@@ -47,7 +47,7 @@
                         'glow-emerald': '0 0 45px -5px rgba(16, 185, 129, 0.4)',
                         'glow-gold': '0 0 35px -5px rgba(250, 204, 21, 0.35)',
                         'glow-card': '0 20px 50px -10px rgba(0, 0, 0, 0.7)',
-                        'avenora-card': '0 30px 60px -12px rgba(0, 0, 0, 0.45)',
+                        'avenora-card': '0 30px 60px -12px rgba(0, 0, 0, 0.55)',
                     }
                 }
             }
@@ -80,55 +80,101 @@
         }
 
         /* ==============================================================
-           AVENORA EXACT HERO ARCHITECTURE ("Travelo" Style)
+           DIMENSIONAL STACKED HERO ARCHITECTURE
+           Layer 1: Clean Background Plate (Atrium) + Atmospheric Gradient
+           Layer 2: Monumental Title "Lato Sensu 27" (Middle Plane)
+           Layer 3: Cutout Brazilian Doctors PNG (Foreground Plane)
+           Layer 4: Bottom Interactive UI & Floating Card
            ============================================================== */
         .home-hero-area {
             position: relative;
-            background-image: 
-                linear-gradient(180deg, rgba(0, 104, 67, 0.88) 0%, rgba(0, 158, 94, 0.45) 36%, rgba(2, 24, 19, 0.45) 68%, #021813 100%),
-                url("assets/img/hero-medicos-brasileiros.jpg");
-            background-position: 0 0, 50% 28%;
-            background-repeat: no-repeat, no-repeat;
-            background-size: 100% 100%, cover;
+            background-color: #021813;
+            overflow: hidden;
         }
 
-        /* Top Cyan/Emerald Smooth Atmospheric Glow like Avenora's top sky curve */
+        /* Layer 1: Background Plate + Emerald/UFF Green Atmospheric Sky */
+        .hero-layer-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background-image: 
+                linear-gradient(180deg, rgba(0, 104, 67, 0.90) 0%, rgba(0, 140, 85, 0.55) 38%, rgba(2, 24, 19, 0.55) 75%, #021813 100%),
+                url("assets/img/hero-bg-atrium.jpg");
+            background-position: 0 0, 50% 35%;
+            background-repeat: no-repeat, no-repeat;
+            background-size: 100% 100%, cover;
+            will-change: transform;
+        }
+
         .hero-color-glow {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 34rem;
-            background: radial-gradient(ellipse 90% 70% at 65% 0%, rgba(52, 211, 153, 0.45) 0%, rgba(0, 104, 67, 0.5) 48%, transparent 100%);
+            height: 36rem;
+            background: radial-gradient(ellipse 90% 70% at 65% 0%, rgba(52, 211, 153, 0.5) 0%, rgba(0, 104, 67, 0.55) 50%, transparent 100%);
             pointer-events: none;
-            z-index: 1;
+            z-index: 2;
         }
 
-        /* Monumental Hero Title ("Travelo" -> "Lato Sensu 27") */
-        .hero-title-wrapper {
+        /* Layer 2: Monumental Text Plane (Behind the doctors' heads/shoulders!) */
+        .hero-layer-text {
             position: relative;
-            z-index: 2;
+            z-index: 10;
             width: 100%;
             text-align: center;
-            overflow: hidden;
-            padding-top: 1rem;
-            padding-bottom: 0.5rem;
+            padding-top: 2rem;
             user-select: none;
+            pointer-events: none;
+            will-change: transform;
         }
 
         .hero-title {
-            font-size: clamp(3.5rem, 13.4vw, 15.5rem);
+            font-size: clamp(3.4rem, 13.5vw, 15.5rem);
             font-weight: 800;
             line-height: 0.82;
             letter-spacing: -0.04em;
             margin: 0;
             padding-bottom: 0.08em;
             -webkit-text-fill-color: transparent;
-            background-image: linear-gradient(183deg, #FFFFFF 52%, rgba(255, 255, 255, 0.08) 94%);
+            background-image: linear-gradient(180deg, #FFFFFF 55%, rgba(255, 255, 255, 0.15) 95%);
             -webkit-background-clip: text;
             background-clip: text;
             display: inline-block;
             white-space: nowrap;
+            filter: drop-shadow(0 12px 30px rgba(0, 40, 25, 0.35));
+        }
+
+        /* Layer 3: Cutout Doctors Foreground Plane (In front of "Lato Sensu 27"!) */
+        .hero-layer-doctors {
+            position: absolute;
+            inset: 0;
+            z-index: 20;
+            pointer-events: none;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            will-change: transform;
+        }
+
+        .hero-doctors-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 28%;
+            filter: drop-shadow(0 -8px 25px rgba(0, 0, 0, 0.38));
+        }
+
+        /* Bottom gradient vignette over the bottom of the doctors so bottom UI text is 100% readable */
+        .hero-bottom-vignette {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 42%;
+            background: linear-gradient(180deg, transparent 0%, rgba(2, 24, 19, 0.65) 55%, #021813 100%);
+            z-index: 25;
+            pointer-events: none;
         }
 
         /* Avenora Pill Primary Button */
@@ -143,13 +189,13 @@
             border-radius: 9999px;
             font-weight: 700;
             transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
-            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.45);
         }
 
         .avenora-btn:hover {
             transform: translateY(-3px);
             background-color: #F8FAFC;
-            box-shadow: 0 20px 40px -5px rgba(0, 158, 94, 0.4);
+            box-shadow: 0 20px 40px -5px rgba(0, 158, 94, 0.45);
         }
 
         .avenora-btn-circle {
@@ -237,16 +283,17 @@
 <body class="selection:bg-brand-emerald selection:text-white noise-bg">
 
     <!-- ============================================================== -->
-    <!-- 1. AVENORA FULL-BLEED HERO AREA ("Lato Sensu 27")              -->
+    <!-- 1. STACKED DIMENSIONAL HERO ("Fundo -> Lato Sensu 27 -> Médicos") -->
     <!-- ============================================================== -->
-    <div id="hero" class="home-hero-area min-h-screen flex flex-col justify-between relative overflow-hidden">
+    <div id="hero" class="home-hero-area min-h-screen flex flex-col justify-between relative">
         
-        <!-- Top Atmospheric Gradient Curve -->
+        <!-- CAMADA 1 (Fundo): Imagem do Átrio da Faculdade sem médicos + Luz Esmeralda -->
+        <div id="hero-bg-layer" class="hero-layer-bg"></div>
         <div class="hero-color-glow"></div>
 
-        <!-- TOP NAVIGATION BAR (Uncluttered: Logos + Dúvidas, Edital, Inscreva-se) -->
+        <!-- TOP NAVIGATION BAR (z-50: Logos + Dúvidas, Edital, Inscreva-se) -->
         <header id="main-nav" class="relative z-50 w-full pt-5 px-6 md:px-12 lg:px-16">
-            <div class="max-w-7xl mx-auto flex items-center justify-between py-3 px-6 rounded-full bg-brand-base/45 backdrop-blur-md border border-white/15">
+            <div class="max-w-7xl mx-auto flex items-center justify-between py-3 px-6 rounded-full bg-brand-base/50 backdrop-blur-md border border-white/15">
                 
                 <!-- Logos FacMed & UFF -->
                 <a href="#hero" class="flex items-center gap-3 sm:gap-4 group">
@@ -276,13 +323,23 @@
             </div>
         </header>
 
-        <!-- MONUMENTAL TITLE: "Lato Sensu 27" (Exatamente como "Travelo" no Avenora) -->
-        <div class="hero-title-wrapper mt-6 md:mt-8">
+        <!-- CAMADA 2 (Meio - z-10): Texto Monumental "Lato Sensu 27" -->
+        <div id="hero-text-layer" class="hero-layer-text mt-4 md:mt-6">
             <h1 class="hero-title">Lato Sensu 27</h1>
         </div>
 
-        <!-- BOTTOM HERO WRAPPER (Left: Headline + Pill Button | Right: Floating White Card) -->
-        <div class="relative z-20 max-w-7xl w-full mx-auto px-6 md:px-12 lg:px-16 pb-14 pt-4 md:pt-0">
+        <!-- CAMADA 3 (Frente - z-20): Médicos Brasileiros Recortados em PNG Transparente (Sobrepostos ao Texto!) -->
+        <div id="hero-doctors-layer" class="hero-layer-doctors">
+            <img src="assets/img/medicos-cutout.png" 
+                 alt="Equipe de Médicos Brasileiros da Faculdade de Medicina da UFF" 
+                 class="hero-doctors-img">
+        </div>
+
+        <!-- Vinheta Suave na Base para leitura perfeita dos textos inferiores -->
+        <div class="hero-bottom-vignette"></div>
+
+        <!-- CAMADA 4 (UI Frontal Inferior - z-30): Chamada Esquerda + Card Branco Flutuante Direita -->
+        <div class="relative z-30 max-w-7xl w-full mx-auto px-6 md:px-12 lg:px-16 pb-12 pt-36 md:pt-44">
             <div class="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-10">
                 
                 <!-- Left Side: Bold Editorial Headline & Pill Button -->
@@ -290,11 +347,11 @@
                     <div class="text-xs sm:text-sm font-mono uppercase tracking-[0.25em] text-brand-glow font-bold mb-3 drop-shadow">
                         CONCURSO UNIFICADO • FACULDADE DE MEDICINA DA UFF
                     </div>
-                    <h2 class="font-sans font-bold text-3xl sm:text-5xl md:text-[3.35rem] text-white tracking-tight leading-[1.12] drop-shadow-2xl">
+                    <h2 class="font-sans font-bold text-3xl sm:text-5xl md:text-[3.25rem] text-white tracking-tight leading-[1.12] drop-shadow-2xl">
                         Pós-graduação médica para quem busca excelência pública federal.
                     </h2>
                     
-                    <div class="mt-8 flex flex-wrap items-center gap-4">
+                    <div class="mt-7 flex flex-wrap items-center gap-4">
                         <a href="#especialidades" class="avenora-btn text-sm sm:text-base">
                             <span>Explorar Especialidades</span>
                             <span class="avenora-btn-circle">
@@ -304,8 +361,8 @@
                     </div>
                 </div>
 
-                <!-- Right Side: White Floating Card (Idêntico ao card "Plan your next vacation" do Avenora) -->
-                <div class="w-full lg:w-[390px] bg-white rounded-[28px] p-5 shadow-avenora-card text-brand-base flex flex-col items-center text-center">
+                <!-- Right Side: White Floating Card (Idêntico ao card do Avenora) -->
+                <div class="w-full lg:w-[380px] bg-white rounded-[28px] p-5 shadow-avenora-card text-brand-base flex flex-col items-center text-center">
                     <h3 class="font-bold text-lg text-brand-base tracking-tight">
                         Concurso Unificado 2027
                     </h3>
@@ -313,7 +370,7 @@
                         13 programas de Pós-Graduação Lato Sensu 100% gratuitos na Faculdade de Medicina da UFF
                     </p>
                     
-                    <div class="w-full h-48 rounded-2xl overflow-hidden mt-4 relative group">
+                    <div class="w-full h-44 rounded-2xl overflow-hidden mt-4 relative group">
                         <img src="assets/img/predio.jpg" 
                              alt="Prédio da Faculdade de Medicina da UFF" 
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
@@ -775,7 +832,7 @@
     </div>
 
     <!-- ============================================================== -->
-    <!-- JAVASCRIPT: Momentum Smooth Scroll, 3D Slider & HUD Logics     -->
+    <!-- JAVASCRIPT: Momentum Smooth Scroll, 3D Parallax & Slider       -->
     <!-- ============================================================== -->
     <script>
         // -------------------------------------------------------------
@@ -1229,11 +1286,51 @@
         });
 
         // -------------------------------------------------------------
-        // 8. GSAP SCROLLTRIGGER REVEALS & PARALLAX
+        // 8. 3-LAYER HERO DEPTH PARALLAX & SCROLLTRIGGER
         // -------------------------------------------------------------
         document.addEventListener('DOMContentLoaded', () => {
             gsap.registerPlugin(ScrollTrigger);
 
+            const hero = document.getElementById('hero');
+            const bgLayer = document.getElementById('hero-bg-layer');
+            const textLayer = document.getElementById('hero-text-layer');
+            const doctorsLayer = document.getElementById('hero-doctors-layer');
+
+            // Subtle Mouse Depth Parallax between the 3 stacked planes
+            if (hero && bgLayer && textLayer && doctorsLayer) {
+                hero.addEventListener('mousemove', (e) => {
+                    const x = (e.clientX / window.innerWidth - 0.5);
+                    const y = (e.clientY / window.innerHeight - 0.5);
+
+                    gsap.to(bgLayer, { x: -x * 12, y: -y * 8, scale: 1.03, duration: 1, ease: 'power2.out' });
+                    gsap.to(textLayer, { x: x * 18, y: y * 10, duration: 0.9, ease: 'power2.out' });
+                    gsap.to(doctorsLayer, { x: x * 32, y: y * 14, duration: 0.8, ease: 'power2.out' });
+                });
+
+                // Scroll differential parallax
+                gsap.to(textLayer, {
+                    scrollTrigger: {
+                        trigger: '#hero',
+                        start: 'top top',
+                        end: 'bottom top',
+                        scrub: true
+                    },
+                    y: 110,
+                    opacity: 0.25
+                });
+
+                gsap.to(doctorsLayer, {
+                    scrollTrigger: {
+                        trigger: '#hero',
+                        start: 'top top',
+                        end: 'bottom top',
+                        scrub: true
+                    },
+                    y: 45
+                });
+            }
+
+            // Image reveals in lower sections
             gsap.utils.toArray('.img-reveal-wrap').forEach((wrap) => {
                 const img = wrap.querySelector('img');
                 if (img) {
