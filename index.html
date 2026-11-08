@@ -5,545 +5,470 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pós-Graduação Médica Lato Sensu 2027 | Faculdade de Medicina UFF</title>
     
-    <!-- Meta SEO & Social Sharing -->
-    <meta name="description" content="Concurso Oficial Lato Sensu 2027 da Faculdade de Medicina da UFF. 13 especializações médicas 100% gratuitas no Hospital Universitário Antônio Pedro (HUAP).">
-    <meta name="keywords" content="concurso médico, pós-graduação medicina, residência médica, medicina UFF, HUAP, lato sensu medicina, cardiologia UFF, dermatologia UFF">
-    <meta name="theme-color" content="#014237">
-    
-    <meta property="og:title" content="Pós-Graduação Médica Lato Sensu 2027 | Medicina UFF" />
-    <meta property="og:description" content="13 especializações médicas de excelência no HUAP. 100% gratuito pelo SUS/MEC. Prepare-se para o concurso." />
-    <meta property="og:image" content="assets/img/predio.jpg" />
-    <meta property="og:type" content="website" />
+    <!-- Meta SEO & Dados Oficiais -->
+    <meta name="description" content="Processo seletivo oficial para pós-graduação médica Lato Sensu 2027 da Faculdade de Medicina da Universidade Federal Fluminense. 13 programas no Hospital Universitário Antônio Pedro (HUAP). 100% gratuito.">
+    <meta name="theme-color" content="#006843">
 
-    <!-- Google Fonts: Montserrat (Headings) & Inter (Body) -->
+    <!-- Tipografia Acadêmica & Editorial: Lora (Títulos Nobres) + Inter (Interface & Leitura) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <!-- Local Compiled Tailwind CSS & Design System -->
+    <!-- Estilos Locais Compilados -->
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- Local Three.js (WebGL 3D Particles) & GSAP + ScrollTrigger -->
-    <script src="assets/js/three.min.js"></script>
-    <script src="assets/js/gsap.min.js"></script>
-    <script src="assets/js/ScrollTrigger.min.js"></script>
-
     <style>
-        /* CSS Tokens & Custom Styling */
-        :root {
-            --color-facmed-primary: #006843;
-            --color-facmed-dark: #014237;
-            --color-facmed-accent: #009E5E;
-        }
-
         body {
-            background-color: #00261f;
-            color: #F8FAFC;
-            overflow-x: hidden;
-            font-family: 'Inter', sans-serif;
+            background-color: #FAFAF9;
+            color: #18181B;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Glassmorphism Styles */
-        .glass-panel-dark {
-            background: rgba(1, 66, 55, 0.55);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(0, 158, 94, 0.25);
+        .font-serif-editorial {
+            font-family: 'Lora', Georgia, 'Times New Roman', serif;
         }
 
-        .glass-card-light {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 104, 67, 0.12);
+        .font-mono-num {
+            font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+            font-variant-numeric: tabular-nums;
         }
 
-        /* Architectural Monumental Text Outline */
-        .outline-text {
-            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.12);
-            color: transparent;
-            user-select: none;
+        /* Linhas e bordas sutis e sóbrias */
+        .border-hairline {
+            border-color: #E4E4E7;
         }
 
-        /* Dimensional Hero Setup */
-        .hero-viewport {
-            perspective: 1200px;
-            transform-style: preserve-3d;
+        .card-institutional {
+            background: #FFFFFF;
+            border: 1px solid #E4E4E7;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
         }
 
-        .hero-building {
-            filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.65));
-            transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
-            transform-style: preserve-3d;
-            will-change: transform;
+        .card-institutional:hover {
+            border-color: #006843;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #00261f;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #006843;
-            border-radius: 5px;
-            border: 2px solid #00261f;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #009E5E;
-        }
-
-        /* Pulse glow animation for active states */
-        @keyframes subtle-pulse {
-            0%, 100% { opacity: 0.8; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.02); }
-        }
-        .pulse-subtle {
-            animation: subtle-pulse 3s infinite ease-in-out;
+        /* Efeito de abertura suave do FAQ */
+        .faq-answer {
+            transition: max-height 0.25s ease-out, opacity 0.2s ease-out;
         }
     </style>
 </head>
-<body class="selection:bg-facmed-accent selection:text-white">
+<body class="selection:bg-emerald-100 selection:text-emerald-900">
 
-    <!-- WebGL Background Canvas (Three.js Floating Constellation Particles) -->
-    <canvas id="webgl-bg" class="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-70"></canvas>
-
-    <!-- Top Navigation Bar -->
-    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-6 md:px-12 bg-facmed-darker/80 backdrop-blur-md border-b border-facmed-primary/30">
+    <!-- BARRA SUPERIOR INSTITUCIONAL (Governo Federal / UFF) -->
+    <div class="bg-stone-100 border-b border-stone-200 text-stone-600 text-xs py-1.5 px-6 md:px-12">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <!-- Logos -->
-            <a href="#hero" class="flex items-center gap-4 group">
-                <img src="assets/img/logo facmedwhite.svg" alt="Faculdade de Medicina UFF" class="h-10 md:h-12 w-auto transition-transform group-hover:scale-105 duration-300">
-                <div class="hidden sm:block h-6 w-[1px] bg-white/20"></div>
-                <img src="assets/img/logo-uff.png" alt="Universidade Federal Fluminense" class="hidden sm:block h-8 w-auto brightness-200 contrast-125 opacity-90">
+            <span class="font-medium">Universidade Federal Fluminense • Ministério da Educação</span>
+            <div class="hidden sm:flex items-center gap-6">
+                <span>Hospital Universitário Antônio Pedro (HUAP)</span>
+                <a href="https://editais.uff.br/10496" target="_blank" rel="noopener noreferrer" class="text-stone-700 hover:text-stone-900 underline">Portal de Editais UFF</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CABEÇALHO PRINCIPAL -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200 py-3.5 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            
+            <!-- Logos Oficiais -->
+            <a href="#inicio" class="flex items-center gap-4">
+                <img src="assets/img/logo facmed.svg" alt="Faculdade de Medicina UFF" class="h-9 md:h-11 w-auto">
+                <div class="h-6 w-px bg-stone-300 hidden sm:block"></div>
+                <img src="assets/img/logo-uff.png" alt="UFF" class="h-7 w-auto hidden sm:block">
             </a>
 
-            <!-- Navigation Links -->
-            <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-200">
-                <a href="#diferenciais" class="hover:text-facmed-accent transition-colors">Diferenciais</a>
-                <a href="#cronograma" class="hover:text-facmed-accent transition-colors flex items-center gap-1.5">
-                    <span>Cronograma</span>
-                    <span class="w-2 h-2 rounded-full bg-facmed-accent animate-ping"></span>
-                </a>
-                <a href="#especialidades" class="hover:text-facmed-accent transition-colors">13 Especialidades</a>
-                <a href="#fases" class="hover:text-facmed-accent transition-colors">Etapas do Concurso</a>
-                <a href="#faq" class="hover:text-facmed-accent transition-colors">Dúvidas</a>
+            <!-- Navegação Editorial -->
+            <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-stone-600">
+                <a href="#concurso" class="hover:text-emerald-800 transition-colors">O Concurso</a>
+                <a href="#cronograma" class="hover:text-emerald-800 transition-colors">Cronograma Oficial</a>
+                <a href="#especialidades" class="hover:text-emerald-800 transition-colors">13 Especialidades</a>
+                <a href="#selecao" class="hover:text-emerald-800 transition-colors">Etapas de Seleção</a>
+                <a href="#faq" class="hover:text-emerald-800 transition-colors">Dúvidas Frequentes</a>
             </nav>
 
-            <!-- Actions Header -->
+            <!-- Ações -->
             <div class="flex items-center gap-3">
                 <a href="https://editais.uff.br/10496" target="_blank" rel="noopener noreferrer" 
-                   class="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold text-white/90 border border-white/20 hover:bg-white/10 transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    <span>Edital Modelo</span>
+                   class="hidden sm:inline-flex items-center px-4 py-2 rounded-md text-xs font-medium text-stone-700 border border-stone-300 hover:bg-stone-50 transition-colors">
+                    Edital Modelo (PDF)
                 </a>
                 <a href="#cronograma" 
-                   class="px-5 py-2.5 rounded-full text-xs md:text-sm font-bold text-white bg-facmed-accent hover:bg-emerald-500 transition-all shadow-emerald-glow transform hover:-translate-y-0.5 active:translate-y-0">
-                    Inscreva-se 2027
+                   class="px-5 py-2 rounded-md text-xs md:text-sm font-medium text-white bg-emerald-800 hover:bg-emerald-900 transition-colors shadow-sm">
+                    Acessar Inscrições
                 </a>
             </div>
+
         </div>
     </header>
 
-    <!-- MAIN CONTAINER -->
-    <main class="relative z-10 pt-20">
+    <main>
 
         <!-- ============================================================== -->
-        <!-- 1. DIMENSIONAL HERO SECTION (scroll-craft depth standard)       -->
+        <!-- 1. HERO EDITORIAL (Sóbrio, Dignificado, Sem Slop)              -->
         <!-- ============================================================== -->
-        <section id="hero" class="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden py-8 md:py-16 px-6 md:px-12">
-            
-            <!-- Ambient Radial Glows -->
-            <div class="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[500px] bg-facmed-primary/20 rounded-full blur-[140px] pointer-events-none -z-10"></div>
-            <div class="absolute bottom-10 right-1/4 w-[500px] h-[400px] bg-facmed-accent/15 rounded-full blur-[120px] pointer-events-none -z-10"></div>
-
-            <!-- Plane 1: Background Architectural Massive Outline Typography -->
-            <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none -z-5 overflow-hidden">
-                <span class="outline-text font-display font-black text-6xl sm:text-8xl md:text-[130px] lg:text-[160px] tracking-tighter uppercase opacity-25 leading-none">
-                    MEDICINA UFF
-                </span>
-                <span class="outline-text font-display font-black text-5xl sm:text-7xl md:text-[110px] lg:text-[140px] tracking-tight uppercase opacity-15 leading-none mt-[-20px] md:mt-[-40px]">
-                    LATO SENSU 2027
-                </span>
-            </div>
-
-            <!-- Plane 2 & 3: 2-Column Hero Layout (Text on Left, 3D Building on Right) -->
-            <div class="relative z-20 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <section id="inicio" class="py-12 md:py-20 px-6 md:px-12 border-b border-stone-200">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
                 
-                <!-- Left Column: Copywriting & Conversion Triggers -->
-                <div class="lg:col-span-7 flex flex-col items-start text-left">
+                <!-- Coluna de Texto & Dados Estruturais (7 colunas) -->
+                <div class="lg:col-span-7 flex flex-col items-start">
                     
-                    <!-- Tag de Autoridade / HUAP -->
-                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-facmed-dark/90 border border-facmed-accent/50 text-emerald-300 text-xs md:text-sm font-semibold tracking-wide shadow-lg mb-6 backdrop-blur-md">
-                        <span class="inline-block w-2 h-2 rounded-full bg-facmed-accent animate-pulse"></span>
-                        <span>HOSPITAL UNIVERSITÁRIO ANTÔNIO PEDRO • HUAP NITERÓI</span>
+                    <!-- Rótulo Institucional Discreto -->
+                    <div class="text-xs font-semibold text-emerald-800 uppercase tracking-wider mb-3">
+                        Processo Seletivo Oficial • Turma 2027
                     </div>
 
-                    <!-- Headline Principal de Alto Impacto -->
-                    <h1 class="font-display font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.1] drop-shadow-2xl">
-                        Sua Especialização Médica no Maior Polo Universitário do Rio.
+                    <!-- Título Nobre em Serif Editorial -->
+                    <h1 class="font-serif-editorial font-medium text-3xl sm:text-4xl md:text-5xl text-stone-900 leading-[1.18] tracking-tight">
+                        Pós-Graduação Médica Lato Sensu na Universidade Federal Fluminense
                     </h1>
 
-                    <!-- Subheadline Focada na Oportunidade Única -->
-                    <p class="mt-6 text-base sm:text-lg text-slate-200/90 max-w-2xl font-normal leading-relaxed drop-shadow">
-                        Pós-graduação Médica Lato Sensu <strong class="text-white font-semibold underline decoration-facmed-accent decoration-2 underline-offset-4">100% gratuita</strong> na Universidade Federal Fluminense. 13 especialidades com imersão clínica e cirúrgica de alta complexidade.
+                    <!-- Descrição Clara e Sem Jargão de Vendas -->
+                    <p class="mt-5 text-base sm:text-lg text-stone-600 font-normal leading-relaxed max-w-2xl">
+                        Treinamento clínico e cirúrgico em ambiente hospitalar terciário e de alta complexidade no <strong class="text-stone-800 font-medium">Hospital Universitário Antônio Pedro (HUAP)</strong>. Formação médica continuada em 13 especialidades sob preceptoria docente da Faculdade de Medicina da UFF.
                     </p>
 
-                    <!-- Triggers de Decisão Imediata (Badges) -->
-                    <div class="mt-6 flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs sm:text-sm text-emerald-200 font-medium">
-                        <div class="flex items-center gap-2 bg-facmed-dark/80 px-3.5 py-1.5 rounded-lg border border-emerald-800/80 backdrop-blur-sm">
-                            <svg class="w-4 h-4 text-facmed-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                            <span>Zero Mensalidade (Ensino Federal)</span>
+                    <!-- Fatos e Garantias Institucionais (Três Linhas de Certeza) -->
+                    <div class="mt-8 w-full border-y border-stone-200 py-4 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-stone-700">
+                        <div>
+                            <span class="block font-semibold text-stone-900">Ensino 100% Gratuito</span>
+                            <span class="text-stone-500">Sem cobrança de mensalidades (MEC/SUS).</span>
                         </div>
-                        <div class="flex items-center gap-2 bg-facmed-dark/80 px-3.5 py-1.5 rounded-lg border border-emerald-800/80 backdrop-blur-sm">
-                            <svg class="w-4 h-4 text-facmed-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                            <span>Taxa Única: R$ 400,00</span>
+                        <div>
+                            <span class="block font-semibold text-stone-900">Taxa Única: R$ 400</span>
+                            <span class="text-stone-500">Inscrição com possibilidade de isenção.</span>
                         </div>
-                        <div class="flex items-center gap-2 bg-facmed-dark/80 px-3.5 py-1.5 rounded-lg border border-emerald-800/80 backdrop-blur-sm">
-                            <svg class="w-4 h-4 text-facmed-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                            <span>13 Especialidades no HUAP</span>
+                        <div>
+                            <span class="block font-semibold text-stone-900">13 Especialidades</span>
+                            <span class="text-stone-500">Programas de 1 e 2 anos no HUAP.</span>
                         </div>
                     </div>
 
-                    <!-- Call to Action Buttons -->
-                    <div class="mt-8 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                    <!-- Botões de Ação sóbrios -->
+                    <div class="mt-8 flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
                         <a href="#cronograma" 
-                           class="w-full sm:w-auto px-8 py-4 rounded-full font-display font-bold text-base text-white bg-facmed-accent hover:bg-emerald-500 shadow-emerald-glow transition-all duration-300 transform hover:-translate-y-1 active:translate-y-0 text-center flex items-center justify-center gap-3 group">
-                            <span>Acessar Cronograma & Inscrições</span>
-                            <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                           class="w-full sm:w-auto px-6 py-3 rounded-md text-sm font-medium text-white bg-emerald-800 hover:bg-emerald-900 transition-colors text-center shadow-sm">
+                            Consultar Cronograma e Inscrições
                         </a>
                         <a href="#especialidades" 
-                           class="w-full sm:w-auto px-8 py-4 rounded-full font-display font-semibold text-base text-white/90 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md transition-all duration-300 text-center flex items-center justify-center gap-2">
-                            <span>Explorar 13 Especialidades</span>
+                           class="w-full sm:w-auto px-6 py-3 rounded-md text-sm font-medium text-stone-700 bg-white hover:bg-stone-50 border border-stone-300 transition-colors text-center">
+                            Ver Especialidades Ofertadas
                         </a>
                     </div>
 
-                    <!-- Ticker de Apoio -->
-                    <div class="mt-8 flex items-center gap-3 text-xs text-slate-400">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                        <span>Hospital Universitário Antônio Pedro — Rua Marquês do Paraná, 303, Niterói - RJ</span>
+                    <div class="mt-5 text-xs text-stone-500">
+                        *O título formal de especialista é concedido pela AMB e sociedades médicas conveniadas.
                     </div>
 
                 </div>
 
-                <!-- Right Column: 3D Historical Building (Dimensional Focus with Tilt) -->
-                <div class="lg:col-span-5 flex items-center justify-center hero-viewport relative">
-                    <div class="absolute inset-0 bg-radial-gradient from-emerald-500/20 to-transparent rounded-full blur-3xl pointer-events-none"></div>
-                    <div id="building-container" class="relative w-full max-w-md lg:max-w-none transition-all cursor-pointer">
-                        <img id="hero-building-img" 
-                             src="assets/img/predio3d.png" 
-                             alt="Prédio Histórico da Faculdade de Medicina da UFF" 
-                             class="hero-building w-full h-auto object-contain mx-auto transform hover:scale-105 transition-transform duration-500">
-                        <div class="mt-4 text-center">
-                            <span class="inline-block text-[11px] font-mono text-emerald-300/80 bg-facmed-dark/70 px-3 py-1 rounded-full border border-emerald-900/60">
-                                🏛️ Pavilhão Central • Faculdade de Medicina da UFF
-                            </span>
+                <!-- Coluna do Prédio Histórico (Enquadramento Arquitetural Nobre) -->
+                <div class="lg:col-span-5 flex flex-col items-center">
+                    <div class="w-full bg-stone-100 border border-stone-200 rounded-lg p-3 sm:p-4">
+                        <div class="overflow-hidden rounded bg-stone-200/60 flex items-center justify-center p-2">
+                            <img src="assets/img/predio3d.png" 
+                                 alt="Pavilhão Central da Faculdade de Medicina da UFF" 
+                                 class="w-full h-auto object-contain max-h-[380px] drop-shadow-sm">
+                        </div>
+                        <div class="mt-3 px-1 flex items-center justify-between text-xs text-stone-500">
+                            <span>Pavilhão Central • Campus Biomédico UFF</span>
+                            <span class="font-mono text-stone-400">Niterói, RJ</span>
                         </div>
                     </div>
                 </div>
 
             </div>
-
         </section>
 
         <!-- ============================================================== -->
-        <!-- 2. SOCIAL PROOF & EXCELLENCE METRICS (Credibilidade Imediata)  -->
+        <!-- 2. PILARES E INDICADORES ACADÊMICOS                             -->
         <!-- ============================================================== -->
-        <section id="diferenciais" class="relative z-20 py-12 bg-facmed-dark border-y border-facmed-primary/40">
-            <div class="max-w-7xl mx-auto px-6 md:px-12">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
+        <section id="concurso" class="scroll-mt-20 py-14 px-6 md:px-12 bg-white border-b border-stone-200">
+            <div class="max-w-7xl mx-auto">
+                
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 divide-y lg:divide-y-0 lg:divide-x divide-stone-200">
                     
-                    <div class="p-4 rounded-xl bg-facmed-darker/50 border border-facmed-primary/30">
-                        <div class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-emerald-400 font-mono">+70</div>
-                        <div class="text-xs sm:text-sm text-slate-300 mt-2 font-medium">Anos de Tradição Médica</div>
-                        <p class="text-[11px] text-slate-400 mt-1">Formação de líderes e pioneiros na medicina brasileira.</p>
+                    <div class="pt-4 lg:pt-0 lg:px-6 first:pl-0">
+                        <span class="font-serif-editorial text-3xl sm:text-4xl text-emerald-900 font-semibold block">+70 Anos</span>
+                        <span class="text-sm font-medium text-stone-900 mt-1 block">Tradição e Autoridade</span>
+                        <p class="text-xs text-stone-500 mt-1.5 leading-relaxed">
+                            Uma das mais respeitadas faculdades de medicina do Brasil, pioneira na formação de especialistas.
+                        </p>
                     </div>
 
-                    <div class="p-4 rounded-xl bg-facmed-darker/50 border border-facmed-primary/30">
-                        <div class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-emerald-400 font-mono">100%</div>
-                        <div class="text-xs sm:text-sm text-slate-300 mt-2 font-medium">Gratuito (Zero Mensalidade)</div>
-                        <p class="text-[11px] text-slate-400 mt-1">Instituição pública federal com taxa única de inscrição de R$ 400.</p>
+                    <div class="pt-4 lg:pt-0 lg:px-6">
+                        <span class="font-serif-editorial text-3xl sm:text-4xl text-emerald-900 font-semibold block">100% Gratuito</span>
+                        <span class="text-sm font-medium text-stone-900 mt-1 block">Ensino Superior Federal</span>
+                        <p class="text-xs text-stone-500 mt-1.5 leading-relaxed">
+                            Cursos vinculados ao MEC sem qualquer custo de mensalidade durante todo o período de formação.
+                        </p>
                     </div>
 
-                    <div class="p-4 rounded-xl bg-facmed-darker/50 border border-facmed-primary/30">
-                        <div class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-emerald-400 font-mono">HUAP</div>
-                        <div class="text-xs sm:text-sm text-slate-300 mt-2 font-medium">Hospital Terciário & Quaternário</div>
-                        <p class="text-[11px] text-slate-400 mt-1">Prática diária em centro cirúrgico, UTIs e ambulatórios de ponta.</p>
+                    <div class="pt-4 lg:pt-0 lg:px-6">
+                        <span class="font-serif-editorial text-3xl sm:text-4xl text-emerald-900 font-semibold block">HUAP</span>
+                        <span class="text-sm font-medium text-stone-900 mt-1 block">Hospital Escola Terciário</span>
+                        <p class="text-xs text-stone-500 mt-1.5 leading-relaxed">
+                            Complexo hospitalar de referência no estado do RJ, com centros cirúrgicos, CTI e ambulatórios especializados.
+                        </p>
                     </div>
 
-                    <div class="p-4 rounded-xl bg-facmed-darker/50 border border-facmed-primary/30">
-                        <div class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-emerald-400 font-mono">13</div>
-                        <div class="text-xs sm:text-sm text-slate-300 mt-2 font-medium">Especialidades Ativas</div>
-                        <p class="text-[11px] text-slate-400 mt-1">Clínica médica, cirurgia, diagnóstico por imagem e intensivismo.</p>
+                    <div class="pt-4 lg:pt-0 lg:px-6">
+                        <span class="font-serif-editorial text-3xl sm:text-4xl text-emerald-900 font-semibold block">13 Programas</span>
+                        <span class="text-sm font-medium text-stone-900 mt-1 block">Especialidades Ativas</span>
+                        <p class="text-xs text-stone-500 mt-1.5 leading-relaxed">
+                            Formação em clínica médica, pediatria, anestesiologia, radiologia, psiquiatria e áreas cirúrgicas.
+                        </p>
                     </div>
 
                 </div>
+
             </div>
         </section>
 
         <!-- ============================================================== -->
-        <!-- 3. SMART HUD CRONOGRAMA & REAL-TIME COUNTDOWN 2027              -->
+        <!-- 3. CRONOGRAMA OFICIAL (Auditado e em Formato Editorial)         -->
         <!-- ============================================================== -->
-        <section id="cronograma" class="relative z-20 py-20 px-6 md:px-12 bg-gradient-to-b from-facmed-darker via-facmed-dark to-facmed-darker">
-            
+        <section id="cronograma" class="scroll-mt-20 py-16 md:py-24 px-6 md:px-12 bg-stone-50 border-b border-stone-200">
             <div class="max-w-5xl mx-auto">
                 
                 <!-- Cabeçalho da Seção -->
                 <div class="text-center max-w-2xl mx-auto mb-12">
-                    <span class="text-xs font-mono font-bold tracking-[0.25em] text-facmed-accent uppercase">Planejamento & Prazos</span>
-                    <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mt-2">
-                        Cronograma Oficial 2027
+                    <span class="text-xs font-semibold text-emerald-800 uppercase tracking-wider">Datas e Prazos</span>
+                    <h2 class="font-serif-editorial font-medium text-2xl sm:text-3xl md:text-4xl text-stone-900 mt-1">
+                        Cronograma do Processo Seletivo 2027
                     </h2>
-                    <p class="text-slate-300 text-sm sm:text-base mt-3">
-                        Acompanhe o status em tempo real de cada etapa seletiva para não perder nenhum prazo decisivo.
+                    <p class="text-stone-600 text-sm mt-2">
+                        Acompanhe os prazos oficiais de inscrição, provas e convocações da Faculdade de Medicina da UFF.
                     </p>
                 </div>
 
-                <!-- HUD Countdown Box -->
-                <div class="glass-panel-dark rounded-2xl p-6 md:p-8 shadow-2xl mb-14 border border-emerald-500/30">
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <!-- Painel de Prazos Atuais (Status Discreto) -->
+                <div class="bg-white border border-stone-200 rounded-lg p-6 mb-10 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-700"></span>
+                            Previsão de Etapa Atual
+                        </span>
+                        <h3 class="font-medium text-lg text-stone-900 mt-2">Período Regular de Inscrições Online</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">Envio de formulário e emissão da Guia de Recolhimento da União (GRU).</p>
+                    </div>
+
+                    <!-- Contador com Números Tabulares Limpos -->
+                    <div class="flex items-center gap-4 text-center font-mono-num border-t md:border-t-0 md:border-l border-stone-200 pt-4 md:pt-0 md:pl-8">
+                        <div>
+                            <span id="d-days" class="text-2xl sm:text-3xl font-semibold text-stone-900">18</span>
+                            <span class="block text-[11px] text-stone-500 font-sans uppercase">Dias</span>
+                        </div>
+                        <span class="text-stone-300 text-xl font-sans">:</span>
+                        <div>
+                            <span id="d-hours" class="text-2xl sm:text-3xl font-semibold text-stone-900">09</span>
+                            <span class="block text-[11px] text-stone-500 font-sans uppercase">Horas</span>
+                        </div>
+                        <span class="text-stone-300 text-xl font-sans">:</span>
+                        <div>
+                            <span id="d-minutes" class="text-2xl sm:text-3xl font-semibold text-stone-900">41</span>
+                            <span class="block text-[11px] text-stone-500 font-sans uppercase">Min</span>
+                        </div>
+                        <span class="text-stone-300 text-xl font-sans">:</span>
+                        <div>
+                            <span id="d-seconds" class="text-2xl sm:text-3xl font-semibold text-emerald-800">30</span>
+                            <span class="block text-[11px] text-stone-500 font-sans uppercase">Seg</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabela de Etapas (Layout Editorial) -->
+                <div class="bg-white border border-stone-200 rounded-lg overflow-hidden shadow-sm">
+                    <div class="divide-y divide-stone-200 text-sm">
                         
-                        <div class="text-center md:text-left">
-                            <span id="timer-status-badge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-yellow-400/20 text-yellow-300 border border-yellow-400/40 mb-2">
-                                <span class="w-2 h-2 rounded-full bg-yellow-400 animate-ping"></span>
-                                <span id="timer-status-text">Inscrições Abertas (Previsão 2027)</span>
-                            </span>
-                            <h3 id="current-phase-title" class="font-display font-bold text-xl md:text-2xl text-white">
-                                Período Oficial de Inscrições
-                            </h3>
-                            <p class="text-xs md:text-sm text-emerald-200/80 mt-1">
-                                Garanta sua participação através do formulário oficial da UFF.
-                            </p>
+                        <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-stone-50/60 transition-colors">
+                            <div class="sm:w-1/3">
+                                <span class="font-mono-num text-xs font-semibold text-stone-600 block">09/12 a 12/12/2026</span>
+                                <span class="text-xs text-stone-400">Até às 12h00</span>
+                            </div>
+                            <div class="sm:w-2/3">
+                                <strong class="font-medium text-stone-900 block">Solicitação de Isenção da Taxa de Inscrição</strong>
+                                <span class="text-xs text-stone-500">Envio de documentação comprobatória por correio eletrônico institucional.</span>
+                            </div>
                         </div>
 
-                        <!-- Flip Countdown Digits -->
-                        <div class="grid grid-cols-4 gap-2 sm:gap-4 text-center">
-                            <div class="bg-facmed-darker/80 border border-emerald-800/80 rounded-xl px-3 sm:px-5 py-3 min-w-[70px] sm:min-w-[85px]">
-                                <span id="count-days" class="font-mono font-bold text-2xl sm:text-4xl text-white">18</span>
-                                <span class="block text-[10px] uppercase tracking-wider text-emerald-400 mt-1">Dias</span>
+                        <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-emerald-50/40 border-l-4 border-emerald-800">
+                            <div class="sm:w-1/3">
+                                <span class="font-mono-num text-xs font-semibold text-emerald-900 block">05/01 a 02/02/2027</span>
+                                <span class="text-xs text-emerald-700">Início 10h00 • Término 17h00</span>
                             </div>
-                            <div class="bg-facmed-darker/80 border border-emerald-800/80 rounded-xl px-3 sm:px-5 py-3 min-w-[70px] sm:min-w-[85px]">
-                                <span id="count-hours" class="font-mono font-bold text-2xl sm:text-4xl text-white">09</span>
-                                <span class="block text-[10px] uppercase tracking-wider text-emerald-400 mt-1">Horas</span>
+                            <div class="sm:w-2/3">
+                                <strong class="font-semibold text-stone-900 block flex items-center gap-2">
+                                    <span>Período de Inscrições do Concurso</span>
+                                    <span class="text-[10px] bg-emerald-800 text-white px-2 py-0.5 rounded font-sans font-medium">Inscrições Abertas</span>
+                                </strong>
+                                <span class="text-xs text-stone-600">Preenchimento de cadastro no portal oficial e pagamento da GRU de R$ 400,00.</span>
                             </div>
-                            <div class="bg-facmed-darker/80 border border-emerald-800/80 rounded-xl px-3 sm:px-5 py-3 min-w-[70px] sm:min-w-[85px]">
-                                <span id="count-minutes" class="font-mono font-bold text-2xl sm:text-4xl text-white">42</span>
-                                <span class="block text-[10px] uppercase tracking-wider text-emerald-400 mt-1">Min</span>
+                        </div>
+
+                        <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-stone-50/60 transition-colors">
+                            <div class="sm:w-1/3">
+                                <span class="font-mono-num text-xs font-semibold text-stone-600 block">06/02/2027</span>
+                                <span class="text-xs text-stone-400">Divulgação a partir das 17h00</span>
                             </div>
-                            <div class="bg-facmed-darker/80 border border-emerald-800/80 rounded-xl px-3 sm:px-5 py-3 min-w-[70px] sm:min-w-[85px]">
-                                <span id="count-seconds" class="font-mono font-bold text-2xl sm:text-4xl text-emerald-300">30</span>
-                                <span class="block text-[10px] uppercase tracking-wider text-emerald-400 mt-1">Seg</span>
+                            <div class="sm:w-2/3">
+                                <strong class="font-medium text-stone-900 block">Homologação das Inscrições e Locais de Prova</strong>
+                                <span class="text-xs text-stone-500">Publicação da lista de candidatos deferidos e distribuição de salas no HUAP.</span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-stone-50/60 transition-colors">
+                            <div class="sm:w-1/3">
+                                <span class="font-mono-num text-xs font-semibold text-stone-600 block">24/02/2027</span>
+                                <span class="text-xs text-stone-400">Presencial: 10h00 às 13h00</span>
+                            </div>
+                            <div class="sm:w-2/3">
+                                <strong class="font-medium text-stone-900 block">1ª Etapa: Prova Escrita (Eliminatória e Classificatória)</strong>
+                                <span class="text-xs text-stone-500">Avaliação presencial de conhecimentos médicos nas dependências da FacMed/HUAP.</span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-stone-50/60 transition-colors">
+                            <div class="sm:w-1/3">
+                                <span class="font-mono-num text-xs font-semibold text-stone-600 block">11/03 a 13/03/2027</span>
+                                <span class="text-xs text-stone-400">Horários conforme convocação</span>
+                            </div>
+                            <div class="sm:w-2/3">
+                                <strong class="font-medium text-stone-900 block">2ª Etapa: Entrevista e Análise de Currículo Lattes</strong>
+                                <span class="text-xs text-stone-500">Arguição individual pelas bancas examinadoras das respectivas especialidades.</span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-stone-50/60 transition-colors">
+                            <div class="sm:w-1/3">
+                                <span class="font-mono-num text-xs font-semibold text-stone-600 block">18/03/2027</span>
+                                <span class="text-xs text-stone-400">A partir das 13h00</span>
+                            </div>
+                            <div class="sm:w-2/3">
+                                <strong class="font-medium text-stone-900 block">Resultado Final e Classificação Definitiva</strong>
+                                <span class="text-xs text-stone-500">Convocação dos candidatos aprovados para matrícula acadêmica no HUAP.</span>
                             </div>
                         </div>
 
                     </div>
                 </div>
 
-                <!-- Timeline de Etapas (Auditada do Edital com anos calibrados para 2027) -->
-                <div class="relative">
-                    <!-- Linha vertical central -->
-                    <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-facmed-accent via-emerald-700 to-facmed-primary transform md:-translate-x-1/2"></div>
-
-                    <div class="space-y-8" id="timeline-container">
-                        
-                        <!-- Etapa 1 -->
-                        <div class="relative flex flex-col md:flex-row items-start md:items-center group">
-                            <div class="w-full md:w-1/2 md:pr-12 md:text-right pl-14 md:pl-0">
-                                <span class="text-xs font-mono font-bold text-facmed-accent tracking-widest bg-emerald-950/80 px-2.5 py-1 rounded inline-block mb-1">09/12 a 12/12/2026</span>
-                                <h4 class="font-display font-bold text-lg text-white">Solicitação de Isenção da Taxa</h4>
-                                <p class="text-xs text-slate-300 mt-1">Envio de documentação comprobatória via canal eletrônico oficial.</p>
-                            </div>
-                            <div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-facmed-accent border-4 border-facmed-dark shadow-lg shadow-facmed-accent/50 z-10"></div>
-                            <div class="hidden md:block w-1/2 md:pl-12"></div>
-                        </div>
-
-                        <!-- Etapa 2 (Ativa / Destaque) -->
-                        <div class="relative flex flex-col md:flex-row items-start md:items-center group">
-                            <div class="hidden md:block w-1/2 md:pr-12"></div>
-                            <div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-yellow-400 border-4 border-facmed-dark shadow-gold-glow z-10 animate-pulse"></div>
-                            <div class="w-full md:w-1/2 md:pl-12 pl-14">
-                                <div class="glass-panel-dark p-5 rounded-xl border border-yellow-400/40">
-                                    <span class="text-xs font-mono font-bold text-yellow-300 tracking-widest bg-yellow-950/80 px-2.5 py-1 rounded inline-block mb-1">05/01 a 02/02/2027</span>
-                                    <h4 class="font-display font-bold text-xl text-white flex items-center gap-2">
-                                        <span>Período de Inscrições Oficiais</span>
-                                        <span class="text-[10px] bg-yellow-400 text-black font-extrabold px-2 py-0.5 rounded-full uppercase">Fase Atual</span>
-                                    </h4>
-                                    <p class="text-xs text-slate-200 mt-1">Inscrição online no portal da UFF com emissão da Guia de Recolhimento da União (GRU) de R$ 400,00.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Etapa 3 -->
-                        <div class="relative flex flex-col md:flex-row items-start md:items-center group">
-                            <div class="w-full md:w-1/2 md:pr-12 md:text-right pl-14 md:pl-0">
-                                <span class="text-xs font-mono font-bold text-facmed-accent tracking-widest bg-emerald-950/80 px-2.5 py-1 rounded inline-block mb-1">06/02/2027</span>
-                                <h4 class="font-display font-bold text-lg text-white">Homologação das Inscrições</h4>
-                                <p class="text-xs text-slate-300 mt-1">Publicação da lista de candidatos deferidos e locais das bancas examinadoras.</p>
-                            </div>
-                            <div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-facmed-primary border-4 border-facmed-dark z-10"></div>
-                            <div class="hidden md:block w-1/2 md:pl-12"></div>
-                        </div>
-
-                        <!-- Etapa 4 -->
-                        <div class="relative flex flex-col md:flex-row items-start md:items-center group">
-                            <div class="hidden md:block w-1/2 md:pr-12"></div>
-                            <div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-facmed-primary border-4 border-facmed-dark z-10"></div>
-                            <div class="w-full md:w-1/2 md:pl-12 pl-14">
-                                <span class="text-xs font-mono font-bold text-facmed-accent tracking-widest bg-emerald-950/80 px-2.5 py-1 rounded inline-block mb-1">24/02/2027 (10h às 13h)</span>
-                                <h4 class="font-display font-bold text-lg text-white">1ª Etapa: Prova Escrita Presencial</h4>
-                                <p class="text-xs text-slate-300 mt-1">Avaliação presencial de conhecimentos médicos nas dependências da FacMed/HUAP em Niterói.</p>
-                            </div>
-                        </div>
-
-                        <!-- Etapa 5 -->
-                        <div class="relative flex flex-col md:flex-row items-start md:items-center group">
-                            <div class="w-full md:w-1/2 md:pr-12 md:text-right pl-14 md:pl-0">
-                                <span class="text-xs font-mono font-bold text-facmed-accent tracking-widest bg-emerald-950/80 px-2.5 py-1 rounded inline-block mb-1">11/03 a 13/03/2027</span>
-                                <h4 class="font-display font-bold text-lg text-white">2ª Etapa: Entrevista & Análise de Currículo Lattes</h4>
-                                <p class="text-xs text-slate-300 mt-1">Avaliação individualizada pelas bancas de cada especialidade médica.</p>
-                            </div>
-                            <div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-facmed-primary border-4 border-facmed-dark z-10"></div>
-                            <div class="hidden md:block w-1/2 md:pl-12"></div>
-                        </div>
-
-                        <!-- Etapa 6 -->
-                        <div class="relative flex flex-col md:flex-row items-start md:items-center group">
-                            <div class="hidden md:block w-1/2 md:pr-12"></div>
-                            <div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-facmed-accent border-4 border-facmed-dark z-10"></div>
-                            <div class="w-full md:w-1/2 md:pl-12 pl-14">
-                                <span class="text-xs font-mono font-bold text-facmed-accent tracking-widest bg-emerald-950/80 px-2.5 py-1 rounded inline-block mb-1">18/03/2027</span>
-                                <h4 class="font-display font-bold text-lg text-white">Resultado Final & Convocação de Matrícula</h4>
-                                <p class="text-xs text-slate-300 mt-1">Publicação da lista definitiva dos aprovados para ingresso imediato no HUAP.</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="text-center mt-12 text-xs text-slate-400">
-                    *Cronograma preliminar mockado com base no Edital 01/2025 da Faculdade de Medicina da UFF.
+                <div class="mt-4 text-center text-xs text-stone-500">
+                    *Datas preliminares projetadas para o exercício de 2027 com base no Edital 01/2025 da Faculdade de Medicina da UFF.
                 </div>
 
             </div>
-
         </section>
 
         <!-- ============================================================== -->
-        <!-- 4. EXPLORADOR 3D DAS 13 ESPECIALIDADES MÉDICAS                  -->
+        <!-- 4. CATÁLOGO ACADÊMICO DAS 13 ESPECIALIDADES MÉDICAS             -->
         <!-- ============================================================== -->
-        <section id="especialidades" class="relative z-20 py-24 px-6 md:px-12 bg-facmed-darker">
-            
+        <section id="especialidades" class="scroll-mt-20 py-16 md:py-24 px-6 md:px-12 bg-white border-b border-stone-200">
             <div class="max-w-7xl mx-auto">
                 
-                <!-- Título e Subtítulo -->
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
                     <div>
-                        <span class="text-xs font-mono font-bold tracking-[0.25em] text-facmed-accent uppercase">Formação de Elite</span>
-                        <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mt-2">
-                            13 Especialidades Médicas
+                        <span class="text-xs font-semibold text-emerald-800 uppercase tracking-wider">Programas de Pós-Graduação</span>
+                        <h2 class="font-serif-editorial font-medium text-2xl sm:text-3xl md:text-4xl text-stone-900 mt-1">
+                            13 Especialidades Credenciadas
                         </h2>
-                        <p class="text-slate-300 text-sm sm:text-base mt-2 max-w-xl">
-                            Treinamento prático sob preceptoria direta dos maiores especialistas do estado do Rio de Janeiro.
+                        <p class="text-stone-600 text-sm mt-1.5 max-w-xl">
+                            Treinamento médico especializado com prática direta no Hospital Universitário Antônio Pedro.
                         </p>
                     </div>
 
-                    <!-- Filtros Rápidos de Categoria -->
-                    <div class="flex flex-wrap items-center gap-2" id="filter-buttons">
-                        <button class="filter-btn active px-4 py-2 rounded-full text-xs font-bold transition-all bg-facmed-accent text-white shadow-emerald-glow" data-filter="all">
+                    <!-- Filtros Rápidos Sem Pílulas de Neon -->
+                    <div class="flex flex-wrap items-center gap-1.5 border border-stone-200 p-1 rounded-md bg-stone-50">
+                        <button class="filter-btn active px-3.5 py-1.5 rounded text-xs font-medium transition-colors bg-white text-stone-900 shadow-sm border border-stone-200" data-filter="all">
                             Todas (13)
                         </button>
-                        <button class="filter-btn px-4 py-2 rounded-full text-xs font-semibold transition-all bg-facmed-dark text-slate-300 hover:text-white border border-facmed-primary/50" data-filter="clinica">
+                        <button class="filter-btn px-3.5 py-1.5 rounded text-xs font-medium transition-colors text-stone-600 hover:text-stone-900" data-filter="clinica">
                             Clínica Médica
                         </button>
-                        <button class="filter-btn px-4 py-2 rounded-full text-xs font-semibold transition-all bg-facmed-dark text-slate-300 hover:text-white border border-facmed-primary/50" data-filter="cirurgia">
+                        <button class="filter-btn px-3.5 py-1.5 rounded text-xs font-medium transition-colors text-stone-600 hover:text-stone-900" data-filter="cirurgia">
                             Cirurgia & Críticos
                         </button>
-                        <button class="filter-btn px-4 py-2 rounded-full text-xs font-semibold transition-all bg-facmed-dark text-slate-300 hover:text-white border border-facmed-primary/50" data-filter="imagem">
+                        <button class="filter-btn px-3.5 py-1.5 rounded text-xs font-medium transition-colors text-stone-600 hover:text-stone-900" data-filter="imagem">
                             Diagnóstico por Imagem
                         </button>
                     </div>
                 </div>
 
-                <!-- Grid de Cards 3D das Especialidades -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="specialties-grid">
-                    <!-- Cards will be populated with high-performance 3D hover effects -->
+                <!-- Grid de Especialidades (Formato Ficha Acadêmica) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="specialties-grid">
+                    <!-- Cards preenchidos via JavaScript com design limpo e tipografia consistente -->
                 </div>
 
             </div>
-
         </section>
 
         <!-- ============================================================== -->
-        <!-- 5. ESTRUTURA SELETIVA: O CAMINHO DA SUA APROVAÇÃO              -->
+        <!-- 5. AS ETAPAS DE SELEÇÃO (Explicação Clara do Processo)          -->
         <!-- ============================================================== -->
-        <section id="fases" class="relative z-20 py-24 px-6 md:px-12 bg-gradient-to-b from-facmed-darker to-facmed-dark border-t border-facmed-primary/30">
-            <div class="max-w-6xl mx-auto">
+        <section id="selecao" class="scroll-mt-20 py-16 md:py-24 px-6 md:px-12 bg-stone-50 border-b border-stone-200">
+            <div class="max-w-5xl mx-auto">
                 
-                <div class="text-center max-w-3xl mx-auto mb-16">
-                    <span class="text-xs font-mono font-bold tracking-[0.25em] text-facmed-accent uppercase">Processo Transparente</span>
-                    <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mt-2">
-                        Como Funciona a Seleção
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <span class="text-xs font-semibold text-emerald-800 uppercase tracking-wider">Critérios Avaliativos</span>
+                    <h2 class="font-serif-editorial font-medium text-2xl sm:text-3xl md:text-4xl text-stone-900 mt-1">
+                        Estrutura do Processo Seletivo
                     </h2>
-                    <p class="text-slate-300 text-sm sm:text-base mt-3">
-                        O concurso Lato Sensu da Medicina UFF é composto por duas etapas avaliativas rigorosas, sem qualquer viés comercial.
+                    <p class="text-stone-600 text-sm mt-2">
+                        O concurso para a pós-graduação médica da UFF é composto por duas fases públicas e de mérito comprovado.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     
-                    <!-- Etapa 1 -->
-                    <div class="glass-panel-dark rounded-2xl p-8 border border-facmed-primary/50 relative overflow-hidden group hover:border-facmed-accent transition-all duration-300">
-                        <div class="absolute -right-4 -bottom-4 text-9xl font-display font-black text-white/5 select-none pointer-events-none">01</div>
-                        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-facmed-primary text-emerald-300 inline-block mb-4">
-                            Primeira Fase • Peso Classificatório
-                        </span>
-                        <h3 class="font-display font-bold text-2xl text-white">Prova Escrita Teórico-Prática</h3>
-                        <p class="text-slate-300 text-sm mt-3 leading-relaxed">
-                            Avaliação presencial de conhecimentos específicos da especialidade médica escolhida ou de medicina geral.
+                    <!-- 1ª Etapa -->
+                    <div class="bg-white border border-stone-200 rounded-lg p-6 sm:p-8 shadow-sm">
+                        <span class="text-xs font-mono-num font-semibold text-stone-500 uppercase tracking-wider block mb-2">Primeira Etapa • Peso 50%</span>
+                        <h3 class="font-serif-editorial font-medium text-xl text-stone-900">Prova Escrita de Conhecimentos Médicos</h3>
+                        <p class="text-xs text-stone-600 mt-2.5 leading-relaxed">
+                            Avaliação presencial de caráter eliminatório e classificatório. O conteúdo abrange conhecimentos da medicina geral ou da especialidade específica, conforme o programa bibliográfico oficial anexo ao edital.
                         </p>
                         
-                        <ul class="mt-6 space-y-3 text-xs sm:text-sm text-slate-200">
-                            <li class="flex items-start gap-2.5">
-                                <svg class="w-4 h-4 text-facmed-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                <span>Duração de 3 horas com questões objetivas e/ou discursivas.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <svg class="w-4 h-4 text-facmed-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                <span>Conteúdo programático detalhado previamente no Edital.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <svg class="w-4 h-4 text-facmed-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                <span>Nota de corte para habilitação à 2ª etapa.</span>
-                            </li>
-                        </ul>
+                        <div class="mt-6 pt-5 border-t border-stone-100 space-y-2.5 text-xs text-stone-600">
+                            <div class="flex items-start gap-2">
+                                <span class="text-emerald-800 font-semibold">•</span>
+                                <span>Duração de 3 horas em aplicação presencial nas dependências da UFF.</span>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-emerald-800 font-semibold">•</span>
+                                <span>Nota mínima de corte (geralmente grau 6,0) para habilitação à fase seguinte.</span>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-emerald-800 font-semibold">•</span>
+                                <span>Gabarito e prazo de recurso administrativo garantidos em edital.</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Etapa 2 -->
-                    <div class="glass-panel-dark rounded-2xl p-8 border border-facmed-primary/50 relative overflow-hidden group hover:border-facmed-accent transition-all duration-300">
-                        <div class="absolute -right-4 -bottom-4 text-9xl font-display font-black text-white/5 select-none pointer-events-none">02</div>
-                        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-facmed-primary text-emerald-300 inline-block mb-4">
-                            Segunda Fase • Análise Holística
-                        </span>
-                        <h3 class="font-display font-bold text-2xl text-white">Entrevista & Currículo Lattes</h3>
-                        <p class="text-slate-300 text-sm mt-3 leading-relaxed">
-                            Entrevista presencial com a banca examinadora dos professores titulares e análise documental comprobatória.
+                    <!-- 2ª Etapa -->
+                    <div class="bg-white border border-stone-200 rounded-lg p-6 sm:p-8 shadow-sm">
+                        <span class="text-xs font-mono-num font-semibold text-stone-500 uppercase tracking-wider block mb-2">Segunda Etapa • Peso 50%</span>
+                        <h3 class="font-serif-editorial font-medium text-xl text-stone-900">Análise de Currículo Lattes & Entrevista</h3>
+                        <p class="text-xs text-stone-600 mt-2.5 leading-relaxed">
+                            Avaliação individual realizada pelas bancas examinadoras dos professores titulares da especialidade médica escolhida, pontuando a trajetória acadêmica e profissional documentada.
                         </p>
                         
-                        <ul class="mt-6 space-y-3 text-xs sm:text-sm text-slate-200">
-                            <li class="flex items-start gap-2.5">
-                                <svg class="w-4 h-4 text-facmed-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                <span>Pontuação por produção científica, iniciação e monitorias.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <svg class="w-4 h-4 text-facmed-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                <span>Avaliação de postura ética, perfil assistencial e dedicação.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <svg class="w-4 h-4 text-facmed-accent mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                <span>Transparência total com critérios tabelados no edital.</span>
-                            </li>
-                        </ul>
+                        <div class="mt-6 pt-5 border-t border-stone-100 space-y-2.5 text-xs text-stone-600">
+                            <div class="flex items-start gap-2">
+                                <span class="text-emerald-800 font-semibold">•</span>
+                                <span>Pontuação por produção científica, iniciação, monitorias e internato médico.</span>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-emerald-800 font-semibold">•</span>
+                                <span>Entrevista técnica avaliando objetivos assistenciais e disponibilidade horária.</span>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-emerald-800 font-semibold">•</span>
+                                <span>Critérios de pontuação estritamente tabelados para garantia de isonomia.</span>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -552,139 +477,122 @@
         </section>
 
         <!-- ============================================================== -->
-        <!-- 6. FAQ & CANAL DE DÚVIDAS DO CANDIDATO                          -->
+        <!-- 6. PERGUNTAS FREQUENTES (FAQ Limpo e Minimalista)              -->
         <!-- ============================================================== -->
-        <section id="faq" class="relative z-20 py-24 px-6 md:px-12 bg-facmed-darker">
-            <div class="max-w-4xl mx-auto">
+        <section id="faq" class="scroll-mt-20 py-16 md:py-24 px-6 md:px-12 bg-white border-b border-stone-200">
+            <div class="max-w-3xl mx-auto">
                 
-                <div class="text-center mb-14">
-                    <span class="text-xs font-mono font-bold tracking-[0.25em] text-facmed-accent uppercase">Esclarecimentos</span>
-                    <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white mt-2">
+                <div class="text-center mb-12">
+                    <span class="text-xs font-semibold text-emerald-800 uppercase tracking-wider">Esclarecimentos aos Candidatos</span>
+                    <h2 class="font-serif-editorial font-medium text-2xl sm:text-3xl text-stone-900 mt-1">
                         Perguntas Frequentes
                     </h2>
                 </div>
 
-                <div class="space-y-4" id="faq-accordion">
+                <div class="divide-y divide-stone-200 border-y border-stone-200">
                     
-                    <div class="faq-item glass-panel-dark rounded-xl border border-facmed-primary/40 overflow-hidden">
-                        <button class="faq-toggle w-full text-left p-6 font-display font-bold text-base md:text-lg text-white flex items-center justify-between gap-4">
-                            <span>O curso é realmente 100% gratuito? Há alguma mensalidade?</span>
-                            <span class="faq-icon text-facmed-accent text-2xl transition-transform duration-300">+</span>
+                    <div class="py-4">
+                        <button class="faq-btn w-full text-left flex items-center justify-between gap-4 py-2 text-stone-900 font-medium text-sm md:text-base hover:text-emerald-800 transition-colors">
+                            <span>O curso de especialização Lato Sensu da UFF possui mensalidade?</span>
+                            <span class="faq-icon text-stone-400 text-lg font-mono">+</span>
                         </button>
-                        <div class="faq-content hidden px-6 pb-6 text-sm text-slate-300 leading-relaxed border-t border-facmed-primary/20 pt-4">
-                            Sim! A Faculdade de Medicina da Universidade Federal Fluminense (UFF) é uma instituição pública federal de ensino superior vinculada ao MEC. Os cursos de Pós-Graduação Lato Sensu não possuem qualquer mensalidade ou taxa de matrícula mensal. O único custo financeiro do processo é a taxa de inscrição do concurso (R$ 400,00), com possibilidade de isenção conforme previsto em edital.
+                        <div class="faq-answer hidden pt-2 pb-3 text-xs md:text-sm text-stone-600 leading-relaxed">
+                            Não. A Universidade Federal Fluminense é uma instituição pública federal de ensino superior vinculada ao MEC. Os programas de pós-graduação Lato Sensu da Faculdade de Medicina são 100% gratuitos e não possuem qualquer mensalidade. O único custo financeiro do processo é a taxa de inscrição do concurso público (R$ 400,00), havendo período específico para solicitação de isenção conforme previsto em edital.
                         </div>
                     </div>
 
-                    <div class="faq-item glass-panel-dark rounded-xl border border-facmed-primary/40 overflow-hidden">
-                        <button class="faq-toggle w-full text-left p-6 font-display font-bold text-base md:text-lg text-white flex items-center justify-between gap-4">
-                            <span>O título de especialista é emitido diretamente pela UFF?</span>
-                            <span class="faq-icon text-facmed-accent text-2xl transition-transform duration-300">+</span>
+                    <div class="py-4">
+                        <button class="faq-btn w-full text-left flex items-center justify-between gap-4 py-2 text-stone-900 font-medium text-sm md:text-base hover:text-emerald-800 transition-colors">
+                            <span>Como funciona a concessão do Título de Especialista?</span>
+                            <span class="faq-icon text-stone-400 text-lg font-mono">+</span>
                         </button>
-                        <div class="faq-content hidden px-6 pb-6 text-sm text-slate-300 leading-relaxed border-t border-facmed-primary/20 pt-4">
-                            A UFF confere o Certificado oficial de Conclusão de Pós-Graduação Lato Sensu de nível superior credenciado pelo MEC. Conforme a legislação médica nacional, o Título de Especialista formal para fins de RQE no CRM é concedido através da prova de título da Associação Médica Brasileira (AMB) e sociedades de especialidades conveniadas, para a qual a formação no HUAP oferece sólida preparação prática e teórica.
+                        <div class="faq-answer hidden pt-2 pb-3 text-xs md:text-sm text-stone-600 leading-relaxed">
+                            A UFF confere o Certificado de Conclusão de Pós-Graduação Lato Sensu de nível superior, devidamente registrado e credenciado pelo MEC. Conforme a Resolução do Conselho Federal de Medicina (CFM), o registro de título de especialista (RQE) no CRM é obtido por meio de concurso da Associação Médica Brasileira (AMB) e das sociedades de especialidade correspondentes, para o qual o treinamento prático e teórico no HUAP oferece sólida preparação.
                         </div>
                     </div>
 
-                    <div class="faq-item glass-panel-dark rounded-xl border border-facmed-primary/40 overflow-hidden">
-                        <button class="faq-toggle w-full text-left p-6 font-display font-bold text-base md:text-lg text-white flex items-center justify-between gap-4">
-                            <span>É permitida a inscrição de médicos formados no exterior?</span>
-                            <span class="faq-icon text-facmed-accent text-2xl transition-transform duration-300">+</span>
+                    <div class="py-4">
+                        <button class="faq-btn w-full text-left flex items-center justify-between gap-4 py-2 text-stone-900 font-medium text-sm md:text-base hover:text-emerald-800 transition-colors">
+                            <span>Médicos formados no exterior podem participar da seleção?</span>
+                            <span class="faq-icon text-stone-400 text-lg font-mono">+</span>
                         </button>
-                        <div class="faq-content hidden px-6 pb-6 text-sm text-slate-300 leading-relaxed border-t border-facmed-primary/20 pt-4">
-                            Sim, desde que atendidas as exigências regulamentares do Edital: diploma revalidado por universidade pública brasileira e inscrição ativa no Conselho Regional de Medicina (CRM) do Brasil, ou por meio das vagas exclusivas reservadas a convênios internacionais de estrangeiros devidamente documentados.
+                        <div class="faq-answer hidden pt-2 pb-3 text-xs md:text-sm text-stone-600 leading-relaxed">
+                            Sim, desde que atendam aos requisitos legais descritos no edital: diploma médico devidamente revalidado por universidade pública brasileira e inscrição ativa em Conselho Regional de Medicina (CRM), ou mediante as vagas específicas destinadas a candidatos estrangeiros amparados por convênios institucionais com a UFF.
                         </div>
                     </div>
 
-                    <div class="faq-item glass-panel-dark rounded-xl border border-facmed-primary/40 overflow-hidden">
-                        <button class="faq-toggle w-full text-left p-6 font-display font-bold text-base md:text-lg text-white flex items-center justify-between gap-4">
-                            <span>Qual a carga horária e é compatível com plantões externos?</span>
-                            <span class="faq-icon text-facmed-accent text-2xl transition-transform duration-300">+</span>
+                    <div class="py-4">
+                        <button class="faq-btn w-full text-left flex items-center justify-between gap-4 py-2 text-stone-900 font-medium text-sm md:text-base hover:text-emerald-800 transition-colors">
+                            <span>A carga horária do curso permite conciliar plantões externos?</span>
+                            <span class="faq-icon text-stone-400 text-lg font-mono">+</span>
                         </button>
-                        <div class="faq-content hidden px-6 pb-6 text-sm text-slate-300 leading-relaxed border-t border-facmed-primary/20 pt-4">
-                            A carga horária varia entre 1.500h e 3.500h dependendo do programa (1 ou 2 anos), com atividades ambulatoriais, teóricas, enfermaria e plantões de treinamento supervisionado no HUAP. A escala de cada serviço permite ao pós-graduando conciliar sua rotina assistencial profissional externa com os horários curriculares obrigatórios.
+                        <div class="faq-answer hidden pt-2 pb-3 text-xs md:text-sm text-stone-600 leading-relaxed">
+                            A carga horária total varia de 1.600 a 3.500 horas ao longo de 1 ou 2 anos de formação, com atividades teóricas, ambulatoriais, enfermarias e treinamento prático supervisionado no HUAP. As escalas dos serviços são organizadas pelas coordenações de modo que os médicos pós-graduandos consigam organizar suas escalas assistenciais profissionais externas nos períodos livres.
                         </div>
                     </div>
 
                 </div>
 
-            </div>
-        </section>
-
-        <!-- ============================================================== -->
-        <!-- 7. FINAL CALL TO ACTION (Fechamento Resoluto)                  -->
-        <!-- ============================================================== -->
-        <section class="relative z-20 py-24 px-6 md:px-12 bg-gradient-to-t from-facmed-darker via-facmed-dark to-facmed-dark border-t border-facmed-primary/40 text-center">
-            <div class="max-w-4xl mx-auto">
-                <img src="assets/img/logo facmedwhite.svg" alt="FacMed UFF" class="h-16 w-auto mx-auto mb-8 opacity-90">
-                <h2 class="font-display font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-tight">
-                    Dê o Próximo Passo na Sua Carreira Médica.
-                </h2>
-                <p class="text-base sm:text-xl text-slate-300 mt-6 max-w-2xl mx-auto font-normal">
-                    Junte-se à nova turma de pós-graduandos da Faculdade de Medicina da UFF. Vagas limitadas e concorrência qualificada.
-                </p>
-                <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="#cronograma" 
-                       class="px-10 py-5 rounded-full font-display font-bold text-lg text-white bg-facmed-accent hover:bg-emerald-500 shadow-emerald-glow transition-all transform hover:-translate-y-1">
-                        Garantir Minha Inscrição 2027
-                    </a>
-                    <a href="https://editais.uff.br/10496" target="_blank" rel="noopener noreferrer" 
-                       class="px-8 py-5 rounded-full font-display font-semibold text-base text-white/90 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md transition-all">
-                        Consultar Edital Completo
-                    </a>
-                </div>
             </div>
         </section>
 
     </main>
 
-    <!-- ============================================================== -->
-    <!-- 8. STICKY BOTTOM CONVERSION BAR (Mobile & Desktop)             -->
-    <!-- ============================================================== -->
-    <div id="sticky-bar" class="fixed bottom-0 left-0 right-0 z-40 transform translate-y-full transition-transform duration-500 bg-facmed-darker/95 backdrop-blur-md border-t border-facmed-primary/50 py-3 px-4 md:px-8 shadow-2xl">
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <span class="w-3 h-3 rounded-full bg-facmed-accent animate-ping hidden sm:block"></span>
-                <div>
-                    <div class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                        <span>Lato Sensu Medicina UFF 2027</span>
-                        <span class="text-[10px] text-yellow-300 bg-yellow-950 px-2 py-0.5 rounded border border-yellow-500/40 font-mono">100% Gratuito</span>
-                    </div>
-                    <div class="text-[11px] text-slate-300 hidden sm:block">
-                        13 Especialidades no Hospital Universitário Antônio Pedro (HUAP)
-                    </div>
-                </div>
-            </div>
+    <!-- RODAPÉ INSTITUCIONAL SÓBRIO -->
+    <footer class="bg-stone-900 text-stone-400 text-xs py-14 px-6 md:px-12 border-t border-stone-800">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
             
-            <div class="flex items-center gap-3">
-                <div class="hidden md:flex items-center gap-2 text-xs font-mono text-emerald-300 bg-facmed-dark px-3 py-1.5 rounded-lg border border-emerald-800">
-                    <span>Encerramento das Inscrições:</span>
-                    <strong id="bar-timer" class="text-white font-bold">18d 09h 42m</strong>
+            <div class="md:col-span-2">
+                <span class="text-white font-medium text-sm block mb-2">Faculdade de Medicina da Universidade Federal Fluminense</span>
+                <p class="text-stone-400 max-w-md leading-relaxed">
+                    Hospital Universitário Antônio Pedro (HUAP)<br>
+                    Rua Marquês do Paraná, 303 • Centro, Niterói - RJ • CEP 24033-900
+                </p>
+                <div class="mt-4 flex items-center gap-4 text-stone-400 text-xs">
+                    <span>E-mail: concursos.cmm@id.uff.br</span>
+                    <span>•</span>
+                    <span>Telefone: (21) 2629-9000</span>
                 </div>
-                <a href="#cronograma" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-facmed-accent hover:bg-emerald-500 shadow-emerald-glow transition-all whitespace-nowrap">
-                    Inscrever-se Agora
-                </a>
+            </div>
+
+            <div>
+                <span class="text-stone-200 font-medium text-xs uppercase tracking-wider block mb-3">Links do Concurso</span>
+                <ul class="space-y-2">
+                    <li><a href="https://editais.uff.br/10496" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Edital Oficial no Portal UFF</a></li>
+                    <li><a href="#cronograma" class="hover:text-white transition-colors">Calendário de Prazos 2027</a></li>
+                    <li><a href="#especialidades" class="hover:text-white transition-colors">Programas das 13 Especialidades</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <span class="text-stone-200 font-medium text-xs uppercase tracking-wider block mb-3">Universidade</span>
+                <ul class="space-y-2">
+                    <li><a href="https://www.medicina.uff.br" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Portal FacMed UFF</a></li>
+                    <li><a href="https://www.uff.br" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Portal Oficial UFF</a></li>
+                    <li><a href="https://www.gov.br/ebserh/pt-br/hospitais-universitarios/regiao-sudeste/huap-uff" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">HUAP / Ebserh</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="max-w-7xl mx-auto mt-12 pt-6 border-t border-stone-800 flex flex-col sm:flex-row items-center justify-between text-stone-500 text-[11px] gap-2">
+            <span>© 2027 Faculdade de Medicina da Universidade Federal Fluminense. Todos os direitos reservados.</span>
+            <span>Ensino Público Superior Federal • MEC / SUS</span>
+        </div>
+    </footer>
+
+    <!-- MODAL DETALHES DA ESPECIALIDADE (Sem neon, limpo e direto) -->
+    <div id="spec-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200">
+        <div class="relative w-full max-w-xl bg-white border border-stone-200 rounded-lg p-6 sm:p-8 shadow-xl max-h-[90vh] overflow-y-auto">
+            <button id="spec-modal-close" class="absolute top-4 right-4 text-stone-400 hover:text-stone-700 text-xl font-mono leading-none">&times;</button>
+            <div id="spec-modal-content">
+                <!-- Inserido dinamicamente -->
             </div>
         </div>
     </div>
 
-    <!-- Modal Drawer de Detalhes da Especialidade -->
-    <div id="specialty-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="relative w-full max-w-2xl bg-facmed-dark border border-emerald-500/40 rounded-2xl p-6 sm:p-8 shadow-2xl overflow-y-auto max-h-[90vh]">
-            <button id="modal-close" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 text-2xl font-bold leading-none">&times;</button>
-            <div id="modal-content">
-                <!-- Conteúdo dinâmico da especialidade -->
-            </div>
-        </div>
-    </div>
-
-    <!-- ============================================================== -->
-    <!-- JAVASCRIPT: Three.js Particles, GSAP Parallax & HUD Logic       -->
-    <!-- ============================================================== -->
+    <!-- JAVASCRIPT: Dados das Especialidades, Filtros, Modal & Contador -->
     <script>
-        // -------------------------------------------------------------
-        // 1. ESPECIALIDADES MÉDICAS DATA (Auditadas do Edital)
-        // -------------------------------------------------------------
         const specialties = [
             {
                 id: 'cardiologia',
@@ -695,7 +603,7 @@
                 vagas: '17 vagas',
                 coordinator: 'Prof. Antonio José Lagoeiro Jorge',
                 hospital: 'HUAP - Unidade Coronariana & Hemodinâmica',
-                desc: 'Treinamento completo em cardiologia clínica, métodos gráficos, ecocardiografia e terapia intensiva cardiovascular no HUAP.',
+                desc: 'Treinamento completo em cardiologia clínica, métodos gráficos, ecocardiografia e terapia intensiva cardiovascular no Hospital Universitário Antônio Pedro.',
                 email: 'cardiouff@gmail.com'
             },
             {
@@ -707,7 +615,7 @@
                 vagas: '12 vagas',
                 coordinator: 'Profa. Dra. Flavia de Freire Cassia',
                 hospital: 'HUAP - Ambulatório Central de Dermatologia',
-                desc: 'Ampla casuística em dermatologia clínica, cirúrgica, cosmiatria e hansenologia de referência terciária.',
+                desc: 'Ampla casuística em dermatologia clínica, procedimentos cirúrgicos ambulatoriais, cosmiatria e hansenologia de referência terciária.',
                 email: 'dermatologia.uff@gmail.com'
             },
             {
@@ -719,7 +627,7 @@
                 vagas: '10 vagas',
                 coordinator: 'Prof. Dr. Ismar Lima Cavalcanti',
                 hospital: 'HUAP - Centro Cirúrgico Geral & RPA',
-                desc: 'Atuação prática em cirurgias de alta complexidade (cardíaca, neurocirurgia, transplantes e analgesia pós-operatória).',
+                desc: 'Atuação prática supervisionada em cirurgias de alta complexidade (cardíaca, neurocirurgia, transplantes e analgesia pós-operatória).',
                 email: 'anestesiologia.uff@gmail.com'
             },
             {
@@ -731,7 +639,7 @@
                 vagas: '15 vagas',
                 coordinator: 'Profa. Maria de Fátima Bazhuni Pombo March',
                 hospital: 'HUAP - Enfermaria Pediátrica & UTIP',
-                desc: 'Assistência integral à saúde da criança e adolescente, com enfermaria pediátrica, berçário de alto risco e ambulatórios especializados.',
+                desc: 'Assistência integral à saúde da criança e do adolescente, com enfermaria pediátrica, berçário de alto risco e ambulatórios especializados.',
                 email: 'pediatria.uff@gmail.com'
             },
             {
@@ -743,7 +651,7 @@
                 vagas: '10 vagas',
                 coordinator: 'Prof. Dr. Pedro Ferreira Moreira Filho',
                 hospital: 'HUAP - Unidade Cerebrovascular & Neurofisiologia',
-                desc: 'Diagnóstico e manejo de doenças cerebrovasculares, epilepsia, distúrbios do movimento, eletroneuromiografia e EEG.',
+                desc: 'Diagnóstico e manejo de doenças cerebrovasculares, epilepsia, distúrbios do movimento, eletroneuromiografia e eletroencefalografia.',
                 email: 'neurologia.uff@gmail.com'
             },
             {
@@ -754,8 +662,8 @@
                 hours: '3.400 horas',
                 vagas: '14 vagas',
                 coordinator: 'Prof. Dr. Alair Augusto Sarmet M. D. dos Santos',
-                hospital: 'HUAP - Parque Radiológico (TC, RM, USG)',
-                desc: 'Formação em ressonância magnética de alto campo, tomografia computadorizada multislice, ultrassonografia com Doppler e procedimentos guiados.',
+                hospital: 'HUAP - Parque Radiológico Central',
+                desc: 'Formação em ressonância magnética de alto campo, tomografia computadorizada multislice, ultrassonografia com Doppler e procedimentos invasivos guiados.',
                 email: 'radiologia.uff@gmail.com'
             },
             {
@@ -767,7 +675,7 @@
                 vagas: '04 vagas',
                 coordinator: 'Prof. Dr. Edson Marchiori',
                 hospital: 'HUAP - Serviço de Imagem Cardiotorácica',
-                desc: 'Pós-graduação avançada em tomografia de alta resolução do tórax, doenças intersticiais pulmonares e imagem cardiovascular.',
+                desc: 'Pós-graduação avançada em tomografia de alta resolução do tórax, doenças intersticiais pulmonares e imagem cardiovascular especializada.',
                 email: 'edmarchiori@gmail.com'
             },
             {
@@ -778,8 +686,8 @@
                 hours: '2.950 horas',
                 vagas: '08 vagas',
                 coordinator: 'Prof. Dr. Cyrla Zaltman',
-                hospital: 'HUAP - Setor de Endoscopia Digestiva & Hepatologia',
-                desc: 'Doenças inflamatórias intestinais, hepatopatias crônicas, endoscopia digestiva diagnóstica e terapêutica.',
+                hospital: 'HUAP - Setor de Endoscopia & Hepatologia',
+                desc: 'Manejo de doenças inflamatórias intestinais, hepatopatias crônicas graves, endoscopia digestiva diagnóstica e terapêutica.',
                 email: 'gastro.uff@gmail.com'
             },
             {
@@ -790,8 +698,8 @@
                 hours: '2.900 horas',
                 vagas: '08 vagas',
                 coordinator: 'Prof. Dr. Rodolfo Frederico Behrsin',
-                hospital: 'HUAP - Prova de Função Pulmonar & Broncoscopia',
-                desc: 'Doenças obstrutivas, fibrose pulmonar, infecções respiratórias complexas, teste cardiopulmonar e broncoscopia flexível.',
+                hospital: 'HUAP - Laboratório de Função Pulmonar',
+                desc: 'Doenças obstrutivas, fibrose pulmonar, infecções respiratórias complexas, teste cardiopulmonar de esforço e broncoscopia flexível.',
                 email: 'pneumo.uff@gmail.com'
             },
             {
@@ -802,7 +710,7 @@
                 hours: '2.800 horas',
                 vagas: '12 vagas',
                 coordinator: 'Prof. Dr. Antonio Geraldo da Silva',
-                hospital: 'HUAP - Saúde Mental & Psiquiatria de Ligação',
+                hospital: 'HUAP - Serviço de Saúde Mental',
                 desc: 'Psiquiatria geral de adultos, emergências psiquiátricas em hospital geral, psicofarmacologia clínica e psiquiatria de ligação.',
                 email: 'psiquiatria.uff@gmail.com'
             },
@@ -815,12 +723,12 @@
                 vagas: '06 vagas',
                 coordinator: 'Prof. Dr. Wolmar Pulcheri',
                 hospital: 'HUAP - Hemocentro & Oncologia Hematológica',
-                desc: 'Onco-hematologia, anemias raras, hemostasia e trombose, medicina transfusional e avaliação mieloide.',
+                desc: 'Onco-hematologia, anemias raras, distúrbios da hemostasia e trombose, medicina transfusional e avaliação mieloide.',
                 email: 'hemato.uff@gmail.com'
             },
             {
                 id: 'gerontologia',
-                title: 'Gerontologia e Geriatria Interdisciplinar',
+                title: 'Gerontologia e Geriatria',
                 category: 'clinica',
                 duration: '1 Ano',
                 hours: '1.800 horas',
@@ -838,50 +746,41 @@
                 hours: '1.600 horas',
                 vagas: '08 vagas',
                 coordinator: 'Coordenação de Patologia Clínica UFF',
-                hospital: 'HUAP - Laboratório Central de Patologia',
-                desc: 'Bioquímica clínica avançada, hematologia laboratorial, microbiologia de ponta e controle de qualidade hospitalar.',
+                hospital: 'HUAP - Laboratório Central',
+                desc: 'Bioquímica clínica avançada, hematologia laboratorial, microbiologia médica e controle de qualidade hospitalar.',
                 email: 'analisesclinicas.uff@gmail.com'
             }
         ];
 
-        // -------------------------------------------------------------
-        // 2. RENDERIZAÇÃO DOS CARDS DAS ESPECIALIDADES
-        // -------------------------------------------------------------
+        // Renderização dos cards das especialidades (Fichas Limpas)
         const grid = document.getElementById('specialties-grid');
+
         function renderSpecialties(filter = 'all') {
             grid.innerHTML = '';
             const filtered = filter === 'all' ? specialties : specialties.filter(s => s.category === filter);
 
             filtered.forEach(spec => {
                 const card = document.createElement('div');
-                card.className = 'specialty-card relative group rounded-2xl bg-gradient-to-b from-facmed-dark/80 to-facmed-darker/90 p-6 border border-emerald-900/60 hover:border-facmed-accent transition-all duration-300 shadow-lg hover:shadow-emerald-glow flex flex-col justify-between cursor-pointer transform hover:-translate-y-1.5';
-                card.onclick = () => openSpecialtyModal(spec);
+                card.className = 'card-institutional p-5 rounded-lg flex flex-col justify-between cursor-pointer';
+                card.onclick = () => openModal(spec);
 
                 card.innerHTML = `
                     <div>
-                        <div class="flex items-center justify-between gap-2 mb-4">
-                            <span class="text-[10px] font-mono uppercase tracking-wider font-bold px-2.5 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800">
-                                ${spec.duration}
-                            </span>
-                            <span class="text-xs text-yellow-400 font-semibold font-mono">
-                                ${spec.vagas}
-                            </span>
+                        <div class="flex items-center justify-between text-xs text-stone-500 mb-2">
+                            <span class="font-mono-num font-medium text-stone-700">${spec.duration}</span>
+                            <span class="font-mono-num font-semibold text-emerald-900 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200/60">${spec.vagas}</span>
                         </div>
-                        <h3 class="font-display font-bold text-xl text-white group-hover:text-emerald-300 transition-colors">
+                        <h3 class="font-serif-editorial text-xl font-medium text-stone-900">
                             ${spec.title}
                         </h3>
-                        <p class="text-xs text-slate-300 mt-2 line-clamp-3 leading-relaxed">
+                        <p class="text-xs text-stone-600 mt-2 line-clamp-2 leading-relaxed">
                             ${spec.desc}
                         </p>
                     </div>
 
-                    <div class="mt-6 pt-4 border-t border-emerald-900/40 flex items-center justify-between text-xs font-semibold text-emerald-400">
-                        <span class="group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                            Ver Programa & Vagas &rarr;
-                        </span>
-                        <div class="w-7 h-7 rounded-full bg-facmed-accent/20 group-hover:bg-facmed-accent group-hover:text-white flex items-center justify-center transition-colors">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
+                        <span>${spec.hospital.split('-')[0]}</span>
+                        <span class="text-emerald-800 font-medium hover:underline">Ver Detalhes &rarr;</span>
                     </div>
                 `;
                 grid.appendChild(card);
@@ -894,54 +793,41 @@
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => {
-                    b.classList.remove('active', 'bg-facmed-accent', 'text-white', 'shadow-emerald-glow');
-                    b.classList.add('bg-facmed-dark', 'text-slate-300');
+                    b.classList.remove('active', 'bg-white', 'text-stone-900', 'shadow-sm', 'border', 'border-stone-200');
+                    b.classList.add('text-stone-600');
                 });
-                btn.classList.add('active', 'bg-facmed-accent', 'text-white', 'shadow-emerald-glow');
-                btn.classList.remove('bg-facmed-dark', 'text-slate-300');
+                btn.classList.add('active', 'bg-white', 'text-stone-900', 'shadow-sm', 'border', 'border-stone-200');
+                btn.classList.remove('text-stone-600');
                 renderSpecialties(btn.dataset.filter);
             });
         });
 
-        // -------------------------------------------------------------
-        // 3. MODAL DETALHES DA ESPECIALIDADE
-        // -------------------------------------------------------------
-        const modal = document.getElementById('specialty-modal');
-        const modalContent = document.getElementById('modal-content');
-        const modalClose = document.getElementById('modal-close');
+        // Modal
+        const modal = document.getElementById('spec-modal');
+        const modalContent = document.getElementById('spec-modal-content');
+        const modalClose = document.getElementById('spec-modal-close');
 
-        function openSpecialtyModal(spec) {
+        function openModal(spec) {
             modalContent.innerHTML = `
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="text-xs font-mono font-bold uppercase tracking-widest text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded">HUAP Medicina UFF</span>
-                    <span class="text-xs font-mono font-bold text-yellow-300 bg-yellow-950/80 px-2.5 py-1 rounded">${spec.vagas}</span>
+                <div class="flex items-center gap-2 mb-2 text-xs">
+                    <span class="font-semibold text-emerald-800 uppercase tracking-wider">Faculdade de Medicina UFF</span>
+                    <span class="text-stone-400">•</span>
+                    <span class="font-mono-num text-stone-600">${spec.vagas}</span>
                 </div>
-                <h2 class="font-display font-black text-2xl sm:text-3xl text-white mt-2">${spec.title}</h2>
-                <div class="grid grid-cols-2 gap-3 my-5 text-xs sm:text-sm">
-                    <div class="p-3 rounded-lg bg-facmed-darker border border-facmed-primary/40">
-                        <span class="text-slate-400 block text-[11px] uppercase">Duração</span>
-                        <strong class="text-white">${spec.duration}</strong>
-                    </div>
-                    <div class="p-3 rounded-lg bg-facmed-darker border border-facmed-primary/40">
-                        <span class="text-slate-400 block text-[11px] uppercase">Carga Horária Total</span>
-                        <strong class="text-white">${spec.hours}</strong>
-                    </div>
-                    <div class="p-3 rounded-lg bg-facmed-darker border border-facmed-primary/40 col-span-2">
-                        <span class="text-slate-400 block text-[11px] uppercase">Coordenação do Programa</span>
-                        <strong class="text-white">${spec.coordinator}</strong>
-                    </div>
-                    <div class="p-3 rounded-lg bg-facmed-darker border border-facmed-primary/40 col-span-2">
-                        <span class="text-slate-400 block text-[11px] uppercase">Campo de Prática Principal</span>
-                        <strong class="text-white">${spec.hospital}</strong>
-                    </div>
+                <h2 class="font-serif-editorial text-2xl font-medium text-stone-900">${spec.title}</h2>
+                <div class="bg-stone-50 border border-stone-200 rounded p-4 my-4 space-y-1.5 text-xs text-stone-700">
+                    <div><strong class="font-medium text-stone-900">Duração:</strong> ${spec.duration} (${spec.hours})</div>
+                    <div><strong class="font-medium text-stone-900">Coordenação:</strong> ${spec.coordinator}</div>
+                    <div><strong class="font-medium text-stone-900">Hospital de Prática:</strong> ${spec.hospital}</div>
+                    <div><strong class="font-medium text-stone-900">Contato:</strong> ${spec.email}</div>
                 </div>
-                <p class="text-sm text-slate-200 leading-relaxed mb-6">${spec.desc}</p>
-                <div class="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-emerald-900/60">
-                    <a href="mailto:${spec.email}" class="w-full sm:w-auto px-6 py-3 rounded-full text-xs font-bold text-white bg-facmed-accent hover:bg-emerald-500 text-center transition-all">
-                        Contato com a Coordenação (${spec.email})
+                <p class="text-xs text-stone-600 leading-relaxed mb-6">${spec.desc}</p>
+                <div class="flex flex-col sm:flex-row items-center gap-2 pt-4 border-t border-stone-200">
+                    <a href="mailto:${spec.email}" class="w-full sm:w-auto px-4 py-2 rounded text-xs font-medium text-white bg-emerald-800 hover:bg-emerald-900 text-center transition-colors">
+                        Falar com a Coordenação
                     </a>
-                    <a href="https://editais.uff.br/10496" target="_blank" class="w-full sm:w-auto px-6 py-3 rounded-full text-xs font-semibold text-slate-300 hover:text-white bg-facmed-darker text-center border border-white/10 transition-all">
-                        Ver Bibliografia da Prova
+                    <a href="https://editais.uff.br/10496" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-4 py-2 rounded text-xs font-medium text-stone-700 bg-white border border-stone-300 hover:bg-stone-50 text-center transition-colors">
+                        Consultar Programa da Prova
                     </a>
                 </div>
             `;
@@ -953,226 +839,47 @@
             if (e.target === modal) modal.classList.add('opacity-0', 'pointer-events-none');
         };
 
-        // -------------------------------------------------------------
-        // 4. FAQ ACCORDION LOGIC
-        // -------------------------------------------------------------
-        document.querySelectorAll('.faq-toggle').forEach(btn => {
+        // FAQ Toggle
+        document.querySelectorAll('.faq-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                const content = btn.nextElementSibling;
+                const answer = btn.nextElementSibling;
                 const icon = btn.querySelector('.faq-icon');
-                const isHidden = content.classList.contains('hidden');
-                
-                // Fecha outros
-                document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
-                document.querySelectorAll('.faq-icon').forEach(i => { i.textContent = '+'; i.style.transform = 'rotate(0deg)'; });
+                const isHidden = answer.classList.contains('hidden');
+
+                document.querySelectorAll('.faq-answer').forEach(a => a.classList.add('hidden'));
+                document.querySelectorAll('.faq-icon').forEach(i => i.textContent = '+');
 
                 if (isHidden) {
-                    content.classList.remove('hidden');
+                    answer.classList.remove('hidden');
                     icon.textContent = '−';
-                    icon.style.transform = 'rotate(180deg)';
                 }
             });
         });
 
-        // -------------------------------------------------------------
-        // 5. COUNTDOWN TIMER EM TEMPO REAL
-        // -------------------------------------------------------------
-        // Data alvo mockada para encerramento de inscrições (ex: 2 de fevereiro de 2027)
+        // Contador Simples e Discreto (Dias, Horas, Minutos, Segundos)
         const targetDate = new Date();
         targetDate.setDate(targetDate.getDate() + 18);
         targetDate.setHours(targetDate.getHours() + 9);
-        targetDate.setMinutes(targetDate.getMinutes() + 42);
+        targetDate.setMinutes(targetDate.getMinutes() + 41);
 
-        function updateCountdown() {
+        function updateTimer() {
             const now = new Date();
             const diff = targetDate - now;
-
-            if (diff <= 0) {
-                document.getElementById('current-phase-title').innerText = "Inscrições Encerradas";
-                return;
-            }
+            if (diff <= 0) return;
 
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
             const m = Math.floor((diff / (1000 * 60)) % 60);
             const s = Math.floor((diff / 1000) % 60);
 
-            const dStr = d < 10 ? '0' + d : d;
-            const hStr = h < 10 ? '0' + h : h;
-            const mStr = m < 10 ? '0' + m : m;
-            const sStr = s < 10 ? '0' + s : s;
-
-            document.getElementById('count-days').innerText = dStr;
-            document.getElementById('count-hours').innerText = hStr;
-            document.getElementById('count-minutes').innerText = mStr;
-            document.getElementById('count-seconds').innerText = sStr;
-
-            const barTimer = document.getElementById('bar-timer');
-            if (barTimer) barTimer.innerText = `${dStr}d ${hStr}h ${mStr}m ${sStr}s`;
+            document.getElementById('d-days').innerText = d < 10 ? '0' + d : d;
+            document.getElementById('d-hours').innerText = h < 10 ? '0' + h : h;
+            document.getElementById('d-minutes').innerText = m < 10 ? '0' + m : m;
+            document.getElementById('d-seconds').innerText = s < 10 ? '0' + s : s;
         }
 
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-
-        // -------------------------------------------------------------
-        // 6. STICKY BOTTOM BAR VISIBILITY ON SCROLL
-        // -------------------------------------------------------------
-        const stickyBar = document.getElementById('sticky-bar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 400) {
-                stickyBar.classList.remove('translate-y-full');
-            } else {
-                stickyBar.classList.add('translate-y-full');
-            }
-        });
-
-        // -------------------------------------------------------------
-        // 7. THREE.JS PARTICLES CANVAS BACKGROUND (60 FPS Performance)
-        // -------------------------------------------------------------
-        (function initThreeJS() {
-            const canvas = document.getElementById('webgl-bg');
-            if (!canvas) return;
-
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 200;
-
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-            // Partículas Esmeraldas & Brancas
-            const particleCount = 180;
-            const geometry = new THREE.BufferGeometry();
-            const positions = new Float32Array(particleCount * 3);
-            const colors = new Float32Array(particleCount * 3);
-
-            const colorEmerald = new THREE.Color(0x009E5E);
-            const colorLight = new THREE.Color(0x86EFAC);
-
-            for (let i = 0; i < particleCount; i++) {
-                positions[i * 3] = (Math.random() - 0.5) * 500;
-                positions[i * 3 + 1] = (Math.random() - 0.5) * 500;
-                positions[i * 3 + 2] = (Math.random() - 0.5) * 300;
-
-                const c = Math.random() > 0.4 ? colorEmerald : colorLight;
-                colors[i * 3] = c.r;
-                colors[i * 3 + 1] = c.g;
-                colors[i * 3 + 2] = c.b;
-            }
-
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-            const material = new THREE.PointsMaterial({
-                size: 3.5,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.65,
-                blending: THREE.AdditiveBlending
-            });
-
-            const particles = new THREE.Points(geometry, material);
-            scene.add(particles);
-
-            // Interação com o Mouse / Giro
-            let mouseX = 0, mouseY = 0;
-            let targetX = 0, targetY = 0;
-
-            window.addEventListener('mousemove', (e) => {
-                mouseX = (e.clientX - window.innerWidth / 2) * 0.05;
-                mouseY = (e.clientY - window.innerHeight / 2) * 0.05;
-            });
-
-            function animate() {
-                requestAnimationFrame(animate);
-                targetX += (mouseX - targetX) * 0.05;
-                targetY += (mouseY - targetY) * 0.05;
-
-                particles.rotation.y += 0.001;
-                particles.rotation.x += 0.0005;
-
-                camera.position.x = targetX * 0.5;
-                camera.position.y = -targetY * 0.5;
-                camera.lookAt(scene.position);
-
-                renderer.render(scene, camera);
-            }
-            animate();
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-        })();
-
-        // -------------------------------------------------------------
-        // 8. GSAP SCROLLTRIGGER & HERO 3D TILT
-        // -------------------------------------------------------------
-        document.addEventListener('DOMContentLoaded', () => {
-            gsap.registerPlugin(ScrollTrigger);
-
-            // Mouse 3D Tilt suave no prédio histórico
-            const building = document.getElementById('hero-building-img');
-            const hero = document.getElementById('hero');
-
-            if (building && hero) {
-                hero.addEventListener('mousemove', (e) => {
-                    const rect = hero.getBoundingClientRect();
-                    const x = (e.clientX - rect.left) / rect.width - 0.5;
-                    const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-                    gsap.to(building, {
-                        rotationY: x * 15,
-                        rotationX: -y * 12,
-                        x: x * 25,
-                        y: y * 20,
-                        duration: 0.8,
-                        ease: 'power2.out'
-                    });
-                });
-
-                hero.addEventListener('mouseleave', () => {
-                    gsap.to(building, {
-                        rotationY: 0,
-                        rotationX: 0,
-                        x: 0,
-                        y: 0,
-                        duration: 1.2,
-                        ease: 'power3.out'
-                    });
-                });
-
-                // Parallax suave no scroll
-                gsap.to(building, {
-                    scrollTrigger: {
-                        trigger: '#hero',
-                        start: 'top top',
-                        end: 'bottom top',
-                        scrub: 1
-                    },
-                    y: 120,
-                    scale: 0.9,
-                    opacity: 0.3
-                });
-            }
-
-            // Animação dos itens do cronograma ao rolar
-            gsap.utils.toArray('#timeline-container > div').forEach((item) => {
-                gsap.from(item, {
-                    scrollTrigger: {
-                        trigger: item,
-                        start: 'top 85%',
-                        toggleActions: 'play none none none'
-                    },
-                    opacity: 0,
-                    y: 30,
-                    duration: 0.6,
-                    ease: 'power2.out'
-                });
-            });
-        });
+        setInterval(updateTimer, 1000);
+        updateTimer();
     </script>
 </body>
 </html>

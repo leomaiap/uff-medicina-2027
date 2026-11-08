@@ -3,73 +3,50 @@
 @tailwind utilities;
 
 :root {
-    --color-facmed-primary: #006843;
-    --color-facmed-dark: #014237;
-    --color-facmed-accent: #009E5E;
+  --color-facmed-primary: #006843;
+  --color-facmed-dark: #004d32;
+  --color-facmed-surface: #FAFAF9;
 }
 
 body {
-    background-color: #00261f;
-    color: #F8FAFC;
-    overflow-x: hidden;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
+  background-color: #FAFAF9;
+  color: #18181B;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Glassmorphism Styles */
-.glass-panel-dark {
-    background: rgba(1, 66, 55, 0.65);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(0, 158, 94, 0.25);
+.font-serif-editorial {
+  font-family: 'Lora', Georgia, 'Times New Roman', serif;
 }
 
-.glass-card-light {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(0, 104, 67, 0.12);
+/* Quiet hairline borders */
+.hairline {
+  border-color: rgba(24, 24, 27, 0.08);
 }
 
-/* Architectural Monumental Text Outline */
-.outline-text {
-    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.15);
-    color: transparent;
-    user-select: none;
+/* Subtle clean depth without slop glows */
+.card-clean {
+  background: #FFFFFF;
+  border: 1px solid rgba(228, 228, 231, 0.9);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
-/* Dimensional Hero Setup */
-.hero-viewport {
-    perspective: 1200px;
-    transform-style: preserve-3d;
+.card-clean:hover {
+  border-color: rgba(0, 104, 67, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
-.hero-building {
-    filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.7));
-    transform-style: preserve-3d;
-    will-change: transform;
-}
-
-/* Custom Scrollbar */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-    width: 10px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: #00261f;
+  background: #F4F4F5;
 }
 ::-webkit-scrollbar-thumb {
-    background: #006843;
-    border-radius: 5px;
-    border: 2px solid #00261f;
+  background: #D4D4D8;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #009E5E;
-}
-
-/* Animations */
-@keyframes subtle-pulse {
-    0%, 100% { opacity: 0.8; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.02); }
-}
-.pulse-subtle {
-    animation: subtle-pulse 3s infinite ease-in-out;
+  background: #A1A1AA;
 }
