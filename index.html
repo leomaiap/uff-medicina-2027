@@ -377,7 +377,7 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-brand-base/75 via-transparent to-transparent"></div>
                         <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white text-xs font-semibold">
                             <span>Campus Niterói • RJ</span>
-                            <span class="bg-brand-emerald px-2.5 py-1 rounded-full text-[11px] font-bold">Taxa Única R$ 400</span>
+                            <span class="text-brand-glow font-bold tracking-wide">Taxa Única R$ 400</span>
                         </div>
                     </div>
                 </div>
@@ -554,9 +554,9 @@
                 
                 <div class="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
                     <div>
-                        <span class="text-xs font-mono font-bold uppercase tracking-wider text-brand-gold bg-brand-surfaceLight px-3 py-1 rounded-full border border-brand-gold/40 inline-block mb-3">
-                            Inscrições Abertas (Previsão 2027)
-                        </span>
+                        <p class="text-xs font-mono font-bold uppercase tracking-[0.2em] text-brand-gold mb-2">
+                            Inscrições Abertas • Previsão 2027
+                        </p>
                         <h3 class="font-sans font-black text-2xl sm:text-3xl text-white">
                             Encerramento do Prazo de Inscrição
                         </h3>
@@ -802,7 +802,7 @@
                 <div>
                     <div class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
                         <span>Faculdade de Medicina UFF • 2027</span>
-                        <span class="text-[10px] text-brand-gold bg-brand-surfaceLight px-2 py-0.5 rounded font-mono border border-brand-gold/40">100% Gratuito</span>
+                        <span class="text-[11px] text-brand-gold font-mono font-bold">• 100% Gratuito</span>
                     </div>
                     <div class="text-[11px] text-slate-400 hidden sm:block">
                         13 Especialidades Oficiais • Campus Niterói
@@ -811,9 +811,9 @@
             </div>
 
             <div class="flex items-center gap-4">
-                <div class="hidden md:flex items-center gap-2 text-xs font-mono text-brand-glow bg-brand-surface px-3 py-1.5 rounded-xl border border-brand-emerald/30">
+                <div class="hidden md:flex items-center gap-2 text-xs font-mono text-slate-300">
                     <span>Inscrições Encerram Em:</span>
-                    <strong id="bar-timer" class="text-white font-bold">18d 09h 42m</strong>
+                    <strong id="bar-timer" class="text-brand-glow font-bold">18d 09h 42m</strong>
                 </div>
                 <a href="#cronograma" class="px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-brand-emerald to-emerald-400 hover:from-emerald-400 hover:to-teal-300 shadow-glow-emerald transition-all whitespace-nowrap">
                     Garantir Minha Inscrição
@@ -1015,31 +1015,27 @@
                 card.onclick = () => openSpecialtyModal(spec);
 
                 card.innerHTML = `
-                    <div class="img-reveal-wrap h-56 rounded-2xl overflow-hidden relative mb-5">
+                    <div class="img-reveal-wrap h-56 rounded-2xl overflow-hidden relative mb-4">
                         <img src="${spec.image}" alt="${spec.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-brand-base via-transparent to-transparent"></div>
-                        <div class="absolute top-3 left-3 flex items-center gap-2">
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-base/80 text-brand-glow border border-brand-accent/40 backdrop-blur-md">
-                                ${spec.category}
-                            </span>
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <span class="text-xs font-mono font-bold text-brand-gold bg-brand-base/80 px-2.5 py-1 rounded-full border border-brand-gold/40 backdrop-blur-md">
-                                ${spec.vagas}
-                            </span>
-                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-base/85 via-transparent to-transparent"></div>
                     </div>
 
-                    <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
-                        <span>Duração: ${spec.duration}</span>
-                        <span>${spec.hours}</span>
+                    <div class="flex items-center justify-between text-xs font-mono mb-2">
+                        <span class="text-brand-glow font-bold tracking-wider uppercase text-[11px]">${spec.category}</span>
+                        <span class="text-brand-gold font-bold text-xs">${spec.vagas}</span>
                     </div>
 
                     <h3 class="font-bold text-2xl text-white group-hover:text-brand-glow transition-colors">
                         ${spec.title}
                     </h3>
 
-                    <p class="text-xs text-slate-300 mt-2 line-clamp-2 leading-relaxed font-light">
+                    <div class="flex items-center gap-2 text-xs font-mono text-slate-400 mt-2 mb-3">
+                        <span>Duração: ${spec.duration}</span>
+                        <span class="text-white/20">•</span>
+                        <span>${spec.hours}</span>
+                    </div>
+
+                    <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed font-light">
                         ${spec.desc}
                     </p>
 
@@ -1116,11 +1112,11 @@
 
         function openSpecialtyModal(spec) {
             modalContent.innerHTML = `
-                <div class="flex items-center gap-2 mb-3">
-                    <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-glow bg-brand-surfaceLight px-3 py-1 rounded-full border border-brand-emerald/40">
+                <div class="flex items-center justify-between text-xs font-mono pb-3 mb-3 border-b border-white/10">
+                    <span class="text-brand-glow font-bold uppercase tracking-wider text-[11px]">
                         Faculdade de Medicina UFF
                     </span>
-                    <span class="text-xs font-mono font-bold text-brand-gold bg-brand-surfaceLight px-3 py-1 rounded-full border border-brand-gold/40">
+                    <span class="text-brand-gold font-bold text-xs">
                         ${spec.vagas}
                     </span>
                 </div>
