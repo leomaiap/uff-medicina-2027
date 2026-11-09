@@ -454,10 +454,10 @@
         /* Movie Credits Specialty Scroll (Disciplinas em Loop Infinito com Fade) */
         .credits-viewport {
             position: relative;
-            height: 275px;
+            height: 340px;
             overflow: hidden;
-            mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.35) 12%, #000 26%, #000 74%, rgba(0, 0, 0, 0.35) 88%, transparent 100%);
-            -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.35) 12%, #000 26%, #000 74%, rgba(0, 0, 0, 0.35) 88%, transparent 100%);
+            mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.3) 10%, #000 24%, #000 76%, rgba(0, 0, 0, 0.3) 90%, transparent 100%);
+            -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.3) 10%, #000 24%, #000 76%, rgba(0, 0, 0, 0.3) 90%, transparent 100%);
         }
 
         @keyframes rollCreditsUp {
@@ -472,7 +472,7 @@
         .credits-roll {
             display: flex;
             flex-direction: column;
-            animation: rollCreditsUp 24s linear infinite;
+            animation: rollCreditsUp 28s linear infinite;
             will-change: transform;
         }
 
@@ -483,7 +483,7 @@
         }
 
         .credits-item {
-            height: 55px;
+            height: 68px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -496,26 +496,26 @@
 
         .credits-item-text {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-            letter-spacing: -0.015em;
-            color: rgba(255, 255, 255, 0.90);
+            font-weight: 800;
+            font-size: 1.65rem;
+            letter-spacing: -0.025em;
+            color: rgba(255, 255, 255, 0.92);
             transition: color 0.25s ease, transform 0.25s ease, text-shadow 0.25s ease;
             white-space: nowrap;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
         }
 
         @media (min-width: 640px) {
             .credits-item-text {
-                font-size: 1.4rem;
+                font-size: 2.25rem;
             }
         }
 
         .credits-item:hover .credits-item-text,
         .credits-item:focus .credits-item-text {
             color: #FACC15;
-            transform: scale(1.08);
-            text-shadow: 0 0 20px rgba(250, 204, 21, 0.55);
+            transform: scale(1.06);
+            text-shadow: 0 0 25px rgba(250, 204, 21, 0.6);
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -889,33 +889,25 @@
             <!-- ============================================================== -->
             <div class="max-w-4xl mx-auto px-4 md:px-12 mt-12 md:mt-16 pt-10 border-t border-white/10">
                 
-                <div class="text-center mb-4">
-                    <h3 class="font-sans font-bold text-2xl sm:text-3xl text-white">
+                <div class="text-center mb-6">
+                    <h3 class="font-sans font-black text-2xl sm:text-4xl text-white tracking-tight">
                         Disciplinas Ofertadas no Concurso
                     </h3>
-                    <p class="text-xs sm:text-sm text-slate-400 mt-1.5 max-w-xl mx-auto font-light">
-                        Passe o cursor ou toque para pausar • Clique na disciplina para ver detalhes e pré-requisitos
-                    </p>
                 </div>
 
-                <!-- Rolagem Cinematográfica Livre de Disciplinas (Sem retângulo rígido, letras flutuando com fade superior e inferior) -->
-                <div class="relative max-w-xl mx-auto overflow-hidden">
+                <!-- Rolagem Cinematográfica Livre de Disciplinas (Letras com alta visibilidade flutuando com fade superior e inferior) -->
+                <div class="relative max-w-2xl mx-auto overflow-hidden">
                     
-                    <!-- Viewport de Rolagem (Exibe pelo menos 5 disciplinas ao mesmo tempo: 275px / 55px = 5 visíveis com fade natural) -->
-                    <div id="credits-viewport" class="credits-viewport relative h-[275px] overflow-hidden select-none focus:outline-none" tabindex="0" role="region" aria-label="Créditos em rolagem contínua das 13 especialidades médicas">
+                    <!-- Viewport de Rolagem (Exibe pelo menos 5 disciplinas simultaneamente com 68px cada: 340px / 68px = 5 visíveis com fade natural) -->
+                    <div id="credits-viewport" class="credits-viewport relative h-[340px] overflow-hidden select-none focus:outline-none" tabindex="0" role="region" aria-label="Créditos em rolagem contínua das especialidades médicas">
                         <div id="credits-roll" class="credits-roll">
                             <!-- Injetado dinamicamente via JS em loop infinito -->
                         </div>
                     </div>
 
-                    <!-- Rodapé discreto sem caixa -->
-                    <div class="flex items-center justify-center gap-3 pt-3 text-[12px] font-mono text-slate-400">
-                        <span class="flex items-center gap-1.5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                            <span class="text-slate-300">13 Disciplinas Oficiais UFF</span>
-                        </span>
-                        <span class="text-white/20">•</span>
-                        <button id="credits-toggle-btn" class="hover:text-brand-gold text-slate-300 transition-colors flex items-center gap-1.5 py-0.5 px-2.5 rounded-full bg-white/5 hover:bg-white/10" aria-label="Pausar ou reproduzir rolagem dos créditos">
+                    <!-- Controle sutil de reprodução -->
+                    <div class="flex items-center justify-center pt-4">
+                        <button id="credits-toggle-btn" class="hover:text-brand-gold text-slate-400 hover:text-white transition-colors flex items-center gap-1.5 py-1 px-3 rounded-full bg-white/5 hover:bg-white/10 text-xs font-mono" aria-label="Pausar ou reproduzir rolagem dos créditos">
                             <span id="credits-toggle-icon">⏸</span>
                             <span id="credits-toggle-label">Pausar</span>
                         </button>
