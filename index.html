@@ -272,7 +272,7 @@
             scroll-snap-type: x mandatory;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
-            padding: 1.5rem 1.5rem 3.25rem 1.5rem;
+            padding: 1.25rem 0.25rem 3rem 0.25rem;
             scrollbar-width: none;
             -ms-overflow-style: none;
             cursor: grab;
@@ -289,7 +289,7 @@
         @media (min-width: 768px) {
             .spec-carousel-track {
                 gap: 1.75rem;
-                padding: 2rem max(3rem, calc((100vw - 80rem) / 2 + 3rem)) 3.75rem;
+                padding: 1.5rem 0.5rem 3.5rem 0.5rem;
             }
         }
 
@@ -309,12 +309,12 @@
             user-select: none;
             background-color: rgb(var(--card-rgb-dark));
             box-shadow:
-                0 24px 48px -12px rgba(var(--card-rgb), 0.58),
+                0 22px 46px -12px rgba(var(--card-rgb), 0.62),
                 0 8px 20px -6px rgba(0, 0, 0, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: none;
+            outline: none;
             transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-                        box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.35s ease;
+                        box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @media (min-width: 640px) {
@@ -327,9 +327,9 @@
 
         .spec-card:hover {
             transform: translateY(-10px);
-            border-color: rgba(255, 255, 255, 0.26);
+            border: none;
             box-shadow:
-                0 32px 60px -10px rgba(var(--card-rgb), 0.75),
+                0 32px 60px -10px rgba(var(--card-rgb), 0.78),
                 0 12px 26px -6px rgba(0, 0, 0, 0.55);
         }
 
@@ -756,8 +756,8 @@
         <!-- ============================================================== -->
         <section id="especialidades" class="py-16 md:py-24 border-t border-white/10" aria-label="13 Especialidades Médicas Oficiais">
             
-            <!-- Section Header + Carousel Controls -->
-            <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+            <!-- Section Header + Carousel Controls (Aligned with Navbar max-w-7xl) -->
+            <div class="max-w-7xl mx-auto px-4 md:px-12 lg:px-16 mb-4 md:mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
                 <div>
                     <span class="text-xs font-mono font-bold tracking-[0.22em] text-brand-glow uppercase block mb-2">
                         PÓS-GRADUAÇÃO LATO SENSU • FACULDADE DE MEDICINA DA UFF
@@ -766,12 +766,16 @@
                         13 Especialidades Médicas
                     </h2>
                     <p class="text-slate-300 text-sm sm:text-base mt-2 max-w-xl font-light">
-                        Deslize pelos programas oficiais do Concurso 2027 e toque em qualquer especialidade para consultar vagas, carga horária e coordenação.
+                        Deslize pelos programas oficiais do Concurso 2027. O carrossel cicla em loop contínuo e você pode pausar ao passar o mouse ou tocar no card.
                     </p>
                 </div>
 
-                <!-- Navigation Buttons (Desktop & Mobile) -->
+                <!-- Navigation Controls + Loop Status -->
                 <div class="flex items-center gap-3 self-start sm:self-end shrink-0">
+                    <button id="spec-loop-toggle" class="px-3.5 py-2 rounded-full text-xs font-mono font-semibold text-slate-300 hover:text-white bg-white/5 border border-white/10 hover:border-brand-emerald/40 transition-all flex items-center gap-2" aria-label="Pausar ou Retomar Giro Automático">
+                        <span class="w-2 h-2 rounded-full bg-brand-emerald animate-pulse" id="loop-indicator"></span>
+                        <span id="loop-label">Auto-Loop</span>
+                    </button>
                     <button id="spec-prev" class="spec-nav-btn" aria-label="Especialidade Anterior">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7"></path>
@@ -785,9 +789,39 @@
                 </div>
             </div>
 
-            <!-- Horizontal Cards Track -->
-            <div id="spec-cards-track" class="spec-carousel-track" data-native-scroll>
-                <!-- Cards injected via JS -->
+            <!-- Horizontal Cards Track Container (Enclosed strictly within max-w-7xl navbar bounds!) -->
+            <div class="max-w-7xl mx-auto px-4 md:px-12 lg:px-16 overflow-hidden">
+                <div id="spec-cards-track" class="spec-carousel-track" data-native-scroll>
+                    <!-- Cards injected via JS -->
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- LISTA COMPLETA EM TEXTO (ACESSIBILIDADE & LEITURA LINEAR)      -->
+            <!-- ============================================================== -->
+            <div class="max-w-7xl mx-auto px-4 md:px-12 lg:px-16 mt-12 md:mt-16 pt-10 border-t border-white/10">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-emerald/15 border border-brand-emerald/30 text-brand-glow font-mono text-[11px] font-bold uppercase tracking-wider mb-2">
+                            <span>✦</span>
+                            <span>Acessibilidade & Consulta Rápida</span>
+                        </div>
+                        <h3 class="font-sans font-bold text-2xl sm:text-3xl text-white">
+                            Todas as 13 Especialidades em Formato Escrito
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl font-light">
+                            Relação estruturada para facilitar a leitura linear por leitores de tela (TalkBack, VoiceOver, NVDA) e candidatos que preferem texto direto.
+                        </p>
+                    </div>
+                    <span class="text-xs font-mono text-slate-400">
+                        13 Programas • Faculdade de Medicina UFF
+                    </span>
+                </div>
+
+                <!-- Accessible semantic grid / list -->
+                <ul role="list" id="spec-accessible-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" aria-label="Relação completa em texto das especialidades">
+                    <!-- Populated via JS for exact sync with specialties data -->
+                </ul>
             </div>
 
         </section>
@@ -1285,38 +1319,77 @@
         ];
 
         // -------------------------------------------------------------
-        // 2. RENDERIZAR CARDS COM COR PREDOMINANTE DA IMAGEM
+        // 2. RENDERIZAR CARDS COM COR PREDOMINANTE DA IMAGEM & CICLO EM LOOP
         // -------------------------------------------------------------
         const specTrack = document.getElementById('spec-cards-track');
+        let autoCycleTimer = null;
+        let isAutoLooping = true;
+        let isUserInteracting = false;
+        let resumeTimeout = null;
+
+        function getScrollStep() {
+            const firstCard = specTrack ? specTrack.querySelector('.spec-card') : null;
+            return firstCard ? firstCard.offsetWidth + 24 : 320;
+        }
+
+        function advanceCard() {
+            if (!specTrack) return;
+            const halfWidth = specTrack.scrollWidth / 2;
+            if (specTrack.scrollLeft >= halfWidth - 20) {
+                specTrack.scrollLeft -= halfWidth;
+            }
+            specTrack.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+        }
+
+        function startAutoCycle() {
+            if (autoCycleTimer) clearInterval(autoCycleTimer);
+            autoCycleTimer = setInterval(() => {
+                if (isAutoLooping && !isUserInteracting) {
+                    advanceCard();
+                }
+            }, 3200);
+        }
+
+        function stopAutoCycle() {
+            if (autoCycleTimer) clearInterval(autoCycleTimer);
+            autoCycleTimer = null;
+        }
 
         function buildSpecialtyCards() {
             if (!specTrack) return;
-            specTrack.innerHTML = specialties.map((spec, index) => `
-                <article class="spec-card"
-                         data-index="${index}"
-                         style="--card-rgb: ${spec.rgb}; --card-rgb-dark: ${spec.rgbDark};"
-                         role="button"
-                         tabindex="0"
-                         aria-label="Ver detalhes de ${spec.title}">
-                    <div class="spec-card-img-wrap">
-                        <img src="${spec.image}"
-                             alt="${spec.title} - Faculdade de Medicina da UFF"
-                             class="spec-card-img"
-                             loading="${index < 4 ? 'eager' : 'lazy'}">
-                    </div>
-                    <div class="spec-card-gradient"></div>
-                    <div class="spec-card-body">
-                        <h3 class="spec-card-title">${spec.title}</h3>
-                        <p class="spec-card-meta">${spec.vagas} • ${spec.duration} • ${spec.hours}</p>
-                        <div class="spec-card-btn">
-                            <span>Explorar Programa</span>
-                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"></path>
-                            </svg>
+            
+            // Duplica os itens para criar um carrossel em loop infinito sem travamento
+            const loopItems = [...specialties, ...specialties];
+
+            specTrack.innerHTML = loopItems.map((spec, index) => {
+                const realIndex = index % specialties.length;
+                return `
+                    <article class="spec-card"
+                             data-index="${realIndex}"
+                             style="--card-rgb: ${spec.rgb}; --card-rgb-dark: ${spec.rgbDark};"
+                             role="button"
+                             tabindex="0"
+                             aria-label="Ver detalhes de ${spec.title}">
+                        <div class="spec-card-img-wrap">
+                            <img src="${spec.image}"
+                                 alt="${spec.title} - Faculdade de Medicina da UFF"
+                                 class="spec-card-img"
+                                 loading="${index < 6 ? 'eager' : 'lazy'}">
                         </div>
-                    </div>
-                </article>
-            `).join('');
+                        <div class="spec-card-gradient"></div>
+                        <div class="spec-card-body">
+                            <h3 class="spec-card-title">${spec.title}</h3>
+                            <p class="spec-card-meta">${spec.vagas} • ${spec.duration} • ${spec.hours}</p>
+                            <div class="spec-card-btn">
+                                <span>Explorar Programa</span>
+                                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
 
             // Click & keyboard handler to open specialty modal
             let dragMoved = false;
@@ -1335,31 +1408,78 @@
                 });
             });
 
-            // Prev / Next navigation buttons
+            // Prev / Next navigation buttons with loop wrap-around
             const prevBtn = document.getElementById('spec-prev');
             const nextBtn = document.getElementById('spec-next');
-            const getScrollStep = () => {
-                const firstCard = specTrack.querySelector('.spec-card');
-                return firstCard ? firstCard.offsetWidth + 24 : 320;
-            };
             if (prevBtn) {
                 prevBtn.addEventListener('click', () => {
+                    isUserInteracting = true;
+                    const halfWidth = specTrack.scrollWidth / 2;
+                    if (specTrack.scrollLeft <= getScrollStep()) {
+                        specTrack.scrollLeft += halfWidth;
+                    }
                     specTrack.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+                    clearTimeout(resumeTimeout);
+                    resumeTimeout = setTimeout(() => { isUserInteracting = false; }, 3500);
                 });
             }
             if (nextBtn) {
                 nextBtn.addEventListener('click', () => {
-                    specTrack.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+                    isUserInteracting = true;
+                    advanceCard();
+                    clearTimeout(resumeTimeout);
+                    resumeTimeout = setTimeout(() => { isUserInteracting = false; }, 3500);
                 });
             }
 
-            // Mouse drag-to-scroll for desktop convenience
+            // Loop Toggle button
+            const loopToggleBtn = document.getElementById('spec-loop-toggle');
+            const loopIndicator = document.getElementById('loop-indicator');
+            const loopLabel = document.getElementById('loop-label');
+            if (loopToggleBtn) {
+                loopToggleBtn.addEventListener('click', () => {
+                    isAutoLooping = !isAutoLooping;
+                    if (isAutoLooping) {
+                        loopIndicator.classList.remove('bg-slate-500');
+                        loopIndicator.classList.add('bg-brand-emerald', 'animate-pulse');
+                        loopLabel.textContent = 'Auto-Loop';
+                        startAutoCycle();
+                    } else {
+                        loopIndicator.classList.remove('bg-brand-emerald', 'animate-pulse');
+                        loopIndicator.classList.add('bg-slate-500');
+                        loopLabel.textContent = 'Pausado';
+                        stopAutoCycle();
+                    }
+                });
+            }
+
+            // Mouse hover / touch pause
+            specTrack.addEventListener('mouseenter', () => { isUserInteracting = true; });
+            specTrack.addEventListener('mouseleave', () => { isUserInteracting = false; });
+            specTrack.addEventListener('touchstart', () => { isUserInteracting = true; }, { passive: true });
+            specTrack.addEventListener('touchend', () => {
+                clearTimeout(resumeTimeout);
+                resumeTimeout = setTimeout(() => { isUserInteracting = false; }, 2800);
+            }, { passive: true });
+
+            // Seamless wrap check on scroll
+            specTrack.addEventListener('scroll', () => {
+                const halfWidth = specTrack.scrollWidth / 2;
+                if (specTrack.scrollLeft >= halfWidth * 1.6) {
+                    specTrack.scrollLeft -= halfWidth;
+                } else if (specTrack.scrollLeft <= 5) {
+                    specTrack.scrollLeft += halfWidth;
+                }
+            }, { passive: true });
+
+            // Mouse drag-to-scroll for desktop
             let isDown = false;
             let startX = 0;
             let scrollLeft = 0;
             specTrack.addEventListener('mousedown', (e) => {
                 isDown = true;
                 dragMoved = false;
+                isUserInteracting = true;
                 specTrack.classList.add('is-dragging');
                 startX = e.pageX - specTrack.offsetLeft;
                 scrollLeft = specTrack.scrollLeft;
@@ -1368,6 +1488,8 @@
                 if (!isDown) return;
                 isDown = false;
                 specTrack.classList.remove('is-dragging');
+                clearTimeout(resumeTimeout);
+                resumeTimeout = setTimeout(() => { isUserInteracting = false; }, 2500);
                 setTimeout(() => { dragMoved = false; }, 50);
             });
             specTrack.addEventListener('mousemove', (e) => {
@@ -1380,9 +1502,44 @@
                     specTrack.scrollLeft = scrollLeft - walk;
                 }
             });
+
+            startAutoCycle();
+        }
+
+        // -------------------------------------------------------------
+        // 2.1 RENDERIZAR LISTA COMPLETA EM TEXTO PARA ACESSIBILIDADE
+        // -------------------------------------------------------------
+        function buildAccessibleSpecialtyList() {
+            const listEl = document.getElementById('spec-accessible-list');
+            if (!listEl) return;
+            listEl.innerHTML = specialties.map((spec, index) => `
+                <li class="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 flex flex-col justify-between hover:border-brand-emerald/40 transition-colors">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 pb-2.5 mb-2.5 border-b border-white/10">
+                            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-brand-glow">${spec.category}</span>
+                            <span class="text-xs font-mono font-bold text-brand-gold bg-brand-gold/15 px-2.5 py-0.5 rounded-full">${spec.vagas}</span>
+                        </div>
+                        <h4 class="font-sans font-bold text-lg sm:text-xl text-white mt-1 leading-snug">${index + 1}. ${spec.title}</h4>
+                        <div class="flex flex-wrap items-center gap-2.5 text-xs text-slate-300 mt-2 font-mono">
+                            <span><strong>Duração:</strong> ${spec.duration}</span>
+                            <span class="text-white/30">•</span>
+                            <span><strong>Carga Horária:</strong> ${spec.hours}</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed font-light">${spec.desc}</p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-white/10 flex items-center justify-between gap-3">
+                        <span class="text-[11px] text-slate-400 truncate font-mono">Coord: <strong class="text-slate-200 font-medium">${spec.coordinator.replace('Prof. ', '').replace('Profa. ', '')}</strong></span>
+                        <button onclick="openSpecialtyModal(specialties[${index}])" class="shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-white/10 hover:bg-brand-emerald hover:text-white transition-all flex items-center gap-1.5" aria-label="Abrir detalhes completos de ${spec.title}">
+                            <span>Detalhes</span>
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </li>
+            `).join('');
         }
 
         buildSpecialtyCards();
+        buildAccessibleSpecialtyList();
 
         // -------------------------------------------------------------
         // 3. MODAL DE DETALHES DA ESPECIALIDADE
