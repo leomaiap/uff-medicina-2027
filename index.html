@@ -255,330 +255,201 @@
         }
 
         /* ==============================================================
-           TIMED CARDS OPENING ANIMATION (Globe Express / Cards Opening)
+           SPECIALTY CARDS — PREDOMINANT IMAGE COLOR & FROSTED CTA
            ============================================================== */
         #especialidades {
             position: relative;
             width: 100%;
-            height: 100vh;
-            min-height: 780px;
-            background-color: #021813;
+            background: linear-gradient(180deg, #021813 0%, #03221B 50%, #021813 100%);
             overflow: hidden;
+        }
+
+        .spec-carousel-track {
+            display: flex;
+            align-items: stretch;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            padding: 1.5rem 1.5rem 3.25rem 1.5rem;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            cursor: grab;
+        }
+        .spec-carousel-track::-webkit-scrollbar {
+            display: none;
+        }
+        .spec-carousel-track.is-dragging {
+            cursor: grabbing;
+            scroll-snap-type: none;
+            scroll-behavior: auto;
+        }
+
+        @media (min-width: 768px) {
+            .spec-carousel-track {
+                gap: 1.75rem;
+                padding: 2rem max(3rem, calc((100vw - 80rem) / 2 + 3rem)) 3.75rem;
+            }
+        }
+
+        .spec-card {
+            --card-rgb: 15, 54, 85;
+            --card-rgb-dark: 9, 34, 56;
+            position: relative;
+            flex: 0 0 282px;
+            height: 415px;
+            border-radius: 26px;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            cursor: pointer;
             user-select: none;
+            background-color: rgb(var(--card-rgb-dark));
+            box-shadow:
+                0 24px 48px -12px rgba(var(--card-rgb), 0.58),
+                0 8px 20px -6px rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.35s ease;
         }
 
-        .tc-indicator {
+        @media (min-width: 640px) {
+            .spec-card {
+                flex: 0 0 308px;
+                height: 440px;
+                border-radius: 28px;
+            }
+        }
+
+        .spec-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.26);
+            box-shadow:
+                0 32px 60px -10px rgba(var(--card-rgb), 0.75),
+                0 12px 26px -6px rgba(0, 0, 0, 0.55);
+        }
+
+        .spec-card-img-wrap {
             position: absolute;
-            left: 0;
             top: 0;
+            left: 0;
+            right: 0;
+            height: 76%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .spec-card-img {
             width: 100%;
-            height: 4px;
-            z-index: 65;
-            background: linear-gradient(90deg, #10B981, #FACC15);
-            transform: translateX(-100%);
-        }
-
-        .tc-card {
-            position: absolute;
-            left: 0;
-            top: 0;
-            background-position: center;
-            background-size: cover;
-            box-shadow: 0 22px 45px -8px rgba(0, 0, 0, 0.78);
-            cursor: pointer;
-            will-change: transform, width, height, border-radius;
-            overflow: hidden;
-        }
-
-        /* Subtle dark vignette overlay inside each card/background */
-        .tc-card::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, rgba(2, 24, 19, 0.92) 0%, rgba(2, 24, 19, 0.68) 42%, rgba(2, 24, 19, 0.35) 100%),
-                        linear-gradient(180deg, rgba(2, 24, 19, 0.55) 0%, transparent 35%, rgba(2, 24, 19, 0.85) 100%);
-            transition: opacity 0.6s ease;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 20%;
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
         }
 
-        /* Queue cards have a cleaner bottom-up gradient so the thumbnail photo pops */
-        .tc-card.is-thumbnail::after {
-            background: linear-gradient(180deg, rgba(2, 24, 19, 0.05) 0%, rgba(2, 24, 19, 0.3) 50%, rgba(2, 24, 19, 0.92) 100%);
-        }
-
-        .tc-card.is-thumbnail {
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            transition: border-color 0.3s ease;
-        }
-        .tc-card.is-thumbnail:hover {
-            border-color: #34D399;
-        }
-
-        .tc-card-content {
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: #FFFFFF;
-            padding-left: 18px;
-            padding-right: 14px;
-            pointer-events: none;
-            will-change: transform, opacity;
-        }
-
-        .tc-content-start {
-            width: 28px;
-            height: 4px;
-            background-color: #34D399;
-            margin-bottom: 8px;
-        }
-
-        .tc-content-place {
-            font-size: 11px;
-            font-weight: 700;
-            font-family: 'Space Grotesk', monospace;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: #34D399;
-        }
-
-        .tc-content-title-1,
-        .tc-content-title-2 {
-            font-weight: 600;
-            font-size: 20px;
-            line-height: 1.1;
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.02em;
-            color: #FFFFFF;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
-        }
-
-        .tc-details {
-            z-index: 25;
-            position: absolute;
-            top: 175px;
-            left: 6vw;
-            max-width: 680px;
-            pointer-events: auto;
-        }
-
-        @media (max-width: 768px) {
-            .tc-details {
-                top: 135px;
-                left: 24px;
-                right: 24px;
-                max-width: calc(100% - 48px);
-            }
-        }
-
-        .tc-place-box {
-            height: 44px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .tc-place-box .tc-text {
-            padding-top: 14px;
-            font-size: 15px;
-            font-family: 'Space Grotesk', monospace;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: #34D399;
-            position: relative;
-        }
-
-        .tc-place-box .tc-text::before {
-            top: 0;
-            left: 0;
-            position: absolute;
-            content: "";
-            width: 36px;
-            height: 4px;
-            background-color: #FACC15;
-        }
-
-        .tc-title-box-1,
-        .tc-title-box-2 {
-            margin-top: 2px;
-            height: 82px;
-            overflow: hidden;
-        }
-
-        @media (max-width: 768px) {
-            .tc-title-box-1,
-            .tc-title-box-2 {
-                height: 52px;
-            }
-        }
-
-        .tc-title-1,
-        .tc-title-2 {
-            font-weight: 700;
-            font-size: clamp(38px, 5.2vw, 72px);
-            line-height: 1.06;
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: -0.01em;
-            color: #FFFFFF;
-            white-space: nowrap;
-            text-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .tc-meta-row {
-            margin-top: 14px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 16px;
-            font-family: 'Space Grotesk', monospace;
-            font-size: 13px;
-            color: #F8FAFC;
-        }
-
-        .tc-desc {
-            margin-top: 14px;
-            max-width: 500px;
-            font-size: 14px;
-            line-height: 1.65;
-            color: #E2E8F0;
-            font-weight: 300;
-        }
-
-        .tc-cta {
-            margin-top: 26px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .tc-bookmark {
-            border: none;
-            background-color: #FACC15;
-            width: 44px;
-            height: 44px;
-            border-radius: 999px;
-            color: #021813;
-            display: grid;
-            place-items: center;
-            cursor: pointer;
-            transition: transform 0.25s ease, background-color 0.25s ease;
-            box-shadow: 0 10px 25px -4px rgba(250, 204, 21, 0.45);
-        }
-        .tc-bookmark:hover {
-            transform: scale(1.08);
-            background-color: #FDE047;
-        }
-
-        .tc-discover {
-            border: 1.5px solid rgba(255, 255, 255, 0.75);
-            background-color: rgba(2, 24, 19, 0.45);
-            backdrop-filter: blur(10px);
-            height: 44px;
-            border-radius: 999px;
-            color: #FFFFFF;
-            padding: 0 28px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .tc-discover:hover {
-            background-color: #FFFFFF;
-            color: #021813;
-            border-color: #FFFFFF;
-        }
-
-        .tc-pagination {
-            position: absolute;
-            left: 0;
-            top: 0;
-            display: inline-flex;
-            align-items: center;
-            z-index: 60;
-        }
-
-        .tc-pagination .tc-arrow {
-            width: 50px;
-            height: 50px;
-            border-radius: 999px;
-            border: 2px solid rgba(255, 255, 255, 0.35);
-            background: rgba(2, 24, 19, 0.45);
-            backdrop-filter: blur(8px);
-            display: grid;
-            place-items: center;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            color: rgba(255, 255, 255, 0.85);
-        }
-        .tc-pagination .tc-arrow:hover {
-            border-color: #34D399;
-            background: rgba(0, 158, 94, 0.35);
-            color: #FFFFFF;
+        .spec-card:hover .spec-card-img {
             transform: scale(1.06);
         }
-        .tc-pagination .tc-arrow + .tc-arrow {
-            margin-left: 16px;
+
+        /* Seamless predominant-color gradient fade over the image into the solid card base */
+        .spec-card-gradient {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background: linear-gradient(
+                180deg,
+                rgba(var(--card-rgb), 0.00) 0%,
+                rgba(var(--card-rgb), 0.00) 34%,
+                rgba(var(--card-rgb), 0.48) 50%,
+                rgba(var(--card-rgb), 0.88) 62%,
+                rgb(var(--card-rgb)) 71%,
+                rgb(var(--card-rgb-dark)) 100%
+            );
+            pointer-events: none;
         }
 
-        .tc-progress-sub-container {
-            margin-left: 24px;
-            width: 320px;
-            height: 50px;
+        .spec-card-body {
+            position: relative;
+            z-index: 5;
+            padding: 1.35rem 1.35rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .spec-card-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: #FFFFFF;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .spec-card-meta {
+            margin-top: 0.35rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.82);
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .spec-card-btn {
+            margin-top: 1.05rem;
+            width: 100%;
             display: flex;
             align-items: center;
-        }
-        @media (max-width: 1024px) {
-            .tc-progress-sub-container {
-                width: 160px;
-            }
-        }
-        @media (max-width: 640px) {
-            .tc-progress-sub-container {
-                width: 90px;
-                margin-left: 12px;
-            }
-        }
-
-        .tc-progress-sub-background {
-            width: 100%;
-            height: 3px;
-            background-color: rgba(255, 255, 255, 0.22);
-            overflow: hidden;
-        }
-
-        .tc-progress-sub-foreground {
-            height: 3px;
-            background-color: #FACC15;
-            width: 0%;
-        }
-
-        .tc-slide-numbers {
-            width: 54px;
-            height: 50px;
-            overflow: hidden;
-            z-index: 60;
-            position: relative;
-            margin-left: 16px;
-        }
-
-        .tc-slide-numbers .tc-item {
-            width: 54px;
-            height: 50px;
-            position: absolute;
+            justify-content: space-between;
+            padding: 0.78rem 1.05rem;
+            border-radius: 14px;
+            background: rgba(0, 0, 0, 0.28);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             color: #FFFFFF;
-            top: 0;
-            left: 0;
-            display: grid;
-            place-items: center;
-            font-size: 28px;
-            font-weight: 700;
-            font-family: 'Oswald', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .spec-card:hover .spec-card-btn {
+            background: rgba(0, 0, 0, 0.40);
+            border-color: rgba(255, 255, 255, 0.24);
+        }
+
+        .spec-nav-btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(4, 47, 36, 0.65);
+            backdrop-filter: blur(8px);
+            color: #FFFFFF;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+        }
+        .spec-nav-btn:hover {
+            background: #10B981;
+            border-color: #34D399;
+            color: #021813;
+            transform: scale(1.06);
         }
 
         /* Parallax image zoom effect */
@@ -662,76 +533,6 @@
                 padding-left: 1.4rem;
                 gap: 1rem;
             }
-
-            /* Especialidades */
-            #especialidades {
-                height: 100vh;
-                height: 100svh;
-                min-height: 700px;
-            }
-            .tc-details {
-                top: 96px;
-            }
-            .tc-place-box { height: 36px; }
-            .tc-place-box .tc-text {
-                padding-top: 12px;
-                font-size: 12px;
-            }
-            .tc-title-box-1,
-            .tc-title-box-2 {
-                height: 38px;
-            }
-            .tc-title-1,
-            .tc-title-2 {
-                font-size: 32px;
-                line-height: 1.12;
-            }
-            .tc-meta-row {
-                margin-top: 10px;
-                gap: 10px;
-                font-size: 12px;
-            }
-            .tc-desc {
-                margin-top: 10px;
-                font-size: 13px;
-                line-height: 1.55;
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-            .tc-cta {
-                margin-top: 16px;
-                gap: 12px;
-            }
-            .tc-bookmark { width: 40px; height: 40px; }
-            .tc-discover {
-                height: 40px;
-                padding: 0 20px;
-                font-size: 11px;
-            }
-            .tc-content-place { font-size: 10px; }
-            .tc-card-content { padding-left: 12px; padding-right: 10px; }
-            .tc-content-title-1,
-            .tc-content-title-2 {
-                font-size: 15px;
-            }
-            .tc-pagination .tc-arrow {
-                width: 42px;
-                height: 42px;
-            }
-            .tc-pagination .tc-arrow + .tc-arrow { margin-left: 10px; }
-            .tc-slide-numbers,
-            .tc-slide-numbers .tc-item {
-                height: 42px;
-                width: 44px;
-                font-size: 22px;
-            }
-            .tc-slide-numbers { margin-left: 10px; }
-            .tc-progress-sub-container { height: 42px; }
-        }
-        @media (max-width: 767px) and (max-height: 740px) {
-            .tc-desc { -webkit-line-clamp: 2; }
         }
 
         /* Sticky bar respeita a home indicator do iPhone */
@@ -951,106 +752,42 @@
         </section>
 
         <!-- ============================================================== -->
-        <!-- 4. TIMED CARDS OPENING (13 Especialidades Médicas Oficiais)    -->
+        <!-- 4. ESPECIALIDADES MÉDICAS (Cards com Cor Predominante)         -->
         <!-- ============================================================== -->
-        <section id="especialidades" aria-label="13 Especialidades Médicas Oficiais">
+        <section id="especialidades" class="py-16 md:py-24 border-t border-white/10" aria-label="13 Especialidades Médicas Oficiais">
             
-            <!-- Top Timer Progress Bar -->
-            <div class="tc-indicator" id="tc-indicator"></div>
-
-            <!-- Section Header Overlay (Top Left) -->
-            <div class="absolute top-7 md:top-8 left-6 md:left-[6vw] right-6 md:right-[6vw] z-40 flex items-center justify-between pointer-events-none">
+            <!-- Section Header + Carousel Controls -->
+            <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
                 <div>
-                    <span class="text-[10px] md:text-[11px] font-mono font-bold tracking-[0.2em] md:tracking-[0.25em] text-brand-glow uppercase block">
-                        PÓS-GRADUAÇÃO LATO SENSU<span class="hidden md:inline"> • FACULDADE DE MEDICINA DA UFF</span>
+                    <span class="text-xs font-mono font-bold tracking-[0.22em] text-brand-glow uppercase block mb-2">
+                        PÓS-GRADUAÇÃO LATO SENSU • FACULDADE DE MEDICINA DA UFF
                     </span>
-                    <h2 class="font-sans font-bold text-lg sm:text-xl text-white/90 tracking-tight mt-0.5">
-                        13 Especialidades Médicas Oficiais<span class="hidden md:inline"> — Clique em um card para expandir</span>
+                    <h2 class="font-sans font-black text-3xl sm:text-4xl md:text-5xl text-white tracking-tight leading-tight">
+                        13 Especialidades Médicas
                     </h2>
+                    <p class="text-slate-300 text-sm sm:text-base mt-2 max-w-xl font-light">
+                        Deslize pelos programas oficiais do Concurso 2027 e toque em qualquer especialidade para consultar vagas, carga horária e coordenação.
+                    </p>
                 </div>
-            </div>
 
-            <!-- Dynamic Cards & Queue Container (Injected via JS) -->
-            <div id="tc-demo"></div>
-
-            <!-- Details Layer EVEN -->
-            <div class="tc-details" id="tc-details-even">
-                <div class="tc-place-box">
-                    <div class="tc-text">Clínica Médica</div>
-                </div>
-                <div class="tc-title-box-1"><div class="tc-title-1">CARDIOLOGIA</div></div>
-                <div class="tc-title-box-2"><div class="tc-title-2">CLÍNICA</div></div>
-                <div class="tc-meta-row">
-                    <span class="tc-vagas text-brand-gold font-bold">17 vagas</span>
-                    <span class="text-white/30">•</span>
-                    <span class="tc-duration">Duração: 2 Anos</span>
-                    <span class="text-white/30">•</span>
-                    <span class="tc-hours text-brand-glow">3.285 horas</span>
-                </div>
-                <div class="tc-desc">
-                    Treinamento completo em cardiologia clínica, eletrocardiografia avançada, ecocardiografia, métodos gráficos e emergências cardiovasculares na Faculdade de Medicina da UFF.
-                </div>
-                <div class="tc-cta">
-                    <button class="tc-bookmark" aria-label="Destaque da Especialidade" onclick="openActiveSpecialtyModal()">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                            <path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z" clip-rule="evenodd" />
+                <!-- Navigation Buttons (Desktop & Mobile) -->
+                <div class="flex items-center gap-3 self-start sm:self-end shrink-0">
+                    <button id="spec-prev" class="spec-nav-btn" aria-label="Especialidade Anterior">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7"></path>
                         </svg>
                     </button>
-                    <button class="tc-discover" onclick="openActiveSpecialtyModal()">
-                        <span>Ver Plano Pedagógico</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Details Layer ODD -->
-            <div class="tc-details" id="tc-details-odd">
-                <div class="tc-place-box">
-                    <div class="tc-text">Clínica Médica</div>
-                </div>
-                <div class="tc-title-box-1"><div class="tc-title-1">CARDIOLOGIA</div></div>
-                <div class="tc-title-box-2"><div class="tc-title-2">CLÍNICA</div></div>
-                <div class="tc-meta-row">
-                    <span class="tc-vagas text-brand-gold font-bold">17 vagas</span>
-                    <span class="text-white/30">•</span>
-                    <span class="tc-duration">Duração: 2 Anos</span>
-                    <span class="text-white/30">•</span>
-                    <span class="tc-hours text-brand-glow">3.285 horas</span>
-                </div>
-                <div class="tc-desc">
-                    Treinamento completo em cardiologia clínica, eletrocardiografia avançada, ecocardiografia, métodos gráficos e emergências cardiovasculares na Faculdade de Medicina da UFF.
-                </div>
-                <div class="tc-cta">
-                    <button class="tc-bookmark" aria-label="Destaque da Especialidade" onclick="openActiveSpecialtyModal()">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                            <path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z" clip-rule="evenodd" />
+                    <button id="spec-next" class="spec-nav-btn" aria-label="Próxima Especialidade">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </button>
-                    <button class="tc-discover" onclick="openActiveSpecialtyModal()">
-                        <span>Ver Plano Pedagógico</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </button>
                 </div>
             </div>
 
-            <!-- Bottom Right Pagination HUD (Arrows + Progress Line + Slide Numbers) -->
-            <div class="tc-pagination" id="tc-pagination">
-                <button class="tc-arrow tc-arrow-left" id="tc-prev" aria-label="Especialidade Anterior">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                    </svg>
-                </button>
-                <button class="tc-arrow tc-arrow-right" id="tc-next" aria-label="Próxima Especialidade">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                    </svg>
-                </button>
-                <div class="tc-progress-sub-container">
-                    <div class="tc-progress-sub-background">
-                        <div class="tc-progress-sub-foreground" id="tc-progress-bar"></div>
-                    </div>
-                </div>
-                <div class="tc-slide-numbers" id="tc-slide-numbers"></div>
+            <!-- Horizontal Cards Track -->
+            <div id="spec-cards-track" class="spec-carousel-track" data-native-scroll>
+                <!-- Cards injected via JS -->
             </div>
 
         </section>
@@ -1356,7 +1093,7 @@
     </div>
 
     <!-- ============================================================== -->
-    <!-- JAVASCRIPT: Momentum Smooth Scroll, 3D Parallax & Slider       -->
+    <!-- JAVASCRIPT: Momentum Smooth Scroll, 3D Parallax & Cards        -->
     <!-- ============================================================== -->
     <script>
         // -------------------------------------------------------------
@@ -1366,559 +1103,286 @@
             {
                 id: 'cardiologia',
                 title: 'Cardiologia',
-                title1: 'CARDIOLOGIA',
-                title2: 'CLÍNICA',
                 category: 'Clínica Médica',
                 duration: '2 Anos',
                 hours: '3.285 horas',
                 vagas: '17 vagas',
                 coordinator: 'Prof. Antonio José Lagoeiro Jorge',
-                image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=1600&q=85',
+                image: 'assets/img/especialidades/cardiologia.jpg',
+                rgb: '112, 24, 42',
+                rgbDark: '68, 12, 24',
                 desc: 'Treinamento completo em cardiologia clínica, eletrocardiografia avançada, ecocardiografia, métodos gráficos e emergências cardiovasculares na Faculdade de Medicina da UFF.',
                 email: 'cardiouff@gmail.com'
             },
             {
                 id: 'dermatologia',
                 title: 'Dermatologia',
-                title1: 'DERMATOLOGIA',
-                title2: '& CIRURGIA',
                 category: 'Clínica & Cirúrgica',
                 duration: '2 Anos',
                 hours: '3.000 horas',
                 vagas: '12 vagas',
                 coordinator: 'Profa. Dra. Flavia de Freire Cassia',
-                image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1600&q=85',
+                image: 'assets/img/especialidades/dermatologia.jpg',
+                rgb: '128, 78, 46',
+                rgbDark: '82, 46, 25',
                 desc: 'Ampla casuística ambulatorial em dermatologia clínica, cirurgia dermatológica básica, cosmiatria médica e doenças infecciosas cutâneas de referência regional.',
                 email: 'dermatologia.uff@gmail.com'
             },
             {
                 id: 'anestesiologia',
                 title: 'Anestesiologia',
-                title1: 'ANESTESIOLOGIA',
-                title2: '& MEDICINA DOR',
                 category: 'Cirúrgica & Crítica',
                 duration: '2 Anos',
                 hours: '3.500 horas',
                 vagas: '10 vagas',
                 coordinator: 'Prof. Dr. Ismar Lima Cavalcanti',
-                image: 'https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1600&q=85',
+                image: 'assets/img/especialidades/anestesiologia.jpg',
+                rgb: '26, 92, 102',
+                rgbDark: '14, 56, 64',
                 desc: 'Atuação prática em anestesia para procedimentos de grande porte, neuroanestesia, analgesia pós-operatória avançada e manejo das vias aéreas difíceis.',
                 email: 'anestesiologia.uff@gmail.com'
             },
             {
                 id: 'neurologia',
                 title: 'Neurologia',
-                title1: 'NEUROLOGIA',
-                title2: 'CLÍNICA',
                 category: 'Neurociências',
                 duration: '2 Anos',
                 hours: '3.100 horas',
                 vagas: '10 vagas',
                 coordinator: 'Prof. Dr. Pedro Ferreira Moreira Filho',
-                image: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=1600&q=85',
+                image: 'assets/img/especialidades/neurologia.jpg',
+                rgb: '62, 30, 114',
+                rgbDark: '36, 16, 72',
                 desc: 'Diagnóstico e conduta em doenças cerebrovasculares, epilepsia, distúrbios dos movimentos, cefaleias e exames de eletroneuromiografia e EEG.',
                 email: 'neurologia.uff@gmail.com'
             },
             {
                 id: 'pediatria',
                 title: 'Pediatria',
-                title1: 'PEDIATRIA',
-                title2: '& PUERICULTURA',
                 category: 'Saúde da Criança',
                 duration: '2 Anos',
                 hours: '2.880 horas',
                 vagas: '15 vagas',
                 coordinator: 'Profa. Maria de Fátima Bazhuni Pombo March',
-                image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1600&q=85',
+                image: 'assets/img/especialidades/pediatria.jpg',
+                rgb: '42, 104, 115',
+                rgbDark: '22, 64, 72',
                 desc: 'Atenção integral à saúde da criança e adolescente, com ambulatórios de puericultura, infectologia pediátrica, pneumologia pediátrica e medicina do adolescente.',
                 email: 'pediatria.uff@gmail.com'
             },
             {
                 id: 'radiologia',
                 title: 'Radiologia e Diagnóstico por Imagem',
-                title1: 'RADIOLOGIA',
-                title2: '& DIAGNÓSTICO',
                 category: 'Diagnóstico por Imagem',
                 duration: '2 Anos',
                 hours: '3.400 horas',
                 vagas: '14 vagas',
                 coordinator: 'Prof. Dr. Alair Augusto Sarmet M. D. dos Santos',
-                image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1600&q=85',
+                image: 'assets/img/especialidades/radiologia.jpg',
+                rgb: '18, 68, 122',
+                rgbDark: '10, 40, 78',
                 desc: 'Treinamento completo em ressonância magnética, tomografia computadorizada multislice, ultrassonografia com Doppler e biópsias guiadas por imagem.',
                 email: 'radiologia.uff@gmail.com'
             },
             {
                 id: 'gastroenterologia',
                 title: 'Gastroenterologia',
-                title1: 'GASTROENTEROLOGIA',
-                title2: '& HEPATOLOGIA',
                 category: 'Clínica Médica',
                 duration: '2 Anos',
                 hours: '2.950 horas',
                 vagas: '08 vagas',
                 coordinator: 'Prof. Dr. Cyrla Zaltman',
-                image: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=1600&q=85',
+                image: 'assets/img/especialidades/gastroenterologia.jpg',
+                rgb: '106, 52, 26',
+                rgbDark: '66, 30, 14',
                 desc: 'Abordagem avançada em doenças inflamatórias intestinais, hepatologia, distúrbios da motilidade digestiva e endoscopia diagnóstica.',
                 email: 'gastro.uff@gmail.com'
             },
             {
                 id: 'pneumologia',
                 title: 'Pneumologia',
-                title1: 'PNEUMOLOGIA',
-                title2: '& BRONCOSCOPIA',
                 category: 'Clínica Médica',
                 duration: '2 Anos',
                 hours: '2.900 horas',
                 vagas: '08 vagas',
                 coordinator: 'Prof. Dr. Rodolfo Frederico Behrsin',
-                image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1600&q=85',
+                image: 'assets/img/especialidades/pneumologia.jpg',
+                rgb: '14, 86, 108',
+                rgbDark: '8, 50, 66',
                 desc: 'Doenças pulmonares obstrutivas, doenças intersticiais, prova de função respiratória completa, teste ergométrico cardiopulmonar e broncoscopia.',
                 email: 'pneumo.uff@gmail.com'
             },
             {
                 id: 'psiquiatria',
                 title: 'Psiquiatria',
-                title1: 'PSIQUIATRIA',
-                title2: 'CLÍNICA',
                 category: 'Saúde Mental',
                 duration: '2 Anos',
                 hours: '2.800 horas',
                 vagas: '12 vagas',
                 coordinator: 'Prof. Dr. Antonio Geraldo da Silva',
-                image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=1600&q=85',
+                image: 'assets/img/especialidades/psiquiatria.jpg',
+                rgb: '82, 92, 54',
+                rgbDark: '48, 56, 30',
                 desc: 'Formação sólida em psicofarmacologia moderna, psiquiatria clínica de adultos, intervenção em crises, emergências psiquiátricas e psicoterapia médica.',
                 email: 'psiquiatria.uff@gmail.com'
             },
             {
                 id: 'hematologia',
                 title: 'Hematologia Clínica',
-                title1: 'HEMATOLOGIA',
-                title2: '& HEMOTERAPIA',
                 category: 'Onco-Hematologia',
                 duration: '2 Anos',
                 hours: '2.850 horas',
                 vagas: '06 vagas',
                 coordinator: 'Prof. Dr. Wolmar Pulcheri',
-                image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1600&q=85',
+                image: 'assets/img/especialidades/hematologia.jpg',
+                rgb: '108, 22, 48',
+                rgbDark: '66, 12, 28',
                 desc: 'Investigação e conduta em anemias complexas, hemostasia e distúrbios da coagulação, leucemias, linfomas e medicina transfusional.',
                 email: 'hemato.uff@gmail.com'
             },
             {
                 id: 'gerontologia',
                 title: 'Gerontologia e Geriatria',
-                title1: 'GERONTOLOGIA',
-                title2: '& GERIATRIA',
                 category: 'Envelhecimento Humano',
                 duration: '1 Ano',
                 hours: '1.800 horas',
                 vagas: '10 vagas',
                 coordinator: 'Profa. Dra. Yolanda Boechat',
-                image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1600&q=85',
+                image: 'assets/img/especialidades/gerontologia.jpg',
+                rgb: '122, 74, 38',
+                rgbDark: '76, 44, 20',
                 desc: 'Avaliação geriátrica ampla, síndromes demenciais, polifarmácia no idoso, fragilidade clínica e reabilitação funcional integrada.',
                 email: 'geriatria.uff@gmail.com'
             },
             {
                 id: 'radiologia-toracica',
                 title: 'Radiologia Torácica',
-                title1: 'RADIOLOGIA',
-                title2: 'TORÁCICA',
                 category: 'Diagnóstico Avançado',
                 duration: '1 Ano',
                 hours: '1.920 horas',
                 vagas: '04 vagas',
                 coordinator: 'Prof. Dr. Edson Marchiori',
-                image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1600&q=85',
+                image: 'assets/img/especialidades/radiologia-toracica.jpg',
+                rgb: '28, 56, 98',
+                rgbDark: '16, 34, 62',
                 desc: 'Especialização de referência internacional em tomografia computadorizada de alta resolução do tórax e padrões tomográficos pleuropulmonares.',
                 email: 'edmarchiori@gmail.com'
             },
             {
                 id: 'analises-clinicas',
                 title: 'Análises Clínicas',
-                title1: 'ANÁLISES',
-                title2: 'CLÍNICAS',
                 category: 'Patologia Laboratorial',
                 duration: '1 Ano',
                 hours: '1.600 horas',
                 vagas: '08 vagas',
                 coordinator: 'Coordenação de Patologia Clínica UFF',
-                image: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=1600&q=85',
+                image: 'assets/img/especialidades/analises-clinicas.jpg',
+                rgb: '26, 94, 58',
+                rgbDark: '14, 56, 34',
                 desc: 'Bioquímica clínica de alta precisão, hematologia laboratorial automatizada, imunologia diagnóstica e controle de qualidade laboratorial.',
                 email: 'analisesclinicas.uff@gmail.com'
             }
         ];
 
         // -------------------------------------------------------------
-        // 2. TIMED CARDS OPENING ANIMATION ENGINE (GLOBE EXPRESS STYLE)
+        // 2. RENDERIZAR CARDS COM COR PREDOMINANTE DA IMAGEM
         // -------------------------------------------------------------
-        const tcSection = document.getElementById('especialidades');
-        const tcDemo = document.getElementById('tc-demo');
-        const tcSlideNumbers = document.getElementById('tc-slide-numbers');
+        const specTrack = document.getElementById('spec-cards-track');
 
-        let tcOrder = specialties.map((_, idx) => idx);
-        let tcDetailsEven = true;
-        let tcAnimating = false;
-        let tcAutoTimer = null;
+        function buildSpecialtyCards() {
+            if (!specTrack) return;
+            specTrack.innerHTML = specialties.map((spec, index) => `
+                <article class="spec-card"
+                         data-index="${index}"
+                         style="--card-rgb: ${spec.rgb}; --card-rgb-dark: ${spec.rgbDark};"
+                         role="button"
+                         tabindex="0"
+                         aria-label="Ver detalhes de ${spec.title}">
+                    <div class="spec-card-img-wrap">
+                        <img src="${spec.image}"
+                             alt="${spec.title} - Faculdade de Medicina da UFF"
+                             class="spec-card-img"
+                             loading="${index < 4 ? 'eager' : 'lazy'}">
+                    </div>
+                    <div class="spec-card-gradient"></div>
+                    <div class="spec-card-body">
+                        <h3 class="spec-card-title">${spec.title}</h3>
+                        <p class="spec-card-meta">${spec.vagas} • ${spec.duration} • ${spec.hours}</p>
+                        <div class="spec-card-btn">
+                            <span>Explorar Programa</span>
+                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
 
-        let tcOffsetTop = 200;
-        let tcOffsetLeft = 700;
-        let tcCardWidth = 200;
-        let tcCardHeight = 300;
-        let tcGap = 28;
-        const tcNumberSize = 54;
-        const tcEase = "sine.inOut";
+            // Click & keyboard handler to open specialty modal
+            let dragMoved = false;
+            specTrack.querySelectorAll('.spec-card').forEach((card) => {
+                card.addEventListener('click', () => {
+                    if (dragMoved) return;
+                    const idx = Number(card.getAttribute('data-index'));
+                    openSpecialtyModal(specialties[idx]);
+                });
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        const idx = Number(card.getAttribute('data-index'));
+                        openSpecialtyModal(specialties[idx]);
+                    }
+                });
+            });
 
-        function getTcCard(index) { return `#tc-card-${index}`; }
-        function getTcCardContent(index) { return `#tc-card-content-${index}`; }
-        function getTcSliderItem(index) { return `#tc-slide-item-${index}`; }
-
-        function computeTcMetrics() {
-            const w = tcSection.clientWidth || window.innerWidth;
-            const h = tcSection.clientHeight || window.innerHeight;
-            const vh = Math.min(h, window.innerHeight || 900);
-
-            if (w < 768) {
-                tcCardWidth = 122;
-                tcCardHeight = 168;
-                tcGap = 12;
-                // Fila de cards logo acima da paginação + sticky bar, sem cobrir o CTA do card ativo
-                const detailsEl = document.getElementById('tc-details-even');
-                const detailsBottom = detailsEl ? detailsEl.offsetTop + detailsEl.offsetHeight + 22 : 430;
-                tcOffsetTop = Math.max(detailsBottom, h - tcCardHeight - 150);
-                tcOffsetLeft = 24;
-            } else if (w < 1150) {
-                tcCardWidth = 170;
-                tcCardHeight = 230;
-                tcGap = 20;
-                tcOffsetTop = Math.max(280, vh - 435);
-                tcOffsetLeft = Math.max(420, w - 580);
-            } else {
-                tcCardWidth = 195;
-                tcCardHeight = 265;
-                tcGap = 26;
-                tcOffsetTop = Math.max(305, vh - 495);
-                tcOffsetLeft = Math.max(600, w - 760);
+            // Prev / Next navigation buttons
+            const prevBtn = document.getElementById('spec-prev');
+            const nextBtn = document.getElementById('spec-next');
+            const getScrollStep = () => {
+                const firstCard = specTrack.querySelector('.spec-card');
+                return firstCard ? firstCard.offsetWidth + 24 : 320;
+            };
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    specTrack.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+                });
             }
-            return { w, h };
-        }
-
-        function populateTcDetails(selector, spec) {
-            const container = document.querySelector(selector);
-            if (!container) return;
-            container.querySelector('.tc-place-box .tc-text').textContent = spec.category;
-            container.querySelector('.tc-title-1').textContent = spec.title1;
-            container.querySelector('.tc-title-2').textContent = spec.title2;
-            container.querySelector('.tc-vagas').textContent = spec.vagas;
-            container.querySelector('.tc-duration').textContent = `Duração: ${spec.duration}`;
-            container.querySelector('.tc-hours').textContent = spec.hours;
-            container.querySelector('.tc-desc').textContent = spec.desc;
-        }
-
-        function openActiveSpecialtyModal() {
-            openSpecialtyModal(specialties[tcOrder[0]]);
-        }
-
-        function buildTcDOM() {
-            const cardsHTML = specialties.map((item, index) => `
-                <div class="tc-card" id="tc-card-${index}" data-index="${index}" style="background-image: url('${item.image}')"></div>
-            `).join('');
-
-            const cardContentsHTML = specialties.map((item, index) => `
-                <div class="tc-card-content" id="tc-card-content-${index}">
-                    <div class="tc-content-start"></div>
-                    <div class="tc-content-place">${item.vagas}</div>
-                    <div class="tc-content-title-1">${item.title1}</div>
-                    <div class="tc-content-title-2">${item.title2}</div>
-                </div>
-            `).join('');
-
-            const slideNumbersHTML = specialties.map((_, index) => `
-                <div class="tc-item" id="tc-slide-item-${index}">${index + 1 < 10 ? '0' + (index + 1) : index + 1}</div>
-            `).join('');
-
-            tcDemo.innerHTML = cardsHTML + cardContentsHTML;
-            tcSlideNumbers.innerHTML = slideNumbersHTML;
-
-            // Clicking a thumbnail card in the queue opens that card into the background!
-            specialties.forEach((_, index) => {
-                const cardEl = document.getElementById(`tc-card-${index}`);
-                cardEl.addEventListener('click', () => {
-                    if (tcOrder[0] === index) {
-                        openSpecialtyModal(specialties[index]);
-                    } else {
-                        tcAdvanceToCard(index);
-                    }
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    specTrack.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
                 });
+            }
+
+            // Mouse drag-to-scroll for desktop convenience
+            let isDown = false;
+            let startX = 0;
+            let scrollLeft = 0;
+            specTrack.addEventListener('mousedown', (e) => {
+                isDown = true;
+                dragMoved = false;
+                specTrack.classList.add('is-dragging');
+                startX = e.pageX - specTrack.offsetLeft;
+                scrollLeft = specTrack.scrollLeft;
             });
-        }
-
-        function initTcLayout() {
-            const { w, h } = computeTcMetrics();
-            const [active, ...rest] = tcOrder;
-            const detailsActive = tcDetailsEven ? "#tc-details-even" : "#tc-details-odd";
-            const detailsInactive = tcDetailsEven ? "#tc-details-odd" : "#tc-details-even";
-
-            populateTcDetails(detailsActive, specialties[active]);
-
-            gsap.set("#tc-pagination", {
-                top: tcOffsetTop + tcCardHeight + 18,
-                left: tcOffsetLeft,
-                y: 0,
-                opacity: 1,
-                zIndex: 60
+            window.addEventListener('mouseup', () => {
+                if (!isDown) return;
+                isDown = false;
+                specTrack.classList.remove('is-dragging');
+                setTimeout(() => { dragMoved = false; }, 50);
             });
-
-            const activeEl = document.querySelector(getTcCard(active));
-            if (activeEl) activeEl.classList.remove('is-thumbnail');
-
-            gsap.set(getTcCard(active), {
-                x: 0,
-                y: 0,
-                width: w,
-                height: h,
-                borderRadius: 0,
-                scale: 1,
-                zIndex: 20
-            });
-            gsap.set(getTcCardContent(active), { x: 0, y: 0, opacity: 0, zIndex: 15 });
-
-            gsap.set(detailsActive, { opacity: 1, zIndex: 25, x: 0 });
-            gsap.set(detailsInactive, { opacity: 0, zIndex: 12 });
-
-            gsap.set(`${detailsActive} .tc-text`, { y: 0 });
-            gsap.set(`${detailsActive} .tc-title-1`, { y: 0 });
-            gsap.set(`${detailsActive} .tc-title-2`, { y: 0 });
-            gsap.set(`${detailsActive} .tc-meta-row`, { y: 0, opacity: 1 });
-            gsap.set(`${detailsActive} .tc-desc`, { y: 0, opacity: 1 });
-            gsap.set(`${detailsActive} .tc-cta`, { y: 0, opacity: 1 });
-
-            gsap.set(`${detailsInactive} .tc-text`, { y: 100 });
-            gsap.set(`${detailsInactive} .tc-title-1`, { y: 100 });
-            gsap.set(`${detailsInactive} .tc-title-2`, { y: 100 });
-            gsap.set(`${detailsInactive} .tc-meta-row`, { y: 40, opacity: 0 });
-            gsap.set(`${detailsInactive} .tc-desc`, { y: 50, opacity: 0 });
-            gsap.set(`${detailsInactive} .tc-cta`, { y: 60, opacity: 0 });
-
-            gsap.set("#tc-progress-bar", {
-                width: `${((active + 1) / tcOrder.length) * 100}%`
-            });
-
-            gsap.set(getTcSliderItem(active), { x: 0 });
-
-            rest.forEach((i, index) => {
-                const el = document.querySelector(getTcCard(i));
-                if (el) el.classList.add('is-thumbnail');
-
-                const cardX = tcOffsetLeft + index * (tcCardWidth + tcGap);
-                gsap.set(getTcCard(i), {
-                    x: cardX,
-                    y: tcOffsetTop,
-                    width: tcCardWidth,
-                    height: tcCardHeight,
-                    zIndex: 30,
-                    borderRadius: 14,
-                    scale: 1
-                });
-                gsap.set(getTcCardContent(i), {
-                    x: cardX,
-                    y: tcOffsetTop + tcCardHeight - 108,
-                    opacity: 1,
-                    zIndex: 40,
-                    width: tcCardWidth
-                });
-                gsap.set(getTcSliderItem(i), { x: (index + 1) * tcNumberSize });
-            });
-        }
-
-        function tcStep(direction = 1, targetCardIdx = null) {
-            if (tcAnimating) return Promise.resolve();
-            tcAnimating = true;
-
-            return new Promise((resolve) => {
-                const { w, h } = computeTcMetrics();
-                const prv = tcOrder[0];
-
-                if (targetCardIdx !== null && tcOrder.includes(targetCardIdx)) {
-                    while (tcOrder[0] !== targetCardIdx) {
-                        tcOrder.push(tcOrder.shift());
-                    }
-                } else if (direction === 1) {
-                    tcOrder.push(tcOrder.shift());
-                } else {
-                    tcOrder.unshift(tcOrder.pop());
-                }
-
-                tcDetailsEven = !tcDetailsEven;
-                const detailsActive = tcDetailsEven ? "#tc-details-even" : "#tc-details-odd";
-                const detailsInactive = tcDetailsEven ? "#tc-details-odd" : "#tc-details-even";
-
-                const [active, ...rest] = tcOrder;
-                populateTcDetails(detailsActive, specialties[active]);
-
-                const activeEl = document.querySelector(getTcCard(active));
-                if (activeEl) activeEl.classList.remove('is-thumbnail');
-
-                gsap.set(detailsActive, { zIndex: 25 });
-                gsap.to(detailsActive, { opacity: 1, delay: 0.3, duration: 0.4, ease: tcEase });
-
-                gsap.fromTo(`${detailsActive} .tc-text`, { y: 100 }, { y: 0, delay: 0.1, duration: 0.65, ease: tcEase });
-                gsap.fromTo(`${detailsActive} .tc-title-1`, { y: 100 }, { y: 0, delay: 0.15, duration: 0.65, ease: tcEase });
-                gsap.fromTo(`${detailsActive} .tc-title-2`, { y: 100 }, { y: 0, delay: 0.2, duration: 0.65, ease: tcEase });
-                gsap.fromTo(`${detailsActive} .tc-meta-row`, { y: 40, opacity: 0 }, { y: 0, opacity: 1, delay: 0.28, duration: 0.45, ease: tcEase });
-                gsap.fromTo(`${detailsActive} .tc-desc`, { y: 50, opacity: 0 }, { y: 0, opacity: 1, delay: 0.32, duration: 0.45, ease: tcEase });
-                gsap.fromTo(`${detailsActive} .tc-cta`, { y: 60, opacity: 0 }, { y: 0, opacity: 1, delay: 0.38, duration: 0.45, ease: tcEase });
-
-                gsap.set(detailsInactive, { zIndex: 12 });
-                gsap.to(detailsInactive, { opacity: 0, duration: 0.3, ease: tcEase });
-
-                gsap.set(getTcCard(prv), { zIndex: 10 });
-                gsap.set(getTcCard(active), { zIndex: 20 });
-                gsap.to(getTcCard(prv), { scale: 1.35, duration: 0.85, ease: tcEase });
-
-                gsap.to(getTcCardContent(active), {
-                    y: tcOffsetTop + tcCardHeight - 20,
-                    opacity: 0,
-                    duration: 0.3,
-                    ease: tcEase
-                });
-
-                gsap.to(getTcSliderItem(active), { x: 0, duration: 0.65, ease: tcEase });
-                gsap.to(getTcSliderItem(prv), { x: -tcNumberSize, duration: 0.65, ease: tcEase });
-
-                gsap.to("#tc-progress-bar", {
-                    width: `${((active + 1) / tcOrder.length) * 100}%`,
-                    duration: 0.65,
-                    ease: tcEase
-                });
-
-                // MAIN HERO EXPANSION: The active card expands smoothly from the queue to cover the whole section!
-                gsap.to(getTcCard(active), {
-                    x: 0,
-                    y: 0,
-                    width: w,
-                    height: h,
-                    borderRadius: 0,
-                    scale: 1,
-                    duration: 0.8,
-                    ease: tcEase,
-                    onComplete: () => {
-                        // Place previous active card at the end of the queue
-                        const prvIndexInRest = rest.indexOf(prv);
-                        const xNew = tcOffsetLeft + prvIndexInRest * (tcCardWidth + tcGap);
-                        const prvEl = document.querySelector(getTcCard(prv));
-                        if (prvEl) prvEl.classList.add('is-thumbnail');
-
-                        gsap.set(getTcCard(prv), {
-                            x: xNew,
-                            y: tcOffsetTop,
-                            width: tcCardWidth,
-                            height: tcCardHeight,
-                            zIndex: 30,
-                            borderRadius: 14,
-                            scale: 1
-                        });
-
-                        gsap.set(getTcCardContent(prv), {
-                            x: xNew,
-                            y: tcOffsetTop + tcCardHeight - 108,
-                            opacity: 1,
-                            zIndex: 40,
-                            width: tcCardWidth
-                        });
-
-                        gsap.set(getTcSliderItem(prv), { x: (prvIndexInRest + 1) * tcNumberSize });
-                        tcAnimating = false;
-                        resolve();
-                    }
-                });
-
-                // Shift all other cards in the queue smoothly to the left
-                rest.forEach((i, index) => {
-                    if (i !== prv) {
-                        const xNew = tcOffsetLeft + index * (tcCardWidth + tcGap);
-                        const el = document.querySelector(getTcCard(i));
-                        if (el) el.classList.add('is-thumbnail');
-
-                        gsap.set(getTcCard(i), { zIndex: 30 });
-                        gsap.to(getTcCard(i), {
-                            x: xNew,
-                            y: tcOffsetTop,
-                            width: tcCardWidth,
-                            height: tcCardHeight,
-                            borderRadius: 14,
-                            scale: 1,
-                            duration: 0.65,
-                            delay: 0.06 * (index + 1),
-                            ease: tcEase
-                        });
-
-                        gsap.to(getTcCardContent(i), {
-                            x: xNew,
-                            y: tcOffsetTop + tcCardHeight - 108,
-                            opacity: 1,
-                            zIndex: 40,
-                            width: tcCardWidth,
-                            duration: 0.65,
-                            delay: 0.06 * (index + 1),
-                            ease: tcEase
-                        });
-
-                        gsap.to(getTcSliderItem(i), { x: (index + 1) * tcNumberSize, duration: 0.65, ease: tcEase });
-                    }
-                });
-            });
-        }
-
-        function tcAdvanceToCard(cardIdx) {
-            resetTcAutoLoop();
-            tcStep(1, cardIdx);
-        }
-
-        function startTcAutoLoop() {
-            gsap.killTweensOf("#tc-indicator");
-            gsap.set("#tc-indicator", { xPercent: -100 });
-            gsap.to("#tc-indicator", {
-                xPercent: 0,
-                duration: 5.5,
-                ease: "none",
-                onComplete: () => {
-                    gsap.to("#tc-indicator", {
-                        xPercent: 100,
-                        duration: 0.5,
-                        ease: "power2.in",
-                        onComplete: async () => {
-                            await tcStep(1);
-                            startTcAutoLoop();
-                        }
-                    });
+            specTrack.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                const x = e.pageX - specTrack.offsetLeft;
+                const walk = (x - startX) * 1.3;
+                if (Math.abs(walk) > 8) {
+                    dragMoved = true;
+                    e.preventDefault();
+                    specTrack.scrollLeft = scrollLeft - walk;
                 }
             });
         }
 
-        function resetTcAutoLoop() {
-            gsap.killTweensOf("#tc-indicator");
-            gsap.set("#tc-indicator", { xPercent: -100 });
-            if (tcAutoTimer) clearTimeout(tcAutoTimer);
-            tcAutoTimer = setTimeout(() => {
-                startTcAutoLoop();
-            }, 300);
-        }
-
-        document.getElementById('tc-next').onclick = () => {
-            resetTcAutoLoop();
-            tcStep(1);
-        };
-        document.getElementById('tc-prev').onclick = () => {
-            resetTcAutoLoop();
-            tcStep(-1);
-        };
-
-        buildTcDOM();
-        initTcLayout();
-        startTcAutoLoop();
-
-        window.addEventListener('resize', () => {
-            if (!tcAnimating) initTcLayout();
-        });
+        buildSpecialtyCards();
 
         // -------------------------------------------------------------
         // 3. MODAL DE DETALHES DA ESPECIALIDADE
