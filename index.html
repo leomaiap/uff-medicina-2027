@@ -887,10 +887,10 @@
                 
                 <div class="relative pl-8 sm:pl-10 group">
                     <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-emerald border-4 border-brand-base shadow-glow-emerald"></div>
-                    <span class="text-xs font-mono font-bold text-brand-glow tracking-widest uppercase">09/12 a 12/12/2026</span>
+                    <span class="text-xs font-mono font-bold text-brand-glow tracking-widest uppercase">09/12 (16h) a 12/12 (12h)</span>
                     <h4 class="font-bold text-xl text-white mt-1">Solicitação de Isenção da Taxa</h4>
                     <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
-                        Envio de requerimento e comprovação de hipossuficiência por e-mail oficial à coordenação de concursos da UFF.
+                        Envio de requerimento e comprovação em PDF (máx. 5 MB) para <strong class="text-white font-mono">concursos.cmm@id.uff.br</strong> (CadÚnico ou servidores ativos/aposentados da UFF).
                     </p>
                 </div>
 
@@ -1011,7 +1011,7 @@
                         <span class="faq-icon text-brand-glow text-2xl font-mono transition-transform duration-300">+</span>
                     </button>
                     <div class="faq-answer hidden px-6 pb-6 text-sm text-slate-300 leading-relaxed border-t border-white/10 pt-4">
-                        Não! Como instituição de ensino superior pública federal, a Faculdade de Medicina da Universidade Federal Fluminense (UFF) não cobra nenhuma mensalidade, anuidade ou taxa de rematrícula. O único valor previsto é a taxa de inscrição do concurso (R$ 400,00), com isenção disponível para quem preencher os critérios socioeconômicos do edital.
+                        Não! Conforme o Item 1.5 do Edital Unificado CMM nº 1, os cursos oferecidos são de natureza 100% gratuita, não sendo devida qualquer contraprestação pecuniária a título de mensalidade pelos alunos ingressantes. O único valor previsto é a taxa de inscrição do concurso (R$ 400,00), com isenção disponível para membros do CadÚnico e servidores ativos/aposentados da UFF.
                     </div>
                 </div>
 
@@ -1027,11 +1027,21 @@
 
                 <div class="faq-card glass-card rounded-2xl border border-white/15 overflow-hidden transition-all">
                     <button class="faq-btn w-full text-left p-6 font-bold text-base md:text-lg text-white flex items-center justify-between gap-4">
-                        <span>Médicos com diploma estrangeiro podem participar?</span>
+                        <span>Candidatos estrangeiros ou com diploma no exterior podem participar?</span>
                         <span class="faq-icon text-brand-glow text-2xl font-mono transition-transform duration-300">+</span>
                     </button>
                     <div class="faq-answer hidden px-6 pb-6 text-sm text-slate-300 leading-relaxed border-t border-white/10 pt-4">
-                        Sim, desde que o diploma de graduação em Medicina esteja devidamente revalidado por universidade pública brasileira e o candidato possua inscrição ativa e regular no CRM, salvo nas vagas regulamentadas por convênios internacionais expressos em edital.
+                        Sim! Podem concorrer candidatos brasileiros natos/naturalizados e candidatos estrangeiros. O candidato estrangeiro deverá apresentar visto permanente ou visto temporário de estudante expedido pelo Consulado do Brasil em seu país e o Certificado CELPE-Bras (nível intermediário superior) no ato da matrícula. Conforme item 1.4 do edital, diplomas obtidos no exterior devem ser devidamente revalidados no Brasil para a matrícula.
+                    </div>
+                </div>
+
+                <div class="faq-card glass-card rounded-2xl border border-white/15 overflow-hidden transition-all">
+                    <button class="faq-btn w-full text-left p-6 font-bold text-base md:text-lg text-white flex items-center justify-between gap-4">
+                        <span>Profissionais não médicos podem concorrer?</span>
+                        <span class="faq-icon text-brand-glow text-2xl font-mono transition-transform duration-300">+</span>
+                    </button>
+                    <div class="faq-answer hidden px-6 pb-6 text-sm text-slate-300 leading-relaxed border-t border-white/10 pt-4">
+                        Sim! O Edital prevê vagas específicas para não médicos nos cursos de: <strong>Gerontologia e Geriatria Interdisciplinar</strong> (21 vagas para graduados reconhecidos pelo MEC em qualquer área, exceto licenciatura curta) e <strong>Análises Clínicas</strong> (25 vagas no total, abertas a graduados em Medicina, Farmácia, Farmácia-Bioquímica, Biologia ou Biomedicina).
                     </div>
                 </div>
 
@@ -1131,7 +1141,7 @@
     <!-- ============================================================== -->
     <script>
         // -------------------------------------------------------------
-        // 1. DATA OFICIAL DAS 13 ESPECIALIDADES (Faculdade de Medicina UFF)
+        // 1. DATA OFICIAL DAS 13 ESPECIALIDADES (EDITAL UNIFICADO CMM Nº 1 / UFF)
         // -------------------------------------------------------------
         const specialties = [
             {
@@ -1140,7 +1150,10 @@
                 category: 'Clínica Médica',
                 duration: '2 Anos',
                 hours: '3.285 horas',
-                vagas: '17 vagas',
+                vagas: '17 vagas AC + 03 Estrangeiros',
+                vagasShort: '20 vagas (17 AC + 3 Ext)',
+                inicio: '30/03/2026',
+                prereq: 'Graduação em Medicina em instituição reconhecida pelo MEC ou diploma revalidado no Brasil.',
                 coordinator: 'Prof. Antonio José Lagoeiro Jorge',
                 image: 'assets/img/especialidades/cardiologia.jpg',
                 rgb: '112, 24, 42',
@@ -1152,9 +1165,12 @@
                 id: 'dermatologia',
                 title: 'Dermatologia',
                 category: 'Clínica & Cirúrgica',
-                duration: '2 Anos',
-                hours: '3.000 horas',
-                vagas: '12 vagas',
+                duration: '3 Anos',
+                hours: '8.190 horas',
+                vagas: '02 vagas',
+                vagasShort: '02 vagas',
+                inicio: '30/03/2026',
+                prereq: 'Graduação em Medicina em instituição reconhecida pelo MEC ou diploma revalidado no Brasil.',
                 coordinator: 'Profa. Dra. Flavia de Freire Cassia',
                 image: 'assets/img/especialidades/dermatologia.jpg',
                 rgb: '128, 78, 46',
@@ -1166,9 +1182,12 @@
                 id: 'anestesiologia',
                 title: 'Anestesiologia',
                 category: 'Cirúrgica & Crítica',
-                duration: '2 Anos',
-                hours: '3.500 horas',
-                vagas: '10 vagas',
+                duration: '3 Anos',
+                hours: '8.640 horas',
+                vagas: '02 vagas + Cadastro Reserva (CR)',
+                vagasShort: '02 vagas + CR*',
+                inicio: '30/03/2026',
+                prereq: 'Graduação em Medicina em instituição reconhecida pelo MEC ou diploma revalidado no Brasil.',
                 coordinator: 'Prof. Dr. Ismar Lima Cavalcanti',
                 image: 'assets/img/especialidades/anestesiologia.jpg',
                 rgb: '26, 92, 102',
@@ -1180,9 +1199,12 @@
                 id: 'neurologia',
                 title: 'Neurologia',
                 category: 'Neurociências',
-                duration: '2 Anos',
-                hours: '3.100 horas',
-                vagas: '10 vagas',
+                duration: '3 Anos',
+                hours: '8.640 horas',
+                vagas: '08 vagas + Cadastro Reserva (CR)',
+                vagasShort: '08 vagas + CR*',
+                inicio: '30/03/2026',
+                prereq: 'Graduação em Medicina em instituição reconhecida pelo MEC ou diploma revalidado no Brasil.',
                 coordinator: 'Prof. Dr. Pedro Ferreira Moreira Filho',
                 image: 'assets/img/especialidades/neurologia.jpg',
                 rgb: '62, 30, 114',
@@ -1194,9 +1216,12 @@
                 id: 'pediatria',
                 title: 'Pediatria',
                 category: 'Saúde da Criança',
-                duration: '2 Anos',
-                hours: '2.880 horas',
-                vagas: '15 vagas',
+                duration: '3 Anos',
+                hours: '8.400 horas',
+                vagas: '03 vagas + Cadastro Reserva (CR)',
+                vagasShort: '03 vagas + CR*',
+                inicio: '30/03/2026',
+                prereq: 'Graduação em Medicina em instituição reconhecida pelo MEC ou diploma revalidado no Brasil.',
                 coordinator: 'Profa. Maria de Fátima Bazhuni Pombo March',
                 image: 'assets/img/especialidades/pediatria.jpg',
                 rgb: '42, 104, 115',
@@ -1206,11 +1231,14 @@
             },
             {
                 id: 'radiologia',
-                title: 'Radiologia e Diagnóstico por Imagem',
+                title: 'Radiologia',
                 category: 'Diagnóstico por Imagem',
-                duration: '2 Anos',
-                hours: '3.400 horas',
-                vagas: '14 vagas',
+                duration: '3 Anos',
+                hours: '4.815 horas',
+                vagas: '02 vagas + Cadastro Reserva (CR)',
+                vagasShort: '02 vagas + CR*',
+                inicio: '30/03/2026',
+                prereq: 'Graduação em Medicina em instituição reconhecida pelo MEC ou diploma revalidado no Brasil.',
                 coordinator: 'Prof. Dr. Alair Augusto Sarmet M. D. dos Santos',
                 image: 'assets/img/especialidades/radiologia.jpg',
                 rgb: '18, 68, 122',
@@ -1223,8 +1251,11 @@
                 title: 'Gastroenterologia',
                 category: 'Clínica Médica',
                 duration: '2 Anos',
-                hours: '2.950 horas',
-                vagas: '08 vagas',
+                hours: '5.760 horas',
+                vagas: '01 vaga + Cadastro Reserva (CR)',
+                vagasShort: '01 vaga + CR*',
+                inicio: '30/03/2026',
+                prereq: 'Residência Médica credenciada ou especialização em Clínica Médica com duração mínima de 2 anos.',
                 coordinator: 'Prof. Dr. Cyrla Zaltman',
                 image: 'assets/img/especialidades/gastroenterologia.jpg',
                 rgb: '106, 52, 26',
@@ -1236,9 +1267,12 @@
                 id: 'pneumologia',
                 title: 'Pneumologia',
                 category: 'Clínica Médica',
-                duration: '2 Anos',
-                hours: '2.900 horas',
-                vagas: '08 vagas',
+                duration: '1 Ano e 6 Meses',
+                hours: '5.760 horas',
+                vagas: '04 vagas AC + 02 Estrangeiros + CR',
+                vagasShort: '06 vagas (4 AC + 2 Ext + CR*)',
+                inicio: '30/03/2026',
+                prereq: 'Residência Médica credenciada ou especialização em Clínica Médica com duração mínima de 2 anos.',
                 coordinator: 'Prof. Dr. Rodolfo Frederico Behrsin',
                 image: 'assets/img/especialidades/pneumologia.jpg',
                 rgb: '14, 86, 108',
@@ -1250,9 +1284,12 @@
                 id: 'psiquiatria',
                 title: 'Psiquiatria',
                 category: 'Saúde Mental',
-                duration: '2 Anos',
-                hours: '2.800 horas',
-                vagas: '12 vagas',
+                duration: '3 Anos',
+                hours: '8.877 horas',
+                vagas: '03 vagas + Cadastro Reserva (CR)',
+                vagasShort: '03 vagas + CR*',
+                inicio: '30/03/2026',
+                prereq: 'Graduação em Medicina em instituição reconhecida pelo MEC ou diploma revalidado no Brasil.',
                 coordinator: 'Prof. Dr. Antonio Geraldo da Silva',
                 image: 'assets/img/especialidades/psiquiatria.jpg',
                 rgb: '82, 92, 54',
@@ -1265,8 +1302,11 @@
                 title: 'Hematologia Clínica',
                 category: 'Onco-Hematologia',
                 duration: '2 Anos',
-                hours: '2.850 horas',
-                vagas: '06 vagas',
+                hours: '3.690 horas',
+                vagas: '02 vagas + Cadastro Reserva (CR)',
+                vagasShort: '02 vagas + CR*',
+                inicio: '30/03/2026',
+                prereq: 'Graduação em Medicina com experiência comprovada de pelo menos 1 ano em Clínica Médica, urgência/emergência ou terapia intensiva.',
                 coordinator: 'Prof. Dr. Wolmar Pulcheri',
                 image: 'assets/img/especialidades/hematologia.jpg',
                 rgb: '108, 22, 48',
@@ -1276,25 +1316,31 @@
             },
             {
                 id: 'gerontologia',
-                title: 'Gerontologia e Geriatria',
+                title: 'Gerontologia e Geriatria Interdisciplinar',
                 category: 'Envelhecimento Humano',
-                duration: '1 Ano',
-                hours: '1.800 horas',
-                vagas: '10 vagas',
+                duration: '2 Anos (Médicos) / 1,5 Ano (Não Médicos)',
+                hours: '2.880h (Médicos) / 1.040h (Não Médicos)',
+                vagas: '10 vagas Médicos + 21 Não Médicos',
+                vagasShort: '31 vagas (10 Médicos + 21 Não Médicos)',
+                inicio: '01/04/2026',
+                prereq: 'Para graduados em Medicina: Residência Médica em Clínica Médica (CNRM) ou declaração de 4 anos de atuação supervisionada com RQE. Para não médicos: Graduação reconhecida pelo MEC em qualquer área (exceto licenciatura curta).',
                 coordinator: 'Profa. Dra. Yolanda Boechat',
                 image: 'assets/img/especialidades/gerontologia.jpg',
                 rgb: '122, 74, 38',
                 rgbDark: '76, 44, 20',
-                desc: 'Avaliação geriátrica ampla, síndromes demenciais, polifarmácia no idoso, fragilidade clínica e reabilitação funcional integrada.',
+                desc: 'Avaliação geriátrica ampla interdisciplinar, síndromes demenciais, polifarmácia no idoso, fragilidade clínica e reabilitação funcional integrada.',
                 email: 'geriatria.uff@gmail.com'
             },
             {
                 id: 'radiologia-toracica',
-                title: 'Radiologia Torácica',
+                title: 'Radiologia e Diagnóstico por Imagem do Tórax',
                 category: 'Diagnóstico Avançado',
-                duration: '1 Ano',
-                hours: '1.920 horas',
-                vagas: '04 vagas',
+                duration: '1 Ano e 6 Meses',
+                hours: '1.864 horas',
+                vagas: '02 vagas + Cadastro Reserva (CR)',
+                vagasShort: '02 vagas + CR*',
+                inicio: '30/03/2026',
+                prereq: 'Graduação em Medicina e Residência Médica ou Pós-Graduação Lato Sensu (3 anos) credenciada pelo Colégio Brasileiro de Radiologia (CBR).',
                 coordinator: 'Prof. Dr. Edson Marchiori',
                 image: 'assets/img/especialidades/radiologia-toracica.jpg',
                 rgb: '28, 56, 98',
@@ -1307,8 +1353,11 @@
                 title: 'Análises Clínicas',
                 category: 'Patologia Laboratorial',
                 duration: '1 Ano',
-                hours: '1.600 horas',
-                vagas: '08 vagas',
+                hours: '360 horas',
+                vagas: '22 vagas AC + 03 Estrangeiros',
+                vagasShort: '25 vagas (22 AC + 3 Ext)',
+                inicio: '24/04/2026',
+                prereq: 'Graduação reconhecida pelo MEC em Medicina, Farmácia, Farmácia-Bioquímica, Biologia ou Biomedicina.',
                 coordinator: 'Coordenação de Patologia Clínica UFF',
                 image: 'assets/img/especialidades/analises-clinicas.jpg',
                 rgb: '26, 94, 58',
@@ -1379,7 +1428,7 @@
                         <div class="spec-card-gradient"></div>
                         <div class="spec-card-body">
                             <h3 class="spec-card-title">${spec.title}</h3>
-                            <p class="spec-card-meta">${spec.vagas} • ${spec.duration} • ${spec.hours}</p>
+                            <p class="spec-card-meta">${spec.vagasShort} • ${spec.duration} • ${spec.hours}</p>
                             <div class="spec-card-btn">
                                 <span>Explorar Programa</span>
                                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1523,9 +1572,15 @@
                         <div class="flex flex-wrap items-center gap-2.5 text-xs text-slate-300 mt-2 font-mono">
                             <span><strong>Duração:</strong> ${spec.duration}</span>
                             <span class="text-white/30">•</span>
-                            <span><strong>Carga Horária:</strong> ${spec.hours}</span>
+                            <span><strong>Carga:</strong> ${spec.hours}</span>
+                            <span class="text-white/30">•</span>
+                            <span class="text-brand-glow"><strong>Início:</strong> ${spec.inicio}</span>
                         </div>
                         <p class="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed font-light">${spec.desc}</p>
+                        <div class="mt-3 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300 leading-relaxed">
+                            <span class="font-mono text-brand-gold font-bold uppercase block text-[10px] mb-1">Pré-Requisito do Edital:</span>
+                            ${spec.prereq}
+                        </div>
                     </div>
                     <div class="pt-4 mt-4 border-t border-white/10 flex items-center justify-between gap-3">
                         <span class="text-[11px] text-slate-400 truncate font-mono">Coord: <strong class="text-slate-200 font-medium">${spec.coordinator.replace('Prof. ', '').replace('Profa. ', '')}</strong></span>
@@ -1542,61 +1597,69 @@
         buildAccessibleSpecialtyList();
 
         // -------------------------------------------------------------
-        // 3. MODAL DE DETALHES DA ESPECIALIDADE
+        // 3. MODAL DE DETALHES DA ESPECIALIDADE (COM DADOS DO EDITAL)
         // -------------------------------------------------------------
         const modal = document.getElementById('specialty-modal');
         const modalContent = document.getElementById('modal-content');
         const modalClose = document.getElementById('modal-close');
 
         function openSpecialtyModal(spec) {
+            isUserInteracting = true;
             modalContent.innerHTML = `
                 <div class="flex items-center justify-between text-xs font-mono pb-3 mb-3 border-b border-white/10">
                     <span class="text-brand-glow font-bold uppercase tracking-wider text-[11px]">
-                        Faculdade de Medicina UFF
+                        Edital Unificado CMM • Faculdade de Medicina UFF
                     </span>
-                    <span class="text-brand-gold font-bold text-xs">
+                    <span class="text-brand-gold font-bold text-xs bg-brand-gold/15 px-3 py-1 rounded-full">
                         ${spec.vagas}
                     </span>
                 </div>
 
-                <h2 class="font-black text-3xl text-white mt-1">${spec.title}</h2>
+                <h2 class="font-black text-2xl sm:text-3xl text-white mt-1">${spec.title}</h2>
+                <div class="text-xs font-mono text-slate-400 mt-1 uppercase tracking-wider">${spec.category} • Início das Aulas: <strong class="text-white">${spec.inicio}</strong></div>
                 
-                <div class="grid grid-cols-2 gap-3 my-6 text-xs sm:text-sm">
-                    <div class="p-4 rounded-xl bg-brand-base border border-white/10">
-                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Duração do Programa</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-5 text-xs sm:text-sm">
+                    <div class="p-3.5 rounded-xl bg-brand-base border border-white/10">
+                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Duração Oficial</span>
                         <strong class="text-white text-base font-bold">${spec.duration}</strong>
                     </div>
-                    <div class="p-4 rounded-xl bg-brand-base border border-white/10">
+                    <div class="p-3.5 rounded-xl bg-brand-base border border-white/10">
                         <span class="text-slate-400 block text-[11px] uppercase font-mono">Carga Horária Total</span>
                         <strong class="text-white text-base font-bold">${spec.hours}</strong>
                     </div>
-                    <div class="p-4 rounded-xl bg-brand-base border border-white/10 col-span-2">
-                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Coordenação Acadêmica</span>
-                        <strong class="text-white text-base font-bold">${spec.coordinator}</strong>
+                    <div class="p-3.5 rounded-xl bg-brand-base border border-white/10 sm:col-span-2">
+                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Pré-Requisito Regulamentar (Edital)</span>
+                        <strong class="text-brand-glow font-medium text-xs sm:text-sm leading-relaxed block mt-1">${spec.prereq}</strong>
                     </div>
-                    <div class="p-4 rounded-xl bg-brand-base border border-white/10 col-span-2">
-                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Pré-Requisito Regulamentar</span>
-                        <strong class="text-brand-glow font-bold">Graduação em Medicina em instituição reconhecida pelo MEC ou diploma revalidado.</strong>
+                    <div class="p-3.5 rounded-xl bg-brand-base border border-white/10 sm:col-span-2">
+                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Coordenação Acadêmica</span>
+                        <strong class="text-white text-sm font-bold">${spec.coordinator}</strong>
                     </div>
                 </div>
 
                 <p class="text-sm text-slate-200 leading-relaxed mb-6 font-light">${spec.desc}</p>
 
                 <div class="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-white/10">
-                    <a href="mailto:${spec.email}" class="w-full sm:w-auto px-6 py-3 rounded-full text-xs font-bold text-white bg-brand-emerald hover:bg-emerald-500 text-center transition-all shadow-glow-emerald">
-                        Falar com a Coordenação (${spec.email})
+                    <a href="mailto:${spec.email}" class="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs font-bold text-white bg-brand-emerald hover:bg-emerald-500 text-center transition-all shadow-glow-emerald">
+                        Coordenação: ${spec.email}
                     </a>
-                    <a href="https://editais.uff.br/10496" target="_blank" class="w-full sm:w-auto px-6 py-3 rounded-full text-xs font-semibold text-slate-300 hover:text-white glass-pill text-center transition-all">
-                        Consultar Programa no Edital
+                    <a href="mailto:concursos.cmm@id.uff.br" class="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white glass-pill text-center transition-all">
+                        Dúvidas Edital: concursos.cmm@id.uff.br
                     </a>
                 </div>
             `;
             modal.classList.remove('opacity-0', 'pointer-events-none');
         }
 
-        modalClose.onclick = () => modal.classList.add('opacity-0', 'pointer-events-none');
+        modalClose.onclick = () => {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => { isUserInteracting = false; }, 1500);
+        };
         modal.onclick = (e) => {
-            if (e.target === modal) modal.classList.add('opacity-0', 'pointer-events-none');
+            if (e.target === modal) {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => { isUserInteracting = false; }, 1500);
+            }
         };
 
         // -------------------------------------------------------------
