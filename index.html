@@ -457,8 +457,8 @@
             position: relative;
             height: 275px;
             overflow: hidden;
-            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 12%, #000 25%, #000 75%, rgba(0, 0, 0, 0.4) 88%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 12%, #000 25%, #000 75%, rgba(0, 0, 0, 0.4) 88%, transparent 100%);
+            mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.35) 12%, #000 26%, #000 74%, rgba(0, 0, 0, 0.35) 88%, transparent 100%);
+            -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.35) 12%, #000 26%, #000 74%, rgba(0, 0, 0, 0.35) 88%, transparent 100%);
         }
 
         @keyframes rollCreditsUp {
@@ -500,7 +500,7 @@
             font-weight: 700;
             font-size: 1.2rem;
             letter-spacing: -0.015em;
-            color: rgba(255, 255, 255, 0.88);
+            color: rgba(255, 255, 255, 0.90);
             transition: color 0.25s ease, transform 0.25s ease, text-shadow 0.25s ease;
             white-space: nowrap;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
@@ -526,6 +526,19 @@
             .credits-viewport {
                 overflow-y: auto;
             }
+        }
+
+        /* Screen reader utility */
+        .sr-only {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
         }
 
         /* Parallax image zoom effect */
@@ -891,15 +904,9 @@
                 </div>
 
                 <!-- Caixa Cinematográfica de Créditos com Fades Superior e Inferior -->
-                <div class="relative max-w-xl mx-auto rounded-3xl bg-brand-surface/40 border border-white/10 p-3 sm:p-5 shadow-2xl backdrop-blur-md overflow-hidden">
+                <div class="relative max-w-xl mx-auto rounded-3xl bg-brand-surface/60 border border-brand-emerald/30 p-3 sm:p-5 shadow-[0_0_30px_2px_rgba(0,158,94,0.22)] backdrop-blur-md overflow-hidden">
                     
-                    <!-- Fade de Cima (Gradiente Suave) -->
-                    <div class="absolute inset-x-0 top-0 h-16 sm:h-20 bg-gradient-to-b from-brand-base via-brand-base/80 to-transparent pointer-events-none z-20 rounded-t-3xl"></div>
-                    
-                    <!-- Fade de Baixo (Gradiente Suave) -->
-                    <div class="absolute inset-x-0 bottom-0 h-16 sm:h-20 bg-gradient-to-t from-brand-base via-brand-base/80 to-transparent pointer-events-none z-20 rounded-b-3xl"></div>
-
-                    <!-- Viewport de Rolagem (Exibe pelo menos 5 disciplinas ao mesmo tempo: 275px / 55px = 5 visíveis) -->
+                    <!-- Viewport de Rolagem (Exibe pelo menos 5 disciplinas ao mesmo tempo: 275px / 55px = 5 visíveis com fade natural) -->
                     <div id="credits-viewport" class="credits-viewport relative h-[275px] overflow-hidden select-none focus:outline-none" tabindex="0" role="region" aria-label="Créditos em rolagem contínua das 13 especialidades médicas">
                         <div id="credits-roll" class="credits-roll">
                             <!-- Injetado dinamicamente via JS em loop infinito -->
