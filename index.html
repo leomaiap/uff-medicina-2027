@@ -270,7 +270,6 @@
             gap: 1.5rem;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             padding: 1.25rem 0.25rem 3rem 0.25rem;
             scrollbar-width: none;
@@ -890,21 +889,17 @@
             <!-- ============================================================== -->
             <div class="max-w-4xl mx-auto px-4 md:px-12 mt-12 md:mt-16 pt-10 border-t border-white/10">
                 
-                <div class="text-center mb-6">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-emerald/15 border border-brand-emerald/30 text-brand-glow font-mono text-[11px] font-bold uppercase tracking-wider mb-2">
-                        <span>✦</span>
-                        <span>Lista Completa • 13 Especialidades Oficiais</span>
-                    </div>
+                <div class="text-center mb-4">
                     <h3 class="font-sans font-bold text-2xl sm:text-3xl text-white">
                         Disciplinas Ofertadas no Concurso
                     </h3>
-                    <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl mx-auto font-light">
+                    <p class="text-xs sm:text-sm text-slate-400 mt-1.5 max-w-xl mx-auto font-light">
                         Passe o cursor ou toque para pausar • Clique na disciplina para ver detalhes e pré-requisitos
                     </p>
                 </div>
 
-                <!-- Caixa Cinematográfica de Créditos com Fades Superior e Inferior -->
-                <div class="relative max-w-xl mx-auto rounded-3xl bg-brand-surface/60 border border-brand-emerald/30 p-3 sm:p-5 shadow-[0_0_30px_2px_rgba(0,158,94,0.22)] backdrop-blur-md overflow-hidden">
+                <!-- Rolagem Cinematográfica Livre de Disciplinas (Sem retângulo rígido, letras flutuando com fade superior e inferior) -->
+                <div class="relative max-w-xl mx-auto overflow-hidden">
                     
                     <!-- Viewport de Rolagem (Exibe pelo menos 5 disciplinas ao mesmo tempo: 275px / 55px = 5 visíveis com fade natural) -->
                     <div id="credits-viewport" class="credits-viewport relative h-[275px] overflow-hidden select-none focus:outline-none" tabindex="0" role="region" aria-label="Créditos em rolagem contínua das 13 especialidades médicas">
@@ -913,13 +908,14 @@
                         </div>
                     </div>
 
-                    <!-- Rodapé com status e botão de pausa/reprodução -->
-                    <div class="flex items-center justify-between pt-3 px-3 text-[11px] font-mono text-slate-400 border-t border-white/5 relative z-30">
-                        <span class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <!-- Rodapé discreto sem caixa -->
+                    <div class="flex items-center justify-center gap-3 pt-3 text-[12px] font-mono text-slate-400">
+                        <span class="flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                             <span class="text-slate-300">13 Disciplinas Oficiais UFF</span>
                         </span>
-                        <button id="credits-toggle-btn" class="hover:text-brand-gold text-slate-300 transition-colors flex items-center gap-1.5 py-0.5 px-2 rounded-lg bg-white/5 hover:bg-white/10" aria-label="Pausar ou reproduzir rolagem dos créditos">
+                        <span class="text-white/20">•</span>
+                        <button id="credits-toggle-btn" class="hover:text-brand-gold text-slate-300 transition-colors flex items-center gap-1.5 py-0.5 px-2.5 rounded-full bg-white/5 hover:bg-white/10" aria-label="Pausar ou reproduzir rolagem dos créditos">
                             <span id="credits-toggle-icon">⏸</span>
                             <span id="credits-toggle-label">Pausar</span>
                         </button>
@@ -1478,26 +1474,45 @@
         ];
 
         // -------------------------------------------------------------
-        // 2. RENDERIZAR CARDS COM COR PREDOMINANTE DA IMAGEM & CICLO EM LOOP
+        // 2. RENDERIZAR CARDS COM COR PREDOMINANTE & LOOP CIRCULAR INFINITO
         // -------------------------------------------------------------
         const specTrack = document.getElementById('spec-cards-track');
         let autoCycleTimer = null;
         let isAutoLooping = true;
         let isUserInteracting = false;
         let resumeTimeout = null;
+        let wrapTimer = null;
 
-        function getScrollStep() {
+        function getCardStep() {
             const firstCard = specTrack ? specTrack.querySelector('.spec-card') : null;
-            return firstCard ? firstCard.offsetWidth + 24 : 320;
+            if (!firstCard) return 320;
+            const nextCard = firstCard.nextElementSibling;
+            if (nextCard) {
+                return nextCard.offsetLeft - firstCard.offsetLeft;
+            }
+            return firstCard.offsetWidth + 24;
+        }
+
+        function checkSeamlessWrap() {
+            if (!specTrack) return;
+            const step = getCardStep();
+            const oneSetWidth = specialties.length * step;
+            if (oneSetWidth <= 0) return;
+
+            // Se avançou além do segundo conjunto, ajusta 1 conjunto para trás (imperceptível)
+            if (specTrack.scrollLeft >= oneSetWidth * 2) {
+                specTrack.scrollLeft -= oneSetWidth;
+            }
+            // Se recuou antes do segundo conjunto, ajusta 1 conjunto para frente (imperceptível)
+            else if (specTrack.scrollLeft <= oneSetWidth * 0.3) {
+                specTrack.scrollLeft += oneSetWidth;
+            }
         }
 
         function advanceCard() {
             if (!specTrack) return;
-            const halfWidth = specTrack.scrollWidth / 2;
-            if (specTrack.scrollLeft >= halfWidth - 20) {
-                specTrack.scrollLeft -= halfWidth;
-            }
-            specTrack.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+            const step = getCardStep();
+            specTrack.scrollBy({ left: step, behavior: 'smooth' });
         }
 
         function startAutoCycle() {
@@ -1517,8 +1532,8 @@
         function buildSpecialtyCards() {
             if (!specTrack) return;
             
-            // Duplica os itens para criar um carrossel em loop infinito sem travamento
-            const loopItems = [...specialties, ...specialties];
+            // Buffer triplo (39 cards) para circulação infinita sem fim e sem sobressaltos
+            const loopItems = [...specialties, ...specialties, ...specialties];
 
             specTrack.innerHTML = loopItems.map((spec, index) => {
                 const realIndex = index % specialties.length;
@@ -1550,6 +1565,12 @@
                 `;
             }).join('');
 
+            // Inicia no conjunto do meio para permitir rolagem bidirecional circular infinita
+            requestAnimationFrame(() => {
+                const step = getCardStep();
+                specTrack.scrollLeft = specialties.length * step;
+            });
+
             // Click & keyboard handler to open specialty modal
             let dragMoved = false;
             specTrack.querySelectorAll('.spec-card').forEach((card) => {
@@ -1567,17 +1588,14 @@
                 });
             });
 
-            // Prev / Next navigation buttons with loop wrap-around
+            // Prev / Next navigation buttons
             const prevBtn = document.getElementById('spec-prev');
             const nextBtn = document.getElementById('spec-next');
             if (prevBtn) {
                 prevBtn.addEventListener('click', () => {
                     isUserInteracting = true;
-                    const halfWidth = specTrack.scrollWidth / 2;
-                    if (specTrack.scrollLeft <= getScrollStep()) {
-                        specTrack.scrollLeft += halfWidth;
-                    }
-                    specTrack.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+                    const step = getCardStep();
+                    specTrack.scrollBy({ left: -step, behavior: 'smooth' });
                     clearTimeout(resumeTimeout);
                     resumeTimeout = setTimeout(() => { isUserInteracting = false; }, 3500);
                 });
@@ -1621,14 +1639,10 @@
                 resumeTimeout = setTimeout(() => { isUserInteracting = false; }, 2800);
             }, { passive: true });
 
-            // Seamless wrap check on scroll
+            // Wrap transparente quando o scroll termina de assentar
             specTrack.addEventListener('scroll', () => {
-                const halfWidth = specTrack.scrollWidth / 2;
-                if (specTrack.scrollLeft >= halfWidth * 1.6) {
-                    specTrack.scrollLeft -= halfWidth;
-                } else if (specTrack.scrollLeft <= 5) {
-                    specTrack.scrollLeft += halfWidth;
-                }
+                clearTimeout(wrapTimer);
+                wrapTimer = setTimeout(checkSeamlessWrap, 120);
             }, { passive: true });
 
             // Mouse drag-to-scroll for desktop
