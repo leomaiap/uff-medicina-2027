@@ -611,7 +611,8 @@
                 background-position: 0 0, 50% 18%;
             }
             .hero-layer-text {
-                padding-top: 0.25rem;
+                padding-top: 0;
+                margin-top: -1.75rem !important;
             }
             .hero-title {
                 display: block;
@@ -752,7 +753,7 @@
 
         <!-- TOP NAVIGATION BAR (z-50: Logos + Dúvidas, Edital, Inscreva-se) -->
         <header id="main-nav" class="relative z-50 w-full pt-[max(1rem,env(safe-area-inset-top))] md:pt-5 px-4 md:px-12 lg:px-16">
-            <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 py-2 md:py-3 pl-4 pr-2 md:px-6 rounded-full bg-brand-base/50 backdrop-blur-md border border-white/15">
+            <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 py-2 md:py-3 pl-3.5 pr-2.5 md:px-6 rounded-full bg-brand-base/50 backdrop-blur-md border border-white/15">
                 
                 <!-- Logos FacMed & UFF -->
                 <a href="#hero" class="flex items-center gap-2.5 sm:gap-4 group shrink-0">
@@ -761,17 +762,17 @@
                     <img src="assets/img/logo-uff-white.png" alt="Universidade Federal Fluminense" class="h-5 sm:h-7 md:h-8 w-auto opacity-95">
                 </a>
 
-                <!-- Links Simplificados: Apenas Dúvidas, Edital e Inscreva-se -->
-                <div class="flex items-center gap-4 sm:gap-8">
-                    <a href="#faq" class="hidden sm:inline text-xs sm:text-sm font-semibold text-white/90 hover:text-white transition-colors">
+                <!-- Links: Apenas Inscreva-se no mobile; Dúvidas e Edital no desktop -->
+                <div class="flex items-center gap-4 sm:gap-8 shrink-0">
+                    <a href="#faq" class="hidden md:inline text-xs sm:text-sm font-semibold text-white/90 hover:text-white transition-colors">
                         Dúvidas
                     </a>
                     <a href="https://editais.uff.br/10496" target="_blank" rel="noopener noreferrer" 
-                       class="hidden min-[400px]:flex text-xs sm:text-sm font-semibold text-white/90 hover:text-white transition-colors items-center gap-1">
+                       class="hidden md:flex text-xs sm:text-sm font-semibold text-white/90 hover:text-white transition-colors items-center gap-1">
                         <span>Edital</span>
                         <svg class="w-3.5 h-3.5 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </a>
-                    <a href="#cronograma" class="avenora-btn !py-1.5 !pl-4 sm:!pl-5 !pr-1.5 !gap-2.5 sm:!gap-3 text-xs sm:text-sm whitespace-nowrap">
+                    <a href="#cronograma" class="avenora-btn shrink-0 !py-1.5 !pl-4 sm:!pl-5 !pr-1.5 !gap-2.5 sm:!gap-3 text-xs sm:text-sm whitespace-nowrap">
                         <span>Inscreva-se<span class="hidden sm:inline"> 2027</span></span>
                         <span class="avenora-btn-circle !w-8 !h-8">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
