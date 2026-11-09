@@ -296,6 +296,7 @@
             --card-rgb: 15, 54, 85;
             --card-rgb-dark: 9, 34, 56;
             position: relative;
+            isolation: isolate;
             flex: 0 0 282px;
             height: 415px;
             border-radius: 26px;
@@ -330,6 +331,36 @@
             box-shadow:
                 0 32px 60px -10px rgba(var(--card-rgb), 0.78),
                 0 12px 26px -6px rgba(0, 0, 0, 0.55);
+        }
+
+        .spec-card-number {
+            position: absolute;
+            top: 0.85rem;
+            left: 1.15rem;
+            z-index: 4;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 4.5rem;
+            line-height: 0.82;
+            letter-spacing: -0.05em;
+            color: rgb(var(--card-rgb));
+            mix-blend-mode: multiply;
+            opacity: 0.8;
+            pointer-events: none;
+            user-select: none;
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @media (min-width: 640px) {
+            .spec-card-number {
+                top: 1rem;
+                left: 1.25rem;
+                font-size: 5.2rem;
+            }
+        }
+
+        .spec-card:hover .spec-card-number {
+            transform: scale(1.05);
         }
 
         .spec-card-img-wrap {
@@ -497,7 +528,7 @@
         .credits-item-text {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 800;
-            font-size: 1.65rem;
+            font-size: clamp(1.2rem, 5.2vw, 1.65rem);
             letter-spacing: -0.025em;
             color: rgba(255, 255, 255, 0.92);
             transition: color 0.25s ease, transform 0.25s ease, text-shadow 0.25s ease;
@@ -1243,6 +1274,40 @@
         // -------------------------------------------------------------
         const specialties = [
             {
+                id: 'analises-clinicas',
+                title: 'Análises Clínicas',
+                category: 'Patologia Laboratorial',
+                duration: '1 Ano',
+                hours: '360 horas',
+                vagas: '22 vagas AC + 03 Estrangeiros',
+                vagasShort: '25 vagas (22 AC + 3 Ext)',
+                inicio: '24/04/2026',
+                prereq: 'Graduação reconhecida pelo MEC em Medicina, Farmácia, Farmácia-Bioquímica, Biologia ou Biomedicina.',
+                coordinator: 'Coordenação de Patologia Clínica UFF',
+                image: 'assets/img/especialidades/analises-clinicas.jpg',
+                rgb: '26, 94, 58',
+                rgbDark: '14, 56, 34',
+                desc: 'Bioquímica clínica de alta precisão, hematologia laboratorial automatizada, imunologia diagnóstica e controle de qualidade laboratorial.',
+                email: 'analisesclinicas.uff@gmail.com'
+            },
+            {
+                id: 'anestesiologia',
+                title: 'Anestesiologia',
+                category: 'Cirúrgica & Crítica',
+                duration: '3 Anos',
+                hours: '8.640 horas',
+                vagas: '02 vagas + Cadastro Reserva (CR)',
+                vagasShort: '02 vagas + CR*',
+                inicio: '30/03/2026',
+                prereq: 'Graduação em Medicina em instituição reconhecida pelo MEC ou diploma revalidado no Brasil.',
+                coordinator: 'Prof. Dr. Ismar Lima Cavalcanti',
+                image: 'assets/img/especialidades/anestesiologia.jpg',
+                rgb: '26, 92, 102',
+                rgbDark: '14, 56, 64',
+                desc: 'Atuação prática em anestesia para procedimentos de grande porte, neuroanestesia, analgesia pós-operatória avançada e manejo das vias aéreas difíceis.',
+                email: 'anestesiologia.uff@gmail.com'
+            },
+            {
                 id: 'cardiologia',
                 title: 'Cardiologia',
                 category: 'Clínica Médica',
@@ -1277,21 +1342,55 @@
                 email: 'dermatologia.uff@gmail.com'
             },
             {
-                id: 'anestesiologia',
-                title: 'Anestesiologia',
-                category: 'Cirúrgica & Crítica',
-                duration: '3 Anos',
-                hours: '8.640 horas',
+                id: 'gastroenterologia',
+                title: 'Gastroenterologia',
+                category: 'Clínica Médica',
+                duration: '2 Anos',
+                hours: '5.760 horas',
+                vagas: '01 vaga + Cadastro Reserva (CR)',
+                vagasShort: '01 vaga + CR*',
+                inicio: '30/03/2026',
+                prereq: 'Residência Médica credenciada ou especialização em Clínica Médica com duração mínima de 2 anos.',
+                coordinator: 'Prof. Dr. Cyrla Zaltman',
+                image: 'assets/img/especialidades/gastroenterologia.jpg',
+                rgb: '106, 52, 26',
+                rgbDark: '66, 30, 14',
+                desc: 'Abordagem avançada em doenças inflamatórias intestinais, hepatologia, distúrbios da motilidade digestiva e endoscopia diagnóstica.',
+                email: 'gastro.uff@gmail.com'
+            },
+            {
+                id: 'gerontologia',
+                title: 'Gerontologia e Geriatria Interdisciplinar',
+                category: 'Envelhecimento Humano',
+                duration: '2 Anos (Médicos) / 1,5 Ano (Não Médicos)',
+                hours: '2.880h (Médicos) / 1.040h (Não Médicos)',
+                vagas: '10 vagas Médicos + 21 Não Médicos',
+                vagasShort: '31 vagas (10 Médicos + 21 Não Médicos)',
+                inicio: '01/04/2026',
+                prereq: 'Para graduados em Medicina: Residência Médica em Clínica Médica (CNRM) ou declaração de 4 anos de atuação supervisionada com RQE. Para não médicos: Graduação reconhecida pelo MEC em qualquer área (exceto licenciatura curta).',
+                coordinator: 'Profa. Dra. Yolanda Boechat',
+                image: 'assets/img/especialidades/gerontologia.jpg',
+                rgb: '122, 74, 38',
+                rgbDark: '76, 44, 20',
+                desc: 'Avaliação geriátrica ampla interdisciplinar, síndromes demenciais, polifarmácia no idoso, fragilidade clínica e reabilitação funcional integrada.',
+                email: 'geriatria.uff@gmail.com'
+            },
+            {
+                id: 'hematologia',
+                title: 'Hematologia Clínica',
+                category: 'Onco-Hematologia',
+                duration: '2 Anos',
+                hours: '3.690 horas',
                 vagas: '02 vagas + Cadastro Reserva (CR)',
                 vagasShort: '02 vagas + CR*',
                 inicio: '30/03/2026',
-                prereq: 'Graduação em Medicina em instituição reconhecida pelo MEC ou diploma revalidado no Brasil.',
-                coordinator: 'Prof. Dr. Ismar Lima Cavalcanti',
-                image: 'assets/img/especialidades/anestesiologia.jpg',
-                rgb: '26, 92, 102',
-                rgbDark: '14, 56, 64',
-                desc: 'Atuação prática em anestesia para procedimentos de grande porte, neuroanestesia, analgesia pós-operatória avançada e manejo das vias aéreas difíceis.',
-                email: 'anestesiologia.uff@gmail.com'
+                prereq: 'Graduação em Medicina com experiência comprovada de pelo menos 1 ano em Clínica Médica, urgência/emergência ou terapia intensiva.',
+                coordinator: 'Prof. Dr. Wolmar Pulcheri',
+                image: 'assets/img/especialidades/hematologia.jpg',
+                rgb: '108, 22, 48',
+                rgbDark: '66, 12, 28',
+                desc: 'Investigação e conduta em anemias complexas, hemostasia e distúrbios da coagulação, leucemias, linfomas e medicina transfusional.',
+                email: 'hemato.uff@gmail.com'
             },
             {
                 id: 'neurologia',
@@ -1328,40 +1427,6 @@
                 email: 'pediatria.uff@gmail.com'
             },
             {
-                id: 'radiologia',
-                title: 'Radiologia',
-                category: 'Diagnóstico por Imagem',
-                duration: '3 Anos',
-                hours: '4.815 horas',
-                vagas: '02 vagas + Cadastro Reserva (CR)',
-                vagasShort: '02 vagas + CR*',
-                inicio: '30/03/2026',
-                prereq: 'Graduação em Medicina em instituição reconhecida pelo MEC ou diploma revalidado no Brasil.',
-                coordinator: 'Prof. Dr. Alair Augusto Sarmet M. D. dos Santos',
-                image: 'assets/img/especialidades/radiologia.jpg',
-                rgb: '18, 68, 122',
-                rgbDark: '10, 40, 78',
-                desc: 'Treinamento completo em ressonância magnética, tomografia computadorizada multislice, ultrassonografia com Doppler e biópsias guiadas por imagem.',
-                email: 'radiologia.uff@gmail.com'
-            },
-            {
-                id: 'gastroenterologia',
-                title: 'Gastroenterologia',
-                category: 'Clínica Médica',
-                duration: '2 Anos',
-                hours: '5.760 horas',
-                vagas: '01 vaga + Cadastro Reserva (CR)',
-                vagasShort: '01 vaga + CR*',
-                inicio: '30/03/2026',
-                prereq: 'Residência Médica credenciada ou especialização em Clínica Médica com duração mínima de 2 anos.',
-                coordinator: 'Prof. Dr. Cyrla Zaltman',
-                image: 'assets/img/especialidades/gastroenterologia.jpg',
-                rgb: '106, 52, 26',
-                rgbDark: '66, 30, 14',
-                desc: 'Abordagem avançada em doenças inflamatórias intestinais, hepatologia, distúrbios da motilidade digestiva e endoscopia diagnóstica.',
-                email: 'gastro.uff@gmail.com'
-            },
-            {
                 id: 'pneumologia',
                 title: 'Pneumologia',
                 category: 'Clínica Médica',
@@ -1396,38 +1461,21 @@
                 email: 'psiquiatria.uff@gmail.com'
             },
             {
-                id: 'hematologia',
-                title: 'Hematologia Clínica',
-                category: 'Onco-Hematologia',
-                duration: '2 Anos',
-                hours: '3.690 horas',
+                id: 'radiologia',
+                title: 'Radiologia',
+                category: 'Diagnóstico por Imagem',
+                duration: '3 Anos',
+                hours: '4.815 horas',
                 vagas: '02 vagas + Cadastro Reserva (CR)',
                 vagasShort: '02 vagas + CR*',
                 inicio: '30/03/2026',
-                prereq: 'Graduação em Medicina com experiência comprovada de pelo menos 1 ano em Clínica Médica, urgência/emergência ou terapia intensiva.',
-                coordinator: 'Prof. Dr. Wolmar Pulcheri',
-                image: 'assets/img/especialidades/hematologia.jpg',
-                rgb: '108, 22, 48',
-                rgbDark: '66, 12, 28',
-                desc: 'Investigação e conduta em anemias complexas, hemostasia e distúrbios da coagulação, leucemias, linfomas e medicina transfusional.',
-                email: 'hemato.uff@gmail.com'
-            },
-            {
-                id: 'gerontologia',
-                title: 'Gerontologia e Geriatria Interdisciplinar',
-                category: 'Envelhecimento Humano',
-                duration: '2 Anos (Médicos) / 1,5 Ano (Não Médicos)',
-                hours: '2.880h (Médicos) / 1.040h (Não Médicos)',
-                vagas: '10 vagas Médicos + 21 Não Médicos',
-                vagasShort: '31 vagas (10 Médicos + 21 Não Médicos)',
-                inicio: '01/04/2026',
-                prereq: 'Para graduados em Medicina: Residência Médica em Clínica Médica (CNRM) ou declaração de 4 anos de atuação supervisionada com RQE. Para não médicos: Graduação reconhecida pelo MEC em qualquer área (exceto licenciatura curta).',
-                coordinator: 'Profa. Dra. Yolanda Boechat',
-                image: 'assets/img/especialidades/gerontologia.jpg',
-                rgb: '122, 74, 38',
-                rgbDark: '76, 44, 20',
-                desc: 'Avaliação geriátrica ampla interdisciplinar, síndromes demenciais, polifarmácia no idoso, fragilidade clínica e reabilitação funcional integrada.',
-                email: 'geriatria.uff@gmail.com'
+                prereq: 'Graduação em Medicina em instituição reconhecida pelo MEC ou diploma revalidado no Brasil.',
+                coordinator: 'Prof. Dr. Alair Augusto Sarmet M. D. dos Santos',
+                image: 'assets/img/especialidades/radiologia.jpg',
+                rgb: '18, 68, 122',
+                rgbDark: '10, 40, 78',
+                desc: 'Treinamento completo em ressonância magnética, tomografia computadorizada multislice, ultrassonografia com Doppler e biópsias guiadas por imagem.',
+                email: 'radiologia.uff@gmail.com'
             },
             {
                 id: 'radiologia-toracica',
@@ -1445,23 +1493,6 @@
                 rgbDark: '16, 34, 62',
                 desc: 'Especialização de referência internacional em tomografia computadorizada de alta resolução do tórax e padrões tomográficos pleuropulmonares.',
                 email: 'edmarchiori@gmail.com'
-            },
-            {
-                id: 'analises-clinicas',
-                title: 'Análises Clínicas',
-                category: 'Patologia Laboratorial',
-                duration: '1 Ano',
-                hours: '360 horas',
-                vagas: '22 vagas AC + 03 Estrangeiros',
-                vagasShort: '25 vagas (22 AC + 3 Ext)',
-                inicio: '24/04/2026',
-                prereq: 'Graduação reconhecida pelo MEC em Medicina, Farmácia, Farmácia-Bioquímica, Biologia ou Biomedicina.',
-                coordinator: 'Coordenação de Patologia Clínica UFF',
-                image: 'assets/img/especialidades/analises-clinicas.jpg',
-                rgb: '26, 94, 58',
-                rgbDark: '14, 56, 34',
-                desc: 'Bioquímica clínica de alta precisão, hematologia laboratorial automatizada, imunologia diagnóstica e controle de qualidade laboratorial.',
-                email: 'analisesclinicas.uff@gmail.com'
             }
         ];
 
@@ -1536,6 +1567,7 @@
                              role="button"
                              tabindex="0"
                              aria-label="Ver detalhes de ${spec.title}">
+                        <span class="spec-card-number">${realIndex + 1}</span>
                         <div class="spec-card-img-wrap">
                             <img src="${spec.image}"
                                  alt="${spec.title} - Faculdade de Medicina da UFF"
