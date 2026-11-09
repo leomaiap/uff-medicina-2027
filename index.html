@@ -2,7 +2,7 @@
 <html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Concurso Unificado Lato Sensu 2027 | Faculdade de Medicina UFF</title>
     
     <!-- SEO & Metadata -->
@@ -593,6 +593,114 @@
         ::-webkit-scrollbar-track { background: #021813; }
         ::-webkit-scrollbar-thumb { background: #006843; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #10B981; }
+        /* ==============================================================
+           MOBILE (iPhone / Android) — hero espelhando o desktop
+           ============================================================== */
+        @media (max-width: 767px) {
+            #hero {
+                min-height: 100vh;
+                min-height: 100svh;
+            }
+            .hero-layer-bg {
+                background-position: 0 0, 50% 18%;
+            }
+            .hero-layer-text {
+                padding-top: 0.75rem;
+            }
+            .hero-title {
+                font-size: 15vw;
+                letter-spacing: -0.045em;
+            }
+            .hero-layer-doctors {
+                top: 9%;
+            }
+            .hero-doctors-img {
+                object-position: 50% 0%;
+            }
+            .hero-bottom-vignette {
+                height: 62%;
+                background: linear-gradient(180deg, transparent 0%, rgba(2, 24, 19, 0.55) 30%, rgba(2, 24, 19, 0.92) 62%, #021813 100%);
+            }
+            .avenora-btn {
+                padding-left: 1.4rem;
+                gap: 1rem;
+            }
+
+            /* Especialidades */
+            #especialidades {
+                height: 100vh;
+                height: 100svh;
+                min-height: 700px;
+            }
+            .tc-details {
+                top: 96px;
+            }
+            .tc-place-box { height: 36px; }
+            .tc-place-box .tc-text {
+                padding-top: 12px;
+                font-size: 12px;
+            }
+            .tc-title-box-1,
+            .tc-title-box-2 {
+                height: 38px;
+            }
+            .tc-title-1,
+            .tc-title-2 {
+                font-size: 32px;
+                line-height: 1.12;
+            }
+            .tc-meta-row {
+                margin-top: 10px;
+                gap: 10px;
+                font-size: 12px;
+            }
+            .tc-desc {
+                margin-top: 10px;
+                font-size: 13px;
+                line-height: 1.55;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .tc-cta {
+                margin-top: 16px;
+                gap: 12px;
+            }
+            .tc-bookmark { width: 40px; height: 40px; }
+            .tc-discover {
+                height: 40px;
+                padding: 0 20px;
+                font-size: 11px;
+            }
+            .tc-content-place { font-size: 10px; }
+            .tc-card-content { padding-left: 12px; padding-right: 10px; }
+            .tc-content-title-1,
+            .tc-content-title-2 {
+                font-size: 15px;
+            }
+            .tc-pagination .tc-arrow {
+                width: 42px;
+                height: 42px;
+            }
+            .tc-pagination .tc-arrow + .tc-arrow { margin-left: 10px; }
+            .tc-slide-numbers,
+            .tc-slide-numbers .tc-item {
+                height: 42px;
+                width: 44px;
+                font-size: 22px;
+            }
+            .tc-slide-numbers { margin-left: 10px; }
+            .tc-progress-sub-container { height: 42px; }
+        }
+        @media (max-width: 767px) and (max-height: 740px) {
+            .tc-desc { -webkit-line-clamp: 2; }
+        }
+
+        /* Sticky bar respeita a home indicator do iPhone */
+        #sticky-bar {
+            padding-bottom: calc(0.875rem + env(safe-area-inset-bottom, 0px));
+        }
     </style>
 </head>
 <body class="selection:bg-brand-emerald selection:text-white noise-bg">
@@ -600,35 +708,35 @@
     <!-- ============================================================== -->
     <!-- 1. STACKED DIMENSIONAL HERO ("Fundo -> Lato Sensu 27 -> Médicos") -->
     <!-- ============================================================== -->
-    <div id="hero" class="home-hero-area min-h-screen flex flex-col justify-between relative">
+    <div id="hero" class="home-hero-area min-h-screen min-h-[100svh] flex flex-col justify-between relative">
         
         <!-- CAMADA 1 (Fundo): Imagem do Átrio da Faculdade sem médicos + Luz Esmeralda -->
         <div id="hero-bg-layer" class="hero-layer-bg"></div>
         <div class="hero-color-glow"></div>
 
         <!-- TOP NAVIGATION BAR (z-50: Logos + Dúvidas, Edital, Inscreva-se) -->
-        <header id="main-nav" class="relative z-50 w-full pt-5 px-6 md:px-12 lg:px-16">
-            <div class="max-w-7xl mx-auto flex items-center justify-between py-3 px-6 rounded-full bg-brand-base/50 backdrop-blur-md border border-white/15">
+        <header id="main-nav" class="relative z-50 w-full pt-[max(1rem,env(safe-area-inset-top))] md:pt-5 px-4 md:px-12 lg:px-16">
+            <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 py-2 md:py-3 pl-4 pr-2 md:px-6 rounded-full bg-brand-base/50 backdrop-blur-md border border-white/15">
                 
                 <!-- Logos FacMed & UFF -->
-                <a href="#hero" class="flex items-center gap-3 sm:gap-4 group">
-                    <img src="assets/img/logo facmedwhite.svg" alt="Faculdade de Medicina da UFF" class="h-8 md:h-10 w-auto transition-transform group-hover:scale-105 duration-300">
-                    <div class="h-5 sm:h-6 w-[1px] bg-white/30"></div>
-                    <img src="assets/img/logo-uff-white.png" alt="Universidade Federal Fluminense" class="h-6 sm:h-7 md:h-8 w-auto opacity-95">
+                <a href="#hero" class="flex items-center gap-2.5 sm:gap-4 group shrink-0">
+                    <img src="assets/img/logo facmedwhite.svg" alt="Faculdade de Medicina da UFF" class="h-7 md:h-10 w-auto transition-transform group-hover:scale-105 duration-300">
+                    <div class="h-5 sm:h-6 w-[1px] bg-white/30 shrink-0"></div>
+                    <img src="assets/img/logo-uff-white.png" alt="Universidade Federal Fluminense" class="h-5 sm:h-7 md:h-8 w-auto opacity-95">
                 </a>
 
                 <!-- Links Simplificados: Apenas Dúvidas, Edital e Inscreva-se -->
-                <div class="flex items-center gap-5 sm:gap-8">
-                    <a href="#faq" class="text-xs sm:text-sm font-semibold text-white/90 hover:text-white transition-colors">
+                <div class="flex items-center gap-4 sm:gap-8">
+                    <a href="#faq" class="hidden sm:inline text-xs sm:text-sm font-semibold text-white/90 hover:text-white transition-colors">
                         Dúvidas
                     </a>
                     <a href="https://editais.uff.br/10496" target="_blank" rel="noopener noreferrer" 
-                       class="text-xs sm:text-sm font-semibold text-white/90 hover:text-white transition-colors flex items-center gap-1">
+                       class="hidden min-[400px]:flex text-xs sm:text-sm font-semibold text-white/90 hover:text-white transition-colors items-center gap-1">
                         <span>Edital</span>
                         <svg class="w-3.5 h-3.5 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </a>
-                    <a href="#cronograma" class="avenora-btn !py-1.5 !pl-5 !pr-1.5 !gap-3 text-xs sm:text-sm">
-                        <span>Inscreva-se 2027</span>
+                    <a href="#cronograma" class="avenora-btn !py-1.5 !pl-4 sm:!pl-5 !pr-1.5 !gap-2.5 sm:!gap-3 text-xs sm:text-sm whitespace-nowrap">
+                        <span>Inscreva-se<span class="hidden sm:inline"> 2027</span></span>
                         <span class="avenora-btn-circle !w-8 !h-8">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </span>
@@ -639,7 +747,7 @@
         </header>
 
         <!-- CAMADA 2 (Meio - z-10): Texto Monumental "Lato Sensu 27" -->
-        <div id="hero-text-layer" class="hero-layer-text mt-4 md:mt-6">
+        <div id="hero-text-layer" class="hero-layer-text mt-1 md:mt-6">
             <h1 class="hero-title">Lato Sensu 27</h1>
         </div>
 
@@ -654,19 +762,19 @@
         <div class="hero-bottom-vignette"></div>
 
         <!-- CAMADA 4 (UI Frontal Inferior - z-30): Chamada Esquerda + Card Branco Flutuante Direita -->
-        <div class="relative z-30 max-w-7xl w-full mx-auto px-6 md:px-12 lg:px-16 pb-12 pt-36 md:pt-44">
+        <div class="relative z-30 max-w-7xl w-full mx-auto px-6 md:px-12 lg:px-16 pb-[max(2.5rem,env(safe-area-inset-bottom))] md:pb-12 pt-24 md:pt-44">
             <div class="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-10">
                 
                 <!-- Left Side: Bold Editorial Headline & Pill Button -->
                 <div class="max-w-2xl">
-                    <div class="text-xs sm:text-sm font-mono uppercase tracking-[0.25em] text-brand-gold font-bold mb-3 drop-shadow">
+                    <div class="text-[10px] sm:text-sm font-mono uppercase tracking-[0.18em] sm:tracking-[0.25em] text-brand-gold font-bold mb-3 drop-shadow leading-relaxed">
                         CONCURSO UNIFICADO • FACULDADE DE MEDICINA DA UFF
                     </div>
-                    <h2 class="font-sans font-bold text-3xl sm:text-5xl md:text-[3.25rem] text-white tracking-tight leading-[1.12] drop-shadow-2xl">
+                    <h2 class="font-sans font-bold text-[1.85rem] sm:text-5xl md:text-[3.25rem] text-white tracking-tight leading-[1.1] drop-shadow-2xl">
                         Pós-graduação médica para quem busca excelência pública federal.
                     </h2>
                     
-                    <div class="mt-7 flex flex-wrap items-center gap-4">
+                    <div class="mt-6 md:mt-7 flex flex-wrap items-center gap-4">
                         <a href="#especialidades" class="avenora-btn text-sm sm:text-base">
                             <span>Explorar Especialidades</span>
                             <span class="avenora-btn-circle">
@@ -677,7 +785,7 @@
                 </div>
 
                 <!-- Right Side: White Floating Card (Idêntico ao card do Avenora) -->
-                <div class="w-full lg:w-[380px] bg-white rounded-[28px] p-5 shadow-avenora-card text-brand-base flex flex-col items-center text-center">
+                <div class="hidden md:flex w-full lg:w-[380px] bg-white rounded-[28px] p-5 shadow-avenora-card text-brand-base flex-col items-center text-center">
                     <h3 class="font-bold text-lg text-brand-base tracking-tight">
                         Concurso Unificado 2027
                     </h3>
@@ -732,7 +840,7 @@
         <!-- ============================================================== -->
         <!-- 3. A FACULDADE DE MEDICINA DA UFF                              -->
         <!-- ============================================================== -->
-        <section id="sobre" class="py-24 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
+        <section id="sobre" class="py-16 md:py-24 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
             
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
@@ -741,10 +849,10 @@
                     <div class="img-reveal-wrap rounded-3xl border border-white/15 shadow-2xl relative">
                         <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=1200&q=80" 
                              alt="Sessão Clínica da Faculdade de Medicina UFF" 
-                             class="w-full h-[460px] object-cover">
+                             class="w-full h-[340px] sm:h-[460px] object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-brand-base via-transparent to-transparent"></div>
                         
-                        <div class="absolute bottom-6 left-6 right-6 glass-card p-5 rounded-2xl border border-brand-emerald/40">
+                        <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 glass-card p-4 sm:p-5 rounded-2xl border border-brand-emerald/40">
                             <span class="text-xs font-mono uppercase text-brand-glow font-bold tracking-widest block">Ensino & Pesquisa</span>
                             <p class="text-sm text-slate-200 mt-1 font-medium">
                                 Discussão científica de casos complexos e mentoria com professores titulares da UFF.
@@ -814,13 +922,13 @@
             <div class="tc-indicator" id="tc-indicator"></div>
 
             <!-- Section Header Overlay (Top Left) -->
-            <div class="absolute top-8 left-[6vw] right-[6vw] z-40 flex items-center justify-between pointer-events-none">
+            <div class="absolute top-7 md:top-8 left-6 md:left-[6vw] right-6 md:right-[6vw] z-40 flex items-center justify-between pointer-events-none">
                 <div>
-                    <span class="text-[11px] font-mono font-bold tracking-[0.25em] text-brand-glow uppercase block">
-                        PÓS-GRADUAÇÃO LATO SENSU • FACULDADE DE MEDICINA DA UFF
+                    <span class="text-[10px] md:text-[11px] font-mono font-bold tracking-[0.2em] md:tracking-[0.25em] text-brand-glow uppercase block">
+                        PÓS-GRADUAÇÃO LATO SENSU<span class="hidden md:inline"> • FACULDADE DE MEDICINA DA UFF</span>
                     </span>
                     <h2 class="font-sans font-bold text-lg sm:text-xl text-white/90 tracking-tight mt-0.5">
-                        13 Especialidades Médicas Oficiais — Clique em um card para expandir
+                        13 Especialidades Médicas Oficiais<span class="hidden md:inline"> — Clique em um card para expandir</span>
                     </h2>
                 </div>
             </div>
@@ -913,13 +1021,13 @@
         <!-- ============================================================== -->
         <!-- 5. SMART HUD CRONOGRAMA 2027 & COUNTDOWN                       -->
         <!-- ============================================================== -->
-        <section id="cronograma" class="py-24 px-6 md:px-12 lg:px-20 max-w-6xl mx-auto">
+        <section id="cronograma" class="py-16 md:py-24 px-6 md:px-12 lg:px-20 max-w-6xl mx-auto">
             
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <span class="text-xs font-mono font-bold tracking-[0.25em] text-brand-glow uppercase block mb-2">
                     CALENDÁRIO DO CONCURSO UNIFICADO
                 </span>
-                <h2 class="font-sans font-black text-3xl sm:text-5xl text-white">
+                <h2 class="font-sans font-black text-[1.7rem] sm:text-5xl text-white">
                     Cronograma Oficial 2027
                 </h2>
                 <p class="text-slate-300 text-sm sm:text-base mt-3">
@@ -928,7 +1036,7 @@
             </div>
 
             <!-- Glowing Countdown HUD Panel -->
-            <div class="glass-card rounded-3xl p-6 md:p-10 shadow-2xl border border-brand-emerald/30 relative overflow-hidden mb-16">
+            <div class="glass-card rounded-3xl p-5 md:p-10 shadow-2xl border border-brand-emerald/30 relative overflow-hidden mb-16">
                 <div class="absolute -top-24 -right-24 w-64 h-64 bg-brand-emerald/20 rounded-full blur-3xl pointer-events-none"></div>
                 
                 <div class="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
@@ -946,20 +1054,20 @@
 
                     <!-- Digits Counter -->
                     <div class="grid grid-cols-4 gap-2 sm:gap-4 text-center">
-                        <div class="bg-brand-base/80 border border-brand-emerald/40 rounded-2xl p-4 min-w-[75px] sm:min-w-[90px] shadow-lg">
-                            <span id="hud-days" class="font-mono font-black text-3xl sm:text-5xl text-white">18</span>
+                        <div class="bg-brand-base/80 border border-brand-emerald/40 rounded-2xl px-1 py-3 sm:p-4 min-w-0 sm:min-w-[90px] shadow-lg">
+                            <span id="hud-days" class="font-mono font-black text-[1.7rem] sm:text-5xl text-white">18</span>
                             <span class="block text-[10px] uppercase font-bold tracking-widest text-brand-glow mt-1">Dias</span>
                         </div>
-                        <div class="bg-brand-base/80 border border-brand-emerald/40 rounded-2xl p-4 min-w-[75px] sm:min-w-[90px] shadow-lg">
-                            <span id="hud-hours" class="font-mono font-black text-3xl sm:text-5xl text-white">09</span>
+                        <div class="bg-brand-base/80 border border-brand-emerald/40 rounded-2xl px-1 py-3 sm:p-4 min-w-0 sm:min-w-[90px] shadow-lg">
+                            <span id="hud-hours" class="font-mono font-black text-[1.7rem] sm:text-5xl text-white">09</span>
                             <span class="block text-[10px] uppercase font-bold tracking-widest text-brand-glow mt-1">Horas</span>
                         </div>
-                        <div class="bg-brand-base/80 border border-brand-emerald/40 rounded-2xl p-4 min-w-[75px] sm:min-w-[90px] shadow-lg">
-                            <span id="hud-minutes" class="font-mono font-black text-3xl sm:text-5xl text-white">42</span>
+                        <div class="bg-brand-base/80 border border-brand-emerald/40 rounded-2xl px-1 py-3 sm:p-4 min-w-0 sm:min-w-[90px] shadow-lg">
+                            <span id="hud-minutes" class="font-mono font-black text-[1.7rem] sm:text-5xl text-white">42</span>
                             <span class="block text-[10px] uppercase font-bold tracking-widest text-brand-glow mt-1">Min</span>
                         </div>
-                        <div class="bg-brand-base/80 border border-brand-emerald/40 rounded-2xl p-4 min-w-[75px] sm:min-w-[90px] shadow-lg">
-                            <span id="hud-seconds" class="font-mono font-black text-3xl sm:text-5xl text-brand-accent">30</span>
+                        <div class="bg-brand-base/80 border border-brand-emerald/40 rounded-2xl px-1 py-3 sm:p-4 min-w-0 sm:min-w-[90px] shadow-lg">
+                            <span id="hud-seconds" class="font-mono font-black text-[1.7rem] sm:text-5xl text-brand-accent">30</span>
                             <span class="block text-[10px] uppercase font-bold tracking-widest text-brand-glow mt-1">Seg</span>
                         </div>
                     </div>
@@ -1027,7 +1135,7 @@
                 <span class="text-xs font-mono font-bold tracking-[0.25em] text-brand-glow uppercase block mb-2">
                     ETAPAS DE AVALIAÇÃO
                 </span>
-                <h2 class="font-sans font-black text-3xl sm:text-5xl text-white">
+                <h2 class="font-sans font-black text-[1.7rem] sm:text-5xl text-white">
                     Como Funciona a Seleção
                 </h2>
                 <p class="text-slate-300 text-sm sm:text-base mt-3">
@@ -1082,7 +1190,7 @@
                 <span class="text-xs font-mono font-bold tracking-[0.25em] text-brand-glow uppercase block mb-2">
                     ESCLARECIMENTOS
                 </span>
-                <h2 class="font-sans font-black text-3xl sm:text-5xl text-white">
+                <h2 class="font-sans font-black text-[1.7rem] sm:text-5xl text-white">
                     Perguntas Frequentes
                 </h2>
             </div>
@@ -1137,7 +1245,7 @@
         <!-- 8. FINAL RESOLUTE CTA                                          -->
         <!-- ============================================================== -->
         <section class="py-28 px-6 md:px-12 lg:px-20 max-w-6xl mx-auto text-center border-t border-white/10 relative">
-            <div class="glass-card rounded-[40px] p-10 sm:p-16 border border-brand-emerald/40 relative overflow-hidden">
+            <div class="glass-card rounded-[28px] sm:rounded-[40px] p-6 sm:p-16 border border-brand-emerald/40 relative overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-br from-brand-primary/30 via-transparent to-brand-emerald/20 pointer-events-none"></div>
                 
                 <div class="flex items-center justify-center gap-4 mb-8 opacity-95">
@@ -1174,14 +1282,14 @@
     <!-- ============================================================== -->
     <!-- 9. STICKY BOTTOM CONVERSION BAR                                -->
     <!-- ============================================================== -->
-    <div id="sticky-bar" class="fixed bottom-0 left-0 right-0 z-40 transform translate-y-full transition-transform duration-500 bg-brand-base/95 backdrop-blur-xl border-t border-brand-emerald/30 py-3.5 px-6 md:px-12 shadow-2xl">
+    <div id="sticky-bar" class="fixed bottom-0 left-0 right-0 z-40 transform translate-y-full transition-transform duration-500 bg-brand-base/95 backdrop-blur-xl border-t border-brand-emerald/30 pt-3 md:pt-3.5 px-4 md:px-12 shadow-2xl">
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
             
             <div class="flex items-center gap-3">
                 <div>
-                    <div class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                        <span>Faculdade de Medicina UFF • 2027</span>
-                        <span class="text-[11px] text-brand-gold font-mono font-bold">• 100% Gratuito</span>
+                    <div class="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2 leading-tight">
+                        <span class="whitespace-nowrap"><span class="sm:hidden">FacMed UFF • 2027</span><span class="hidden sm:inline">Faculdade de Medicina UFF • 2027</span></span>
+                        <span class="text-[10px] sm:text-[11px] text-brand-gold font-mono font-bold whitespace-nowrap">100% Gratuito</span>
                     </div>
                     <div class="text-[11px] text-slate-400 hidden sm:block">
                         13 Especialidades Oficiais • Campus Niterói
@@ -1194,8 +1302,8 @@
                     <span>Inscrições Encerram Em:</span>
                     <strong id="bar-timer" class="text-brand-glow font-bold">18d 09h 42m</strong>
                 </div>
-                <a href="#cronograma" class="px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-brand-emerald to-emerald-400 hover:from-emerald-400 hover:to-teal-300 shadow-glow-emerald transition-all whitespace-nowrap">
-                    Garantir Minha Inscrição
+                <a href="#cronograma" class="px-5 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-brand-emerald to-emerald-400 hover:from-emerald-400 hover:to-teal-300 shadow-glow-emerald transition-all whitespace-nowrap">
+                    <span class="sm:hidden">Inscrever-se</span><span class="hidden sm:inline">Garantir Minha Inscrição</span>
                 </a>
             </div>
 
@@ -1432,10 +1540,13 @@
             const vh = Math.min(h, window.innerHeight || 900);
 
             if (w < 768) {
-                tcCardWidth = 135;
-                tcCardHeight = 180;
-                tcGap = 14;
-                tcOffsetTop = Math.max(260, vh - 375);
+                tcCardWidth = 122;
+                tcCardHeight = 168;
+                tcGap = 12;
+                // Fila de cards logo acima da paginação + sticky bar, sem cobrir o CTA do card ativo
+                const detailsEl = document.getElementById('tc-details-even');
+                const detailsBottom = detailsEl ? detailsEl.offsetTop + detailsEl.offsetHeight + 22 : 430;
+                tcOffsetTop = Math.max(detailsBottom, h - tcCardHeight - 150);
                 tcOffsetLeft = 24;
             } else if (w < 1150) {
                 tcCardWidth = 170;
