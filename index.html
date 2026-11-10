@@ -915,116 +915,47 @@
                 </p>
             </div>
 
-            <!-- 4-Card Metrics Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 relative z-10">
+            <!-- 3-Card Metrics Grid (Clean & Direct) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto relative z-10">
                 
                 <!-- Card 1: 107 VAGAS (Destaque Principal com Borda Ouro/Esmeralda) -->
-                <div class="stat-card p-6 sm:p-7 rounded-2xl md:rounded-3xl glass-card border border-brand-gold/40 bg-gradient-to-b from-brand-surface/80 via-brand-surface/40 to-brand-emerald/15 relative overflow-hidden flex flex-col justify-between shadow-glow-emerald/20 group hover:border-brand-gold/70 transition-all duration-300">
+                <div class="stat-card p-7 sm:p-8 rounded-2xl md:rounded-3xl glass-card border border-brand-gold/40 bg-gradient-to-b from-brand-surface/80 via-brand-surface/40 to-brand-emerald/15 relative overflow-hidden shadow-glow-emerald/20 group hover:border-brand-gold/70 transition-all duration-300">
                     <div class="absolute -top-10 -right-10 w-28 h-28 bg-brand-gold/10 rounded-full blur-2xl pointer-events-none"></div>
                     
-                    <div>
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-brand-gold bg-brand-gold/15 px-2.5 py-1 rounded-full border border-brand-gold/30">
-                                Total Geral
-                            </span>
-                            <span class="text-[11px] font-mono text-slate-400 font-semibold">+ Cadastro Reserva</span>
-                        </div>
-                        
-                        <div class="flex items-baseline mt-2">
-                            <span id="counter-vagas" class="font-mono font-black text-5xl sm:text-6xl text-brand-gold tracking-tight" aria-label="107 vagas">0</span>
-                            <span class="font-mono font-black text-3xl sm:text-4xl text-brand-gold ml-1">+</span>
-                        </div>
-
-                        <h3 class="font-bold text-lg text-white mt-2">Vagas Oferecidas</h3>
-                        <p class="text-xs text-slate-300 mt-2 leading-relaxed font-light">
-                            Ampla Concorrência, Médicos e Não Médicos (Gerontologia), vagas para Estrangeiros e Cadastro de Reserva (CR) em 9 especialidades.
-                        </p>
+                    <div class="flex items-baseline">
+                        <span id="counter-vagas" class="font-mono font-black text-5xl sm:text-6xl text-brand-gold tracking-tight" aria-label="107 vagas">0</span>
+                        <span class="font-mono font-black text-3xl sm:text-4xl text-brand-gold ml-1">+</span>
                     </div>
 
-                    <div class="mt-5 pt-4 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-brand-gold font-medium">
-                        <span>Edital CMM Nº 1</span>
-                        <span>100% Oficial</span>
-                    </div>
+                    <h3 class="font-bold text-xl text-white mt-3">Vagas Oferecidas</h3>
+                    <p class="text-sm text-slate-300 mt-2 leading-relaxed font-light">
+                        Ampla Concorrência, Médicos e Não Médicos (Gerontologia), vagas para Estrangeiros e Cadastro de Reserva (CR) em 9 especialidades.
+                    </p>
                 </div>
 
                 <!-- Card 2: 13 ESPECIALIDADES -->
-                <div class="stat-card p-6 sm:p-7 rounded-2xl md:rounded-3xl glass-card border border-brand-emerald/25 relative overflow-hidden flex flex-col justify-between group hover:border-brand-glow/40 transition-all duration-300">
-                    <div>
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-brand-glow bg-brand-emerald/20 px-2.5 py-1 rounded-full border border-brand-emerald/30">
-                                Programas
-                            </span>
-                            <span class="text-[11px] font-mono text-slate-400">Lato Sensu</span>
-                        </div>
-                        
-                        <div class="flex items-baseline mt-2">
-                            <span id="counter-especialidades" class="font-mono font-black text-5xl sm:text-6xl text-white tracking-tight" aria-label="13 especialidades">0</span>
-                        </div>
-
-                        <h3 class="font-bold text-lg text-white mt-2">Especialidades Médicas</h3>
-                        <p class="text-xs text-slate-300 mt-2 leading-relaxed font-light">
-                            Treinamento clínico e ambulatorial intensivo com matrizes curriculares alinhadas às sociedades de especialidade da AMB.
-                        </p>
+                <div class="stat-card p-7 sm:p-8 rounded-2xl md:rounded-3xl glass-card border border-brand-emerald/25 relative overflow-hidden group hover:border-brand-glow/40 transition-all duration-300">
+                    <div class="flex items-baseline">
+                        <span id="counter-especialidades" class="font-mono font-black text-5xl sm:text-6xl text-white tracking-tight" aria-label="13 especialidades">0</span>
                     </div>
 
-                    <div class="mt-5 pt-4 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                        <span>Duração</span>
-                        <span class="text-slate-200">1 a 3 Anos</span>
-                    </div>
+                    <h3 class="font-bold text-xl text-white mt-3">Especialidades Médicas</h3>
+                    <p class="text-sm text-slate-300 mt-2 leading-relaxed font-light">
+                        Treinamento clínico e ambulatorial intensivo com matrizes curriculares alinhadas às sociedades de especialidade da AMB.
+                    </p>
                 </div>
 
                 <!-- Card 3: 100% PÚBLICA E GRATUITA -->
-                <div class="stat-card p-6 sm:p-7 rounded-2xl md:rounded-3xl glass-card border border-brand-emerald/25 relative overflow-hidden flex flex-col justify-between group hover:border-brand-glow/40 transition-all duration-300">
-                    <div>
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-brand-accent bg-brand-accent/15 px-2.5 py-1 rounded-full border border-brand-accent/30">
-                                Custo Zero
-                            </span>
-                            <span class="text-[11px] font-mono text-brand-accent font-semibold">Federal</span>
-                        </div>
-                        
-                        <div class="flex items-baseline mt-2">
-                            <span id="counter-gratuito" class="font-mono font-black text-5xl sm:text-6xl text-brand-accent tracking-tight" aria-label="100 por cento gratuito">0</span>
-                            <span class="font-mono font-black text-3xl sm:text-4xl text-brand-accent ml-0.5">%</span>
-                        </div>
-
-                        <h3 class="font-bold text-lg text-white mt-2">Pública e Gratuita</h3>
-                        <p class="text-xs text-slate-300 mt-2 leading-relaxed font-light">
-                            Zero mensalidades e sem taxa de anuidade. Ensino de pós-graduação financiado pela Universidade Federal Fluminense.
-                        </p>
+                <div class="stat-card p-7 sm:p-8 rounded-2xl md:rounded-3xl glass-card border border-brand-emerald/25 relative overflow-hidden group hover:border-brand-glow/40 transition-all duration-300">
+                    <div class="flex items-baseline">
+                        <span id="counter-gratuito" class="font-mono font-black text-5xl sm:text-6xl text-brand-accent tracking-tight" aria-label="100 por cento gratuito">0</span>
+                        <span class="font-mono font-black text-3xl sm:text-4xl text-brand-accent ml-0.5">%</span>
                     </div>
 
-                    <div class="mt-5 pt-4 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                        <span>Mensalidade</span>
-                        <span class="text-brand-accent font-bold">R$ 0,00</span>
-                    </div>
-                </div>
-
-                <!-- Card 4: TAXA DE INSCRIÇÃO R$ 400 -->
-                <div class="stat-card p-6 sm:p-7 rounded-2xl md:rounded-3xl glass-card border border-brand-emerald/25 relative overflow-hidden flex flex-col justify-between group hover:border-brand-glow/40 transition-all duration-300">
-                    <div>
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-300 bg-white/10 px-2.5 py-1 rounded-full border border-white/15">
-                                Inscrição
-                            </span>
-                            <span class="text-[11px] font-mono text-slate-400">Via GRU</span>
-                        </div>
-                        
-                        <div class="flex items-baseline mt-2">
-                            <span class="font-mono font-bold text-2xl sm:text-3xl text-slate-300 mr-1">R$</span>
-                            <span id="counter-taxa" class="font-mono font-black text-5xl sm:text-6xl text-white tracking-tight" aria-label="400 reais">0</span>
-                        </div>
-
-                        <h3 class="font-bold text-lg text-white mt-2">Taxa Única do Concurso</h3>
-                        <p class="text-xs text-slate-300 mt-2 leading-relaxed font-light">
-                            Recolhimento exclusivo via Guia de Recolhimento da União (GRU Simples), com período de pedido de isenção previsto no edital.
-                        </p>
-                    </div>
-
-                    <div class="mt-5 pt-4 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                        <span>Isenção</span>
-                        <span class="text-slate-200">Prevista em Edital</span>
-                    </div>
+                    <h3 class="font-bold text-xl text-white mt-3">Pública e Gratuita</h3>
+                    <p class="text-sm text-slate-300 mt-2 leading-relaxed font-light">
+                        Zero mensalidades e sem taxa de anuidade. Ensino de pós-graduação financiado pela Universidade Federal Fluminense.
+                    </p>
                 </div>
 
             </div>
@@ -2312,8 +2243,7 @@
                 const counters = [
                     { id: 'counter-vagas', target: 107, duration: 2.2 },
                     { id: 'counter-especialidades', target: 13, duration: 1.6 },
-                    { id: 'counter-gratuito', target: 100, duration: 2.0 },
-                    { id: 'counter-taxa', target: 400, duration: 2.2 }
+                    { id: 'counter-gratuito', target: 100, duration: 2.0 }
                 ];
 
                 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
