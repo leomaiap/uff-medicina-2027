@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Laboratório de Teste: Scrollytelling Jaleco UFF 2027</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS v3 via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            base: '#021813',
+                            surface: '#052720',
+                            surfaceLight: '#09362c',
+                            primary: '#006843',
+                            emerald: '#009E5E',
+                            accent: '#10B981',
+                            glow: '#34D399',
+                            gold: '#FACC15',
+                            cream: '#F4EFEA',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        mono: ['"Space Grotesk"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP 3 + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        body {
+            background-color: #021813;
+            color: #F8FAFC;
+            overflow-x: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Ambient Noise / Grid */
+        .ambient-grid {
+            background-image: radial-gradient(rgba(16, 185, 129, 0.08) 1px, transparent 0);
+            background-size: 32px 32px;
+        }
+
+        /* Glassmorphism */
+        .glass-panel {
+            background: rgba(5, 39, 32, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-panel-active {
+            background: rgba(0, 158, 94, 0.2);
+            border-color: rgba(52, 211, 153, 0.4);
+            box-shadow: 0 0 25px rgba(0, 158, 94, 0.25);
+        }
+
+        /* Radial edge vignette to blend video canvas into #021813 */
+        .canvas-vignette {
+            background: radial-gradient(circle at center, transparent 40%, rgba(2, 24, 19, 0.5) 75%, #021813 100%);
+            pointer-events: none;
+        }
+
+        /* Pulse glow */
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 3s ease-in-out infinite;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #021813;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 158, 94, 0.4);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 158, 94, 0.8);
+        }
+    </style>
+</head>
+<body class="ambient-grid min-h-screen">
+
+    <!-- Top Floating Test Nav -->
+    <header class="fixed top-0 left-0 right-0 z-50 p-4 md:px-8">
+        <div class="max-w-6xl mx-auto flex items-center justify-between glass-panel rounded-2xl px-5 py-3 shadow-2xl">
+            <div class="flex items-center gap-3">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-brand-emerald/20 text-brand-glow font-mono font-bold text-xs border border-brand-emerald/30">
+                    LAB
+                </span>
+                <div>
+                    <h1 class="text-sm md:text-base font-bold text-white tracking-wide flex items-center gap-2">
+                        Scrollytelling Jaleco UFF
+                        <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-brand-gold/15 text-brand-gold border border-brand-gold/30">
+                            Versão Experimental
+                        </span>
+                    </h1>
+                    <p class="text-xs text-slate-400 hidden sm:block">Transformação quadro a quadro impulsionada por scroll</p>
+                </div>
+            </div>
+
+            <!-- Doctor Switcher (Feminino / Masculino) -->
+            <div class="flex items-center gap-1.5 p-1 rounded-xl bg-black/40 border border-white/10" id="doctor-switcher">
+                <button type="button" id="btn-female" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-2 glass-panel-active text-white" aria-pressed="true">
+                    <span>👩</span>
+                    <span>Dra. Sofia</span>
+                </button>
+                <button type="button" id="btn-male" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-2 text-slate-400 hover:text-white" aria-pressed="false">
+                    <span>👨</span>
+                    <span>Dr. Gabriel</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Pre-Section: Intro Hero -->
+    <section class="h-[90vh] flex flex-col justify-center items-center text-center px-6 relative pt-20">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel text-brand-glow text-xs font-mono font-medium mb-6">
+            <span class="w-2 h-2 rounded-full bg-brand-emerald animate-ping"></span>
+            PROTÓTIPO DE SCROLL FRAME-BY-FRAME
+        </div>
+        <h2 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white max-w-4xl leading-[1.1]">
+            A jornada de quem <br class="hidden sm:inline">
+            <span class="bg-gradient-to-r from-brand-emerald via-brand-glow to-brand-gold bg-clip-text text-transparent">
+                veste o jaleco da UFF
+            </span>
+        </h2>
+        <p class="mt-6 text-base sm:text-xl text-slate-300 max-w-2xl font-light leading-relaxed">
+            Role a página para baixo para vivenciar a transformação do candidato em médico especialista da Faculdade de Medicina da Universidade Federal Fluminense.
+        </p>
+
+        <!-- Scroll Indicator Hint -->
+        <div class="mt-12 flex flex-col items-center gap-3 text-slate-400 animate-bounce">
+            <span class="text-xs font-mono tracking-widest uppercase text-brand-emerald">Role para transformar</span>
+            <svg class="w-5 h-5 text-brand-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ==============================================================
+         SCROLLYTELLING PINNED STAGE (Canvas + Scrubbing)
+         Scroll Track: 350vh total height
+         ============================================================== -->
+    <section id="scrolly-track" class="relative w-full h-[350vh]">
+        <!-- Pinned Stage (100vh) -->
+        <div id="scrolly-pin" class="sticky top-0 w-full h-screen h-[100svh] overflow-hidden flex items-center justify-center bg-brand-base">
+            
+            <!-- Atmospheric Glow Background -->
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-emerald/15 rounded-full blur-[130px] animate-pulse-subtle"></div>
+                <div class="absolute bottom-10 right-10 w-[400px] h-[400px] bg-brand-primary/20 rounded-full blur-[100px]"></div>
+            </div>
+
+            <!-- WebGL / Canvas Viewport -->
+            <div class="relative w-full h-full max-w-7xl mx-auto flex items-center justify-center">
+                <!-- HTML5 Canvas that receives WebP frames -->
+                <canvas id="scrolly-canvas" class="relative z-10 w-full h-full object-contain"></canvas>
+                
+                <!-- Seamless edge vignette -->
+                <div class="absolute inset-0 z-20 canvas-vignette"></div>
+
+                <!-- Text Overlay Layer (Syncs with scroll milestones) -->
+                <div class="absolute inset-0 z-30 pointer-events-none flex flex-col justify-between p-6 sm:p-12 md:p-16">
+                    
+                    <!-- Top HUD info -->
+                    <div class="flex items-start justify-between">
+                        <div class="glass-panel px-4 py-2 rounded-xl text-xs font-mono text-slate-300 flex items-center gap-3">
+                            <span class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
+                            <span id="hud-doctor-name">Dra. Sofia • Medicina UFF</span>
+                        </div>
+
+                        <!-- Progress HUD -->
+                        <div class="glass-panel px-4 py-2 rounded-xl text-xs font-mono text-slate-300">
+                            <span class="text-brand-glow font-bold" id="hud-frame-count">01</span> / 94
+                            <span class="text-slate-500 mx-1">|</span>
+                            <span class="text-brand-gold" id="hud-percent">0%</span>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Story Cards (Morph on scroll) -->
+                    <div class="max-w-2xl">
+                        <!-- Step 1: Vocação -->
+                        <div id="step-card-1" class="step-card transition-all duration-700 opacity-100 transform translate-y-0">
+                            <span class="inline-block px-3 py-1 rounded-md text-[11px] font-mono font-bold tracking-wider uppercase bg-brand-emerald/20 text-brand-glow border border-brand-emerald/30 mb-2">
+                                Fase 01 • A Vocação
+                            </span>
+                            <h3 class="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+                                Cada plantão começa com um compromisso interior.
+                            </h3>
+                            <p class="mt-2 text-sm sm:text-base text-slate-300 font-light leading-relaxed">
+                                A jornada de quem escolhe cuidar. Dedicação, estudo constante e o primeiro passo rumo à excelência.
+                            </p>
+                        </div>
+
+                        <!-- Step 2: A Transformação -->
+                        <div id="step-card-2" class="step-card hidden transition-all duration-700 opacity-0 transform translate-y-4">
+                            <span class="inline-block px-3 py-1 rounded-md text-[11px] font-mono font-bold tracking-wider uppercase bg-brand-gold/20 text-brand-gold border border-brand-gold/30 mb-2">
+                                Fase 02 • O Rito de Passagem
+                            </span>
+                            <h3 class="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+                                Vestir o jaleco é assumir uma história secular.
+                            </h3>
+                            <p class="mt-2 text-sm sm:text-base text-slate-300 font-light leading-relaxed">
+                                Mais de 100 anos formando líderes na medicina brasileira. Tradição clínica, ética e técnica de vanguarda.
+                            </p>
+                        </div>
+
+                        <!-- Step 3: A Excelência UFF -->
+                        <div id="step-card-3" class="step-card hidden transition-all duration-700 opacity-0 transform translate-y-4">
+                            <span class="inline-block px-3 py-1 rounded-md text-[11px] font-mono font-bold tracking-wider uppercase bg-brand-glow/20 text-brand-glow border border-brand-glow/30 mb-2">
+                                Fase 03 • Concurso 2027
+                            </span>
+                            <h3 class="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+                                Especialista pela Faculdade de Medicina da UFF.
+                            </h3>
+                            <p class="mt-2 text-sm sm:text-base text-slate-300 font-light leading-relaxed">
+                                13 especialidades médicas 100% gratuitas. O Hospital Universitário Antônio Pedro espera por você.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Scrubber & Quick Test Controls -->
+                    <div class="pointer-events-auto flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10 mt-4">
+                        <!-- Play / Pause Demo Button -->
+                        <div class="flex items-center gap-2">
+                            <button id="btn-autoplay" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold glass-panel text-slate-200 hover:text-white hover:border-brand-emerald/50 flex items-center gap-2 transition-all">
+                                <span id="autoplay-icon">▶</span>
+                                <span id="autoplay-text">Auto Play (24fps)</span>
+                            </button>
+                            <button id="btn-reverse" class="px-3 py-1.5 rounded-lg text-xs font-mono glass-panel text-slate-400 hover:text-white transition-all">
+                                ↺ Início
+                            </button>
+                        </div>
+
+                        <!-- Manual Slider (for quick inspection without scrolling) -->
+                        <div class="flex items-center gap-3 glass-panel px-4 py-1.5 rounded-xl">
+                            <span class="text-xs font-mono text-slate-400">Scrub manual:</span>
+                            <input type="range" id="frame-slider" min="1" max="94" value="1" class="w-32 sm:w-48 accent-brand-emerald cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Loading overlay until frames are cached -->
+            <div id="loading-overlay" class="absolute inset-0 z-50 bg-brand-base flex flex-col items-center justify-center transition-opacity duration-500">
+                <div class="w-12 h-12 rounded-full border-2 border-brand-emerald/30 border-t-brand-glow animate-spin mb-4"></div>
+                <h4 class="text-white font-bold text-base mb-1">Carregando Sequência Cinemática</h4>
+                <p class="text-xs font-mono text-slate-400" id="loading-progress">0% carregado</p>
+                <div class="w-64 h-1.5 bg-white/10 rounded-full mt-3 overflow-hidden">
+                    <div id="loading-bar" class="h-full bg-gradient-to-r from-brand-emerald to-brand-gold w-0 transition-all duration-150"></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Post-Section: Integration Context -->
+    <section class="py-28 px-6 md:px-12 max-w-5xl mx-auto text-center border-t border-white/10">
+        <span class="inline-block px-3.5 py-1 rounded-full text-xs font-mono text-brand-gold bg-brand-gold/10 border border-brand-gold/30 mb-4">
+            COMPARAÇÃO E APROVAÇÃO
+        </span>
+        <h3 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            Como você avalia essa experiência?
+        </h3>
+        <p class="mt-4 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+            Podemos posicionar essa seção logo após o Hero principal da landing page, como abertura das <strong>13 Especialidades Médicas</strong> ou como transição para o cronograma do edital 2027.
+        </p>
+
+        <div class="mt-10 flex flex-wrap justify-center gap-4">
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-6 py-3 rounded-xl bg-brand-emerald hover:bg-brand-accent text-white font-bold text-sm tracking-wide transition-all shadow-glow-emerald">
+                ↑ Testar Novamente do Início
+            </button>
+        </div>
+    </section>
+
+    <!-- Scrollytelling Engine -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const TOTAL_FRAMES = 94;
+        const DOCTORS = {
+            female: {
+                name: 'Dra. Sofia • Medicina UFF',
+                path: 'assets/transformation/female/frame_',
+                images: []
+            },
+            male: {
+                name: 'Dr. Gabriel • Medicina UFF',
+                path: 'assets/transformation/male/frame_',
+                images: []
+            }
+        };
+
+        let currentDoctorKey = 'female';
+        let currentFrameIndex = 0;
+        let isAutoPlaying = false;
+        let autoPlayTimer = null;
+
+        const canvas = document.getElementById('scrolly-canvas');
+        const ctx = canvas.getContext('2d');
+        const hudDoctorName = document.getElementById('hud-doctor-name');
+        const hudFrameCount = document.getElementById('hud-frame-count');
+        const hudPercent = document.getElementById('hud-percent');
+        const frameSlider = document.getElementById('frame-slider');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const loadingProgress = document.getElementById('loading-progress');
+        const loadingBar = document.getElementById('loading-bar');
+
+        const btnFemale = document.getElementById('btn-female');
+        const btnMale = document.getElementById('btn-male');
+        const btnAutoplay = document.getElementById('btn-autoplay');
+        const btnReverse = document.getElementById('btn-reverse');
+        const autoplayIcon = document.getElementById('autoplay-icon');
+        const autoplayText = document.getElementById('autoplay-text');
+
+        const stepCard1 = document.getElementById('step-card-1');
+        const stepCard2 = document.getElementById('step-card-2');
+        const stepCard3 = document.getElementById('step-card-3');
+
+        // Resize Canvas to fit screen DPI
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            renderFrame(currentFrameIndex);
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        // Preload All Images for a Doctor
+        function preloadDoctor(doctorKey, onProgress, onComplete) {
+            const doctor = DOCTORS[doctorKey];
+            if (doctor.images.length === TOTAL_FRAMES) {
+                if (onComplete) onComplete();
+                return;
+            }
+
+            let loaded = 0;
+            for (let i = 1; i <= TOTAL_FRAMES; i++) {
+                const img = new Image();
+                const padIndex = String(i).padStart(3, '0');
+                img.src = `${doctor.path}${padIndex}.webp`;
+                img.onload = () => {
+                    loaded++;
+                    if (onProgress) onProgress(loaded, TOTAL_FRAMES);
+                    if (loaded === TOTAL_FRAMES) {
+                        if (onComplete) onComplete();
+                    }
+                };
+                img.onerror = () => {
+                    loaded++;
+                    if (loaded === TOTAL_FRAMES && onComplete) onComplete();
+                };
+                doctor.images.push(img);
+            }
+        }
+
+        // Render Frame onto Canvas with aspect-ratio preserving contain/cover
+        function renderFrame(index) {
+            const doctor = DOCTORS[currentDoctorKey];
+            const img = doctor.images[index];
+            if (!img || !img.complete) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Calculate 'contain' with slight cinematic crop
+            const canvasRatio = canvas.width / canvas.height;
+            const imgRatio = img.width / img.height;
+
+            let drawWidth, drawHeight, offsetX, offsetY;
+
+            if (canvasRatio > imgRatio) {
+                drawHeight = canvas.height;
+                drawWidth = img.width * (canvas.height / img.height);
+                offsetX = (canvas.width - drawWidth) / 2;
+                offsetY = 0;
+            } else {
+                drawWidth = canvas.width;
+                drawHeight = img.height * (canvas.width / img.width);
+                offsetX = 0;
+                offsetY = (canvas.height - drawHeight) / 2;
+            }
+
+            ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+
+            // Update HUD
+            hudFrameCount.textContent = String(index + 1).padStart(2, '0');
+            const pct = Math.round((index / (TOTAL_FRAMES - 1)) * 100);
+            hudPercent.textContent = `${pct}%`;
+            frameSlider.value = index + 1;
+
+            // Update text steps based on scroll progress
+            updateStoryCards(pct);
+        }
+
+        function updateStoryCards(pct) {
+            if (pct < 33) {
+                showCard(stepCard1);
+                hideCard(stepCard2);
+                hideCard(stepCard3);
+            } else if (pct >= 33 && pct < 70) {
+                hideCard(stepCard1);
+                showCard(stepCard2);
+                hideCard(stepCard3);
+            } else {
+                hideCard(stepCard1);
+                hideCard(stepCard2);
+                showCard(stepCard3);
+            }
+        }
+
+        function showCard(card) {
+            if (!card.classList.contains('hidden')) return;
+            card.classList.remove('hidden');
+            setTimeout(() => {
+                card.classList.remove('opacity-0', 'translate-y-4');
+                card.classList.add('opacity-100', 'translate-y-0');
+            }, 20);
+        }
+
+        function hideCard(card) {
+            if (card.classList.contains('hidden')) return;
+            card.classList.remove('opacity-100', 'translate-y-0');
+            card.classList.add('opacity-0', 'translate-y-4');
+            setTimeout(() => {
+                card.classList.add('hidden');
+            }, 500);
+        }
+
+        // Setup GSAP ScrollTrigger
+        let scrollTween = null;
+        function initScrollAnimation() {
+            const frameObj = { frame: 0 };
+
+            scrollTween = gsap.to(frameObj, {
+                frame: TOTAL_FRAMES - 1,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#scrolly-track",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 0.5,
+                    onUpdate: (self) => {
+                        currentFrameIndex = Math.round(frameObj.frame);
+                        renderFrame(currentFrameIndex);
+                    }
+                }
+            });
+        }
+
+        // Switch Doctor
+        function switchDoctor(doctorKey) {
+            if (currentDoctorKey === doctorKey) return;
+            currentDoctorKey = doctorKey;
+
+            if (doctorKey === 'female') {
+                btnFemale.classList.add('glass-panel-active', 'text-white');
+                btnFemale.classList.remove('text-slate-400');
+                btnFemale.setAttribute('aria-pressed', 'true');
+
+                btnMale.classList.remove('glass-panel-active', 'text-white');
+                btnMale.classList.add('text-slate-400');
+                btnMale.setAttribute('aria-pressed', 'false');
+            } else {
+                btnMale.classList.add('glass-panel-active', 'text-white');
+                btnMale.classList.remove('text-slate-400');
+                btnMale.setAttribute('aria-pressed', 'true');
+
+                btnFemale.classList.remove('glass-panel-active', 'text-white');
+                btnFemale.classList.add('text-slate-400');
+                btnFemale.setAttribute('aria-pressed', 'false');
+            }
+
+            hudDoctorName.textContent = DOCTORS[doctorKey].name;
+
+            // If not cached yet, preload
+            if (DOCTORS[doctorKey].images.length < TOTAL_FRAMES) {
+                loadingOverlay.style.opacity = '1';
+                loadingOverlay.style.pointerEvents = 'auto';
+                preloadDoctor(doctorKey, (loaded, total) => {
+                    const pct = Math.round((loaded / total) * 100);
+                    loadingProgress.textContent = `${pct}% carregado (${loaded}/${total})`;
+                    loadingBar.style.width = `${pct}%`;
+                }, () => {
+                    setTimeout(() => {
+                        loadingOverlay.style.opacity = '0';
+                        loadingOverlay.style.pointerEvents = 'none';
+                        renderFrame(currentFrameIndex);
+                    }, 300);
+                });
+            } else {
+                renderFrame(currentFrameIndex);
+            }
+        }
+
+        btnFemale.addEventListener('click', () => switchDoctor('female'));
+        btnMale.addEventListener('click', () => switchDoctor('male'));
+
+        // Slider scrubbing
+        frameSlider.addEventListener('input', (e) => {
+            currentFrameIndex = parseInt(e.target.value, 10) - 1;
+            renderFrame(currentFrameIndex);
+        });
+
+        // Autoplay toggle (simulate 24fps video)
+        btnAutoplay.addEventListener('click', () => {
+            if (isAutoPlaying) {
+                stopAutoPlay();
+            } else {
+                startAutoPlay();
+            }
+        });
+
+        function startAutoPlay() {
+            isAutoPlaying = true;
+            autoplayIcon.textContent = '⏸';
+            autoplayText.textContent = 'Pausar';
+            btnAutoplay.classList.add('glass-panel-active', 'text-brand-glow');
+
+            autoPlayTimer = setInterval(() => {
+                currentFrameIndex++;
+                if (currentFrameIndex >= TOTAL_FRAMES) {
+                    currentFrameIndex = 0;
+                }
+                renderFrame(currentFrameIndex);
+            }, 1000 / 24);
+        }
+
+        function stopAutoPlay() {
+            isAutoPlaying = false;
+            clearInterval(autoPlayTimer);
+            autoplayIcon.textContent = '▶';
+            autoplayText.textContent = 'Auto Play (24fps)';
+            btnAutoplay.classList.remove('glass-panel-active', 'text-brand-glow');
+        }
+
+        btnReverse.addEventListener('click', () => {
+            stopAutoPlay();
+            currentFrameIndex = 0;
+            renderFrame(0);
+            window.scrollTo({
+                top: document.getElementById('scrolly-track').offsetTop,
+                behavior: 'smooth'
+            });
+        });
+
+        // Initialize: Preload female doctor first, then start male in background
+        window.addEventListener('DOMContentLoaded', () => {
+            resizeCanvas();
+
+            preloadDoctor('female', (loaded, total) => {
+                const pct = Math.round((loaded / total) * 100);
+                loadingProgress.textContent = `${pct}% carregado (${loaded}/${total})`;
+                loadingBar.style.width = `${pct}%`;
+            }, () => {
+                setTimeout(() => {
+                    loadingOverlay.style.opacity = '0';
+                    loadingOverlay.style.pointerEvents = 'none';
+                    renderFrame(0);
+                    initScrollAnimation();
+
+                    // Preload male in background quietly
+                    preloadDoctor('male', null, () => {
+                        console.log('Dr. Gabriel frames preloaded in background!');
+                    });
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
