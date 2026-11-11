@@ -86,6 +86,31 @@
            Layer 3: Cutout Brazilian Doctors PNG (Foreground Plane)
            Layer 4: Bottom Interactive UI & Floating Card
            ============================================================== */
+        #hero-pinned-stage {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background-color: #021813;
+        }
+
+        #hero-reveal-stage {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: #021813;
+            filter: blur(25px);
+            transform: scale(0.96);
+            will-change: filter, transform;
+            pointer-events: none;
+        }
+
         .home-hero-area {
             position: relative;
             background-color: #021813;
@@ -684,9 +709,69 @@
 <body class="selection:bg-brand-emerald selection:text-white noise-bg">
 
     <!-- ============================================================== -->
-    <!-- 1. STACKED DIMENSIONAL HERO ("Fundo -> Lato Sensu 27 -> Médicos") -->
+    <!-- 1. STAGE HERO PINNED COM TRANSIÇÃO RADIAL & DESBLUR             -->
     <!-- ============================================================== -->
-    <div id="hero" class="home-hero-area min-h-screen min-h-[100svh] flex flex-col justify-between relative">
+    <div id="hero-pinned-stage" class="relative w-full overflow-hidden bg-brand-base">
+
+        <!-- CAMADA DO REVEAL (O que está atrás): Prédio da FacMed UFF + Indicadores -->
+        <div id="hero-reveal-stage" class="absolute inset-0 w-full h-full z-10 flex flex-col justify-center items-center overflow-hidden pointer-events-none px-6 md:px-12 text-center">
+            
+            <!-- Fundo Fotográfico Arquitetônico FacMed UFF com Vinheta Suave -->
+            <div class="absolute inset-0 w-full h-full">
+                <img src="assets/img/hero-bg-predio-facmed.jpg" alt="Faculdade de Medicina da UFF" class="w-full h-full object-cover opacity-30 scale-105">
+                <div class="absolute inset-0 bg-gradient-to-b from-brand-base/85 via-brand-base/65 to-brand-base"></div>
+                <div class="absolute inset-0 bg-radial-vignette pointer-events-none"></div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-emerald/20 rounded-full blur-[120px] pointer-events-none"></div>
+            </div>
+
+            <!-- Conteúdo Editorial do Portal de Revelação -->
+            <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center justify-center my-auto py-12">
+                
+                <!-- Badge Dourado -->
+                <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-brand-gold/40 bg-brand-surface/80 backdrop-blur-md text-brand-gold text-[11px] sm:text-xs font-mono uppercase tracking-[0.2em] font-bold shadow-glow-gold/20">
+                    <span class="w-2 h-2 rounded-full bg-brand-gold animate-ping"></span>
+                    <span>FACULDADE DE MEDICINA DA UFF • 2027</span>
+                </div>
+
+                <!-- Título Monumental -->
+                <h2 class="font-sans font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.1] mt-5 drop-shadow-2xl">
+                    Excelência Médica Pública Federal
+                </h2>
+
+                <!-- Subtítulo -->
+                <p class="mt-4 text-slate-300 text-sm sm:text-lg max-w-2xl font-light leading-relaxed drop-shadow">
+                    Pós-Graduação Lato Sensu 100% gratuita com formação clínica e ambulatorial intensiva no Hospital Universitário Antônio Pedro.
+                </p>
+
+                <!-- Três Indicadores -->
+                <div class="grid grid-cols-3 gap-3 sm:gap-6 mt-8 w-full max-w-2xl">
+                    <div class="p-4 sm:p-5 rounded-2xl glass-card border border-brand-gold/40 bg-brand-surface/80 text-center">
+                        <span class="font-mono font-black text-2xl sm:text-4xl text-brand-gold block">107+</span>
+                        <span class="text-[10px] sm:text-xs text-slate-300 uppercase tracking-wider font-medium mt-1 block">Vagas Oferecidas</span>
+                    </div>
+                    <div class="p-4 sm:p-5 rounded-2xl glass-card border border-brand-emerald/30 bg-brand-surface/80 text-center">
+                        <span class="font-mono font-black text-2xl sm:text-4xl text-white block">13</span>
+                        <span class="text-[10px] sm:text-xs text-slate-300 uppercase tracking-wider font-medium mt-1 block">Especialidades</span>
+                    </div>
+                    <div class="p-4 sm:p-5 rounded-2xl glass-card border border-brand-emerald/30 bg-brand-surface/80 text-center">
+                        <span class="font-mono font-black text-2xl sm:text-4xl text-brand-accent block">100%</span>
+                        <span class="text-[10px] sm:text-xs text-slate-300 uppercase tracking-wider font-medium mt-1 block">Pública e Gratuita</span>
+                    </div>
+                </div>
+
+                <!-- Indicador de Scroll -->
+                <div class="mt-10 flex flex-col items-center gap-2 text-[11px] font-mono uppercase tracking-[0.2em] text-brand-gold font-bold">
+                    <span>Continue descendo para explorar</span>
+                    <div class="w-5 h-8 rounded-full border border-brand-gold/50 flex items-start justify-center p-1">
+                        <div class="w-1.5 h-2 bg-brand-gold rounded-full animate-bounce"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- O PRIMEIRO HERO (NA FRENTE) -->
+        <div id="hero" class="home-hero-area min-h-screen min-h-[100svh] flex flex-col justify-between relative z-20" style="will-change: mask-image, -webkit-mask-image;">
         
         <!-- CAMADA 1 (Fundo): Imagem do Átrio da Faculdade sem médicos + Luz Esmeralda -->
         <div id="hero-bg-layer" class="hero-layer-bg"></div>
@@ -787,6 +872,10 @@
         </div>
 
     </div>
+    <!-- FIM DO #hero (PRIMEIRO HERO) -->
+
+    </div>
+    <!-- FIM DO #hero-pinned-stage (CONTAINER PINNED COM TRANSIÇÃO) -->
 
     <!-- MAIN CONTENT -->
     <main class="relative z-10">
@@ -2157,27 +2246,88 @@
                     window.addEventListener('click', enableOnFirstGesture, { once: true });
                 }
 
-                // Scroll differential parallax
-                gsap.to(textLayer, {
-                    scrollTrigger: {
-                        trigger: '#hero',
-                        start: 'top top',
-                        end: 'bottom top',
-                        scrub: true
-                    },
-                    y: 110,
-                    opacity: 0.25
-                });
+                // -------------------------------------------------------------
+                // TRANSIÇÃO DE MÁSCARA RADIAL SUAVE (IRIS) & DESBLUR PROGRESSIVO
+                // -------------------------------------------------------------
+                const heroStage = document.getElementById('hero-pinned-stage');
+                const revealBehind = document.getElementById('hero-reveal-stage');
 
-                gsap.to(doctorsLayer, {
-                    scrollTrigger: {
-                        trigger: '#hero',
-                        start: 'top top',
-                        end: 'bottom top',
-                        scrub: true
-                    },
-                    y: 45
-                });
+                if (heroStage && hero && revealBehind) {
+                    const maskProxy = { radius: 0 };
+
+                    const heroTl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: heroStage,
+                            start: 'top top',
+                            end: '+=125%', // distância calibrada para fluidez perfeita
+                            pin: true,
+                            scrub: 1,
+                            anticipatePin: 1
+                        }
+                    });
+
+                    // 1. A máscara radial abre do centro com arestas aveludadas (+18% smooth feather)
+                    heroTl.to(maskProxy, {
+                        radius: 140,
+                        ease: 'none',
+                        duration: 1,
+                        onUpdate: () => {
+                            const r = maskProxy.radius;
+                            if (r <= 0.5) {
+                                hero.style.webkitMaskImage = 'none';
+                                hero.style.maskImage = 'none';
+                                hero.style.opacity = '1';
+                                hero.style.pointerEvents = 'auto';
+                            } else {
+                                const mask = `radial-gradient(circle at 50% 50%, transparent 0%, transparent ${r}%, black ${r + 18}%)`;
+                                hero.style.webkitMaskImage = mask;
+                                hero.style.maskImage = mask;
+                                if (r >= 135) {
+                                    hero.style.opacity = '0';
+                                    hero.style.pointerEvents = 'none';
+                                } else {
+                                    hero.style.opacity = '1';
+                                    hero.style.pointerEvents = 'auto';
+                                }
+                            }
+                        }
+                    }, 0);
+
+                    // 2. O que está atrás perde o blur gradualmente até atingir ZERO antes da conclusão (em 0.8 da timeline)
+                    heroTl.to(revealBehind, {
+                        filter: 'blur(0px)',
+                        scale: 1,
+                        ease: 'power1.out',
+                        duration: 0.8
+                    }, 0);
+
+                    // 3. Efeito de profundidade 3D sutil nos elementos do Hero durante a abertura do portal
+                    heroTl.to(textLayer, {
+                        y: 40,
+                        scale: 0.94,
+                        opacity: 0.25,
+                        ease: 'power1.inOut',
+                        duration: 0.85
+                    }, 0);
+
+                    heroTl.to(doctorsLayer, {
+                        y: 30,
+                        scale: 0.95,
+                        opacity: 0.35,
+                        ease: 'power1.inOut',
+                        duration: 0.9
+                    }, 0);
+
+                    const bottomUI = hero.querySelector('.hero-bottom-ui');
+                    if (bottomUI) {
+                        heroTl.to(bottomUI, {
+                            y: 50,
+                            opacity: 0.2,
+                            ease: 'power1.inOut',
+                            duration: 0.75
+                        }, 0);
+                    }
+                }
             }
 
             // Image reveals in lower sections
