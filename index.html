@@ -86,34 +86,54 @@
            Layer 3: Cutout Brazilian Doctors PNG (Foreground Plane)
            Layer 4: Bottom Interactive UI & Floating Card
            ============================================================== */
-        #hero-scroll-track {
+        #hero-pinned-stage {
             position: relative;
-            width: 100%;
-            height: 650px;
-        }
-
-        #hero {
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100vh;
             height: 100svh;
-            z-index: 30;
+            overflow: hidden;
+            background-color: #021813;
+        }
+
+        #stage-behind {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            background-color: #021813;
+            filter: blur(20px);
+            will-change: filter;
+        }
+
+        #stage-behind::-webkit-scrollbar {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            #stage-behind {
+                overflow: hidden;
+            }
+        }
+
+        .home-hero-area {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+            background-color: #021813;
+            overflow: hidden;
             will-change: mask-image, -webkit-mask-image;
         }
 
         #main-content {
             position: relative;
             z-index: 10;
-            margin-top: -650px;
-            will-change: transform, filter;
-        }
-
-        .home-hero-area {
-            position: relative;
-            background-color: #021813;
-            overflow: hidden;
         }
 
         /* Layer 1: Background Plate (Prédio da Faculdade de Medicina da UFF) + Atmospheric Sky */
@@ -722,12 +742,120 @@
 <body class="selection:bg-brand-emerald selection:text-white noise-bg">
 
     <!-- ============================================================== -->
-    <!-- 1. HERO COM TRANSIÇÃO RADIAL DIRETO PARA O CONTEÚDO (SOBRE)   -->
+    <!-- 1. HERO PINNED STAGE (TRANSIÇÃO RADIAL NATIVA COM ZERO JITTER) -->
     <!-- ============================================================== -->
-    <div id="hero-scroll-track" class="relative w-full">
+    <div id="hero-pinned-stage" class="relative w-full h-screen min-h-[100svh] overflow-hidden bg-brand-base">
 
-        <!-- O PRIMEIRO HERO (FIXO NO TOPO ATÉ A CONCLUSÃO DA TRANSIÇÃO) -->
-        <div id="hero" class="home-hero-area min-h-screen min-h-[100svh] flex flex-col justify-between fixed inset-0 w-full h-screen z-30 overflow-hidden" style="will-change: mask-image, -webkit-mask-image;">
+        <!-- CAMADA TRASEIRA: TELA DA SEÇÃO SOBRE (REVELADA PELA MÁSCARA RADIAL) -->
+        <div id="stage-behind" class="absolute inset-0 w-full h-full z-10 overflow-y-auto lg:overflow-hidden flex flex-col justify-between bg-brand-base" style="filter: blur(20px); will-change: filter;">
+            
+            <!-- 2. INFINITE MARQUEE TICKER -->
+            <section class="py-3 md:py-4 border-y border-white/10 bg-brand-surface/40 backdrop-blur-md overflow-hidden select-none shrink-0">
+                <div class="animate-marquee whitespace-nowrap flex items-center gap-12 text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-slate-300">
+                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> FACULDADE DE MEDICINA DA UFF</span>
+                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CONCURSO UNIFICADO 2027</span>
+                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg font-bold">✦</span> <span class="text-white font-bold">107 VAGAS OFERECIDAS</span></span>
+                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> PÓS-GRADUAÇÃO LATO SENSU</span>
+                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> 100% GRATUITO (ZERO MENSALIDADE)</span>
+                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> 13 ESPECIALIDADES MÉDICAS</span>
+                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CAMPUS UNIVERSITÁRIO NITERÓI</span>
+                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> CORPO DOCENTE TITULADO</span>
+                    
+                    <!-- Duplicate for seamless infinite loop -->
+                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> FACULDADE DE MEDICINA DA UFF</span>
+                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CONCURSO UNIFICADO 2027</span>
+                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg font-bold">✦</span> <span class="text-white font-bold">107 VAGAS OFERECIDAS</span></span>
+                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> PÓS-GRADUAÇÃO LATO SENSU</span>
+                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> 100% GRATUITO (ZERO MENSALIDADE)</span>
+                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> 13 ESPECIALIDADES MÉDICAS</span>
+                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CAMPUS UNIVERSITÁRIO NITERÓI</span>
+                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> CORPO DOCENTE TITULADO</span>
+                </div>
+            </section>
+
+            <!-- 3. A FACULDADE DE MEDICINA DA UFF (SOBRE) -->
+            <section id="sobre" class="relative w-full flex-1 flex flex-col justify-center overflow-hidden border-t border-white/10">
+                <!-- Fundo Fotográfico Arquitetônico FacMed UFF (Idêntico ao Hero Principal: Mesma foto, escala, posição e transparência) -->
+                <div class="sobre-layer-bg"></div>
+                <div class="hero-color-glow opacity-80 pointer-events-none"></div>
+
+                <div class="relative z-10 py-6 md:py-8 lg:py-10 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto w-full my-auto">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
+                    
+                        <!-- Left: Big Editorial Image -->
+                        <div class="lg:col-span-5 relative">
+                            <div class="img-reveal-wrap rounded-3xl border border-white/15 shadow-2xl relative overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=1200&q=80" 
+                                     alt="Sessão Clínica da Faculdade de Medicina UFF" 
+                                     class="w-full h-[220px] sm:h-[300px] lg:h-[440px] object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-brand-base via-transparent to-transparent"></div>
+                                
+                                <div class="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 glass-card p-3 sm:p-4 rounded-xl border border-brand-emerald/40">
+                                    <span class="text-[10px] sm:text-xs font-mono uppercase text-brand-gold font-bold tracking-widest block">Ensino & Pesquisa</span>
+                                    <p class="text-xs sm:text-sm text-slate-200 mt-0.5 sm:mt-1 font-medium leading-snug">
+                                        Discussão científica de casos complexos e mentoria com professores titulares da UFF.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Content & Core Pillars -->
+                        <div class="lg:col-span-7 flex flex-col justify-center">
+                            <h2 class="font-sans font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white leading-tight">
+                                Tradição Centenária, Ciência de Vanguarda.
+                            </h2>
+                            
+                            <p class="mt-3 md:mt-4 text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed font-light">
+                                A <strong class="text-white font-medium">Faculdade de Medicina da UFF</strong> é uma das mais respeitadas escolas médicas do país. Nosso programa de Pós-Graduação Lato Sensu é desenhado especificamente para médicos que buscam aprofundamento técnico rigoroso, titulação reconhecida e vivência clínica prática qualificada.
+                            </p>
+
+                            <!-- Pillars Grid -->
+                            <div class="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 mt-4 sm:mt-6">
+                                <div class="p-3.5 sm:p-4 md:p-5 rounded-2xl glass-card border border-brand-emerald/20">
+                                    <div class="text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono">01</div>
+                                    <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1">Zero Mensalidades</h3>
+                                    <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5 leading-relaxed">
+                                        Ensino superior federal 100% público. Você foca integralmente no seu aprendizado sem custos mensais.
+                                    </p>
+                                </div>
+
+                                <div class="p-3.5 sm:p-4 md:p-5 rounded-2xl glass-card border border-brand-emerald/20">
+                                    <div class="text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono">02</div>
+                                    <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1">Corpo Docente Titulado</h3>
+                                    <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5 leading-relaxed">
+                                        Professores titulares, mestres e doutores com sólida produção científica e inserção acadêmica.
+                                    </p>
+                                </div>
+
+                                <div class="p-3.5 sm:p-4 md:p-5 rounded-2xl glass-card border border-brand-emerald/20">
+                                    <div class="text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono">03</div>
+                                    <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1">Prática Ambulatorial</h3>
+                                    <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5 leading-relaxed">
+                                        Treinamento prático nos ambulatórios de especialidades e centros diagnósticos da Faculdade de Medicina.
+                                    </p>
+                                </div>
+
+                                <div class="p-3.5 sm:p-4 md:p-5 rounded-2xl glass-card border border-brand-emerald/20">
+                                    <div class="text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono">04</div>
+                                    <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1">Preparação para Título</h3>
+                                    <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5 leading-relaxed">
+                                        Carga horária e conteúdo programático alinhados aos requisitos das sociedades de especialidade da AMB.
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+        <!-- FIM DO #stage-behind -->
+
+        <!-- CAMADA FRONTAL: PRIMEIRO HERO (ABRE COM A MÁSCARA RADIAL) -->
+        <div id="hero" class="home-hero-area min-h-screen min-h-[100svh] flex flex-col justify-between absolute inset-0 w-full h-full z-20 overflow-hidden" style="will-change: mask-image, -webkit-mask-image;">
         
         <!-- CAMADA 1 (Fundo): Imagem do Átrio da Faculdade sem médicos + Luz Esmeralda -->
         <div id="hero-bg-layer" class="hero-layer-bg"></div>
@@ -827,121 +955,14 @@
             </div>
         </div>
 
-    </div>
-    <!-- FIM DO #hero (PRIMEIRO HERO) -->
+        </div>
+        <!-- FIM DO #hero (PRIMEIRO HERO) -->
 
     </div>
-    <!-- FIM DO #hero-scroll-track -->
+    <!-- FIM DO #hero-pinned-stage -->
 
-    <!-- MAIN CONTENT (REVELADO DIRETAMENTE PELA MÁSCARA RADIAL) -->
+    <!-- RESTANTE DA PÁGINA (SCROLL NORMAL CONTÍNUO A PARTIR DE #vagas) -->
     <main id="main-content" class="relative z-10">
-
-        <!-- ============================================================== -->
-        <!-- 2. INFINITE MARQUEE TICKER                                     -->
-        <!-- ============================================================== -->
-        <section class="py-6 border-y border-white/10 bg-brand-surface/40 backdrop-blur-md overflow-hidden select-none">
-            <div class="animate-marquee whitespace-nowrap flex items-center gap-12 text-sm sm:text-base font-mono uppercase tracking-[0.2em] text-slate-300">
-                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> FACULDADE DE MEDICINA DA UFF</span>
-                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CONCURSO UNIFICADO 2027</span>
-                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg font-bold">✦</span> <span class="text-white font-bold">107 VAGAS OFERECIDAS</span></span>
-                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> PÓS-GRADUAÇÃO LATO SENSU</span>
-                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> 100% GRATUITO (ZERO MENSALIDADE)</span>
-                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> 13 ESPECIALIDADES MÉDICAS</span>
-                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CAMPUS UNIVERSITÁRIO NITERÓI</span>
-                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> CORPO DOCENTE TITULADO</span>
-                
-                <!-- Duplicate for seamless infinite loop -->
-                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> FACULDADE DE MEDICINA DA UFF</span>
-                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CONCURSO UNIFICADO 2027</span>
-                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg font-bold">✦</span> <span class="text-white font-bold">107 VAGAS OFERECIDAS</span></span>
-                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> PÓS-GRADUAÇÃO LATO SENSU</span>
-                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> 100% GRATUITO (ZERO MENSALIDADE)</span>
-                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> 13 ESPECIALIDADES MÉDICAS</span>
-                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CAMPUS UNIVERSITÁRIO NITERÓI</span>
-                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> CORPO DOCENTE TITULADO</span>
-            </div>
-        </section>
-
-        <!-- ============================================================== -->
-        <!-- 3. A FACULDADE DE MEDICINA DA UFF                              -->
-        <!-- ============================================================== -->
-        <section id="sobre" class="relative w-full overflow-hidden border-t border-white/10">
-            
-            <!-- Fundo Fotográfico Arquitetônico FacMed UFF (Idêntico ao Hero Principal: Mesma foto, escala, posição e transparência) -->
-            <div class="sobre-layer-bg"></div>
-            <div class="hero-color-glow opacity-80 pointer-events-none"></div>
-
-            <div class="relative z-10 py-16 md:py-24 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                
-                <!-- Left: Big Editorial Image -->
-                <div class="lg:col-span-6 relative">
-                    <div class="img-reveal-wrap rounded-3xl border border-white/15 shadow-2xl relative">
-                        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=1200&q=80" 
-                             alt="Sessão Clínica da Faculdade de Medicina UFF" 
-                             class="w-full h-[340px] sm:h-[460px] object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-brand-base via-transparent to-transparent"></div>
-                        
-                        <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 glass-card p-4 sm:p-5 rounded-2xl border border-brand-emerald/40">
-                            <span class="text-xs font-mono uppercase text-brand-gold font-bold tracking-widest block">Ensino & Pesquisa</span>
-                            <p class="text-sm text-slate-200 mt-1 font-medium">
-                                Discussão científica de casos complexos e mentoria com professores titulares da UFF.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right: Content & Core Pillars -->
-                <div class="lg:col-span-6 flex flex-col justify-center">
-                    <h2 class="font-sans font-black text-3xl sm:text-4xl md:text-5xl text-white leading-tight">
-                        Tradição Centenária, Ciência de Vanguarda.
-                    </h2>
-                    
-                    <p class="mt-6 text-slate-300 text-base md:text-lg leading-relaxed font-light">
-                        A <strong class="text-white font-medium">Faculdade de Medicina da UFF</strong> é uma das mais respeitadas escolas médicas do país. Nosso programa de Pós-Graduação Lato Sensu é desenhado especificamente para médicos que buscam aprofundamento técnico rigoroso, titulação reconhecida e vivência clínica prática qualificada.
-                    </p>
-
-                    <!-- Pillars Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
-                        <div class="p-5 rounded-2xl glass-card border border-brand-emerald/20">
-                            <div class="text-brand-gold text-2xl font-black font-mono">01</div>
-                            <h3 class="font-bold text-lg text-white mt-2">Zero Mensalidades</h3>
-                            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-                                Ensino superior federal 100% público. Você foca integralmente no seu aprendizado sem custos mensais.
-                            </p>
-                        </div>
-
-                        <div class="p-5 rounded-2xl glass-card border border-brand-emerald/20">
-                            <div class="text-brand-gold text-2xl font-black font-mono">02</div>
-                            <h3 class="font-bold text-lg text-white mt-2">Corpo Docente Titulado</h3>
-                            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-                                Professores titulares, mestres e doutores com sólida produção científica e inserção acadêmica.
-                            </p>
-                        </div>
-
-                        <div class="p-5 rounded-2xl glass-card border border-brand-emerald/20">
-                            <div class="text-brand-gold text-2xl font-black font-mono">03</div>
-                            <h3 class="font-bold text-lg text-white mt-2">Prática Ambulatorial</h3>
-                            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-                                Treinamento prático nos ambulatórios de especialidades e centros diagnósticos da Faculdade de Medicina.
-                            </p>
-                        </div>
-
-                        <div class="p-5 rounded-2xl glass-card border border-brand-emerald/20">
-                            <div class="text-brand-gold text-2xl font-black font-mono">04</div>
-                            <h3 class="font-bold text-lg text-white mt-2">Preparação para Título</h3>
-                            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-                                Carga horária e conteúdo programático alinhados aos requisitos das sociedades de especialidade da AMB.
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-            </div>
-
-        </section>
 
         <!-- ============================================================== -->
         <!-- 3.5. INDICADORES & VAGAS DO CONCURSO 2027                      -->
@@ -2012,56 +2033,21 @@
         });
 
         // -------------------------------------------------------------
-        // 7. AVENORA-STYLE BUTTER-SMOOTH MOMENTUM SCROLL (GSAP POWERED)
+        // 7. SMOOTH ANCHOR NAVIGATION (ZERO SLINGSHOT / NATIVE FLUID SCROLL)
         // -------------------------------------------------------------
         document.addEventListener("DOMContentLoaded", () => {
-            if (!window.gsap) return;
-            if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-            if (matchMedia("(pointer: coarse)").matches) return;
-
-            const html = document.documentElement;
-            html.style.scrollBehavior = "auto";
-
-            const SPEED = 1;
-            const DURATION = 1.1;
-            const pos = { y: window.scrollY };
-            let target = window.scrollY;
-            let animating = false;
-
-            const maxScroll = () => html.scrollHeight - window.innerHeight;
-            const stop = () => { gsap.killTweensOf(pos); animating = false; };
-
-            window.addEventListener("wheel", (e) => {
-                if (e.ctrlKey || e.defaultPrevented) return;
-                if (e.target.closest && e.target.closest("[data-native-scroll]")) return;
-                e.preventDefault();
-
-                let d = e.deltaY;
-                if (e.deltaMode === 1) d *= 16;
-                else if (e.deltaMode === 2) d *= window.innerHeight;
-
-                if (!animating) pos.y = target = window.scrollY;
-                target = gsap.utils.clamp(0, maxScroll(), target + d * SPEED);
-                animating = true;
-
-                gsap.to(pos, {
-                    y: target,
-                    duration: DURATION,
-                    ease: "power3.out",
-                    overwrite: true,
-                    onUpdate: () => window.scrollTo(0, pos.y),
-                    onComplete: () => { animating = false; }
+            // Suaviza rolagem ao clicar em links internos (#faq, #cronograma, etc.) sem sequestrar o scroll do mouse
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const targetEl = document.querySelector(targetId);
+                    if (targetEl) {
+                        e.preventDefault();
+                        targetEl.scrollIntoView({ behavior: 'smooth' });
+                    }
                 });
-            }, { passive: false });
-
-            window.addEventListener("mousedown", stop);
-            window.addEventListener("keydown", stop);
-            document.addEventListener("click", (e) => {
-                if (e.target.closest && e.target.closest('a[href*="#"]')) stop();
             });
-            window.addEventListener("scroll", () => {
-                if (!animating) pos.y = target = window.scrollY;
-            }, { passive: true });
         });
 
         // -------------------------------------------------------------
@@ -2209,21 +2195,24 @@
                 }
 
                 // -------------------------------------------------------------
-                // TRANSIÇÃO DE MÁSCARA RADIAL SUAVE (IRIS) DIRETO PARA O CONTEÚDO
+                // TRANSIÇÃO DE MÁSCARA RADIAL NATIVA (IRIS) DIRETO PARA SEÇÃO SOBRE
+                // PINAGEM NATIVA VIA GSAP (ZERO JITTER / ZERO SLINGSHOT / 120FPS)
                 // -------------------------------------------------------------
-                const heroTrack = document.getElementById('hero-scroll-track');
-                const mainContent = document.getElementById('main-content');
-                const D = 650; // distância ágil e rápida de scroll
+                const pinnedStage = document.getElementById('hero-pinned-stage');
+                const stageBehind = document.getElementById('stage-behind');
+                const D = 450; // Distância otimizada para transição rápida e ágil
 
-                if (heroTrack && hero && mainContent) {
+                if (pinnedStage && hero && stageBehind) {
                     const maskProxy = { radius: 0 };
 
                     const heroTl = gsap.timeline({
                         scrollTrigger: {
-                            trigger: heroTrack,
+                            trigger: pinnedStage,
                             start: 'top top',
                             end: '+=' + D,
-                            scrub: 0.3, // resposta imediata e rápida
+                            pin: true,
+                            scrub: true,
+                            anticipatePin: 1,
                             onLeave: () => {
                                 hero.style.display = 'none';
                             },
@@ -2233,17 +2222,10 @@
                         }
                     });
 
-                    // 1. Mantém a tela de trás (Ticker + Sobre) perfeitamente travada no topo durante os 650px
-                    heroTl.fromTo(mainContent, 
-                        { y: 0 }, 
-                        { y: D, ease: 'none', duration: 1 }, 
-                        0
-                    );
-
-                    // 2. A máscara radial abre do centro rapidamente com arestas aveludadas (+18% smooth feather)
+                    // 1. A máscara radial abre do centro rapidamente com arestas aveludadas (+18% smooth feather)
                     heroTl.to(maskProxy, {
                         radius: 140,
-                        ease: 'power1.in', // começa rápida como solicitado
+                        ease: 'power1.in', // Aceleração inicial rápida solicitada
                         duration: 1,
                         onUpdate: () => {
                             const r = maskProxy.radius;
@@ -2267,14 +2249,14 @@
                         }
                     }, 0);
 
-                    // 3. O blur começa em 20px, cai cedo em 20% e em 40% (0.4) JÁ ESTÁ EM ZERO (100% nítido)!
-                    heroTl.fromTo(mainContent, 
+                    // 2. O blur começa em 20px, cai cedo em 20% e em 40% (duration: 0.4) JÁ ESTÁ EM ZERO (100% nítido)!
+                    heroTl.fromTo(stageBehind, 
                         { filter: 'blur(20px)' }, 
                         { filter: 'blur(0px)', ease: 'power2.out', duration: 0.4 }, 
                         0
                     );
 
-                    // 4. Efeito de profundidade 3D sutil nos elementos do Hero durante a abertura rápida
+                    // 3. Efeito de profundidade 3D sutil nos elementos do Hero frontal durante a abertura
                     if (textLayer) {
                         heroTl.to(textLayer, {
                             scale: 0.93,
@@ -2294,7 +2276,7 @@
                     const bottomUI = hero.querySelector('.hero-bottom-ui');
                     if (bottomUI) {
                         heroTl.to(bottomUI, {
-                            y: 40,
+                            y: 35,
                             opacity: 0.2,
                             ease: 'power1.inOut',
                             duration: 0.6
