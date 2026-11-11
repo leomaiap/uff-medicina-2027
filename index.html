@@ -766,19 +766,6 @@
             transform-style: preserve-3d;
             will-change: transform, opacity;
         }
-
-        .timeline-progress-line {
-            position: absolute;
-            left: -2px;
-            top: 0;
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(180deg, #10B981 0%, #FACC15 50%, #34D399 100%);
-            transform-origin: top center;
-            transform: scaleY(0);
-            will-change: transform;
-            box-shadow: 0 0 12px rgba(16, 185, 129, 0.7);
-        }
     </style>
 </head>
 <body class="selection:bg-brand-emerald selection:text-white noise-bg">
@@ -2605,27 +2592,9 @@
                     }
                 }
 
-                // Linha vertical luminosa que preenche conforme o usuário rola pelo Cronograma
+                // Animação dos passos do Cronograma conforme o scroll
                 const timelineContainer = document.querySelector('#cronograma .border-l-2');
                 if (timelineContainer) {
-                    const progressLine = document.createElement('div');
-                    progressLine.className = 'timeline-progress-line';
-                    timelineContainer.appendChild(progressLine);
-
-                    gsap.fromTo(progressLine,
-                        { scaleY: 0 },
-                        {
-                            scaleY: 1,
-                            ease: 'none',
-                            scrollTrigger: {
-                                trigger: timelineContainer,
-                                start: 'top 75%',
-                                end: 'bottom 65%',
-                                scrub: 0.3
-                            }
-                        }
-                    );
-
                     const timelineSteps = timelineContainer.querySelectorAll('.group');
                     timelineSteps.forEach((step, idx) => {
                         const dot = step.querySelector('.timeline-dot') || step.querySelector('div:first-child');
