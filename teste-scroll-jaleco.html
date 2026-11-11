@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Laboratório de Teste: Scrollytelling Jaleco UFF 2027</title>
+    <title>Laboratório Scrollytelling Jaleco UFF 2027 | Modo Transparente & Estúdio</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,31 +60,33 @@
 
         /* Glassmorphism */
         .glass-panel {
-            background: rgba(5, 39, 32, 0.65);
+            background: rgba(5, 39, 32, 0.7);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .glass-panel-active {
-            background: rgba(0, 158, 94, 0.2);
-            border-color: rgba(52, 211, 153, 0.4);
-            box-shadow: 0 0 25px rgba(0, 158, 94, 0.25);
+            background: rgba(0, 158, 94, 0.25);
+            border-color: rgba(52, 211, 153, 0.5);
+            box-shadow: 0 0 25px rgba(0, 158, 94, 0.3);
         }
 
-        /* Radial edge vignette to blend video canvas into #021813 */
-        .canvas-vignette {
-            background: radial-gradient(circle at center, transparent 40%, rgba(2, 24, 19, 0.5) 75%, #021813 100%);
-            pointer-events: none;
+        /* Stroke Typography behind doctor */
+        .stroke-emerald {
+            -webkit-text-stroke: 1.5px rgba(52, 211, 153, 0.35);
+        }
+        .stroke-gold {
+            -webkit-text-stroke: 1.5px rgba(250, 204, 21, 0.3);
         }
 
         /* Pulse glow */
         @keyframes pulse-subtle {
-            0%, 100% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.08); }
         }
         .animate-pulse-subtle {
-            animation: pulse-subtle 3s ease-in-out infinite;
+            animation: pulse-subtle 4s ease-in-out infinite;
         }
 
         /* Custom scrollbar */
@@ -98,16 +100,13 @@
             background: rgba(0, 158, 94, 0.4);
             border-radius: 4px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 158, 94, 0.8);
-        }
     </style>
 </head>
 <body class="ambient-grid min-h-screen">
 
-    <!-- Top Floating Test Nav -->
-    <header class="fixed top-0 left-0 right-0 z-50 p-4 md:px-8">
-        <div class="max-w-6xl mx-auto flex items-center justify-between glass-panel rounded-2xl px-5 py-3 shadow-2xl">
+    <!-- Top Floating Test Nav with Dual Switchers -->
+    <header class="fixed top-0 left-0 right-0 z-50 p-3 sm:p-4 md:px-8">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3 glass-panel rounded-2xl px-4 py-2.5 sm:px-5 sm:py-3 shadow-2xl">
             <div class="flex items-center gap-3">
                 <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-brand-emerald/20 text-brand-glow font-mono font-bold text-xs border border-brand-emerald/30">
                     LAB
@@ -115,24 +114,41 @@
                 <div>
                     <h1 class="text-sm md:text-base font-bold text-white tracking-wide flex items-center gap-2">
                         Scrollytelling Jaleco UFF
-                        <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-brand-gold/15 text-brand-gold border border-brand-gold/30">
-                            Versão Experimental
+                        <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-brand-gold/15 text-brand-gold border border-brand-gold/30 hidden sm:inline-block">
+                            Alpha Cutout
                         </span>
                     </h1>
-                    <p class="text-xs text-slate-400 hidden sm:block">Transformação quadro a quadro impulsionada por scroll</p>
+                    <p class="text-[11px] text-slate-400 hidden md:block">Transformação quadro a quadro com fundo transparente nativo</p>
                 </div>
             </div>
 
-            <!-- Doctor Switcher (Feminino / Masculino) -->
-            <div class="flex items-center gap-1.5 p-1 rounded-xl bg-black/40 border border-white/10" id="doctor-switcher">
-                <button type="button" id="btn-female" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-2 glass-panel-active text-white" aria-pressed="true">
-                    <span>👩</span>
-                    <span>Dra. Sofia</span>
-                </button>
-                <button type="button" id="btn-male" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-2 text-slate-400 hover:text-white" aria-pressed="false">
-                    <span>👨</span>
-                    <span>Dr. Gabriel</span>
-                </button>
+            <!-- Switcher Controls Group -->
+            <div class="flex items-center gap-2 flex-wrap">
+                <!-- Background Mode Switcher (Transparente vs Estúdio) -->
+                <div class="flex items-center gap-1 p-1 rounded-xl bg-black/50 border border-white/10" id="bg-switcher">
+                    <button type="button" id="btn-mode-transparent" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 glass-panel-active text-white" aria-pressed="true">
+                        <span>✨</span>
+                        <span class="hidden sm:inline">Fundo</span>
+                        <span>Transparente</span>
+                    </button>
+                    <button type="button" id="btn-mode-studio" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 text-slate-400 hover:text-white" aria-pressed="false">
+                        <span>🖼️</span>
+                        <span class="hidden sm:inline">Fundo</span>
+                        <span>Estúdio</span>
+                    </button>
+                </div>
+
+                <!-- Doctor Switcher (Feminino / Masculino) -->
+                <div class="flex items-center gap-1 p-1 rounded-xl bg-black/50 border border-white/10" id="doctor-switcher">
+                    <button type="button" id="btn-female" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 glass-panel-active text-white" aria-pressed="true">
+                        <span>👩</span>
+                        <span>Dra. Sofia</span>
+                    </button>
+                    <button type="button" id="btn-male" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 text-slate-400 hover:text-white" aria-pressed="false">
+                        <span>👨</span>
+                        <span>Dr. Gabriel</span>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
@@ -141,7 +157,7 @@
     <section class="h-[90vh] flex flex-col justify-center items-center text-center px-6 relative pt-20">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel text-brand-glow text-xs font-mono font-medium mb-6">
             <span class="w-2 h-2 rounded-full bg-brand-emerald animate-ping"></span>
-            PROTÓTIPO DE SCROLL FRAME-BY-FRAME
+            EXPERIÊNCIA DE PROFUNDIDADE 3D
         </div>
         <h2 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white max-w-4xl leading-[1.1]">
             A jornada de quem <br class="hidden sm:inline">
@@ -150,7 +166,7 @@
             </span>
         </h2>
         <p class="mt-6 text-base sm:text-xl text-slate-300 max-w-2xl font-light leading-relaxed">
-            Role a página para baixo para vivenciar a transformação do candidato em médico especialista da Faculdade de Medicina da Universidade Federal Fluminense.
+            Com o <strong>fundo transparente</strong>, os elementos de tipografia e luzes passam fisicamente <span class="text-brand-glow font-medium">por trás do médico</span>, criando uma estética tridimensional editorial de alto impacto.
         </p>
 
         <!-- Scroll Indicator Hint -->
@@ -170,21 +186,38 @@
         <!-- Pinned Stage (100vh) -->
         <div id="scrolly-pin" class="sticky top-0 w-full h-screen h-[100svh] overflow-hidden flex items-center justify-center bg-brand-base">
             
-            <!-- Atmospheric Glow Background -->
+            <!-- LAYER 0 (BEHIND): Atmospheric Lights -->
             <div class="absolute inset-0 pointer-events-none">
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-emerald/15 rounded-full blur-[130px] animate-pulse-subtle"></div>
-                <div class="absolute bottom-10 right-10 w-[400px] h-[400px] bg-brand-primary/20 rounded-full blur-[100px]"></div>
+                <div id="glow-ambient-1" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-brand-emerald/15 rounded-full blur-[140px] animate-pulse-subtle"></div>
+                <div id="glow-ambient-2" class="absolute bottom-10 right-10 w-[450px] h-[450px] bg-brand-gold/10 rounded-full blur-[120px]"></div>
             </div>
 
-            <!-- WebGL / Canvas Viewport -->
-            <div class="relative w-full h-full max-w-7xl mx-auto flex items-center justify-center">
-                <!-- HTML5 Canvas that receives WebP frames -->
-                <canvas id="scrolly-canvas" class="relative z-10 w-full h-full object-contain"></canvas>
-                
-                <!-- Seamless edge vignette -->
-                <div class="absolute inset-0 z-20 canvas-vignette"></div>
+            <!-- LAYER 1 (BEHIND DOCTOR): Kinetic Parallax Typography & Hospital Watermark -->
+            <div id="backdrop-transparent" class="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center transition-opacity duration-700 opacity-100">
+                <!-- Monumental Outline Typography in Parallax -->
+                <div class="absolute inset-0 flex flex-col justify-center items-center select-none">
+                    <span id="kinetic-text-1" class="font-mono font-black text-[13vw] tracking-tighter uppercase text-transparent stroke-emerald whitespace-nowrap will-change-transform leading-none opacity-40">
+                        MEDICINA UFF
+                    </span>
+                    <span id="kinetic-text-2" class="font-mono font-black text-[18vw] tracking-tighter uppercase text-transparent stroke-gold whitespace-nowrap will-change-transform leading-none -mt-[3vw] opacity-30">
+                        2027
+                    </span>
+                </div>
 
-                <!-- Text Overlay Layer (Syncs with scroll milestones) -->
+                <!-- Secondary Subtext Behind Silhouette -->
+                <div class="absolute top-24 left-1/2 -translate-x-1/2 text-center opacity-30 select-none">
+                    <p class="text-[10px] sm:text-xs font-mono uppercase tracking-[0.35em] text-brand-emerald">
+                        HOSPITAL UNIVERSITÁRIO ANTÔNIO PEDRO • TRADIÇÃO CENTENÁRIA
+                    </p>
+                </div>
+            </div>
+
+            <!-- LAYER 2: Canvas Viewport (The Doctor) -->
+            <div class="relative w-full h-full max-w-7xl mx-auto flex items-center justify-center">
+                <!-- HTML5 Canvas that receives transparent or studio WebP frames -->
+                <canvas id="scrolly-canvas" class="relative z-20 w-full h-full object-contain pointer-events-none"></canvas>
+
+                <!-- LAYER 3 (FOREGROUND): Text Overlay Layer (Syncs with scroll milestones) -->
                 <div class="absolute inset-0 z-30 pointer-events-none flex flex-col justify-between p-6 sm:p-12 md:p-16">
                     
                     <!-- Top HUD info -->
@@ -192,6 +225,8 @@
                         <div class="glass-panel px-4 py-2 rounded-xl text-xs font-mono text-slate-300 flex items-center gap-3">
                             <span class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
                             <span id="hud-doctor-name">Dra. Sofia • Medicina UFF</span>
+                            <span class="text-slate-500">•</span>
+                            <span id="hud-bg-badge" class="text-brand-glow font-bold">Fundo Transparente</span>
                         </div>
 
                         <!-- Progress HUD -->
@@ -213,7 +248,7 @@
                                 Cada plantão começa com um compromisso interior.
                             </h3>
                             <p class="mt-2 text-sm sm:text-base text-slate-300 font-light leading-relaxed">
-                                A jornada de quem escolhe cuidar. Dedicação, estudo constante e o primeiro passo rumo à excelência.
+                                A dedicação aos estudos e o sonho de ingressar na pós-graduação de uma das melhores faculdades do país.
                             </p>
                         </div>
 
@@ -226,7 +261,7 @@
                                 Vestir o jaleco é assumir uma história secular.
                             </h3>
                             <p class="mt-2 text-sm sm:text-base text-slate-300 font-light leading-relaxed">
-                                Mais de 100 anos formando líderes na medicina brasileira. Tradição clínica, ética e técnica de vanguarda.
+                                Mais de 100 anos formando líderes na medicina brasileira. Tradição clínica, ética e técnica de vanguarda no HUAP.
                             </p>
                         </div>
 
@@ -239,7 +274,7 @@
                                 Especialista pela Faculdade de Medicina da UFF.
                             </h3>
                             <p class="mt-2 text-sm sm:text-base text-slate-300 font-light leading-relaxed">
-                                13 especialidades médicas 100% gratuitas. O Hospital Universitário Antônio Pedro espera por você.
+                                13 especialidades médicas 100% gratuitas. O seu lugar é aqui.
                             </p>
                         </div>
                     </div>
@@ -260,7 +295,7 @@
                         <!-- Manual Slider (for quick inspection without scrolling) -->
                         <div class="flex items-center gap-3 glass-panel px-4 py-1.5 rounded-xl">
                             <span class="text-xs font-mono text-slate-400">Scrub manual:</span>
-                            <input type="range" id="frame-slider" min="1" max="94" value="1" class="w-32 sm:w-48 accent-brand-emerald cursor-pointer">
+                            <input type="range" id="frame-slider" min="1" max="94" value="1" class="w-28 sm:w-48 accent-brand-emerald cursor-pointer">
                         </div>
                     </div>
                 </div>
@@ -270,7 +305,7 @@
             <!-- Loading overlay until frames are cached -->
             <div id="loading-overlay" class="absolute inset-0 z-50 bg-brand-base flex flex-col items-center justify-center transition-opacity duration-500">
                 <div class="w-12 h-12 rounded-full border-2 border-brand-emerald/30 border-t-brand-glow animate-spin mb-4"></div>
-                <h4 class="text-white font-bold text-base mb-1">Carregando Sequência Cinemática</h4>
+                <h4 class="text-white font-bold text-base mb-1" id="loading-title">Carregando Sequência Transparente</h4>
                 <p class="text-xs font-mono text-slate-400" id="loading-progress">0% carregado</p>
                 <div class="w-64 h-1.5 bg-white/10 rounded-full mt-3 overflow-hidden">
                     <div id="loading-bar" class="h-full bg-gradient-to-r from-brand-emerald to-brand-gold w-0 transition-all duration-150"></div>
@@ -283,13 +318,13 @@
     <!-- Post-Section: Integration Context -->
     <section class="py-28 px-6 md:px-12 max-w-5xl mx-auto text-center border-t border-white/10">
         <span class="inline-block px-3.5 py-1 rounded-full text-xs font-mono text-brand-gold bg-brand-gold/10 border border-brand-gold/30 mb-4">
-            COMPARAÇÃO E APROVAÇÃO
+            COMPARAÇÃO VISUAL
         </span>
         <h3 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            Como você avalia essa experiência?
+            Transparência vs. Caixa de Estúdio
         </h3>
         <p class="mt-4 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
-            Podemos posicionar essa seção logo após o Hero principal da landing page, como abertura das <strong>13 Especialidades Médicas</strong> ou como transição para o cronograma do edital 2027.
+            Com o fundo transparente recortado em inteligência artificial, você pode posicionar o médico em qualquer parte da página — até sobrepondo o menu, letreiros ou fotos históricas do prédio da Faculdade de Medicina!
         </p>
 
         <div class="mt-10 flex flex-wrap justify-center gap-4">
@@ -304,20 +339,30 @@
         gsap.registerPlugin(ScrollTrigger);
 
         const TOTAL_FRAMES = 94;
-        const DOCTORS = {
+        
+        // Cache dictionary: key = `${doctorKey}_${bgMode}`
+        const CACHE = {
+            female_transparent: [],
+            female_studio: [],
+            male_transparent: [],
+            male_studio: []
+        };
+
+        const CONFIG = {
             female: {
                 name: 'Dra. Sofia • Medicina UFF',
-                path: 'assets/transformation/female/frame_',
-                images: []
+                transparent: 'assets/transformation/female_transparent/frame_',
+                studio: 'assets/transformation/female/frame_'
             },
             male: {
                 name: 'Dr. Gabriel • Medicina UFF',
-                path: 'assets/transformation/male/frame_',
-                images: []
+                transparent: 'assets/transformation/male_transparent/frame_',
+                studio: 'assets/transformation/male/frame_'
             }
         };
 
         let currentDoctorKey = 'female';
+        let currentBgMode = 'transparent'; // 'transparent' or 'studio'
         let currentFrameIndex = 0;
         let isAutoPlaying = false;
         let autoPlayTimer = null;
@@ -325,15 +370,24 @@
         const canvas = document.getElementById('scrolly-canvas');
         const ctx = canvas.getContext('2d');
         const hudDoctorName = document.getElementById('hud-doctor-name');
+        const hudBgBadge = document.getElementById('hud-bg-badge');
         const hudFrameCount = document.getElementById('hud-frame-count');
         const hudPercent = document.getElementById('hud-percent');
         const frameSlider = document.getElementById('frame-slider');
         const loadingOverlay = document.getElementById('loading-overlay');
+        const loadingTitle = document.getElementById('loading-title');
         const loadingProgress = document.getElementById('loading-progress');
         const loadingBar = document.getElementById('loading-bar');
 
+        const backdropTransparent = document.getElementById('backdrop-transparent');
+        const kineticText1 = document.getElementById('kinetic-text-1');
+        const kineticText2 = document.getElementById('kinetic-text-2');
+
         const btnFemale = document.getElementById('btn-female');
         const btnMale = document.getElementById('btn-male');
+        const btnModeTransparent = document.getElementById('btn-mode-transparent');
+        const btnModeStudio = document.getElementById('btn-mode-studio');
+
         const btnAutoplay = document.getElementById('btn-autoplay');
         const btnReverse = document.getElementById('btn-reverse');
         const autoplayIcon = document.getElementById('autoplay-icon');
@@ -353,43 +407,56 @@
         }
         window.addEventListener('resize', resizeCanvas);
 
-        // Preload All Images for a Doctor
-        function preloadDoctor(doctorKey, onProgress, onComplete) {
-            const doctor = DOCTORS[doctorKey];
-            if (doctor.images.length === TOTAL_FRAMES) {
+        // Preload Images for a specific combination
+        function preloadSequence(doctorKey, bgMode, onProgress, onComplete) {
+            const cacheKey = `${doctorKey}_${bgMode}`;
+            const cachedList = CACHE[cacheKey];
+
+            if (cachedList.length === TOTAL_FRAMES) {
                 if (onComplete) onComplete();
                 return;
             }
 
+            const basePath = CONFIG[doctorKey][bgMode];
             let loaded = 0;
+
             for (let i = 1; i <= TOTAL_FRAMES; i++) {
                 const img = new Image();
                 const padIndex = String(i).padStart(3, '0');
-                img.src = `${doctor.path}${padIndex}.webp`;
+                img.src = `${basePath}${padIndex}.webp`;
+
                 img.onload = () => {
                     loaded++;
                     if (onProgress) onProgress(loaded, TOTAL_FRAMES);
-                    if (loaded === TOTAL_FRAMES) {
-                        if (onComplete) onComplete();
-                    }
+                    if (loaded === TOTAL_FRAMES && onComplete) onComplete();
                 };
+
                 img.onerror = () => {
+                    // Fallback to studio image if transparent is still rendering
+                    if (bgMode === 'transparent') {
+                        img.src = `${CONFIG[doctorKey].studio}${padIndex}.webp`;
+                    }
                     loaded++;
                     if (loaded === TOTAL_FRAMES && onComplete) onComplete();
                 };
-                doctor.images.push(img);
+
+                cachedList.push(img);
             }
         }
 
-        // Render Frame onto Canvas with aspect-ratio preserving contain/cover
+        // Render Frame onto Canvas with 'contain' aspect ratio
         function renderFrame(index) {
-            const doctor = DOCTORS[currentDoctorKey];
-            const img = doctor.images[index];
+            const cacheKey = `${currentDoctorKey}_${currentBgMode}`;
+            let img = CACHE[cacheKey][index];
+
+            // Fallback if transparent not loaded yet
+            if (!img || !img.complete) {
+                img = CACHE[`${currentDoctorKey}_studio`][index];
+            }
             if (!img || !img.complete) return;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Calculate 'contain' with slight cinematic crop
             const canvasRatio = canvas.width / canvas.height;
             const imgRatio = img.width / img.height;
 
@@ -415,7 +482,14 @@
             hudPercent.textContent = `${pct}%`;
             frameSlider.value = index + 1;
 
-            // Update text steps based on scroll progress
+            // Update kinetic typography behind doctor based on scroll
+            if (currentBgMode === 'transparent') {
+                const norm = (index / (TOTAL_FRAMES - 1)) - 0.5; // -0.5 to 0.5
+                kineticText1.style.transform = `translateX(${norm * -120}px)`;
+                kineticText2.style.transform = `translateX(${norm * 120}px)`;
+            }
+
+            // Update story steps
             updateStoryCards(pct);
         }
 
@@ -454,11 +528,10 @@
         }
 
         // Setup GSAP ScrollTrigger
-        let scrollTween = null;
         function initScrollAnimation() {
             const frameObj = { frame: 0 };
 
-            scrollTween = gsap.to(frameObj, {
+            gsap.to(frameObj, {
                 frame: TOTAL_FRAMES - 1,
                 ease: "none",
                 scrollTrigger: {
@@ -474,36 +547,24 @@
             });
         }
 
-        // Switch Doctor
-        function switchDoctor(doctorKey) {
-            if (currentDoctorKey === doctorKey) return;
-            currentDoctorKey = doctorKey;
+        // Switch State Function
+        function updateView() {
+            hudDoctorName.textContent = CONFIG[currentDoctorKey].name;
+            hudBgBadge.textContent = currentBgMode === 'transparent' ? 'Fundo Transparente' : 'Fundo Estúdio';
 
-            if (doctorKey === 'female') {
-                btnFemale.classList.add('glass-panel-active', 'text-white');
-                btnFemale.classList.remove('text-slate-400');
-                btnFemale.setAttribute('aria-pressed', 'true');
-
-                btnMale.classList.remove('glass-panel-active', 'text-white');
-                btnMale.classList.add('text-slate-400');
-                btnMale.setAttribute('aria-pressed', 'false');
+            if (currentBgMode === 'transparent') {
+                backdropTransparent.style.opacity = '1';
             } else {
-                btnMale.classList.add('glass-panel-active', 'text-white');
-                btnMale.classList.remove('text-slate-400');
-                btnMale.setAttribute('aria-pressed', 'true');
-
-                btnFemale.classList.remove('glass-panel-active', 'text-white');
-                btnFemale.classList.add('text-slate-400');
-                btnFemale.setAttribute('aria-pressed', 'false');
+                backdropTransparent.style.opacity = '0';
             }
 
-            hudDoctorName.textContent = DOCTORS[doctorKey].name;
-
-            // If not cached yet, preload
-            if (DOCTORS[doctorKey].images.length < TOTAL_FRAMES) {
+            const cacheKey = `${currentDoctorKey}_${currentBgMode}`;
+            if (CACHE[cacheKey].length < TOTAL_FRAMES) {
                 loadingOverlay.style.opacity = '1';
                 loadingOverlay.style.pointerEvents = 'auto';
-                preloadDoctor(doctorKey, (loaded, total) => {
+                loadingTitle.textContent = currentBgMode === 'transparent' ? 'Carregando Sequência Transparente...' : 'Carregando Sequência de Estúdio...';
+                
+                preloadSequence(currentDoctorKey, currentBgMode, (loaded, total) => {
                     const pct = Math.round((loaded / total) * 100);
                     loadingProgress.textContent = `${pct}% carregado (${loaded}/${total})`;
                     loadingBar.style.width = `${pct}%`;
@@ -519,8 +580,47 @@
             }
         }
 
-        btnFemale.addEventListener('click', () => switchDoctor('female'));
-        btnMale.addEventListener('click', () => switchDoctor('male'));
+        // Doctor Switcher Events
+        btnFemale.addEventListener('click', () => {
+            if (currentDoctorKey === 'female') return;
+            currentDoctorKey = 'female';
+            btnFemale.classList.add('glass-panel-active', 'text-white');
+            btnFemale.classList.remove('text-slate-400');
+            btnMale.classList.remove('glass-panel-active', 'text-white');
+            btnMale.classList.add('text-slate-400');
+            updateView();
+        });
+
+        btnMale.addEventListener('click', () => {
+            if (currentDoctorKey === 'male') return;
+            currentDoctorKey = 'male';
+            btnMale.classList.add('glass-panel-active', 'text-white');
+            btnMale.classList.remove('text-slate-400');
+            btnFemale.classList.remove('glass-panel-active', 'text-white');
+            btnFemale.classList.add('text-slate-400');
+            updateView();
+        });
+
+        // Background Mode Switcher Events
+        btnModeTransparent.addEventListener('click', () => {
+            if (currentBgMode === 'transparent') return;
+            currentBgMode = 'transparent';
+            btnModeTransparent.classList.add('glass-panel-active', 'text-white');
+            btnModeTransparent.classList.remove('text-slate-400');
+            btnModeStudio.classList.remove('glass-panel-active', 'text-white');
+            btnModeStudio.classList.add('text-slate-400');
+            updateView();
+        });
+
+        btnModeStudio.addEventListener('click', () => {
+            if (currentBgMode === 'studio') return;
+            currentBgMode = 'studio';
+            btnModeStudio.classList.add('glass-panel-active', 'text-white');
+            btnModeStudio.classList.remove('text-slate-400');
+            btnModeTransparent.classList.remove('glass-panel-active', 'text-white');
+            btnModeTransparent.classList.add('text-slate-400');
+            updateView();
+        });
 
         // Slider scrubbing
         frameSlider.addEventListener('input', (e) => {
@@ -570,11 +670,12 @@
             });
         });
 
-        // Initialize: Preload female doctor first, then start male in background
+        // Preload sequences on start
         window.addEventListener('DOMContentLoaded', () => {
             resizeCanvas();
 
-            preloadDoctor('female', (loaded, total) => {
+            // First preload female transparent
+            preloadSequence('female', 'transparent', (loaded, total) => {
                 const pct = Math.round((loaded / total) * 100);
                 loadingProgress.textContent = `${pct}% carregado (${loaded}/${total})`;
                 loadingBar.style.width = `${pct}%`;
@@ -585,10 +686,10 @@
                     renderFrame(0);
                     initScrollAnimation();
 
-                    // Preload male in background quietly
-                    preloadDoctor('male', null, () => {
-                        console.log('Dr. Gabriel frames preloaded in background!');
-                    });
+                    // Preload others quietly in background
+                    preloadSequence('female', 'studio');
+                    preloadSequence('male', 'transparent');
+                    preloadSequence('male', 'studio');
                 }, 300);
             });
         });
