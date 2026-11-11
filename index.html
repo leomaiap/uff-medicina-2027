@@ -1162,27 +1162,60 @@
             <!-- Timeline de Passos Conectados -->
             <div class="relative border-l-2 border-brand-emerald/30 ml-4 sm:ml-8 space-y-12">
                 
-                <div class="relative pl-8 sm:pl-10 group">
-                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-emerald border-4 border-brand-base shadow-glow-emerald"></div>
-                    <span class="text-xs font-mono font-bold text-slate-300 tracking-widest uppercase">09/12 (16h) a 12/12 (12h)</span>
-                    <h4 class="font-bold text-xl text-white mt-1">Solicitação de Isenção da Taxa</h4>
-                    <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
-                        Envio de requerimento e comprovação em PDF (máx. 5 MB) para <strong class="text-white font-mono">concursos.cmm@id.uff.br</strong> (CadÚnico ou servidores ativos/aposentados da UFF).
+                <!-- Passo 1 (Etapa Passada: Cinza) -->
+                <div class="relative pl-8 sm:pl-10 group opacity-55 hover:opacity-85 transition-opacity">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-slate-500 border-4 border-brand-base timeline-dot"></div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-xs font-mono font-bold text-slate-400 tracking-widest uppercase step-date-tag">09/12 (16h) a 12/12 (12h)</span>
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700/60">Etapa Encerrada</span>
+                    </div>
+                    <h4 class="font-bold text-xl text-slate-400 mt-1">Solicitação de Isenção da Taxa</h4>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-xl">
+                        Envio de requerimento e comprovação em PDF (máx. 5 MB) para <span class="text-slate-300 font-mono">concursos.cmm@id.uff.br</span> (CadÚnico ou servidores ativos/aposentados da UFF).
                     </p>
                 </div>
 
+                <!-- Passo 2 (Fase Atual: Destaque Máximo) -->
                 <div class="relative pl-8 sm:pl-10 group">
-                    <div class="absolute -left-[11px] top-1.5 w-5 h-5 rounded-full bg-brand-gold border-4 border-brand-base shadow-glow-gold animate-pulse"></div>
-                    <span class="text-xs font-mono font-bold text-brand-gold tracking-widest uppercase">05/01 a 02/02/2027 • FASE ATUAL</span>
-                    <h4 class="font-bold text-2xl text-white mt-1">Período Oficial de Inscrições</h4>
-                    <p class="text-xs sm:text-sm text-slate-200 mt-1 max-w-xl">
-                        Inscrição online no portal da Faculdade de Medicina UFF. Emissão e quitação da Guia de Recolhimento da União (GRU) de R$ 400.
-                    </p>
+                    <div class="absolute -left-[13px] top-7 w-6 h-6 rounded-full bg-brand-gold border-4 border-brand-base shadow-glow-gold animate-pulse flex items-center justify-center z-10 timeline-dot">
+                        <span class="w-2 h-2 rounded-full bg-white"></span>
+                    </div>
+                    
+                    <div class="relative p-6 sm:p-7 rounded-2xl bg-gradient-to-br from-brand-surface/95 via-brand-surface/85 to-brand-base/95 border-2 border-brand-gold/70 shadow-[0_0_40px_rgba(230,175,46,0.22)] backdrop-blur-md transition-all duration-300 hover:border-brand-gold hover:shadow-[0_0_55px_rgba(230,175,46,0.32)] timeline-highlight-card">
+                        <div class="flex flex-wrap items-center gap-2.5">
+                            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono font-bold tracking-widest uppercase bg-brand-gold/15 text-brand-gold border border-brand-gold/40 shadow-sm step-date-tag">
+                                <span class="relative flex h-2 w-2">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-gold"></span>
+                                </span>
+                                05/01 a 02/02/2027 • FASE ATUAL
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase bg-brand-emerald/20 text-emerald-300 border border-brand-emerald/40">
+                                Inscrições Abertas
+                            </span>
+                        </div>
+                        
+                        <h4 class="font-bold text-2xl sm:text-3xl text-white mt-3 tracking-tight">Período Oficial de Inscrições</h4>
+                        
+                        <p class="text-sm sm:text-base text-slate-200 mt-2 max-w-xl leading-relaxed">
+                            Inscrição online no portal da Faculdade de Medicina UFF. Emissão e quitação da Guia de Recolhimento da União (GRU) de R$ 400.
+                        </p>
+                        
+                        <div class="mt-5 pt-3.5 border-t border-white/10 flex flex-wrap items-center gap-4">
+                            <a href="#hero" class="avenora-btn text-xs sm:text-sm !py-2 !px-5">
+                                <span>Garantir Minha Inscrição</span>
+                                <span class="avenora-btn-circle !w-7 !h-7">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                                </span>
+                            </a>
+                            <span class="text-xs text-brand-gold font-mono font-semibold tracking-wide">Taxa Única: R$ 400</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="relative pl-8 sm:pl-10 group">
-                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-surface border-4 border-brand-emerald"></div>
-                    <span class="text-xs font-mono font-bold text-slate-300 tracking-widest uppercase">24/02/2027 (10h às 13h)</span>
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-surface border-4 border-brand-emerald timeline-dot"></div>
+                    <span class="text-xs font-mono font-bold text-slate-300 tracking-widest uppercase step-date-tag">24/02/2027 (10h às 13h)</span>
                     <h4 class="font-bold text-xl text-white mt-1">1ª Etapa: Prova Escrita Presencial</h4>
                     <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
                         Avaliação de conhecimentos médicos presencial no campus da Faculdade de Medicina da UFF em Niterói - RJ.
@@ -1190,8 +1223,8 @@
                 </div>
 
                 <div class="relative pl-8 sm:pl-10 group">
-                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-surface border-4 border-brand-emerald"></div>
-                    <span class="text-xs font-mono font-bold text-slate-300 tracking-widest uppercase">11/03 a 13/03/2027</span>
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-surface border-4 border-brand-emerald timeline-dot"></div>
+                    <span class="text-xs font-mono font-bold text-slate-300 tracking-widest uppercase step-date-tag">11/03 a 13/03/2027</span>
                     <h4 class="font-bold text-xl text-white mt-1">2ª Etapa: Entrevista & Análise de Currículo Lattes</h4>
                     <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
                         Arguição individual pelas comissões examinadoras de cada departamento acadêmico da Faculdade de Medicina.
@@ -1199,8 +1232,8 @@
                 </div>
 
                 <div class="relative pl-8 sm:pl-10 group">
-                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-accent border-4 border-brand-base shadow-glow-emerald"></div>
-                    <span class="text-xs font-mono font-bold text-slate-300 tracking-widest uppercase">18/03/2027</span>
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-accent border-4 border-brand-base shadow-glow-emerald timeline-dot"></div>
+                    <span class="text-xs font-mono font-bold text-slate-300 tracking-widest uppercase step-date-tag">18/03/2027</span>
                     <h4 class="font-bold text-xl text-white mt-1">Resultado Final & Convocação de Matrícula</h4>
                     <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
                         Publicação da lista definitiva dos médicos aprovados e início imediato das atividades acadêmicas.
@@ -2622,10 +2655,11 @@
 
                     const timelineSteps = timelineContainer.querySelectorAll('.group');
                     timelineSteps.forEach((step, idx) => {
-                        const dot = step.querySelector('div:first-child');
-                        const dateTag = step.querySelector('span');
+                        const dot = step.querySelector('.timeline-dot') || step.querySelector('div:first-child');
+                        const dateTag = step.querySelector('.step-date-tag') || step.querySelector('span');
                         const stepTitle = step.querySelector('h4');
                         const stepDesc = step.querySelector('p');
+                        const highlightCard = step.querySelector('.timeline-highlight-card');
 
                         const stepTl = gsap.timeline({
                             scrollTrigger: {
@@ -2643,18 +2677,25 @@
                                 0
                             );
                         }
+                        if (highlightCard) {
+                            stepTl.fromTo(highlightCard,
+                                { y: 28, opacity: 0, scale: 0.98 },
+                                { y: 0, opacity: 1, scale: 1, duration: 0.65, ease: 'power3.out' },
+                                0.04
+                            );
+                        }
                         if (dateTag) {
                             stepTl.fromTo(dateTag,
                                 { x: -20, opacity: 0 },
                                 { x: 0, opacity: 1, duration: 0.45, ease: 'power2.out' },
-                                0.06
+                                0.08
                             );
                         }
                         if (stepTitle) {
                             stepTl.fromTo(stepTitle,
                                 { x: 25, opacity: 0 },
                                 { x: 0, opacity: 1, duration: 0.55, ease: 'power3.out' },
-                                0.1
+                                0.12
                             );
                         }
                         if (stepDesc) {
