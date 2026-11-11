@@ -474,13 +474,13 @@
         .spec-card-title {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 800;
-            font-size: 1.4rem;
-            line-height: 1.15;
+            font-size: 1.35rem;
+            line-height: 1.2;
             letter-spacing: -0.02em;
             color: #FFFFFF;
             text-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
             display: -webkit-box;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -573,12 +573,13 @@
         }
 
         .credits-item {
-            height: 68px;
+            min-height: 64px;
+            height: auto;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 0 1.25rem;
+            padding: 0.35rem 1rem;
             cursor: pointer;
             user-select: none;
             transition: transform 0.25s ease;
@@ -587,17 +588,20 @@
         .credits-item-text {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 800;
-            font-size: clamp(1.2rem, 5.2vw, 1.65rem);
+            font-size: clamp(1.15rem, 4.6vw, 1.6rem);
             letter-spacing: -0.025em;
+            line-height: 1.2;
             color: rgba(255, 255, 255, 0.92);
             transition: color 0.25s ease, transform 0.25s ease, text-shadow 0.25s ease;
-            white-space: nowrap;
+            text-wrap: balance;
+            text-align: center;
+            max-width: 100%;
             text-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
         }
 
         @media (min-width: 640px) {
             .credits-item-text {
-                font-size: 2.25rem;
+                font-size: 2.15rem;
             }
         }
 
@@ -1614,7 +1618,8 @@
             },
             {
                 id: 'radiologia-toracica',
-                title: 'Radiologia e Diagnóstico por Imagem do Tórax',
+                title: 'Radiologia Torácica',
+                fullTitle: 'Radiologia e Diagnóstico por Imagem do Tórax',
                 category: 'Diagnóstico Avançado',
                 duration: '1 Ano e 6 Meses',
                 hours: '1.864 horas',
@@ -1924,7 +1929,7 @@
                     </span>
                 </div>
 
-                <h2 class="font-black text-2xl sm:text-3xl text-white mt-1">${spec.title}</h2>
+                <h2 class="font-black text-2xl sm:text-3xl text-white mt-1">${spec.fullTitle || spec.title}</h2>
                 <div class="text-xs font-mono text-slate-400 mt-1 uppercase tracking-wider">${spec.category} • Início das Aulas: <strong class="text-white">${spec.inicio}</strong></div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-5 text-xs sm:text-sm">
