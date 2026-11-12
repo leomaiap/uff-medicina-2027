@@ -179,11 +179,32 @@ document.addEventListener('DOMContentLoaded', () => {
                         );
                     }
 
+                    const line1 = document.getElementById('scrolly-text-line-1');
+                    const line2 = document.getElementById('scrolly-text-line-2');
+
                     if (bgOutline) {
                         heroTl.fromTo(bgOutline,
-                            { scale: 0.92, opacity: 0, y: 25 },
-                            { scale: 1, opacity: 1, y: 0, ease: 'power2.out', duration: 0.4 },
+                            { scale: 0.94, opacity: 0 },
+                            { scale: 1, opacity: 1, ease: 'power2.out', duration: 0.4 },
                             0.08
+                        );
+                    }
+
+                    // ANIMAÇÃO CONFORME SOLICITADO:
+                    // Linha 1 ("CONCURSO") desliza da esquerda para a direita com o scroll
+                    // Linha 2 ("UNIFICADO 27") desliza da direita para a esquerda com o scroll
+                    if (line1) {
+                        heroTl.fromTo(line1,
+                            { xPercent: -24 },
+                            { xPercent: 24, ease: 'none', duration: 2.30 },
+                            0
+                        );
+                    }
+                    if (line2) {
+                        heroTl.fromTo(line2,
+                            { xPercent: 24 },
+                            { xPercent: -24, ease: 'none', duration: 2.30 },
+                            0
                         );
                     }
 
@@ -197,10 +218,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (idx !== currentFrame) {
                                 currentFrame = idx;
                                 renderDoctorFrame(idx);
-                            }
-                            if (bgOutline) {
-                                const p = idx / (TOTAL_FRAMES - 1);
-                                bgOutline.style.transform = `translateY(${(p - 0.5) * -40}px)`;
                             }
                         }
                     }, 0.28);

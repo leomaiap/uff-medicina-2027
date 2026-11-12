@@ -1,13 +1,22 @@
 /* ==============================================================
    SCROLLYTELLING JALECO UFF (DENTRO DO #stage-behind PINADO)
+   Tipografia Monumental "CONCURSO UNIFICADO 27" 100% Preenchida
    ============================================================== */
+.scrolly-filled-text,
 .scrolly-outline-text {
-    color: transparent;
-    -webkit-text-stroke: 1.5px rgba(52, 211, 153, 0.22);
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 900;
     will-change: transform;
     user-select: none;
     pointer-events: none;
+    display: inline-block;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(52, 211, 153, 0.15) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0 !important;
+    filter: drop-shadow(0 4px 30px rgba(0, 0, 0, 0.35));
 }
 
 .scrolly-pillar-card {
