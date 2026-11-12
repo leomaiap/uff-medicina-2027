@@ -2268,7 +2268,8 @@
                 // -------------------------------------------------------------
                 const pinnedStage = document.getElementById('hero-pinned-stage');
                 const stageBehind = document.getElementById('stage-behind');
-                const D = 2600; // Distância total pinada: 0..450px (abertura da íris) + 450..2600px (médico vestindo o jaleco e cards surgindo)
+                const isMobileScroll = window.innerWidth < 768;
+                const D = isMobileScroll ? 850 : 1150; // Distância super ágil e responsiva: ~2 swipes no celular / ~3 giros de roda no PC
 
                 if (pinnedStage && hero && stageBehind) {
                     const TOTAL_FRAMES = 94;
@@ -2340,10 +2341,11 @@
                         scrollTrigger: {
                             trigger: pinnedStage,
                             start: 'top top',
-                            end: '+=' + D,
+                            end: () => '+=' + (window.innerWidth < 768 ? 850 : 1150),
                             pin: true,
-                            scrub: 0.15,
+                            scrub: 0.1,
                             anticipatePin: 1,
+                            invalidateOnRefresh: true,
                             onLeave: () => {
                                 hero.style.display = 'none';
                             },
@@ -2353,11 +2355,11 @@
                         }
                     });
 
-                    // FASE 1 (0.0 -> 1.0): A máscara radial abre do centro rapidamente com arestas aveludadas (+18% smooth feather)
+                    // FASE 1 (0.0 -> 0.55): A máscara radial abre do centro rapidamente com arestas aveludadas (+18% smooth feather)
                     heroTl.to(maskProxy, {
                         radius: 140,
                         ease: 'power1.in',
-                        duration: 1,
+                        duration: 0.55,
                         onUpdate: () => {
                             const r = maskProxy.radius;
                             if (r <= 0.5) {
@@ -2380,10 +2382,10 @@
                         }
                     }, 0);
 
-                    // 2. O blur começa em 20px e zera rapidamente durante a abertura da íris
+                    // 2. O blur começa em 20px e zera já no início da abertura da íris
                     heroTl.fromTo(stageBehind, 
                         { filter: 'blur(20px)' }, 
-                        { filter: 'blur(0px)', ease: 'power2.out', duration: 0.45 }, 
+                        { filter: 'blur(0px)', ease: 'power2.out', duration: 0.28 }, 
                         0
                     );
 
@@ -2393,7 +2395,7 @@
                             scale: 0.93,
                             opacity: 0.2,
                             ease: 'power1.inOut',
-                            duration: 0.8
+                            duration: 0.45
                         }, 0);
                     }
                     if (doctorsLayer) {
@@ -2401,7 +2403,7 @@
                             scale: 0.94,
                             opacity: 0.3,
                             ease: 'power1.inOut',
-                            duration: 0.85
+                            duration: 0.48
                         }, 0);
                     }
                     const bottomUI = hero.querySelector('.hero-bottom-ui');
@@ -2410,7 +2412,7 @@
                             y: 35,
                             opacity: 0.2,
                             ease: 'power1.inOut',
-                            duration: 0.6
+                            duration: 0.38
                         }, 0);
                     }
 
@@ -2425,24 +2427,24 @@
                     if (sobreWordInners.length) {
                         heroTl.fromTo(sobreWordInners,
                             { yPercent: 115, rotateZ: 4, opacity: 0 },
-                            { yPercent: 0, rotateZ: 0, opacity: 1, stagger: 0.04, ease: 'power3.out', duration: 0.5 },
-                            0.15
+                            { yPercent: 0, rotateZ: 0, opacity: 1, stagger: 0.025, ease: 'power3.out', duration: 0.35 },
+                            0.08
                         );
                     }
 
                     if (bgOutline) {
                         heroTl.fromTo(bgOutline,
-                            { scale: 0.92, opacity: 0, y: 30 },
-                            { scale: 1, opacity: 1, y: 0, ease: 'power2.out', duration: 0.7 },
-                            0.15
+                            { scale: 0.92, opacity: 0, y: 25 },
+                            { scale: 1, opacity: 1, y: 0, ease: 'power2.out', duration: 0.4 },
+                            0.08
                         );
                     }
 
-                    // FASE 2 (0.65 -> 4.65): Enquanto a seção continua PINADA, o médico veste o jaleco quadro a quadro (0 -> 93)
+                    // FASE 2 (0.28 -> 2.15): Já começa a vestir o jaleco assim que o centro da íris abre (zero scroll morto)
                     heroTl.to(frameProxy, {
                         frame: TOTAL_FRAMES - 1,
                         ease: 'none',
-                        duration: 4.0,
+                        duration: 1.87,
                         onUpdate: () => {
                             const idx = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(frameProxy.frame)));
                             if (idx !== currentFrame) {
@@ -2451,12 +2453,12 @@
                             }
                             if (bgOutline) {
                                 const p = idx / (TOTAL_FRAMES - 1);
-                                bgOutline.style.transform = `translateY(${(p - 0.5) * -45}px)`;
+                                bgOutline.style.transform = `translateY(${(p - 0.5) * -40}px)`;
                             }
                         }
-                    }, 0.65);
+                    }, 0.28);
 
-                    // As 4 informações (cards) vão aparecendo uma a uma enquanto o médico se veste
+                    // As 4 informações (cards) vão aparecendo de forma ágil enquanto o médico se veste
                     const card1 = document.getElementById('scrolly-card-1');
                     const card2 = document.getElementById('scrolly-card-2');
                     const card3 = document.getElementById('scrolly-card-3');
@@ -2464,35 +2466,35 @@
 
                     if (card1) {
                         heroTl.fromTo(card1,
-                            { y: 35, scale: 0.92, opacity: 0 },
-                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.3)', duration: 0.55, onStart: () => card1.classList.add('scrolly-pillar-active'), onReverseComplete: () => card1.classList.remove('scrolly-pillar-active') },
-                            0.95
+                            { y: 28, scale: 0.93, opacity: 0 },
+                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.25)', duration: 0.32, onStart: () => card1.classList.add('scrolly-pillar-active'), onReverseComplete: () => card1.classList.remove('scrolly-pillar-active') },
+                            0.42
                         );
                     }
                     if (card2) {
                         heroTl.fromTo(card2,
-                            { y: 35, scale: 0.92, opacity: 0 },
-                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.3)', duration: 0.55, onStart: () => card2.classList.add('scrolly-pillar-active'), onReverseComplete: () => card2.classList.remove('scrolly-pillar-active') },
-                            1.85
+                            { y: 28, scale: 0.93, opacity: 0 },
+                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.25)', duration: 0.32, onStart: () => card2.classList.add('scrolly-pillar-active'), onReverseComplete: () => card2.classList.remove('scrolly-pillar-active') },
+                            0.85
                         );
                     }
                     if (card3) {
                         heroTl.fromTo(card3,
-                            { y: 35, scale: 0.92, opacity: 0 },
-                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.3)', duration: 0.55, onStart: () => card3.classList.add('scrolly-pillar-active'), onReverseComplete: () => card3.classList.remove('scrolly-pillar-active') },
-                            2.75
+                            { y: 28, scale: 0.93, opacity: 0 },
+                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.25)', duration: 0.32, onStart: () => card3.classList.add('scrolly-pillar-active'), onReverseComplete: () => card3.classList.remove('scrolly-pillar-active') },
+                            1.28
                         );
                     }
                     if (card4) {
                         heroTl.fromTo(card4,
-                            { y: 35, scale: 0.92, opacity: 0 },
-                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.3)', duration: 0.55, onStart: () => card4.classList.add('scrolly-pillar-active'), onReverseComplete: () => card4.classList.remove('scrolly-pillar-active') },
-                            3.65
+                            { y: 28, scale: 0.93, opacity: 0 },
+                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.25)', duration: 0.32, onStart: () => card4.classList.add('scrolly-pillar-active'), onReverseComplete: () => card4.classList.remove('scrolly-pillar-active') },
+                            1.70
                         );
                     }
 
-                    // Pequena pausa final (0.35) com jaleco vestido e os 4 cards na tela antes de liberar o pin para #vagas
-                    heroTl.to({}, { duration: 0.35 }, 4.65);
+                    // Breve respiro final (0.15) antes de liberar o pin para #vagas
+                    heroTl.to({}, { duration: 0.15 }, 2.15);
                 }
             }
 
