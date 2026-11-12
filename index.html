@@ -64,11 +64,13 @@
             background-color: #021813;
             color: #F8FAFC;
             scroll-behavior: auto;
+            overscroll-behavior-y: none;
         }
 
         body {
             background-color: #021813;
             overflow-x: hidden;
+            overscroll-behavior-y: none;
             font-family: 'Plus Jakarta Sans', sans-serif;
             -webkit-font-smoothing: antialiased;
         }
@@ -731,8 +733,8 @@
            ============================================================== */
         @media (max-width: 767px) {
             #hero {
-                min-height: 100vh;
-                min-height: 100svh;
+                height: 100%;
+                min-height: 0;
             }
             .hero-layer-bg {
                 background-position: 0 0, 50% 18%;
@@ -845,10 +847,10 @@
     <!-- ============================================================== -->
     <!-- 1. HERO PINNED STAGE (TRANSIÇÃO RADIAL NATIVA COM ZERO JITTER) -->
     <!-- ============================================================== -->
-    <div id="hero-pinned-stage" class="relative w-full h-screen min-h-[100svh] overflow-hidden bg-brand-base">
+    <div id="hero-pinned-stage" class="relative w-full h-[100svh] overflow-hidden bg-brand-base">
 
         <!-- CAMADA TRASEIRA: TELA DA SEÇÃO SOBRE (REVELADA PELA MÁSCARA RADIAL) -->
-        <div id="stage-behind" class="absolute inset-0 w-full h-full z-10 overflow-y-auto lg:overflow-hidden flex flex-col justify-between bg-brand-base" style="filter: blur(20px); will-change: filter;">
+        <div id="stage-behind" class="absolute inset-0 w-full h-full z-10 overflow-hidden flex flex-col justify-between bg-brand-base" style="filter: blur(20px); will-change: filter;">
             
             <!-- 2. INFINITE MARQUEE TICKER -->
             <section class="py-3 md:py-4 border-y border-white/10 bg-brand-surface/40 backdrop-blur-md overflow-hidden select-none shrink-0">
@@ -945,7 +947,7 @@
         <!-- FIM DO #stage-behind -->
 
         <!-- CAMADA FRONTAL: PRIMEIRO HERO (ABRE COM A MÁSCARA RADIAL) -->
-        <div id="hero" class="home-hero-area min-h-screen min-h-[100svh] flex flex-col justify-between absolute inset-0 w-full h-full z-20 overflow-hidden" style="will-change: mask-image, -webkit-mask-image;">
+        <div id="hero" class="home-hero-area flex flex-col justify-between absolute inset-0 w-full h-full z-20 overflow-hidden" style="will-change: mask-image, -webkit-mask-image;">
         
         <!-- CAMADA 1 (Fundo): Imagem do Átrio da Faculdade sem médicos + Luz Esmeralda -->
         <div id="hero-bg-layer" class="hero-layer-bg"></div>
@@ -2266,10 +2268,12 @@
                 // TRANSIÇÃO DE MÁSCARA RADIAL NATIVA (IRIS) DIRETO PARA SEÇÃO SOBRE
                 // + SCROLLYTELLING DO MÉDICO VESTINDO O JALECO PINADO (120FPS)
                 // -------------------------------------------------------------
+                ScrollTrigger.config({ ignoreMobileResize: true });
+
                 const pinnedStage = document.getElementById('hero-pinned-stage');
                 const stageBehind = document.getElementById('stage-behind');
                 const isMobileScroll = window.innerWidth < 768;
-                const D = isMobileScroll ? 850 : 1150; // Distância super ágil e responsiva: ~2 swipes no celular / ~3 giros de roda no PC
+                const D = isMobileScroll ? 650 : 1000; // 650px no celular conforme solicitado
 
                 if (pinnedStage && hero && stageBehind) {
                     const TOTAL_FRAMES = 94;
@@ -2341,10 +2345,10 @@
                         scrollTrigger: {
                             trigger: pinnedStage,
                             start: 'top top',
-                            end: () => '+=' + (window.innerWidth < 768 ? 850 : 1150),
+                            end: () => '+=' + (window.innerWidth < 768 ? 650 : 1000),
                             pin: true,
-                            scrub: 0.1,
-                            anticipatePin: 1,
+                            scrub: true,
+                            anticipatePin: 0,
                             invalidateOnRefresh: true,
                             onLeave: () => {
                                 hero.style.display = 'none';
