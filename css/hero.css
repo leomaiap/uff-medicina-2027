@@ -1,0 +1,228 @@
+/* ==============================================================
+   DIMENSIONAL STACKED HERO ARCHITECTURE
+   Layer 1: Clean Background Plate (Atrium) + Atmospheric Gradient
+   Layer 2: Monumental Title "Lato Sensu 27" (Middle Plane)
+   Layer 3: Cutout Brazilian Doctors PNG (Foreground Plane)
+   Layer 4: Bottom Interactive UI & Floating Card
+   ============================================================== */
+#hero-pinned-stage {
+    position: relative;
+    width: 100%;
+    height: 100svh;
+    overflow: hidden;
+    background-color: #021813;
+}
+
+#stage-behind {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    overflow: hidden;
+    background-color: #021813;
+    filter: blur(20px);
+    will-change: filter;
+}
+
+.home-hero-area {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    background-color: #021813;
+    overflow: hidden;
+    will-change: mask-image, -webkit-mask-image;
+}
+
+#main-content {
+    position: relative;
+    z-index: 10;
+}
+
+/* Layer 1: Background Plate (Prédio da Faculdade de Medicina da UFF) + Atmospheric Sky */
+.hero-layer-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image: 
+        linear-gradient(180deg, rgba(0, 104, 67, 0.72) 0%, rgba(0, 104, 67, 0.30) 35%, rgba(2, 24, 19, 0.45) 75%, #021813 100%),
+        url("../assets/img/hero-bg-predio-facmed.jpg");
+    background-position: 0 0, 50% 22%;
+    background-repeat: no-repeat, no-repeat;
+    background-size: 100% 100%, cover;
+    will-change: transform;
+}
+
+/* Fundo da seção Sobre - Foto do prédio quase sumindo (marca d'água super sutil) */
+.sobre-layer-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image: 
+        linear-gradient(180deg, rgba(0, 104, 67, 0.72) 0%, rgba(0, 104, 67, 0.30) 35%, rgba(2, 24, 19, 0.45) 75%, #021813 100%),
+        url("../assets/img/hero-bg-predio-facmed.jpg");
+    background-position: 0 0, 50% 22%;
+    background-repeat: no-repeat, no-repeat;
+    background-size: 100% 100%, cover;
+    opacity: 0.08;
+    pointer-events: none;
+}
+
+.hero-color-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 36rem;
+    background: radial-gradient(ellipse 90% 70% at 65% 0%, rgba(52, 211, 153, 0.5) 0%, rgba(0, 104, 67, 0.55) 50%, transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Layer 2: Monumental Text Plane (Behind the doctors' heads/shoulders!) */
+.hero-layer-text {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    text-align: center;
+    padding-top: 2rem;
+    user-select: none;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.hero-title {
+    font-size: clamp(3.4rem, 13.5vw, 15.5rem);
+    font-weight: 800;
+    line-height: 0.82;
+    letter-spacing: -0.04em;
+    margin: 0;
+    padding-bottom: 0.08em;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(180deg, #FFFFFF 55%, rgba(255, 255, 255, 0.15) 95%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    display: inline-block;
+    white-space: nowrap;
+    filter: drop-shadow(0 12px 30px rgba(0, 40, 25, 0.35));
+}
+
+.hero-title-line-1,
+.hero-title-line-2,
+.hero-title-space {
+    display: inline;
+}
+
+/* Layer 3: Cutout Doctors Foreground Plane (In front of "Lato Sensu 27"!) */
+.hero-layer-doctors {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    will-change: transform;
+}
+
+.hero-doctors-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 28%;
+    filter: drop-shadow(0 -8px 25px rgba(0, 0, 0, 0.38));
+}
+
+/* Bottom gradient vignette over the bottom of the doctors so bottom UI text is 100% readable */
+.hero-bottom-vignette {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 58%;
+    background: linear-gradient(180deg, transparent 0%, rgba(2, 24, 19, 0.45) 28%, rgba(2, 24, 19, 0.88) 60%, #021813 100%);
+    z-index: 25;
+    pointer-events: none;
+}
+
+/* ==============================================================
+   MOBILE (iPhone / Android) — hero idêntico e fiel ao desktop
+   ============================================================== */
+@media (max-width: 767px) {
+    #hero {
+        height: 100%;
+        min-height: 0;
+    }
+    .hero-layer-bg {
+        background-position: 0 0, 50% 18%;
+    }
+    .hero-layer-text {
+        padding-top: 0;
+        margin-top: -1.5rem !important;
+    }
+    .hero-title {
+        display: block;
+        font-size: inherit;
+        line-height: 1;
+        letter-spacing: normal;
+        white-space: normal;
+        background-image: none !important;
+        -webkit-text-fill-color: initial !important;
+        filter: none;
+    }
+    .hero-title-space {
+        display: none;
+    }
+    .hero-title-line-1,
+    .hero-title-line-2 {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        background-image: linear-gradient(180deg, #FFFFFF 56%, rgba(255, 255, 255, 0.26) 95%);
+        filter: drop-shadow(0 10px 25px rgba(0, 30, 20, 0.45));
+    }
+    .hero-title-line-1 {
+        font-size: 42.5vw;
+        line-height: 0.83;
+        letter-spacing: -0.038em;
+    }
+    .hero-title-line-2 {
+        font-size: 21.8vw;
+        line-height: 0.87;
+        letter-spacing: -0.04em;
+    }
+    .hero-layer-doctors {
+        position: absolute;
+        inset: 0;
+        top: 10%;
+        z-index: 20;
+        pointer-events: none;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+    }
+    .hero-doctors-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 41% 0%;
+        filter: drop-shadow(0 -8px 25px rgba(0, 0, 0, 0.38));
+    }
+    .hero-bottom-vignette {
+        height: 60%;
+        background: linear-gradient(180deg, transparent 0%, rgba(2, 24, 19, 0.45) 24%, rgba(2, 24, 19, 0.94) 58%, #021813 100%);
+    }
+    .hero-bottom-ui {
+        padding-top: 0 !important;
+        padding-bottom: max(2.5rem, env(safe-area-inset-bottom, 20px)) !important;
+    }
+    .avenora-btn {
+        padding-left: 1.4rem;
+        gap: 1rem;
+    }
+}

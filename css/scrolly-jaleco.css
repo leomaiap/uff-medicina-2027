@@ -1,0 +1,80 @@
+/* ==============================================================
+   SCROLLYTELLING JALECO UFF (DENTRO DO #stage-behind PINADO)
+   ============================================================== */
+.scrolly-outline-text {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(52, 211, 153, 0.22);
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    will-change: transform;
+    user-select: none;
+    pointer-events: none;
+}
+
+.scrolly-pillar-card {
+    background: rgba(5, 39, 32, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(0, 158, 94, 0.25);
+    box-shadow: 0 18px 40px -10px rgba(0, 0, 0, 0.55);
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.35s ease,
+                box-shadow 0.35s ease,
+                background-color 0.35s ease;
+    will-change: opacity, transform;
+}
+
+.scrolly-pillar-active {
+    background: rgba(5, 39, 32, 0.92);
+    border-color: rgba(52, 211, 153, 0.65);
+    box-shadow: 0 0 30px rgba(0, 158, 94, 0.32), 0 20px 45px -10px rgba(0, 0, 0, 0.65);
+}
+
+/* Posicionamento Diagonal exato conforme modelo-secao-2.jpg */
+#scrolly-card-1 { top: 20%; left: 10%; }
+#scrolly-card-2 { top: 58%; left: 6%; }
+#scrolly-card-3 { top: 15%; right: 10%; }
+#scrolly-card-4 { top: 53%; right: 6%; }
+
+@media (max-width: 1280px) {
+    #scrolly-card-1 { top: 20%; left: 4%; }
+    #scrolly-card-2 { top: 58%; left: 2%; }
+    #scrolly-card-3 { top: 15%; right: 4%; }
+    #scrolly-card-4 { top: 53%; right: 2%; }
+}
+
+@media (max-width: 1024px) {
+    .scrolly-pillar-card {
+        max-width: 245px !important;
+        padding: 0.75rem 0.9rem !important;
+    }
+    #scrolly-card-1 { top: 18%; left: 1rem; }
+    #scrolly-card-2 { top: 56%; left: 1rem; }
+    #scrolly-card-3 { top: 18%; right: 1rem; }
+    #scrolly-card-4 { top: 56%; right: 1rem; }
+}
+
+@media (max-width: 640px) {
+    .scrolly-pillar-card {
+        max-width: 175px !important;
+        padding: 0.55rem 0.65rem !important;
+    }
+    .scrolly-pillar-card h3 {
+        font-size: 0.76rem !important;
+        margin-top: 0.1rem !important;
+    }
+    .scrolly-pillar-card p {
+        font-size: 0.64rem !important;
+        line-height: 1.25 !important;
+    }
+    .scrolly-pillar-card .pillar-num {
+        font-size: 0.95rem !important;
+    }
+    #scrolly-card-1 { top: 16%; left: 0.5rem; }
+    #scrolly-card-2 { top: 52%; left: 0.5rem; }
+    #scrolly-card-3 { top: 16%; right: 0.5rem; }
+    #scrolly-card-4 { top: 52%; right: 0.5rem; }
+    .scrolly-outline-text {
+        -webkit-text-stroke: 1px rgba(52, 211, 153, 0.20);
+    }
+}

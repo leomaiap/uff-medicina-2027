@@ -1,0 +1,59 @@
+/* ==============================================================
+   MAIN & BASE STYLES - FACULDADE DE MEDICINA DA UFF 2027
+   ============================================================== */
+@import './hero.css';
+@import './scrolly-jaleco.css';
+@import './components.css';
+
+html {
+    scroll-behavior: auto;
+    overscroll-behavior-y: none;
+    background-color: #021813;
+    color: #F8FAFC;
+}
+
+body {
+    background-color: #021813;
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient Noise Layer */
+.noise-bg {
+    background-image: radial-gradient(rgba(16, 185, 129, 0.08) 1px, transparent 0);
+    background-size: 36px 36px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #021813; }
+::-webkit-scrollbar-thumb { background: #006843; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #10B981; }
+
+/* Kinetic Typography Masking */
+.word-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+}
+
+.word-inner {
+    display: inline-block;
+    will-change: transform, opacity;
+    transform-origin: 0% 100%;
+}
+
+.scroll-lit-word {
+    display: inline;
+    transition: color 0.15s ease, opacity 0.15s ease;
+    will-change: opacity, color;
+}
+
+.kinetic-card-3d {
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}
