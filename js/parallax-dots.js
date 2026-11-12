@@ -16,8 +16,11 @@
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (prefersReducedMotion) return;
 
+        // Fator de velocidade: rola mais lento que a página (35% da velocidade)
+        const SPEED_RATIO = 0.35;
+
         // Inicializa na posição atual de scroll sem saltos
-        const initialScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+        const initialScrollY = (window.pageYOffset || document.documentElement.scrollTop || 0) * SPEED_RATIO;
         let targetY = initialScrollY;
         let currentY = initialScrollY;
         let velocity = 0;
@@ -69,7 +72,7 @@
         }
 
         function onScroll() {
-            targetY = window.pageYOffset || document.documentElement.scrollTop || 0;
+            targetY = (window.pageYOffset || document.documentElement.scrollTop || 0) * SPEED_RATIO;
             startLoop();
         }
 
@@ -78,13 +81,13 @@
 
         // Suporte adicional para wheel enquanto seções pinadas estão em scrub
         window.addEventListener('wheel', () => {
-            targetY = window.pageYOffset || document.documentElement.scrollTop || 0;
+            targetY = (window.pageYOffset || document.documentElement.scrollTop || 0) * SPEED_RATIO;
             startLoop();
         }, { passive: true });
 
         // Recalibra ao redimensionar
         window.addEventListener('resize', () => {
-            targetY = window.pageYOffset || document.documentElement.scrollTop || 0;
+            targetY = (window.pageYOffset || document.documentElement.scrollTop || 0) * SPEED_RATIO;
             startLoop();
         }, { passive: true });
     }
