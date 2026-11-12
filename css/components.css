@@ -40,16 +40,26 @@
             transform: translateX(2px);
         }
 
-        /* Glassmorphism Avenora Style for dark sections */
+        /* ==============================================================
+           CLASSE UNIFICADA E REUTILIZÁVEL PARA CARDS E RETÂNGULOS DO SITE
+           Garante padrão visual 100% idêntico em todas as seções:
+           - Mesmo tom dark esmeralda translúcido (0.72)
+           - Desfoque de vidro homogêneo (blur 16px)
+           - Totalmente sem bordas (zero contornos indesejados)
+           - Sombra suave e elegante de profundidade
+           ============================================================== */
         .glass-card {
-            background: rgba(5, 39, 32, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: none;
+            background: rgba(5, 39, 32, 0.72) !important;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: none !important;
+            outline: none !important;
+            box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.55);
         }
 
         .glass-card:hover {
-            border: none;
+            border: none !important;
+            outline: none !important;
         }
 
         .glass-pill {

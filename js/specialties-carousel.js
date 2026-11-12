@@ -295,19 +295,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="text-xs font-mono text-slate-400 mt-1 uppercase tracking-wider">${spec.category} • Início das Aulas: <strong class="text-white">${spec.inicio}</strong></div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-5 text-xs sm:text-sm">
-                    <div class="p-3.5 rounded-xl bg-brand-base">
+                    <div class="glass-card p-3.5 rounded-xl">
                         <span class="text-slate-400 block text-[11px] uppercase font-mono">Duração Oficial</span>
                         <strong class="text-white text-base font-bold">${spec.duration}</strong>
                     </div>
-                    <div class="p-3.5 rounded-xl bg-brand-base">
+                    <div class="glass-card p-3.5 rounded-xl">
                         <span class="text-slate-400 block text-[11px] uppercase font-mono">Carga Horária Total</span>
                         <strong class="text-white text-base font-bold">${spec.hours}</strong>
                     </div>
-                    <div class="p-3.5 rounded-xl bg-brand-base sm:col-span-2">
+                    <div class="glass-card p-3.5 rounded-xl sm:col-span-2">
                         <span class="text-slate-400 block text-[11px] uppercase font-mono">Pré-Requisito Regulamentar (Edital)</span>
                         <strong class="text-slate-200 font-medium text-xs sm:text-sm leading-relaxed block mt-1">${spec.prereq}</strong>
                     </div>
-                    <div class="p-3.5 rounded-xl bg-brand-base sm:col-span-2">
+                    <div class="glass-card p-3.5 rounded-xl sm:col-span-2">
                         <span class="text-slate-400 block text-[11px] uppercase font-mono">Coordenação Acadêmica</span>
                         <strong class="text-white text-sm font-bold">${spec.coordinator}</strong>
                     </div>
