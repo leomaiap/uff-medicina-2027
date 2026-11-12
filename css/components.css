@@ -49,12 +49,12 @@
            - Sombra suave e elegante de profundidade
            ============================================================== */
         .glass-card {
-            background: rgba(5, 39, 32, 0.72) !important;
+            background: rgba(4, 34, 26, 0.76) !important;
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: none !important;
             outline: none !important;
-            box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.55);
+            box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.45);
         }
 
         .glass-card:hover {
@@ -89,7 +89,7 @@
         #especialidades {
             position: relative;
             width: 100%;
-            background: linear-gradient(180deg, #021813 0%, #03221B 50%, #021813 100%);
+            background: transparent;
             overflow: hidden;
         }
 
@@ -307,7 +307,7 @@
         .spec-nav-btn:hover {
             background: #10B981;
             border: none;
-            color: #021813;
+            color: #08382b;
             transform: scale(1.06);
         }
 
@@ -424,6 +424,6 @@
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #021813; }
+        ::-webkit-scrollbar-track { background: #08382b; }
         ::-webkit-scrollbar-thumb { background: #006843; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #10B981; }

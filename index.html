@@ -27,9 +27,9 @@
                 extend: {
                     colors: {
                         brand: {
-                            base: '#021813',        // Fundo Dark Rico Ultra-Profundo
-                            surface: '#052720',     // Superfície de Cards
-                            surfaceLight: '#09362c',
+                            base: '#08382b',        // Fundo Verde Esmeralda Editorial Mais Claro
+                            surface: '#0d4838',     // Superfície de Cards Harmonizada
+                            surfaceLight: '#125845',
                             primary: '#006843',     // Verde Institucional Oficial UFF
                             emerald: '#009E5E',     // Verde Esmeralda Vibrante
                             accent: '#10B981',      // Acento Luminoso
@@ -64,7 +64,10 @@
     <link rel="stylesheet" href="css/scrolly-jaleco.css">
     <link rel="stylesheet" href="css/components.css">
 </head>
-<body class="selection:bg-brand-emerald selection:text-white noise-bg">
+<body class="selection:bg-brand-emerald selection:text-white">
+
+    <!-- Textura de Pontinhos Fixa com Paralaxe Vertical & Desaceleração Inercial -->
+    <div id="parallax-dots-layer" aria-hidden="true"></div>
 
     <!-- ============================================================== -->
     <!-- 1. HERO PINNED STAGE (TRANSIÇÃO RADIAL NATIVA COM ZERO JITTER) -->
@@ -661,6 +664,7 @@
     <script src="js/specialties-carousel.js"></script>
     <script src="js/ui-interactions.js"></script>
     <script src="js/hero-parallax.js"></script>
+    <script src="js/parallax-dots.js"></script>
     <script src="js/scrolly-jaleco.js"></script>
     <script src="js/kinetic-typography.js"></script>
 </body>

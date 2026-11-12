@@ -12,7 +12,7 @@ html {
     overflow-x: clip;
     overscroll-behavior-y: none;
     overscroll-behavior-x: none;
-    background-color: #021813;
+    background-color: #08382b;
     color: #F8FAFC;
 }
 
@@ -22,21 +22,37 @@ body {
     overflow-x: clip;
     overscroll-behavior-y: none;
     overscroll-behavior-x: none;
-    background-color: #021813;
+    background-color: #08382b;
     font-family: 'Plus Jakarta Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     touch-action: pan-y;
 }
 
-/* Ambient Noise Layer */
+/* Textura de Pontinhos Fixa com Paralaxe Vertical & Desaceleração Inercial */
+#parallax-dots-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    background-image: radial-gradient(rgba(52, 211, 153, 0.22) 1.25px, transparent 0);
+    background-size: 36px 36px;
+    background-repeat: repeat;
+    background-position: 0px 0px;
+    will-change: background-position;
+}
+
+/* Ambient Noise Layer (compatibilidade legada) */
 .noise-bg {
-    background-image: radial-gradient(rgba(16, 185, 129, 0.08) 1px, transparent 0);
+    background-image: radial-gradient(rgba(52, 211, 153, 0.12) 1px, transparent 0);
     background-size: 36px 36px;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #021813; }
+::-webkit-scrollbar-track { background: #08382b; }
 ::-webkit-scrollbar-thumb { background: #006843; border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: #10B981; }
 
