@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const pinnedStage = document.getElementById('hero-pinned-stage');
                 const stageBehind = document.getElementById('stage-behind');
                 const isMobileScroll = window.innerWidth < 768;
-                const D = isMobileScroll ? 280 : 450; // Híbrido rápido: ~450px desktop e ~280px mobile
+                const D = isMobileScroll ? 320 : 520; // Pacing equilibrado: 520px desktop e 320px mobile
 
                 if (pinnedStage && hero && stageBehind) {
                     const TOTAL_FRAMES = 94;
@@ -28,9 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Sorteio aleatório a cada recarregamento (50% mulher / 50% homem)
                     const currentGender = Math.random() < 0.5 ? 'female' : 'male';
                     const canvas = document.getElementById('scrolly-canvas');
-                    const ctx = canvas ? canvas.getContext('2d') : null;
+                    const ctx = canvas ? canvas.getContext('2d', { alpha: true }) : null;
+                    if (ctx) {
+                        ctx.imageSmoothingEnabled = true;
+                        ctx.imageSmoothingQuality = 'high';
+                    }
                     const bgOutline = document.getElementById('scrolly-bg-outline');
-                    let currentFrame = 0;
 
                     // Cache de geometria do canvas para zero cálculos matemáticos por frame de scroll
                     let cachedW = 0;
@@ -55,6 +58,79 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     }
 
+                    // ==========================================================
+                    // MOTOR DE INTERPOLAÇÃO SUAVE DESACOPLADA (LERP ASSISTIDO EM rAF)
+                    // Permite controle 100% manual pelo scroll, enquanto o código
+                    // suaviza a transição entre todos os 94 frames a 60/120 FPS.
+                    // ==========================================================
+                    let targetFrame = 0;
+                    let smoothFrame = 0;
+                    let displayedIndex = -1;
+                    let isLoopRunning = false;
+
+                    function getReadyImage(index) {
+                        const list = CACHE[currentGender];
+                        if (!list || list.length === 0) return null;
+                        const clamped = Math.max(0, Math.min(TOTAL_FRAMES - 1, index));
+
+                        // 1. Se o frame exato já estiver baixado e decodificado, usa ele
+                        if (list[clamped] && list[clamped].complete && list[clamped].naturalWidth > 0) {
+                            return list[clamped];
+                        }
+                        // 2. Busca o frame pronto mais próximo para trás (evita congelamento em scroll rápido)
+                        for (let i = clamped - 1; i >= 0; i--) {
+                            if (list[i] && list[i].complete && list[i].naturalWidth > 0) return list[i];
+                        }
+                        // 3. Se não houver anterior, busca para frente
+                        for (let i = clamped + 1; i < list.length; i++) {
+                            if (list[i] && list[i].complete && list[i].naturalWidth > 0) return list[i];
+                        }
+                        return null;
+                    }
+
+                    function drawFrame(img) {
+                        if (!canvas || !ctx || !img) return;
+                        ctx.clearRect(0, 0, cachedW, cachedH);
+                        ctx.drawImage(img, cachedOffsetX, cachedOffsetY, cachedDrawW, cachedDrawH);
+                    }
+
+                    function tickSmoothFrames() {
+                        const diff = targetFrame - smoothFrame;
+
+                        if (Math.abs(diff) > 0.04) {
+                            // Interpolação adaptativa:
+                            // Se a diferença for grande (giro brusco do mouse), acelera suavemente (0.22)
+                            // Se for um ajuste fino, desacelera suavemente (0.16)
+                            const speed = Math.abs(diff) > 15 ? 0.22 : 0.16;
+                            smoothFrame += diff * speed;
+                            const nextIdx = Math.round(smoothFrame);
+
+                            if (nextIdx !== displayedIndex) {
+                                displayedIndex = nextIdx;
+                                const img = getReadyImage(nextIdx);
+                                if (img) drawFrame(img);
+                            }
+                            requestAnimationFrame(tickSmoothFrames);
+                        } else {
+                            smoothFrame = targetFrame;
+                            const finalIdx = Math.round(smoothFrame);
+                            if (finalIdx !== displayedIndex) {
+                                displayedIndex = finalIdx;
+                                const img = getReadyImage(finalIdx);
+                                if (img) drawFrame(img);
+                            }
+                            isLoopRunning = false;
+                        }
+                    }
+
+                    function updateTargetFrame(val) {
+                        targetFrame = Math.max(0, Math.min(TOTAL_FRAMES - 1, val));
+                        if (!isLoopRunning) {
+                            isLoopRunning = true;
+                            requestAnimationFrame(tickSmoothFrames);
+                        }
+                    }
+
                     function resizeDoctorCanvas() {
                         if (!canvas) return;
                         const rect = canvas.getBoundingClientRect();
@@ -73,16 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         cachedOffsetX = (cachedW - cachedDrawW) / 2;
                         cachedOffsetY = cachedH - cachedDrawH;
 
-                        renderDoctorFrame(currentFrame);
-                    }
-
-                    function renderDoctorFrame(index) {
-                        if (!canvas || !ctx) return;
-                        const list = CACHE[currentGender];
-                        if (!list || !list[index] || !list[index].complete) return;
-
-                        ctx.clearRect(0, 0, cachedW, cachedH);
-                        ctx.drawImage(list[index], cachedOffsetX, cachedOffsetY, cachedDrawW, cachedDrawH);
+                        const currentImg = getReadyImage(Math.round(smoothFrame));
+                        if (currentImg) drawFrame(currentImg);
                     }
 
                     // Preload dos 94 frames com decodificação assíncrona (evita travadas no main thread)
@@ -95,7 +163,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             img.onload = () => resizeDoctorCanvas();
                         } else {
                             img.onload = () => {
-                                if (currentFrame === i - 1) renderDoctorFrame(currentFrame);
+                                if (!isLoopRunning && Math.round(smoothFrame) === i - 1) {
+                                    drawFrame(img);
+                                }
                             };
                         }
                         img.onerror = () => {
@@ -112,11 +182,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         scrollTrigger: {
                             trigger: pinnedStage,
                             start: 'top top',
-                            end: () => '+=' + (window.innerWidth < 768 ? 280 : 450),
+                            end: () => '+=' + (window.innerWidth < 768 ? 320 : 520),
                             pin: true,
                             pinSpacing: true,
                             anticipatePin: 1,
-                            scrub: 0.35, // Interpolação fluida (350ms): elimina efeito de engasgo e suaviza saltos do mouse
+                            scrub: 0.25, // ScrollTrigger ágil; o LERP em rAF interpola frame a frame
                             invalidateOnRefresh: true,
                             onUpdate: (self) => {
                                 if (scrollyProgressBar) {
@@ -245,17 +315,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         );
                     }
 
-                    // FASE 2 (0.08 -> 0.92): Veste o jaleco de forma ágil e ritmada sem scroll morto
+                    // FASE 2 (0.08 -> 0.92): Veste o jaleco com motor de interpolação assistida por código
                     heroTl.to(frameProxy, {
                         frame: TOTAL_FRAMES - 1,
                         ease: 'none',
                         duration: 0.84,
                         onUpdate: () => {
-                            const idx = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(frameProxy.frame)));
-                            if (idx !== currentFrame) {
-                                currentFrame = idx;
-                                renderDoctorFrame(idx);
-                            }
+                            updateTargetFrame(frameProxy.frame);
                         }
                     }, 0.08);
 
