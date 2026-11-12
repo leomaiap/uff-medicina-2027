@@ -191,19 +191,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     // ANIMAÇÃO CONFORME SOLICITADO:
-                    // Linha 1 ("CONCURSO") desliza da esquerda para a direita com o scroll
-                    // Linha 2 ("UNIFICADO 27") desliza da direita para a esquerda com o scroll
+                    // Linha 1 ("CONCURSO") desliza da esquerda até o centro exato da página (xPercent: 0) e PARA de se mover
+                    // Linha 2 ("UNIFICADO 27") desliza da direita até o centro exato da página (xPercent: 0) e PARA de se mover
                     if (line1) {
                         heroTl.fromTo(line1,
-                            { xPercent: -24 },
-                            { xPercent: 24, ease: 'none', duration: 2.30 },
+                            { xPercent: -36 },
+                            { xPercent: 0, ease: 'power1.out', duration: 0.88 },
                             0
                         );
                     }
                     if (line2) {
                         heroTl.fromTo(line2,
-                            { xPercent: 24 },
-                            { xPercent: -24, ease: 'none', duration: 2.30 },
+                            { xPercent: 36 },
+                            { xPercent: 0, ease: 'power1.out', duration: 0.88 },
                             0
                         );
                     }
