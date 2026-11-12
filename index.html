@@ -66,10 +66,13 @@
 </head>
 <body class="selection:bg-brand-emerald selection:text-white">
 
+    <!-- Feixes de Luz Arquitetônicos (GPU Compositor Layer no fundo, z-index: 0) -->
+    <div id="arch-beams-wrapper" aria-hidden="true"><div id="arch-beams-track"></div></div>
+
     <!-- ============================================================== -->
     <!-- 1. HERO PINNED STAGE (TRANSIÇÃO RADIAL NATIVA COM ZERO JITTER) -->
     <!-- ============================================================== -->
-    <div id="hero-pinned-stage" class="relative w-full h-[100svh] overflow-hidden bg-brand-base">
+    <div id="hero-pinned-stage" class="relative z-10 w-full h-[100svh] overflow-hidden bg-brand-base">
 
         <!-- CAMADA TRASEIRA: TELA DA SEÇÃO SOBRE (REVELADA PELA MÁSCARA RADIAL) -->
         <div id="stage-behind" class="absolute inset-0 w-full h-full z-10 overflow-hidden flex flex-col justify-between bg-brand-base" style="filter: blur(20px); will-change: filter;">
@@ -657,7 +660,7 @@
     <script src="js/specialties-carousel.js"></script>
     <script src="js/ui-interactions.js"></script>
     <script src="js/hero-parallax.js"></script>
-    <script src="js/parallax-dots.js"></script>
+    <script src="js/architectural-beams.js"></script>
     <script src="js/scrolly-jaleco.js"></script>
     <script src="js/kinetic-typography.js"></script>
 </body>
