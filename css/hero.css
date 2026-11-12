@@ -93,35 +93,51 @@
     z-index: 10;
     width: 100%;
     text-align: center;
-    padding-top: 2rem;
+    padding-top: 1rem;
     user-select: none;
     pointer-events: none;
     will-change: transform;
 }
 
 .hero-title {
-    font-size: clamp(3.4rem, 13.5vw, 15.5rem);
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-weight: 800;
-    line-height: 0.82;
-    letter-spacing: -0.04em;
+    line-height: 0.84;
+    letter-spacing: -0.035em;
     margin: 0;
     padding-bottom: 0.08em;
     -webkit-text-fill-color: transparent;
     background-image: linear-gradient(180deg, #FFFFFF 55%, rgba(255, 255, 255, 0.15) 95%);
     -webkit-background-clip: text;
     background-clip: text;
-    display: inline-block;
-    white-space: nowrap;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     filter: drop-shadow(0 12px 30px rgba(0, 40, 25, 0.35));
 }
 
-.hero-title-line-1,
-.hero-title-line-2,
-.hero-title-space {
-    display: inline;
+.hero-title-line-1 {
+    display: block;
+    font-size: clamp(3.2rem, 8.2vw, 9.8rem);
+    line-height: 0.85;
+    letter-spacing: -0.03em;
 }
 
-/* Layer 3: Cutout Doctors Foreground Plane (In front of "Lato Sensu 27"!) */
+.hero-title-line-2 {
+    display: block;
+    font-size: clamp(2.8rem, 7.2vw, 8.6rem);
+    line-height: 0.85;
+    letter-spacing: -0.035em;
+    margin-top: -0.04em;
+}
+
+.hero-title-space {
+    display: none;
+}
+
+/* Layer 3: Cutout Doctors Foreground Plane (In front of monumental title!) */
 .hero-layer-doctors {
     position: absolute;
     inset: 0;
@@ -165,11 +181,23 @@
         background-position: 0 0, 50% 18%;
     }
     .hero-layer-text {
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
         padding-top: 0;
-        margin-top: -1.5rem !important;
+        margin-top: 0 !important;
+        text-align: center;
+        z-index: 10;
+        pointer-events: none;
     }
     .hero-title {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 0 0.5rem;
         font-size: inherit;
         line-height: 1;
         letter-spacing: normal;
@@ -184,6 +212,8 @@
     .hero-title-line-1,
     .hero-title-line-2 {
         display: block;
+        width: 100%;
+        text-align: center;
         margin-left: auto;
         margin-right: auto;
         -webkit-text-fill-color: transparent;
@@ -193,30 +223,34 @@
         filter: drop-shadow(0 10px 25px rgba(0, 30, 20, 0.45));
     }
     .hero-title-line-1 {
-        font-size: 42.5vw;
-        line-height: 0.83;
-        letter-spacing: -0.038em;
+        font-size: clamp(2.0rem, 12.0vw, 3.2rem);
+        line-height: 0.88;
+        letter-spacing: -0.03em;
     }
     .hero-title-line-2 {
-        font-size: 21.8vw;
-        line-height: 0.87;
-        letter-spacing: -0.04em;
+        font-size: clamp(1.9rem, 11.2vw, 3.0rem);
+        line-height: 0.88;
+        letter-spacing: -0.035em;
+        margin-top: 0.05em;
     }
     .hero-layer-doctors {
         position: absolute;
-        inset: 0;
-        top: 10%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
         z-index: 20;
         pointer-events: none;
         display: flex;
         align-items: flex-end;
         justify-content: center;
+        overflow: hidden;
     }
     .hero-doctors-img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: 41% 0%;
+        object-position: 41% top;
         filter: drop-shadow(0 -8px 25px rgba(0, 0, 0, 0.38));
     }
     .hero-bottom-vignette {

@@ -176,30 +176,30 @@
         <div class="hero-color-glow"></div>
 
         <!-- TOP NAVIGATION BAR (z-50: Logos + Dúvidas, Edital, Inscreva-se) -->
-        <header id="main-nav" class="relative z-50 w-full pt-[max(1rem,env(safe-area-inset-top))] md:pt-5 px-4 md:px-12 lg:px-16">
-            <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 py-2 md:py-3 pl-3.5 pr-2.5 md:px-6 rounded-full bg-brand-base/50 backdrop-blur-md border border-white/15">
+        <header id="main-nav" class="relative z-50 w-full pt-[max(0.75rem,env(safe-area-inset-top))] sm:pt-[max(1rem,env(safe-area-inset-top))] md:pt-5 px-3 sm:px-4 md:px-12 lg:px-16">
+            <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-3 py-1.5 sm:py-2 md:py-3 pl-3 pr-2 sm:pl-3.5 sm:pr-2.5 md:px-6 rounded-full bg-brand-base/50 backdrop-blur-md border border-white/15">
                 
                 <!-- Logos FacMed & UFF -->
-                <a href="#hero" class="flex items-center gap-2.5 sm:gap-4 group shrink-0">
-                    <img src="assets/img/logo facmedwhite.svg" alt="Faculdade de Medicina da UFF" class="h-7 md:h-10 w-auto transition-transform group-hover:scale-105 duration-300">
-                    <div class="h-5 sm:h-6 w-[1px] bg-white/30 shrink-0"></div>
-                    <img src="assets/img/logo-uff-white.png" alt="Universidade Federal Fluminense" class="h-5 sm:h-7 md:h-8 w-auto opacity-95">
+                <a href="#hero" class="flex items-center gap-2 sm:gap-3 md:gap-4 group shrink-0 min-w-0">
+                    <img src="assets/img/logo facmedwhite.svg" alt="Faculdade de Medicina da UFF" class="h-6 sm:h-7 md:h-10 w-auto transition-transform group-hover:scale-105 duration-300">
+                    <div class="h-4 sm:h-5 md:h-6 w-[1px] bg-white/30 shrink-0"></div>
+                    <img src="assets/img/logo-uff-white.png" alt="Universidade Federal Fluminense" class="h-4 sm:h-5 md:h-8 w-auto opacity-95">
                 </a>
 
                 <!-- Links: Apenas Inscreva-se no mobile; Dúvidas e Edital no desktop -->
-                <div class="flex items-center gap-4 sm:gap-8 shrink-0">
-                    <a href="#faq" class="hidden md:inline text-xs sm:text-sm font-semibold text-white/90 hover:text-white transition-colors">
+                <div class="flex items-center gap-3 sm:gap-6 md:gap-8 shrink-0">
+                    <a href="#faq" class="hidden lg:inline text-xs sm:text-sm font-semibold text-white/90 hover:text-white transition-colors">
                         Dúvidas
                     </a>
                     <a href="https://editais.uff.br/10496" target="_blank" rel="noopener noreferrer" 
-                       class="hidden md:flex text-xs sm:text-sm font-semibold text-white/90 hover:text-white transition-colors items-center gap-1">
+                       class="hidden lg:flex text-xs sm:text-sm font-semibold text-white/90 hover:text-white transition-colors items-center gap-1">
                         <span>Edital</span>
                         <svg class="w-3.5 h-3.5 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </a>
-                    <a href="#cronograma" class="avenora-btn shrink-0 !py-1.5 !pl-4 sm:!pl-5 !pr-1.5 !gap-2.5 sm:!gap-3 text-xs sm:text-sm whitespace-nowrap">
-                        <span>Inscreva-se<span class="hidden sm:inline"> 2027</span></span>
-                        <span class="avenora-btn-circle !w-8 !h-8">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    <a href="#cronograma" class="avenora-btn shrink-0 !py-1 sm:!py-1.5 !pl-3 sm:!pl-4.5 !pr-1 sm:!pr-1.5 !gap-1.5 sm:!gap-2.5 text-xs sm:text-sm whitespace-nowrap">
+                        <span><span class="sm:hidden">Inscrever</span><span class="hidden sm:inline">Inscreva-se 2027</span></span>
+                        <span class="avenora-btn-circle !w-7 !h-7 sm:!w-8 sm:!h-8">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </span>
                     </a>
                 </div>
@@ -207,9 +207,9 @@
             </div>
         </header>
 
-        <!-- CAMADA 2 (Meio - z-10): Texto Monumental "Lato Sensu 27" -->
-        <div id="hero-text-layer" class="hero-layer-text mt-1 md:mt-6">
-            <h1 class="hero-title"><span class="hero-title-line-1">Lato</span><span class="hero-title-space"> </span><span class="hero-title-line-2">Sensu 27</span></h1>
+        <!-- CAMADA 2 (Meio - z-10): Texto Monumental "CONCURSO UNIFICADO 27" -->
+        <div id="hero-text-layer" class="hero-layer-text mt-1 md:mt-4">
+            <h1 class="hero-title"><span class="hero-title-line-1">CONCURSO</span><span class="hero-title-space"> </span><span class="hero-title-line-2">UNIFICADO 27</span></h1>
         </div>
 
         <!-- CAMADA 3 (Frente - z-20): Médicos Brasileiros Recortados em PNG Transparente (Sobrepostos ao Texto!) -->

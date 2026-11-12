@@ -147,6 +147,49 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.addEventListener('click', enableOnFirstGesture, { once: true });
                 }
 
+                // -----------------------------------------------------------------
+                // CÁLCULO DINÂMICO DE ALTURA E POSIÇÃO DOS MÉDICOS & TÍTULO NO MOBILE
+                // Calcula a posição do texto com base na navbar e a altura dos médicos
+                // garantindo leitura 100% livre e visual 3D perfeito em qualquer resolução
+                // -----------------------------------------------------------------
+                function adjustHeroMobileLayout() {
+                    if (!textLayer || !doctorsLayer) return;
+
+                    if (window.innerWidth >= 768) {
+                        // No Desktop: remove estilos inline e deixa o CSS puro governar
+                        textLayer.style.top = '';
+                        textLayer.style.position = '';
+                        doctorsLayer.style.top = '';
+                        doctorsLayer.style.height = '';
+                        return;
+                    }
+
+                    const nav = document.getElementById('main-nav');
+                    const navRect = nav ? nav.getBoundingClientRect() : { bottom: 56 };
+                    const navBottom = Math.max(48, Math.round(navRect.bottom));
+
+                    // 1. Posiciona o título logo abaixo da barra de navegação com respiro confortável
+                    const titleTop = navBottom + Math.max(6, Math.round(window.innerHeight * 0.012));
+                    textLayer.style.position = 'absolute';
+                    textLayer.style.top = `${titleTop}px`;
+
+                    // 2. Mede a altura real renderizada das duas linhas do título
+                    const titleHeight = textLayer.offsetHeight || 80;
+                    const titleBottom = titleTop + titleHeight;
+
+                    // 3. Posiciona a camada dos médicos para começar suavemente na linha de base
+                    // do texto ("UNIFICADO 27"), garantindo sobreposição 3D sutil (~8px) sem cobrir letras
+                    const doctorsTop = Math.max(titleTop + 40, titleBottom - 8);
+                    doctorsLayer.style.top = `${doctorsTop}px`;
+                    doctorsLayer.style.height = `${window.innerHeight - doctorsTop}px`;
+                }
+
+                // Executa no carregamento e no redimensionamento / troca de orientação
+                adjustHeroMobileLayout();
+                window.addEventListener('resize', adjustHeroMobileLayout, { passive: true });
+                window.addEventListener('orientationchange', () => {
+                    setTimeout(adjustHeroMobileLayout, 100);
+                }, { passive: true });
 
     }
 });
