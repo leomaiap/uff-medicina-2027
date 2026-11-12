@@ -89,8 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             start: 'top top',
                             end: () => '+=' + (window.innerWidth < 768 ? 650 : 1000),
                             pin: true,
+                            pinSpacing: true,
+                            anticipatePin: 1,
                             scrub: true,
-                            anticipatePin: 0,
                             invalidateOnRefresh: true,
                             onLeave: () => {
                                 hero.style.display = 'none';

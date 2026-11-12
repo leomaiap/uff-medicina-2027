@@ -71,14 +71,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         initialBeta += (e.beta - initialBeta) * 0.015;
                         initialGamma += (e.gamma - initialGamma) * 0.015;
 
-                        // Deflexão calibrada para telas móveis (mantém os médicos 100% seguros sem encostar nas bordas)
                         const isMobile = window.innerWidth < 768;
-                        const docDisplaceX = isMobile ? deltaX * 12 : deltaX * 36;
-                        const docDisplaceY = isMobile ? deltaY * 8 : deltaY * 16;
-                        const textDisplaceX = isMobile ? deltaX * 8 : deltaX * 20;
-                        const textDisplaceY = isMobile ? deltaY * 6 : deltaY * 12;
-                        const bgDisplaceX = isMobile ? -deltaX * 6 : -deltaX * 14;
-                        const bgDisplaceY = isMobile ? -deltaY * 5 : -deltaY * 10;
+                        if (isMobile) return; // Mantém a tela 100% sólida e imóvel no mobile ao rolar/tocar
+
+                        const docDisplaceX = deltaX * 36;
+                        const docDisplaceY = deltaY * 16;
+                        const textDisplaceX = deltaX * 20;
+                        const textDisplaceY = deltaY * 12;
+                        const bgDisplaceX = -deltaX * 14;
+                        const bgDisplaceY = -deltaY * 10;
 
                         // Amortecimento cinematográfico via GSAP (elimina micro-tremores naturais da mão)
                         gsap.to(bgLayer, { 

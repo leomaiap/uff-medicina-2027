@@ -8,32 +8,38 @@
 #hero-pinned-stage {
     position: relative;
     width: 100%;
+    max-width: 100vw;
     height: 100svh;
     overflow: hidden;
     background-color: #021813;
+    touch-action: pan-y;
 }
 
 #stage-behind {
     position: absolute;
     inset: 0;
     width: 100%;
+    max-width: 100vw;
     height: 100%;
     z-index: 10;
     overflow: hidden;
     background-color: #021813;
     filter: blur(20px);
     will-change: filter;
+    touch-action: pan-y;
 }
 
 .home-hero-area {
     position: absolute;
     inset: 0;
     width: 100%;
+    max-width: 100vw;
     height: 100%;
     z-index: 20;
     background-color: #021813;
     overflow: hidden;
     will-change: mask-image, -webkit-mask-image;
+    touch-action: pan-y;
 }
 
 #main-content {

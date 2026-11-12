@@ -56,19 +56,20 @@
 
 @media (max-width: 640px) {
     .scrolly-pillar-card {
-        max-width: 175px !important;
-        padding: 0.55rem 0.65rem !important;
+        max-width: 155px !important;
+        box-sizing: border-box !important;
+        padding: 0.5rem 0.6rem !important;
     }
     .scrolly-pillar-card h3 {
-        font-size: 0.76rem !important;
+        font-size: 0.74rem !important;
         margin-top: 0.1rem !important;
     }
     .scrolly-pillar-card p {
-        font-size: 0.64rem !important;
-        line-height: 1.25 !important;
+        font-size: 0.62rem !important;
+        line-height: 1.22 !important;
     }
     .scrolly-pillar-card .pillar-num {
-        font-size: 0.95rem !important;
+        font-size: 0.90rem !important;
     }
     #scrolly-card-1 { top: 16%; left: 0.5rem; }
     #scrolly-card-2 { top: 52%; left: 0.5rem; }
