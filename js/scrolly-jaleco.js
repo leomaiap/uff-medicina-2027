@@ -32,6 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const bgOutline = document.getElementById('scrolly-bg-outline');
                     let currentFrame = 0;
 
+                    // Cache de geometria do canvas para zero cálculos matemáticos por frame de scroll
+                    let cachedW = 0;
+                    let cachedH = 0;
+                    let cachedDrawW = 0;
+                    let cachedDrawH = 0;
+                    let cachedOffsetX = 0;
+                    let cachedOffsetY = 0;
+
                     // Elementos do HUD de Progresso e Navegação Rápida
                     const scrollyHud = document.getElementById('scrolly-hud');
                     const scrollyProgressBar = document.getElementById('scrolly-progress-bar');
@@ -47,37 +55,40 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     }
 
+                    function resizeDoctorCanvas() {
+                        if (!canvas) return;
+                        const rect = canvas.getBoundingClientRect();
+                        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                        canvas.width = Math.round(rect.width * dpr);
+                        canvas.height = Math.round(rect.height * dpr);
+
+                        cachedW = canvas.width;
+                        cachedH = canvas.height;
+
+                        const isMobile = window.innerWidth < 768;
+                        const targetHeightRatio = isMobile ? 0.84 : 0.90;
+                        cachedDrawH = cachedH * targetHeightRatio;
+                        // Proporção exata 16:9 dos frames (1600x900)
+                        cachedDrawW = (1600 / 900) * cachedDrawH;
+                        cachedOffsetX = (cachedW - cachedDrawW) / 2;
+                        cachedOffsetY = cachedH - cachedDrawH;
+
+                        renderDoctorFrame(currentFrame);
+                    }
+
                     function renderDoctorFrame(index) {
                         if (!canvas || !ctx) return;
                         const list = CACHE[currentGender];
                         if (!list || !list[index] || !list[index].complete) return;
 
-                        const img = list[index];
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                        const isMobile = window.innerWidth < 768;
-                        const targetHeightRatio = isMobile ? 0.84 : 0.90;
-                        let drawHeight = canvas.height * targetHeightRatio;
-                        let drawWidth = img.width * (drawHeight / img.height);
-
-                        const offsetX = (canvas.width - drawWidth) / 2;
-                        const offsetY = canvas.height - drawHeight;
-
-                        ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+                        ctx.clearRect(0, 0, cachedW, cachedH);
+                        ctx.drawImage(list[index], cachedOffsetX, cachedOffsetY, cachedDrawW, cachedDrawH);
                     }
 
-                    function resizeDoctorCanvas() {
-                        if (!canvas) return;
-                        const rect = canvas.getBoundingClientRect();
-                        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-                        canvas.width = rect.width * dpr;
-                        canvas.height = rect.height * dpr;
-                        renderDoctorFrame(currentFrame);
-                    }
-
-                    // Preload dos 94 frames do médico sorteado
+                    // Preload dos 94 frames com decodificação assíncrona (evita travadas no main thread)
                     for (let i = 1; i <= TOTAL_FRAMES; i++) {
                         const img = new Image();
+                        img.decoding = 'async';
                         const pad = String(i).padStart(3, '0');
                         img.src = `${PATHS[currentGender]}${pad}.webp`;
                         if (i === 1) {
@@ -92,10 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         };
                         CACHE[currentGender].push(img);
                     }
-                    window.addEventListener('resize', resizeDoctorCanvas);
+                    window.addEventListener('resize', resizeDoctorCanvas, { passive: true });
                     resizeDoctorCanvas();
 
-                    const maskProxy = { radius: 0 };
                     const frameProxy = { frame: 0 };
 
                     const heroTl = gsap.timeline({
@@ -106,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             pin: true,
                             pinSpacing: true,
                             anticipatePin: 1,
-                            scrub: true,
+                            scrub: 0.35, // Interpolação fluida (350ms): elimina efeito de engasgo e suaviza saltos do mouse
                             invalidateOnRefresh: true,
                             onUpdate: (self) => {
                                 if (scrollyProgressBar) {
@@ -143,39 +153,26 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     });
 
-                    // FASE 1 (0.0 -> 0.32): A máscara radial abre do centro com arestas aveludadas
-                    heroTl.to(maskProxy, {
-                        radius: 140,
-                        ease: 'power1.in',
-                        duration: 0.32,
-                        onUpdate: () => {
-                            const r = maskProxy.radius;
-                            if (r <= 0.5) {
-                                hero.style.webkitMaskImage = 'none';
-                                hero.style.maskImage = 'none';
-                                hero.style.opacity = '1';
-                                hero.style.pointerEvents = 'auto';
-                            } else {
-                                const mask = `radial-gradient(circle at 50% 50%, transparent 0%, transparent ${r}%, black ${r + 18}%)`;
-                                hero.style.webkitMaskImage = mask;
-                                hero.style.maskImage = mask;
-                                if (r >= 130) {
-                                    hero.style.opacity = '0';
-                                    hero.style.pointerEvents = 'none';
-                                } else {
-                                    hero.style.opacity = '1';
-                                    hero.style.pointerEvents = 'auto';
-                                }
-                            }
-                        }
-                    }, 0);
-
-                    // 2. O blur começa em 20px e zera logo na largada da abertura
-                    heroTl.fromTo(stageBehind, 
-                        { filter: 'blur(20px)' }, 
-                        { filter: 'blur(0px)', ease: 'power2.out', duration: 0.16 }, 
+                    // FASE 1 (0.0 -> 0.32): Abertura da íris circular via clip-path 100% acelerado pela GPU (zero blur / zero re-rasterização)
+                    heroTl.fromTo(stageBehind,
+                        { clipPath: 'circle(0% at 50% 50%)' },
+                        { 
+                            clipPath: 'circle(140% at 50% 50%)', 
+                            ease: 'power1.inOut', 
+                            duration: 0.32,
+                            onStart: () => { stageBehind.style.pointerEvents = 'auto'; },
+                            onReverseComplete: () => { stageBehind.style.pointerEvents = 'none'; }
+                        },
                         0
                     );
+
+                    // Fade out suave e escala sutil do Hero frontal
+                    heroTl.to(hero, {
+                        opacity: 0,
+                        scale: 0.95,
+                        ease: 'power1.inOut',
+                        duration: 0.28
+                    }, 0.02);
 
                     // 3. Efeito de profundidade sutil nos elementos do Hero frontal durante a abertura
                     if (textLayer) {

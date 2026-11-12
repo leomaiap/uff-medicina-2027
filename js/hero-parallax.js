@@ -15,20 +15,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Subtle Depth Parallax between the 3 stacked planes (Desktop Mouse + Mobile Gyroscope)
             if (hero && bgLayer && textLayer && doctorsLayer) {
-                // Desktop Mouse Parallax
+                // Desktop Mouse Parallax (otimizado com gsap.quickTo e suspenso durante o scroll)
+                const setBgX = gsap.quickTo(bgLayer, 'x', { duration: 0.9, ease: 'power2.out' });
+                const setBgY = gsap.quickTo(bgLayer, 'y', { duration: 0.9, ease: 'power2.out' });
+                const setTextX = gsap.quickTo(textLayer, 'x', { duration: 0.8, ease: 'power2.out' });
+                const setTextY = gsap.quickTo(textLayer, 'y', { duration: 0.8, ease: 'power2.out' });
+                const setDocX = gsap.quickTo(doctorsLayer, 'x', { duration: 0.7, ease: 'power2.out' });
+                const setDocY = gsap.quickTo(doctorsLayer, 'y', { duration: 0.7, ease: 'power2.out' });
+
                 hero.addEventListener('mousemove', (e) => {
+                    // Evita conflito com o ScrollTrigger quando o usuário já iniciou a rolagem
+                    if (window.pageYOffset > 10) return;
+
                     const x = (e.clientX / window.innerWidth - 0.5);
                     const y = (e.clientY / window.innerHeight - 0.5);
 
-                    gsap.to(bgLayer, { x: -x * 12, y: -y * 8, scale: 1.03, duration: 1, ease: 'power2.out', overwrite: 'auto' });
-                    gsap.to(textLayer, { x: x * 18, y: y * 10, duration: 0.9, ease: 'power2.out', overwrite: 'auto' });
-                    gsap.to(doctorsLayer, { x: x * 32, y: y * 14, duration: 0.8, ease: 'power2.out', overwrite: 'auto' });
-                });
+                    setBgX(-x * 12);
+                    setBgY(-y * 8);
+                    setTextX(x * 18);
+                    setTextY(y * 10);
+                    setDocX(x * 32);
+                    setDocY(y * 14);
+                }, { passive: true });
 
                 hero.addEventListener('mouseleave', () => {
-                    gsap.to(bgLayer, { x: 0, y: 0, scale: 1.03, duration: 1.2, ease: 'power2.out', overwrite: 'auto' });
-                    gsap.to(textLayer, { x: 0, y: 0, duration: 1.2, ease: 'power2.out', overwrite: 'auto' });
-                    gsap.to(doctorsLayer, { x: 0, y: 0, duration: 1.2, ease: 'power2.out', overwrite: 'auto' });
+                    if (window.pageYOffset > 10) return;
+                    setBgX(0);
+                    setBgY(0);
+                    setTextX(0);
+                    setTextY(0);
+                    setDocX(0);
+                    setDocY(0);
                 });
 
                 // -----------------------------------------------------------------
