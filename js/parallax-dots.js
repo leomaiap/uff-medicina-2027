@@ -1,57 +1,64 @@
 /**
- * UFF Medicina 2027 - Parallax da Textura de Pontinhos com Inércia e Desaceleração
- * Movimento vertical suave acoplado ao scroll com inércia física real.
- * Ao parar de rolar, a textura continua rolando e desacelera suavemente até parar.
+ * UFF Medicina 2027 - Textura de Pontinhos com Inércia Física Real
+ * 1. Rola na MESMA VELOCIDADE da página (escala 1:1, targetY = scrollY).
+ * 2. Demora para acelerar (inércia na partida) e demora para desacelerar (continua rolando até o repouso).
+ * 3. Aplicado diretamente no background do <body> com background-attachment: fixed,
+ *    garantindo que fique SEMPRE atrás de todos os textos, caixas, cards e imagens.
  */
 (() => {
     'use strict';
 
-    function initParallaxDots() {
-        const dotsLayer = document.getElementById('parallax-dots-layer');
-        if (!dotsLayer) return;
+    function initInertialDots() {
+        const body = document.body;
+        if (!body) return;
 
-        // Respeita preferência do usuário por redução de movimento
+        // Respeita preferência por redução de movimento
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (prefersReducedMotion) return;
 
-        // Parâmetros de Física & Inércia
-        const PARALLAX_FACTOR = 0.32;   // Velocidade da textura em relação ao scroll da página
-        const ACCELERATION = 0.22;       // Quão rápido a textura ganha impulso com a rolagem
-        const FRICTION = 0.935;          // Taxa de atrito/desaceleração por frame (~0.8s de rolagem contínua residual)
-        const VELOCITY_CUTOFF = 0.02;    // Limite para pausar o loop e economizar 100% de CPU/bateria
-
-        let currentY = 0;
-        let currentVelocity = 0;
-        let targetVelocity = 0;
-        let lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+        // Inicializa na posição atual de scroll sem saltos
+        const initialScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+        let targetY = initialScrollY;
+        let currentY = initialScrollY;
+        let velocity = 0;
         let isLoopRunning = false;
         let rafId = null;
 
+        // Parâmetros de Física:
+        // - Rigidez baixa (stiffness: 0.026): demora para acelerar (inércia)
+        // - Amortecimento crítico (damping: 0.28): desaceleração aveludada sem repiques elásticos (~0.7s)
+        const STIFFNESS = 0.026;
+        const DAMPING = 0.28;
+        const SNAP_THRESHOLD = 0.2;
+        const VELOCITY_THRESHOLD = 0.05;
+
+        // Aplica posição inicial
+        body.style.backgroundPosition = `0px ${Math.round(-currentY * 10) / 10}px`;
+
         function updatePhysics() {
-            // 1. Acelera suavemente a velocidade atual na direção do impulso alvo
-            currentVelocity += (targetVelocity - currentVelocity) * ACCELERATION;
+            const delta = targetY - currentY;
+            const force = delta * STIFFNESS;
 
-            // 2. Aplica atrito contínuo para amortecer o impulso
-            targetVelocity *= FRICTION;
+            // Integração física: acelera com a força da mola e freia com amortecimento viscoso
+            velocity += (force - velocity * DAMPING);
+            currentY += velocity;
 
-            // 3. Atualiza o deslocamento vertical acumulado
-            currentY += currentVelocity;
+            // Renderiza no background do body (sempre atrás de todo conteúdo, cards e fotos)
+            const posY = Math.round(-currentY * 10) / 10;
+            body.style.backgroundPosition = `0px ${posY}px`;
 
-            // 4. Aplica na camada de fundo (apenas eixo Y)
-            // Usa 1 casa decimal para renderização subpixel suave e eficiente
-            const posY = (Math.round(-currentY * 10) / 10);
-            dotsLayer.style.backgroundPosition = `0px ${posY}px`;
-
-            // 5. Continua o loop enquanto houver velocidade residual ou impulso ativo
-            if (Math.abs(currentVelocity) > VELOCITY_CUTOFF || Math.abs(targetVelocity) > VELOCITY_CUTOFF) {
-                rafId = requestAnimationFrame(updatePhysics);
-            } else {
-                // Ao desacelerar completamente, zera as velocidades e encerra o loop para economizar CPU
-                currentVelocity = 0;
-                targetVelocity = 0;
+            // Verifica se estabilizou no destino exato
+            if (Math.abs(delta) < SNAP_THRESHOLD && Math.abs(velocity) < VELOCITY_THRESHOLD) {
+                currentY = targetY;
+                velocity = 0;
+                body.style.backgroundPosition = `0px ${Math.round(-currentY * 10) / 10}px`;
                 isLoopRunning = false;
                 rafId = null;
+                return;
             }
+
+            // Continua a desaceleração quadro a quadro
+            rafId = requestAnimationFrame(updatePhysics);
         }
 
         function startLoop() {
@@ -62,44 +69,29 @@
         }
 
         function onScroll() {
-            const currentScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
-            const deltaY = currentScrollY - lastScrollY;
-            lastScrollY = currentScrollY;
-
-            if (deltaY === 0) return;
-
-            // Transfere impulso proporcional ao deslocamento do scroll
-            targetVelocity += deltaY * PARALLAX_FACTOR;
-
-            // Limita velocidade máxima para evitar saltos visuais bruscos em saltos de âncora
-            if (targetVelocity > 45) targetVelocity = 45;
-            if (targetVelocity < -45) targetVelocity = -45;
-
+            targetY = window.pageYOffset || document.documentElement.scrollTop || 0;
             startLoop();
         }
 
-        // Listener passivo para scroll de alta performance (desktop, touch e teclado)
+        // Listener passivo para scroll da página (desktop, mobile e teclado)
         window.addEventListener('scroll', onScroll, { passive: true });
 
-        // Suporte adicional para wheel em momentos em que o scroll está pinado ou em micro-movimentos
-        window.addEventListener('wheel', (e) => {
-            if (Math.abs(e.deltaY) > 0.5) {
-                targetVelocity += (e.deltaY * 0.2) * PARALLAX_FACTOR;
-                if (targetVelocity > 45) targetVelocity = 45;
-                if (targetVelocity < -45) targetVelocity = -45;
-                startLoop();
-            }
+        // Suporte adicional para wheel enquanto seções pinadas estão em scrub
+        window.addEventListener('wheel', () => {
+            targetY = window.pageYOffset || document.documentElement.scrollTop || 0;
+            startLoop();
         }, { passive: true });
 
-        // Ajuste de redimensionamento
+        // Recalibra ao redimensionar
         window.addEventListener('resize', () => {
-            lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+            targetY = window.pageYOffset || document.documentElement.scrollTop || 0;
+            startLoop();
         }, { passive: true });
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initParallaxDots);
+        document.addEventListener('DOMContentLoaded', initInertialDots);
     } else {
-        initParallaxDots();
+        initInertialDots();
     }
 })();

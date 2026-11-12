@@ -23,25 +23,14 @@ body {
     overscroll-behavior-y: none;
     overscroll-behavior-x: none;
     background-color: #08382b;
+    background-image: radial-gradient(rgba(52, 211, 153, 0.20) 1.25px, transparent 0);
+    background-size: 36px 36px;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-position: 0px 0px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     touch-action: pan-y;
-}
-
-/* Textura de Pontinhos Fixa com Paralaxe Vertical & Desaceleração Inercial */
-#parallax-dots-layer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 1;
-    background-image: radial-gradient(rgba(52, 211, 153, 0.22) 1.25px, transparent 0);
-    background-size: 36px 36px;
-    background-repeat: repeat;
-    background-position: 0px 0px;
-    will-change: background-position;
 }
 
 /* Ambient Noise Layer (compatibilidade legada) */
