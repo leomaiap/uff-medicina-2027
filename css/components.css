@@ -45,18 +45,18 @@
             background: rgba(5, 39, 32, 0.6);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(16, 185, 129, 0.22);
+            border: none;
         }
 
         .glass-card:hover {
-            border-color: rgba(52, 211, 153, 0.45);
+            border: none;
         }
 
         .glass-pill {
             background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: none;
         }
 
         /* Infinite Marquee Animation */
@@ -268,24 +268,24 @@
             background: rgba(0, 0, 0, 0.28);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: none;
             color: #FFFFFF;
             font-size: 0.82rem;
             font-weight: 600;
             letter-spacing: 0.01em;
-            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+            transition: background 0.25s ease, transform 0.25s ease;
         }
 
         .spec-card:hover .spec-card-btn {
             background: rgba(0, 0, 0, 0.40);
-            border-color: rgba(255, 255, 255, 0.24);
+            border: none;
         }
 
         .spec-nav-btn {
             width: 46px;
             height: 46px;
             border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: none;
             background: rgba(4, 47, 36, 0.65);
             backdrop-filter: blur(8px);
             color: #FFFFFF;
@@ -296,7 +296,7 @@
         }
         .spec-nav-btn:hover {
             background: #10B981;
-            border-color: #34D399;
+            border: none;
             color: #021813;
             transform: scale(1.06);
         }
