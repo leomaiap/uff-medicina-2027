@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const pinnedStage = document.getElementById('hero-pinned-stage');
                 const stageBehind = document.getElementById('stage-behind');
                 const isMobileScroll = window.innerWidth < 768;
-                const D = isMobileScroll ? 650 : 1000; // 650px no celular conforme solicitado
+                const D = isMobileScroll ? 280 : 450; // Híbrido rápido: ~450px desktop e ~280px mobile
 
                 if (pinnedStage && hero && stageBehind) {
                     const TOTAL_FRAMES = 94;
@@ -31,6 +31,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     const ctx = canvas ? canvas.getContext('2d') : null;
                     const bgOutline = document.getElementById('scrolly-bg-outline');
                     let currentFrame = 0;
+
+                    // Elementos do HUD de Progresso e Navegação Rápida
+                    const scrollyHud = document.getElementById('scrolly-hud');
+                    const scrollyProgressBar = document.getElementById('scrolly-progress-bar');
+                    const scrollyScrollCue = document.getElementById('scrolly-scroll-cue');
+
+                    if (scrollyScrollCue) {
+                        scrollyScrollCue.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const vagas = document.getElementById('vagas');
+                            if (vagas) {
+                                vagas.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                    }
 
                     function renderDoctorFrame(index) {
                         if (!canvas || !ctx) return;
@@ -87,26 +102,52 @@ document.addEventListener('DOMContentLoaded', () => {
                         scrollTrigger: {
                             trigger: pinnedStage,
                             start: 'top top',
-                            end: () => '+=' + (window.innerWidth < 768 ? 650 : 1000),
+                            end: () => '+=' + (window.innerWidth < 768 ? 280 : 450),
                             pin: true,
                             pinSpacing: true,
                             anticipatePin: 1,
                             scrub: true,
                             invalidateOnRefresh: true,
+                            onUpdate: (self) => {
+                                if (scrollyProgressBar) {
+                                    scrollyProgressBar.style.transform = `scaleX(${self.progress})`;
+                                }
+                                if (scrollyHud) {
+                                    if (self.progress <= 0.02) {
+                                        scrollyHud.style.opacity = '0';
+                                        scrollyHud.style.pointerEvents = 'none';
+                                    } else if (self.progress > 0.88) {
+                                        const fade = Math.max(0, (1 - self.progress) / 0.12);
+                                        scrollyHud.style.opacity = String(fade);
+                                        scrollyHud.style.pointerEvents = 'none';
+                                    } else {
+                                        scrollyHud.style.opacity = '1';
+                                        scrollyHud.style.pointerEvents = 'auto';
+                                    }
+                                }
+                            },
                             onLeave: () => {
                                 hero.style.display = 'none';
+                                if (scrollyHud) {
+                                    scrollyHud.style.opacity = '0';
+                                    scrollyHud.style.pointerEvents = 'none';
+                                }
                             },
                             onEnterBack: () => {
                                 hero.style.display = 'flex';
+                                if (scrollyHud) {
+                                    scrollyHud.style.opacity = '1';
+                                    scrollyHud.style.pointerEvents = 'auto';
+                                }
                             }
                         }
                     });
 
-                    // FASE 1 (0.0 -> 0.55): A máscara radial abre do centro rapidamente com arestas aveludadas (+18% smooth feather)
+                    // FASE 1 (0.0 -> 0.32): A máscara radial abre do centro com arestas aveludadas
                     heroTl.to(maskProxy, {
                         radius: 140,
                         ease: 'power1.in',
-                        duration: 0.55,
+                        duration: 0.32,
                         onUpdate: () => {
                             const r = maskProxy.radius;
                             if (r <= 0.5) {
@@ -118,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 const mask = `radial-gradient(circle at 50% 50%, transparent 0%, transparent ${r}%, black ${r + 18}%)`;
                                 hero.style.webkitMaskImage = mask;
                                 hero.style.maskImage = mask;
-                                if (r >= 135) {
+                                if (r >= 130) {
                                     hero.style.opacity = '0';
                                     hero.style.pointerEvents = 'none';
                                 } else {
@@ -129,41 +170,41 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }, 0);
 
-                    // 2. O blur começa em 20px e zera já no início da abertura da íris
+                    // 2. O blur começa em 20px e zera logo na largada da abertura
                     heroTl.fromTo(stageBehind, 
                         { filter: 'blur(20px)' }, 
-                        { filter: 'blur(0px)', ease: 'power2.out', duration: 0.28 }, 
+                        { filter: 'blur(0px)', ease: 'power2.out', duration: 0.16 }, 
                         0
                     );
 
-                    // 3. Efeito de profundidade 3D sutil nos elementos do Hero frontal durante a abertura
+                    // 3. Efeito de profundidade sutil nos elementos do Hero frontal durante a abertura
                     if (textLayer) {
                         heroTl.to(textLayer, {
-                            scale: 0.93,
-                            opacity: 0.2,
+                            scale: 0.94,
+                            opacity: 0,
                             ease: 'power1.inOut',
-                            duration: 0.45
+                            duration: 0.22
                         }, 0);
                     }
                     if (doctorsLayer) {
                         heroTl.to(doctorsLayer, {
-                            scale: 0.94,
-                            opacity: 0.3,
+                            scale: 0.95,
+                            opacity: 0,
                             ease: 'power1.inOut',
-                            duration: 0.48
+                            duration: 0.24
                         }, 0);
                     }
                     const bottomUI = hero.querySelector('.hero-bottom-ui');
                     if (bottomUI) {
                         heroTl.to(bottomUI, {
-                            y: 35,
-                            opacity: 0.2,
+                            y: 30,
+                            opacity: 0,
                             ease: 'power1.inOut',
-                            duration: 0.38
+                            duration: 0.20
                         }, 0);
                     }
 
-                    // 4. Entrada do Título "Tradição Centenária, Ciência de Vanguarda." e do Texto Outlined "CONCURSO UNIFICADO 27"
+                    // 4. Entrada do Título "Tradição Centenária, Ciência de Vanguarda." e do Texto Monumental
                     const sobreHeading = document.getElementById('sobre-heading');
                     if (sobreHeading && !sobreHeading.dataset.splitDone) {
                         sobreHeading.dataset.splitDone = 'true';
@@ -174,8 +215,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (sobreWordInners.length) {
                         heroTl.fromTo(sobreWordInners,
                             { yPercent: 115, rotateZ: 4, opacity: 0 },
-                            { yPercent: 0, rotateZ: 0, opacity: 1, stagger: 0.025, ease: 'power3.out', duration: 0.35 },
-                            0.08
+                            { yPercent: 0, rotateZ: 0, opacity: 1, stagger: 0.015, ease: 'power3.out', duration: 0.22 },
+                            0.04
                         );
                     }
 
@@ -184,35 +225,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (bgOutline) {
                         heroTl.fromTo(bgOutline,
-                            { scale: 0.94, opacity: 0 },
-                            { scale: 1, opacity: 1, ease: 'power2.out', duration: 0.4 },
-                            0.08
+                            { scale: 0.95, opacity: 0 },
+                            { scale: 1, opacity: 1, ease: 'power2.out', duration: 0.25 },
+                            0.04
                         );
                     }
 
-                    // ANIMAÇÃO CONFORME SOLICITADO:
                     // Linha 1 ("CONCURSO") desliza da esquerda até o centro exato da página (xPercent: 0) e PARA de se mover
                     // Linha 2 ("UNIFICADO 27") desliza da direita até o centro exato da página (xPercent: 0) e PARA de se mover
                     if (line1) {
                         heroTl.fromTo(line1,
                             { xPercent: -36 },
-                            { xPercent: 0, ease: 'power1.out', duration: 0.88 },
+                            { xPercent: 0, ease: 'power2.out', duration: 0.44 },
                             0
                         );
                     }
                     if (line2) {
                         heroTl.fromTo(line2,
                             { xPercent: 36 },
-                            { xPercent: 0, ease: 'power1.out', duration: 0.88 },
+                            { xPercent: 0, ease: 'power2.out', duration: 0.44 },
                             0
                         );
                     }
 
-                    // FASE 2 (0.28 -> 2.15): Já começa a vestir o jaleco assim que o centro da íris abre (zero scroll morto)
+                    // FASE 2 (0.08 -> 0.92): Veste o jaleco de forma ágil e ritmada sem scroll morto
                     heroTl.to(frameProxy, {
                         frame: TOTAL_FRAMES - 1,
                         ease: 'none',
-                        duration: 1.87,
+                        duration: 0.84,
                         onUpdate: () => {
                             const idx = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(frameProxy.frame)));
                             if (idx !== currentFrame) {
@@ -220,9 +260,9 @@ document.addEventListener('DOMContentLoaded', () => {
                                 renderDoctorFrame(idx);
                             }
                         }
-                    }, 0.28);
+                    }, 0.08);
 
-                    // As 4 informações (cards) vão aparecendo de forma ágil enquanto o médico se veste
+                    // Os 4 cards informativos surgem em sequência fluida durante a vestimenta do jaleco
                     const card1 = document.getElementById('scrolly-card-1');
                     const card2 = document.getElementById('scrolly-card-2');
                     const card3 = document.getElementById('scrolly-card-3');
@@ -230,35 +270,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (card1) {
                         heroTl.fromTo(card1,
-                            { y: 28, scale: 0.93, opacity: 0 },
-                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.25)', duration: 0.32, onStart: () => card1.classList.add('scrolly-pillar-active'), onReverseComplete: () => card1.classList.remove('scrolly-pillar-active') },
-                            0.42
+                            { y: 24, scale: 0.94, opacity: 0 },
+                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.2)', duration: 0.20, onStart: () => card1.classList.add('scrolly-pillar-active'), onReverseComplete: () => card1.classList.remove('scrolly-pillar-active') },
+                            0.18
                         );
                     }
                     if (card2) {
                         heroTl.fromTo(card2,
-                            { y: 28, scale: 0.93, opacity: 0 },
-                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.25)', duration: 0.32, onStart: () => card2.classList.add('scrolly-pillar-active'), onReverseComplete: () => card2.classList.remove('scrolly-pillar-active') },
-                            0.85
+                            { y: 24, scale: 0.94, opacity: 0 },
+                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.2)', duration: 0.20, onStart: () => card2.classList.add('scrolly-pillar-active'), onReverseComplete: () => card2.classList.remove('scrolly-pillar-active') },
+                            0.38
                         );
                     }
                     if (card3) {
                         heroTl.fromTo(card3,
-                            { y: 28, scale: 0.93, opacity: 0 },
-                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.25)', duration: 0.32, onStart: () => card3.classList.add('scrolly-pillar-active'), onReverseComplete: () => card3.classList.remove('scrolly-pillar-active') },
-                            1.28
+                            { y: 24, scale: 0.94, opacity: 0 },
+                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.2)', duration: 0.20, onStart: () => card3.classList.add('scrolly-pillar-active'), onReverseComplete: () => card3.classList.remove('scrolly-pillar-active') },
+                            0.58
                         );
                     }
                     if (card4) {
                         heroTl.fromTo(card4,
-                            { y: 28, scale: 0.93, opacity: 0 },
-                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.25)', duration: 0.32, onStart: () => card4.classList.add('scrolly-pillar-active'), onReverseComplete: () => card4.classList.remove('scrolly-pillar-active') },
-                            1.70
+                            { y: 24, scale: 0.94, opacity: 0 },
+                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.2)', duration: 0.20, onStart: () => card4.classList.add('scrolly-pillar-active'), onReverseComplete: () => card4.classList.remove('scrolly-pillar-active') },
+                            0.76
                         );
                     }
 
-                    // Breve respiro final (0.15) antes de liberar o pin para #vagas
-                    heroTl.to({}, { duration: 0.15 }, 2.15);
+                    // Respiro final enxuto (0.04) para transição imediata para #vagas
+                    heroTl.to({}, { duration: 0.04 }, 0.96);
                 }
 
 });

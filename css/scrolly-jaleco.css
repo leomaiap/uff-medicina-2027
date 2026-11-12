@@ -80,3 +80,24 @@
         -webkit-text-stroke: 1px rgba(52, 211, 153, 0.20);
     }
 }
+
+/* ==============================================================
+   HUD & INDICADOR DE PROGRESSO DO ESTÁGIO PINADO
+   ============================================================== */
+#scrolly-hud {
+    will-change: opacity, transform;
+    pointer-events: none;
+}
+
+#scrolly-scroll-cue {
+    pointer-events: auto;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+#scrolly-scroll-cue:active {
+    transform: scale(0.96);
+}
+
+#scrolly-progress-bar {
+    transform-origin: left center;
+}
