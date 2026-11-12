@@ -86,49 +86,92 @@
            Layer 3: Cutout Brazilian Doctors PNG (Foreground Plane)
            Layer 4: Bottom Interactive UI & Floating Card
            ============================================================== */
-        #hero-pinned-stage {
+        .home-hero-area {
             position: relative;
             width: 100%;
-            height: 100vh;
-            height: 100svh;
-            overflow: hidden;
-            background-color: #021813;
-        }
-
-        #stage-behind {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            overflow-y: auto;
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            background-color: #021813;
-            filter: blur(20px);
-            will-change: filter;
-        }
-
-        #stage-behind::-webkit-scrollbar {
-            display: none;
-        }
-
-        @media (min-width: 1024px) {
-            #stage-behind {
-                overflow: hidden;
-            }
-        }
-
-        .home-hero-area {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
+            min-height: 100vh;
+            min-height: 100svh;
             z-index: 20;
             background-color: #021813;
             overflow: hidden;
-            will-change: mask-image, -webkit-mask-image;
+        }
+
+        /* ==============================================================
+           SCROLLYTELLING JALECO UFF (SEÇÃO 2)
+           ============================================================== */
+        .scrolly-card {
+            pointer-events: auto;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.3s ease,
+                        box-shadow 0.3s ease,
+                        background-color 0.3s ease;
+            will-change: opacity, transform;
+        }
+
+        .scrolly-card-active {
+            border-color: rgba(52, 211, 153, 0.7) !important;
+            background: rgba(5, 39, 32, 0.94) !important;
+            box-shadow: 0 0 35px rgba(0, 158, 94, 0.4), 0 20px 40px rgba(0, 0, 0, 0.6) !important;
+            transform: scale(1.03) !important;
+        }
+
+        #scrolly-card-1 { top: 22%; left: 4%; }
+        #scrolly-card-2 { top: 58%; left: 7%; }
+        #scrolly-card-3 { top: 22%; right: 4%; }
+        #scrolly-card-4 { top: 58%; right: 7%; }
+
+        .scrolly-stroke-text {
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(52, 211, 153, 0.26);
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            will-change: transform;
+            user-select: none;
+        }
+
+        @media (max-width: 1280px) {
+            #scrolly-card-1 { top: 20%; left: 2%; }
+            #scrolly-card-2 { top: 58%; left: 4%; }
+            #scrolly-card-3 { top: 20%; right: 2%; }
+            #scrolly-card-4 { top: 58%; right: 4%; }
+        }
+
+        @media (max-width: 1024px) {
+            .scrolly-card {
+                max-width: 250px !important;
+                padding: 0.75rem 0.85rem !important;
+            }
+            #scrolly-card-1 { top: 22% !important; left: 1rem !important; }
+            #scrolly-card-2 { top: 58% !important; left: 1rem !important; }
+            #scrolly-card-3 { top: 22% !important; right: 1rem !important; }
+            #scrolly-card-4 { top: 58% !important; right: 1rem !important; }
+            .scrolly-stroke-text {
+                -webkit-text-stroke: 1px rgba(52, 211, 153, 0.22);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .scrolly-card {
+                max-width: 180px !important;
+                padding: 0.5rem 0.65rem !important;
+            }
+            .scrolly-card h3 {
+                font-size: 0.75rem !important;
+                margin-top: 0.15rem !important;
+            }
+            .scrolly-card p {
+                font-size: 0.65rem !important;
+                line-height: 1.25 !important;
+            }
+            .scrolly-card span {
+                font-size: 1rem !important;
+            }
+            #scrolly-card-1 { top: 18% !important; left: 0.5rem !important; }
+            #scrolly-card-2 { top: 54% !important; left: 0.5rem !important; }
+            #scrolly-card-3 { top: 18% !important; right: 0.5rem !important; }
+            #scrolly-card-4 { top: 54% !important; right: 0.5rem !important; }
         }
 
         #main-content {
@@ -775,120 +818,9 @@
 <body class="selection:bg-brand-emerald selection:text-white noise-bg">
 
     <!-- ============================================================== -->
-    <!-- 1. HERO PINNED STAGE (TRANSIÇÃO RADIAL NATIVA COM ZERO JITTER) -->
+    <!-- 1. HERO PRINCIPAL MONUMENTAL (LATO SENSU 27)                   -->
     <!-- ============================================================== -->
-    <div id="hero-pinned-stage" class="relative w-full h-screen min-h-[100svh] overflow-hidden bg-brand-base">
-
-        <!-- CAMADA TRASEIRA: TELA DA SEÇÃO SOBRE (REVELADA PELA MÁSCARA RADIAL) -->
-        <div id="stage-behind" class="absolute inset-0 w-full h-full z-10 overflow-y-auto lg:overflow-hidden flex flex-col justify-between bg-brand-base" style="filter: blur(20px); will-change: filter;">
-            
-            <!-- 2. INFINITE MARQUEE TICKER -->
-            <section class="py-3 md:py-4 border-y border-white/10 bg-brand-surface/40 backdrop-blur-md overflow-hidden select-none shrink-0">
-                <div class="animate-marquee whitespace-nowrap flex items-center gap-12 text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-slate-300">
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> FACULDADE DE MEDICINA DA UFF</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CONCURSO UNIFICADO 2027</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg font-bold">✦</span> <span class="text-white font-bold">107 VAGAS OFERECIDAS</span></span>
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> PÓS-GRADUAÇÃO LATO SENSU</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> 100% GRATUITO (ZERO MENSALIDADE)</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> 13 ESPECIALIDADES MÉDICAS</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CAMPUS UNIVERSITÁRIO NITERÓI</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> CORPO DOCENTE TITULADO</span>
-                    
-                    <!-- Duplicate for seamless infinite loop -->
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> FACULDADE DE MEDICINA DA UFF</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CONCURSO UNIFICADO 2027</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg font-bold">✦</span> <span class="text-white font-bold">107 VAGAS OFERECIDAS</span></span>
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> PÓS-GRADUAÇÃO LATO SENSU</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> 100% GRATUITO (ZERO MENSALIDADE)</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> 13 ESPECIALIDADES MÉDICAS</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CAMPUS UNIVERSITÁRIO NITERÓI</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> CORPO DOCENTE TITULADO</span>
-                </div>
-            </section>
-
-            <!-- 3. A FACULDADE DE MEDICINA DA UFF (SOBRE) -->
-            <section id="sobre" class="relative w-full flex-1 flex flex-col justify-center overflow-hidden border-t border-white/10">
-                <!-- Fundo Fotográfico Arquitetônico FacMed UFF (Idêntico ao Hero Principal: Mesma foto, escala, posição e transparência) -->
-                <div class="sobre-layer-bg"></div>
-                <div class="hero-color-glow opacity-20 pointer-events-none"></div>
-
-                <div class="relative z-10 py-6 md:py-8 lg:py-10 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto w-full my-auto">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
-                    
-                        <!-- Left: Big Editorial Image -->
-                        <div class="lg:col-span-5 relative">
-                            <div class="img-reveal-wrap rounded-3xl border border-white/15 shadow-2xl relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=1200&q=80" 
-                                     alt="Sessão Clínica da Faculdade de Medicina UFF" 
-                                     class="w-full h-[220px] sm:h-[300px] lg:h-[440px] object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-brand-base via-transparent to-transparent"></div>
-                                
-                                <div class="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 glass-card p-3 sm:p-4 rounded-xl border border-brand-emerald/40">
-                                    <span class="text-[10px] sm:text-xs font-mono uppercase text-brand-gold font-bold tracking-widest block">Ensino & Pesquisa</span>
-                                    <p class="text-xs sm:text-sm text-slate-200 mt-0.5 sm:mt-1 font-medium leading-snug">
-                                        Discussão científica de casos complexos e mentoria com professores titulares da UFF.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Right: Content & Core Pillars -->
-                        <div class="lg:col-span-7 flex flex-col justify-center">
-                            <h2 class="font-sans font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white leading-tight">
-                                Tradição Centenária, Ciência de Vanguarda.
-                            </h2>
-                            
-                            <p class="mt-3 md:mt-4 text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed font-light">
-                                A <strong class="text-white font-medium">Faculdade de Medicina da UFF</strong> é uma das mais respeitadas escolas médicas do país. Nosso programa de Pós-Graduação Lato Sensu é desenhado especificamente para médicos que buscam aprofundamento técnico rigoroso, titulação reconhecida e vivência clínica prática qualificada.
-                            </p>
-
-                            <!-- Pillars Grid -->
-                            <div class="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 mt-4 sm:mt-6">
-                                <div class="p-3.5 sm:p-4 md:p-5 rounded-2xl glass-card border border-brand-emerald/20">
-                                    <div class="text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono">01</div>
-                                    <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1">Zero Mensalidades</h3>
-                                    <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5 leading-relaxed">
-                                        Ensino superior federal 100% público. Você foca integralmente no seu aprendizado sem custos mensais.
-                                    </p>
-                                </div>
-
-                                <div class="p-3.5 sm:p-4 md:p-5 rounded-2xl glass-card border border-brand-emerald/20">
-                                    <div class="text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono">02</div>
-                                    <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1">Corpo Docente Titulado</h3>
-                                    <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5 leading-relaxed">
-                                        Professores titulares, mestres e doutores com sólida produção científica e inserção acadêmica.
-                                    </p>
-                                </div>
-
-                                <div class="p-3.5 sm:p-4 md:p-5 rounded-2xl glass-card border border-brand-emerald/20">
-                                    <div class="text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono">03</div>
-                                    <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1">Prática Ambulatorial</h3>
-                                    <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5 leading-relaxed">
-                                        Treinamento prático nos ambulatórios de especialidades e centros diagnósticos da Faculdade de Medicina.
-                                    </p>
-                                </div>
-
-                                <div class="p-3.5 sm:p-4 md:p-5 rounded-2xl glass-card border border-brand-emerald/20">
-                                    <div class="text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono">04</div>
-                                    <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1">Preparação para Título</h3>
-                                    <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5 leading-relaxed">
-                                        Carga horária e conteúdo programático alinhados aos requisitos das sociedades de especialidade da AMB.
-                                    </p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-            </section>
-
-        </div>
-        <!-- FIM DO #stage-behind -->
-
-        <!-- CAMADA FRONTAL: PRIMEIRO HERO (ABRE COM A MÁSCARA RADIAL) -->
-        <div id="hero" class="home-hero-area min-h-screen min-h-[100svh] flex flex-col justify-between absolute inset-0 w-full h-full z-20 overflow-hidden" style="will-change: mask-image, -webkit-mask-image;">
+    <section id="hero" class="home-hero-area relative min-h-screen min-h-[100svh] flex flex-col justify-between w-full overflow-hidden bg-brand-base">
         
         <!-- CAMADA 1 (Fundo): Imagem do Átrio da Faculdade sem médicos + Luz Esmeralda -->
         <div id="hero-bg-layer" class="hero-layer-bg"></div>
@@ -954,22 +886,170 @@
                 </h2>
                 
                 <div class="mt-6 md:mt-7 flex flex-wrap items-center gap-4">
-                    <a href="#especialidades" class="avenora-btn text-sm sm:text-base">
-                        <span>Explorar Especialidades</span>
+                    <a href="#sobre" class="avenora-btn text-sm sm:text-base">
+                        <span>Conhecer o Programa</span>
                         <span class="avenora-btn-circle">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </span>
+                    </a>
+                    <a href="#especialidades" class="px-5 py-3 rounded-full text-sm font-semibold text-white/90 hover:text-white bg-white/10 hover:bg-white/15 border border-white/15 backdrop-blur-md transition-all">
+                        13 Especialidades
                     </a>
                 </div>
 
             </div>
         </div>
 
-        </div>
-        <!-- FIM DO #hero (PRIMEIRO HERO) -->
+    </section>
+    <!-- FIM DO HERO PRINCIPAL -->
 
-    </div>
-    <!-- FIM DO #hero-pinned-stage -->
+    <!-- ============================================================== -->
+    <!-- 2. SEÇÃO 2: SCROLLYTELLING JALECO UFF & 4 PILARES FUNDAMENTAIS -->
+    <!-- ============================================================== -->
+    <section id="sobre" class="relative w-full bg-brand-base overflow-hidden border-t border-white/10" aria-label="A Faculdade de Medicina da UFF">
+        
+        <!-- 2.1. INFINITE MARQUEE TICKER (EXATAMENTE COMO NO MODELO DE REFERÊNCIA) -->
+        <div class="py-3 md:py-3.5 border-b border-white/10 bg-brand-surface/80 backdrop-blur-md overflow-hidden select-none relative z-30">
+            <div class="animate-marquee whitespace-nowrap flex items-center gap-12 text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-slate-300">
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-base">✦</span> FACULDADE DE MEDICINA DA UFF</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-base">✦</span> CONCURSO UNIFICADO 2027</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-base font-bold">✦</span> <span class="text-white font-bold">107 VAGAS OFERECIDAS</span></span>
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-base">✦</span> PÓS-GRADUAÇÃO LATO SENSU</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-base">✦</span> 100% GRATUITO (ZERO MENSALIDADE)</span>
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-base">✦</span> 13 ESPECIALIDADES MÉDICAS</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-base">✦</span> CAMPUS UNIVERSITÁRIO NITERÓI</span>
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-base">✦</span> CORPO DOCENTE TITULADO</span>
+                
+                <!-- Duplicate for seamless infinite loop -->
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-base">✦</span> FACULDADE DE MEDICINA DA UFF</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-base">✦</span> CONCURSO UNIFICADO 2027</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-base font-bold">✦</span> <span class="text-white font-bold">107 VAGAS OFERECIDAS</span></span>
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-base">✦</span> PÓS-GRADUAÇÃO LATO SENSU</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-base">✦</span> 100% GRATUITO (ZERO MENSALIDADE)</span>
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-base">✦</span> 13 ESPECIALIDADES MÉDICAS</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-base">✦</span> CAMPUS UNIVERSITÁRIO NITERÓI</span>
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-base">✦</span> CORPO DOCENTE TITULADO</span>
+            </div>
+        </div>
+
+        <!-- 2.2. SCROLL TRACK (280vh DE EXTENSÃO PARA PINAGEM PERFEITA) -->
+        <div id="scrolly-track" class="relative w-full h-[280vh]">
+            
+            <!-- VIEWPORT STAGE PINADO NATIVAMENTE VIA STICKY (ZERO JITTER) -->
+            <div id="scrolly-stage" class="sticky top-0 w-full h-screen min-h-[100svh] overflow-hidden flex flex-col justify-between items-center bg-brand-base">
+                
+                <!-- CAMADA 0 (Fundo): Prédio Histórico da FacMed UFF + Efeitos de Atmosfera -->
+                <div class="sobre-layer-bg"></div>
+                <div class="hero-color-glow opacity-25 pointer-events-none"></div>
+
+                <!-- CAMADA 1: TIPOGRAFIA MONUMENTAL EM OUTLINE (ATRÁS DO MÉDICO) -->
+                <div id="scrolly-bg-outline" class="absolute inset-0 pointer-events-none flex flex-col items-center justify-center select-none z-10 transition-transform duration-75 ease-out">
+                    <span class="scrolly-stroke-text text-[11vw] font-black uppercase tracking-tight leading-none">CONCURSO</span>
+                    <span class="scrolly-stroke-text text-[13vw] font-black uppercase tracking-tight leading-none -mt-[2vw]">UNIFICADO 27</span>
+                </div>
+
+                <!-- CAMADA 2 (TOPO): Título Principal + Seletor de Gênero -->
+                <div class="relative z-30 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 pt-5 sm:pt-7 md:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div class="text-center sm:text-left">
+                        <span class="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-brand-gold font-bold block mb-1">
+                            FACULDADE DE MEDICINA DA UFF • CONCURSO 2027
+                        </span>
+                        <h2 class="font-sans font-black text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white tracking-tight leading-tight drop-shadow-md">
+                            Tradição Centenária, Ciência de Vanguarda.
+                        </h2>
+                    </div>
+
+                    <!-- Pílula de Alternância Interativa entre Médica e Médico -->
+                    <div class="flex items-center gap-1.5 p-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 shadow-xl text-xs shrink-0 select-none">
+                        <button type="button" id="scrolly-btn-female" class="px-3 py-1 rounded-full font-semibold transition-all flex items-center gap-1.5 bg-brand-emerald text-white shadow-sm" title="Exibir Médica">
+                            <span>👩</span>
+                            <span class="text-xs">Dra. Sofia</span>
+                        </button>
+                        <button type="button" id="scrolly-btn-male" class="px-3 py-1 rounded-full font-semibold transition-all flex items-center gap-1.5 text-slate-300 hover:text-white" title="Exibir Médico">
+                            <span>👨</span>
+                            <span class="text-xs">Dr. Gabriel</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CAMADA 3: CANVAS DO MÉDICO SE VESTINDO (QUADRO A QUADRO) -->
+                <div class="absolute inset-0 z-20 flex items-end justify-center pointer-events-none">
+                    <canvas id="scrolly-canvas" class="w-full h-full object-contain pointer-events-none"></canvas>
+                </div>
+
+                <!-- CAMADA 4: OS 4 CARDS FLUTUANTES (DISPOSIÇÃO DIAGONAL CONFORME MODELO) -->
+                <div class="absolute inset-0 z-30 pointer-events-none max-w-7xl mx-auto w-full h-full">
+                    
+                    <!-- Card 01 (Superior Esquerdo) -->
+                    <div id="scrolly-card-1" class="scrolly-card absolute p-4 sm:p-5 rounded-2xl bg-brand-surface/85 border border-white/10 shadow-2xl transition-all duration-300 max-w-[270px] sm:max-w-[300px] lg:max-w-[320px]">
+                        <div class="flex items-center gap-2">
+                            <span class="text-brand-gold font-mono font-black text-xl sm:text-2xl">01</span>
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-brand-emerald font-bold">100% Público</span>
+                        </div>
+                        <h3 class="font-sans font-bold text-sm sm:text-base md:text-lg text-white mt-1">Zero Mensalidades</h3>
+                        <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                            Ensino superior federal 100% público. Você foca integralmente no seu aprendizado sem custos mensais.
+                        </p>
+                    </div>
+
+                    <!-- Card 02 (Inferior Esquerdo) -->
+                    <div id="scrolly-card-2" class="scrolly-card absolute p-4 sm:p-5 rounded-2xl bg-brand-surface/85 border border-white/10 shadow-2xl transition-all duration-300 max-w-[270px] sm:max-w-[300px] lg:max-w-[320px]">
+                        <div class="flex items-center gap-2">
+                            <span class="text-brand-gold font-mono font-black text-xl sm:text-2xl">02</span>
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-brand-emerald font-bold">Excelência</span>
+                        </div>
+                        <h3 class="font-sans font-bold text-sm sm:text-base md:text-lg text-white mt-1">Corpo Docente Titulado</h3>
+                        <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                            Professores titulares, mestres e doutores com sólida produção científica e inserção acadêmica.
+                        </p>
+                    </div>
+
+                    <!-- Card 03 (Superior Direito) -->
+                    <div id="scrolly-card-3" class="scrolly-card absolute p-4 sm:p-5 rounded-2xl bg-brand-surface/85 border border-white/10 shadow-2xl transition-all duration-300 max-w-[270px] sm:max-w-[300px] lg:max-w-[320px]">
+                        <div class="flex items-center gap-2">
+                            <span class="text-brand-gold font-mono font-black text-xl sm:text-2xl">03</span>
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-brand-emerald font-bold">Vivência Real</span>
+                        </div>
+                        <h3 class="font-sans font-bold text-sm sm:text-base md:text-lg text-white mt-1">Hospital Universitário HUAP</h3>
+                        <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                            Treinamento prático nos ambulatórios de especialidades e centros diagnósticos da Faculdade de Medicina.
+                        </p>
+                    </div>
+
+                    <!-- Card 04 (Inferior Direito) -->
+                    <div id="scrolly-card-4" class="scrolly-card absolute p-4 sm:p-5 rounded-2xl bg-brand-surface/85 border border-white/10 shadow-2xl transition-all duration-300 max-w-[270px] sm:max-w-[300px] lg:max-w-[320px]">
+                        <div class="flex items-center gap-2">
+                            <span class="text-brand-gold font-mono font-black text-xl sm:text-2xl">04</span>
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-brand-emerald font-bold">Reconhecimento</span>
+                        </div>
+                        <h3 class="font-sans font-bold text-sm sm:text-base md:text-lg text-white mt-1">Certificação Oficial MEC / UFF</h3>
+                        <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                            Carga horária e conteúdo programático alinhados aos requisitos das sociedades de especialidade da AMB.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- CAMADA 5 (BASE): Barra de Progresso Fina e Dica de Scroll -->
+                <div class="relative z-30 w-full flex items-center justify-between px-6 py-2 border-t border-white/5 bg-brand-base/80 backdrop-blur-sm">
+                    <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald animate-pulse"></span>
+                        <span id="scrolly-status-text">Role para vestir o jaleco</span>
+                    </span>
+                    <span class="text-[10px] font-mono text-brand-gold font-bold" id="scrolly-frame-count">Quadro 01/94</span>
+                </div>
+
+                <!-- Barra de Progresso do Scroll no Topo/Base -->
+                <div class="absolute bottom-0 left-0 right-0 h-1 bg-white/10 z-40">
+                    <div id="scrolly-progress-bar" class="h-full bg-gradient-to-r from-brand-emerald via-brand-glow to-brand-gold w-0 transition-all duration-75"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- FIM DA SEÇÃO 2 (SCROLLYTELLING JALECO UFF) -->
 
     <!-- RESTANTE DA PÁGINA (SCROLL NORMAL CONTÍNUO A PARTIR DE #vagas) -->
     <main id="main-content" class="relative z-10">
@@ -2206,141 +2286,216 @@
                 }
 
                 // -------------------------------------------------------------
-                // TRANSIÇÃO DE MÁSCARA RADIAL NATIVA (IRIS) DIRETO PARA SEÇÃO SOBRE
-                // PINAGEM NATIVA VIA GSAP (ZERO JITTER / ZERO SLINGSHOT / 120FPS)
+                // 8.1. SCROLLYTELLING JALECO UFF (SEÇÃO 2: MÉDICA / MÉDICO SE VESTINDO)
                 // -------------------------------------------------------------
-                const pinnedStage = document.getElementById('hero-pinned-stage');
-                const stageBehind = document.getElementById('stage-behind');
-                const D = 450; // Distância otimizada para transição rápida e ágil
+                initScrollyJaleco();
+            }
 
-                if (pinnedStage && hero && stageBehind) {
-                    const maskProxy = { radius: 0 };
+            function initScrollyJaleco() {
+                const TOTAL_FRAMES = 94;
+                const CACHE = {
+                    female: [],
+                    male: []
+                };
 
-                    const heroTl = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: pinnedStage,
-                            start: 'top top',
-                            end: '+=' + D,
-                            pin: true,
-                            scrub: true,
-                            anticipatePin: 1,
-                            onLeave: () => {
-                                hero.style.display = 'none';
-                            },
-                            onEnterBack: () => {
-                                hero.style.display = 'flex';
-                            }
-                        }
-                    });
+                const PATHS = {
+                    female: 'assets/transformation/female_transparent/frame_',
+                    male: 'assets/transformation/male_transparent/frame_'
+                };
 
-                    // 1. A máscara radial abre do centro rapidamente com arestas aveludadas (+18% smooth feather)
-                    heroTl.to(maskProxy, {
-                        radius: 140,
-                        ease: 'power1.in', // Aceleração inicial rápida solicitada
-                        duration: 1,
-                        onUpdate: () => {
-                            const r = maskProxy.radius;
-                            if (r <= 0.5) {
-                                hero.style.webkitMaskImage = 'none';
-                                hero.style.maskImage = 'none';
-                                hero.style.opacity = '1';
-                                hero.style.pointerEvents = 'auto';
-                            } else {
-                                const mask = `radial-gradient(circle at 50% 50%, transparent 0%, transparent ${r}%, black ${r + 18}%)`;
-                                hero.style.webkitMaskImage = mask;
-                                hero.style.maskImage = mask;
-                                if (r >= 135) {
-                                    hero.style.opacity = '0';
-                                    hero.style.pointerEvents = 'none';
-                                } else {
-                                    hero.style.opacity = '1';
-                                    hero.style.pointerEvents = 'auto';
-                                }
-                            }
-                        }
-                    }, 0);
+                // Sorteio aleatório a cada recarregamento (50% mulher / 50% homem)
+                // com persistência da preferência manual durante a sessão
+                let savedChoice = sessionStorage.getItem('uff_doctor_choice');
+                let currentGender = savedChoice || (Math.random() < 0.5 ? 'female' : 'male');
 
-                    // 2. O blur começa em 20px, cai cedo em 20% e em 40% (duration: 0.4) JÁ ESTÁ EM ZERO (100% nítido)!
-                    heroTl.fromTo(stageBehind, 
-                        { filter: 'blur(20px)' }, 
-                        { filter: 'blur(0px)', ease: 'power2.out', duration: 0.4 }, 
-                        0
-                    );
+                const canvas = document.getElementById('scrolly-canvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                const scrollyTrack = document.getElementById('scrolly-track');
+                const bgOutline = document.getElementById('scrolly-bg-outline');
+                const progressBar = document.getElementById('scrolly-progress-bar');
+                const frameCountEl = document.getElementById('scrolly-frame-count');
+                const statusTextEl = document.getElementById('scrolly-status-text');
 
-                    // 3. Efeito de profundidade 3D sutil nos elementos do Hero frontal durante a abertura
-                    if (textLayer) {
-                        heroTl.to(textLayer, {
-                            scale: 0.93,
-                            opacity: 0.2,
-                            ease: 'power1.inOut',
-                            duration: 0.8
-                        }, 0);
-                    }
-                    if (doctorsLayer) {
-                        heroTl.to(doctorsLayer, {
-                            scale: 0.94,
-                            opacity: 0.3,
-                            ease: 'power1.inOut',
-                            duration: 0.85
-                        }, 0);
-                    }
-                    const bottomUI = hero.querySelector('.hero-bottom-ui');
-                    if (bottomUI) {
-                        heroTl.to(bottomUI, {
-                            y: 35,
-                            opacity: 0.2,
-                            ease: 'power1.inOut',
-                            duration: 0.6
-                        }, 0);
-                    }
+                const btnFemale = document.getElementById('scrolly-btn-female');
+                const btnMale = document.getElementById('scrolly-btn-male');
 
-                    // 4. Coreografia sincronizada de textos e elementos dentro da seção #sobre enquanto a íris abre
-                    const sobreImgWrap = stageBehind.querySelector('.img-reveal-wrap');
-                    const sobreHeading = stageBehind.querySelector('h2');
-                    const sobrePara = stageBehind.querySelector('h2 + p');
-                    const sobrePillars = stageBehind.querySelectorAll('.grid-cols-2 > div');
+                const card1 = document.getElementById('scrolly-card-1');
+                const card2 = document.getElementById('scrolly-card-2');
+                const card3 = document.getElementById('scrolly-card-3');
+                const card4 = document.getElementById('scrolly-card-4');
 
-                    // Split de palavras no título "Tradição Centenária, Ciência de Vanguarda."
-                    if (sobreHeading && !sobreHeading.dataset.splitDone) {
-                        sobreHeading.dataset.splitDone = 'true';
-                        const rawWords = sobreHeading.innerText.trim().split(/\s+/);
-                        sobreHeading.innerHTML = rawWords.map(w => `<span class="word-mask"><span class="word-inner">${w}</span></span>`).join(' ');
-                    }
+                let currentFrame = 0;
 
-                    const sobreWordInners = sobreHeading ? sobreHeading.querySelectorAll('.word-inner') : [];
-
-                    if (sobreWordInners.length) {
-                        heroTl.fromTo(sobreWordInners,
-                            { yPercent: 115, rotateZ: 4, opacity: 0 },
-                            { yPercent: 0, rotateZ: 0, opacity: 1, stagger: 0.035, ease: 'power3.out', duration: 0.42 },
-                            0.05
-                        );
-                    }
-
-                    if (sobreImgWrap) {
-                        heroTl.fromTo(sobreImgWrap,
-                            { y: 45, scale: 0.93, opacity: 0 },
-                            { y: 0, scale: 1, opacity: 1, ease: 'power2.out', duration: 0.45 },
-                            0.04
-                        );
-                    }
-
-                    if (sobrePara) {
-                        heroTl.fromTo(sobrePara,
-                            { y: 24, opacity: 0 },
-                            { y: 0, opacity: 1, ease: 'power2.out', duration: 0.4 },
-                            0.16
-                        );
-                    }
-
-                    if (sobrePillars.length) {
-                        heroTl.fromTo(sobrePillars,
-                            { y: 35, scale: 0.94, opacity: 0 },
-                            { y: 0, scale: 1, opacity: 1, stagger: 0.055, ease: 'back.out(1.2)', duration: 0.42 },
-                            0.20
-                        );
+                function updateToggleButtonUI() {
+                    if (!btnFemale || !btnMale) return;
+                    if (currentGender === 'female') {
+                        btnFemale.className = 'px-3 py-1 rounded-full font-semibold transition-all flex items-center gap-1.5 bg-brand-emerald text-white shadow-sm';
+                        btnMale.className = 'px-3 py-1 rounded-full font-semibold transition-all flex items-center gap-1.5 text-slate-300 hover:text-white';
+                    } else {
+                        btnMale.className = 'px-3 py-1 rounded-full font-semibold transition-all flex items-center gap-1.5 bg-brand-emerald text-white shadow-sm';
+                        btnFemale.className = 'px-3 py-1 rounded-full font-semibold transition-all flex items-center gap-1.5 text-slate-300 hover:text-white';
                     }
                 }
+
+                function preloadGender(gender, onComplete) {
+                    if (CACHE[gender].length === TOTAL_FRAMES) {
+                        if (onComplete) onComplete();
+                        return;
+                    }
+
+                    const basePath = PATHS[gender];
+                    let loaded = 0;
+
+                    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+                        const img = new Image();
+                        const pad = String(i).padStart(3, '0');
+                        img.src = `${basePath}${pad}.webp`;
+                        img.onload = () => {
+                            loaded++;
+                            if (loaded === TOTAL_FRAMES && onComplete) onComplete();
+                        };
+                        img.onerror = () => {
+                            img.src = `assets/transformation/${gender}/frame_${pad}.webp`;
+                            loaded++;
+                            if (loaded === TOTAL_FRAMES && onComplete) onComplete();
+                        };
+                        CACHE[gender].push(img);
+                    }
+                }
+
+                function renderFrame(index) {
+                    const list = CACHE[currentGender];
+                    if (!list || !list[index] || !list[index].complete) return;
+
+                    const img = list[index];
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    const isMobile = window.innerWidth < 768;
+                    const targetHeightRatio = isMobile ? 0.88 : 0.94;
+                    let drawHeight = canvas.height * targetHeightRatio;
+                    let drawWidth = img.width * (drawHeight / img.height);
+
+                    if (drawWidth < canvas.width && !isMobile) {
+                        drawHeight = canvas.height * 0.96;
+                        drawWidth = img.width * (drawHeight / img.height);
+                    }
+
+                    const offsetX = (canvas.width - drawWidth) / 2;
+                    const offsetY = canvas.height - drawHeight;
+
+                    ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+
+                    if (frameCountEl) {
+                        frameCountEl.textContent = `Quadro ${String(index + 1).padStart(2, '0')}/${TOTAL_FRAMES}`;
+                    }
+                }
+
+                function resizeCanvas() {
+                    const rect = canvas.getBoundingClientRect();
+                    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                    canvas.width = rect.width * dpr;
+                    canvas.height = rect.height * dpr;
+                    renderFrame(currentFrame);
+                }
+                window.addEventListener('resize', resizeCanvas);
+
+                // Carregamento inicial do gênero sorteado
+                updateToggleButtonUI();
+                preloadGender(currentGender, () => {
+                    resizeCanvas();
+                });
+
+                // Pré-carrega o outro gênero silenciosamente em background
+                setTimeout(() => {
+                    const otherGender = currentGender === 'female' ? 'male' : 'female';
+                    preloadGender(otherGender);
+                }, 1200);
+
+                // Alternância interativa
+                function switchDoctor(newGender) {
+                    if (currentGender === newGender) return;
+                    currentGender = newGender;
+                    sessionStorage.setItem('uff_doctor_choice', newGender);
+                    updateToggleButtonUI();
+                    preloadGender(newGender, () => {
+                        renderFrame(currentFrame);
+                    });
+                    renderFrame(currentFrame);
+                }
+
+                if (btnFemale) {
+                    btnFemale.addEventListener('click', () => switchDoctor('female'));
+                }
+                if (btnMale) {
+                    btnMale.addEventListener('click', () => switchDoctor('male'));
+                }
+
+                // Atualização progressiva dos 4 cards de informação
+                function setCardState(card, active) {
+                    if (!card) return;
+                    if (active) {
+                        card.classList.add('scrolly-card-active');
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1.03)';
+                    } else {
+                        card.classList.remove('scrolly-card-active');
+                        card.style.opacity = '0.35';
+                        card.style.transform = 'scale(0.97)';
+                    }
+                }
+
+                // ScrollTrigger para acionamento quadro a quadro da transformação
+                if (scrollyTrack && typeof ScrollTrigger !== 'undefined') {
+                    ScrollTrigger.create({
+                        trigger: scrollyTrack,
+                        start: 'top top',
+                        end: 'bottom bottom',
+                        scrub: 0.1,
+                        onUpdate: (self) => {
+                            const p = self.progress; // 0 to 1
+                            const frameIndex = Math.min(TOTAL_FRAMES - 1, Math.floor(p * TOTAL_FRAMES));
+                            if (frameIndex !== currentFrame) {
+                                currentFrame = frameIndex;
+                                renderFrame(frameIndex);
+                            }
+
+                            // Barra de progresso da seção
+                            if (progressBar) {
+                                progressBar.style.width = `${Math.round(p * 100)}%`;
+                            }
+
+                            // Parallax cinemático das letras em outline atrás do médico
+                            if (bgOutline) {
+                                const shiftY = (p - 0.5) * -70;
+                                bgOutline.style.transform = `translateY(${shiftY}px)`;
+                            }
+
+                            // Status descritivo na barra inferior
+                            if (statusTextEl) {
+                                if (p < 0.25) {
+                                    statusTextEl.textContent = 'Role para vestir o jaleco da UFF';
+                                } else if (p < 0.75) {
+                                    statusTextEl.textContent = 'Tradição Centenária & Excelência HUAP';
+                                } else {
+                                    statusTextEl.textContent = 'Especialista preparado para o Concurso 2027';
+                                }
+                            }
+
+                            // Iluminação sequencial dos 4 pilares
+                            setCardState(card1, p >= 0.08);
+                            setCardState(card2, p >= 0.32);
+                            setCardState(card3, p >= 0.58);
+                            setCardState(card4, p >= 0.80);
+                        }
+                    });
+                }
+
+                // Estados iniciais sutis dos cards
+                setCardState(card1, false);
+                setCardState(card2, false);
+                setCardState(card3, false);
+                setCardState(card4, false);
             }
 
             // Image reveals in lower sections
