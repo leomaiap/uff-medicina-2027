@@ -45,28 +45,13 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('hud-hours').innerText = hStr;
             document.getElementById('hud-minutes').innerText = mStr;
             document.getElementById('hud-seconds').innerText = sStr;
-
-            const barTimer = document.getElementById('bar-timer');
-            if (barTimer) barTimer.innerText = `${dStr}d ${hStr}h ${mStr}m ${sStr}s`;
         }
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
         // -------------------------------------------------------------
-        // 6. STICKY CONVERSION BAR NO SCROLL
-        // -------------------------------------------------------------
-        const stickyBar = document.getElementById('sticky-bar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 450) {
-                stickyBar.classList.remove('translate-y-full');
-            } else {
-                stickyBar.classList.add('translate-y-full');
-            }
-        });
-
-        // -------------------------------------------------------------
-        // 7. SMOOTH ANCHOR NAVIGATION (ZERO SLINGSHOT / NATIVE FLUID SCROLL)
+        // 6. SMOOTH ANCHOR NAVIGATION (ZERO SLINGSHOT / NATIVE FLUID SCROLL)
         // -------------------------------------------------------------
         document.addEventListener("DOMContentLoaded", () => {
             // Suaviza rolagem ao clicar em links internos (#faq, #cronograma, etc.) sem sequestrar o scroll do mouse

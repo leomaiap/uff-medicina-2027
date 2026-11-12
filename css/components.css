@@ -427,11 +427,3 @@
         ::-webkit-scrollbar-track { background: #021813; }
         ::-webkit-scrollbar-thumb { background: #006843; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #10B981; }
-        /* ==============================================================
-        
-/* Sticky bar respeita a home indicator do iPhone */
-        #sticky-bar {
-            padding-bottom: calc(0.875rem + env(safe-area-inset-bottom, 0px));
-        }
-
-        
