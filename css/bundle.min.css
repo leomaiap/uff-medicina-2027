@@ -115,19 +115,6 @@ background-repeat: no-repeat, no-repeat;
 background-size: 100% 100%, cover;
 will-change: transform;
 }
-.sobre-layer-bg {
-position: absolute;
-inset: 0;
-z-index: 1;
-background-image:
-linear-gradient(180deg, rgba(0, 104, 67, 0.65) 0%, rgba(0, 104, 67, 0.25) 35%, rgba(8, 56, 43, 0.45) 75%, #08382b 100%),
-url("../assets/img/hero-bg-predio-facmed.webp");
-background-position: 0 0, 50% 22%;
-background-repeat: no-repeat, no-repeat;
-background-size: 100% 100%, cover;
-opacity: 0.08;
-pointer-events: none;
-}
 .hero-color-glow {
 position: absolute;
 top: 0;
@@ -311,6 +298,9 @@ position: absolute;
 z-index: 15;
 pointer-events: none;
 overflow: visible;
+}
+#scrolly-contour-canvas {
+opacity: 0.8;
 }
 .scrolly-pillar-card {
 background: rgba(5, 39, 32, 0.88) !important;

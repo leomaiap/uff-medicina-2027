@@ -9,6 +9,10 @@
     overflow: visible;
 }
 
+#scrolly-contour-canvas {
+    opacity: 0.8;
+}
+
 .scrolly-pillar-card {
     background: rgba(5, 39, 32, 0.88) !important;
     backdrop-filter: none !important;
