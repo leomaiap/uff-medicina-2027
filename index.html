@@ -190,10 +190,10 @@
             <div class="sobre-layer-bg"></div>
             <div class="hero-color-glow opacity-20 pointer-events-none"></div>
 
-            <!-- CAMADA 1 (FUNDO ATRÁS DO MÉDICO): Tipografia Monumental "CONCURSO UNIFICADO 27" -->
+            <!-- CAMADA 1 (FUNDO ATRÁS DO MÉDICO): Tipografia Monumental Preenchida "TORNE-SE ESPECIALISTA" -->
             <div id="scrolly-bg-outline" class="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none select-none overflow-hidden">
-                <span id="scrolly-text-line-1" class="scrolly-filled-text text-[12vw] sm:text-[11vw] font-black uppercase tracking-tight leading-[0.88] whitespace-nowrap">CONCURSO</span>
-                <span id="scrolly-text-line-2" class="scrolly-filled-text text-[11.5vw] sm:text-[10.5vw] font-black uppercase tracking-tight leading-[0.88] -mt-[0.5vw] whitespace-nowrap">UNIFICADO 27</span>
+                <span id="scrolly-text-line-1" class="scrolly-filled-text text-[12.5vw] sm:text-[11.5vw] font-black uppercase tracking-tight leading-[0.88] whitespace-nowrap">TORNE-SE</span>
+                <span id="scrolly-text-line-2" class="scrolly-filled-text text-[11vw] sm:text-[10vw] font-black uppercase tracking-tight leading-[0.88] -mt-[0.5vw] whitespace-nowrap">ESPECIALISTA</span>
             </div>
 
             <!-- CAMADA 2 (TOPO): Título Principal Centralizado -->
@@ -206,6 +206,12 @@
             <!-- CAMADA 3 (CENTRO/BASE): Canvas da Médica / Médico Vestindo o Jaleco (Ancorado na base) -->
             <div class="absolute inset-0 z-20 flex items-end justify-center pointer-events-none">
                 <canvas id="scrolly-canvas" class="w-full h-full object-contain pointer-events-none"></canvas>
+            </div>
+
+            <!-- CAMADA 3.5 (FRENTE DO MÉDICO - z-25): Contorno Outlined Sincronizado Sobre o Corpo/Jaleco -->
+            <div id="scrolly-fg-outline" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none overflow-hidden" aria-hidden="true">
+                <span id="scrolly-fg-line-1" class="scrolly-fg-outline-text text-[12.5vw] sm:text-[11.5vw] font-black uppercase tracking-tight leading-[0.88] whitespace-nowrap">TORNE-SE</span>
+                <span id="scrolly-fg-line-2" class="scrolly-fg-outline-text text-[11vw] sm:text-[10vw] font-black uppercase tracking-tight leading-[0.88] -mt-[0.5vw] whitespace-nowrap">ESPECIALISTA</span>
             </div>
 
             <!-- CAMADA 4 (FRENTE): Os 4 Cards Informativos Flutuantes -->
