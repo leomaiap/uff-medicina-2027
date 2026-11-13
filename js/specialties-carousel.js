@@ -74,7 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             <img src="${spec.image}"
                                  alt="${spec.title} - Faculdade de Medicina da UFF"
                                  class="spec-card-img"
-                                 loading="${index < 6 ? 'eager' : 'lazy'}">
+                                 loading="lazy"
+                                 decoding="async">
                         </div>
                         <div class="spec-card-gradient"></div>
                         <div class="spec-card-body">

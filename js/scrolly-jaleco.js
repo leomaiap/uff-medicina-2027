@@ -18,12 +18,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 const D = isMobileScroll ? 320 : 520; // Pacing equilibrado: 520px desktop e 320px mobile
 
                 if (pinnedStage && hero && stageBehind) {
-                    const TOTAL_FRAMES = 94;
+                    const TOTAL_FRAMES = 48;
                     const FRAMES = new Array(TOTAL_FRAMES).fill(null);
-                    const PATHS = {
-                        female: 'assets/transformation/female_transparent/frame_',
-                        male: 'assets/transformation/male_transparent/frame_'
-                    };
+
+                    // 4 Sprite Sheets intercalados (3x4 = 12 frames por arquivo, 4 requests totais)
+                    // O Sheet 0 já cobre do frame 0 ao 47 (100% da animação disponível logo no 1º request!)
+                    const SHEET_SLOTS = [
+                        [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 47],
+                        [2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 45],
+                        [1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 44],
+                        [3, 7, 11, 15, 19, 23, 27, 31, 35, 39, 43, 46]
+                    ];
 
                     // Sorteio aleatório a cada recarregamento (50% mulher / 50% homem)
                     const currentGender = Math.random() < 0.5 ? 'female' : 'male';
@@ -73,6 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     function isFrameReady(item) {
                         if (!item) return false;
+                        if (item.sheet) {
+                            return Boolean(item.sheet.complete && item.sheet.naturalWidth > 0);
+                        }
                         if (typeof ImageBitmap !== 'undefined' && item instanceof ImageBitmap) {
                             return item.width > 0;
                         }
@@ -82,11 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     function getReadyFrameEntry(index) {
                         const clamped = Math.max(0, Math.min(TOTAL_FRAMES - 1, index));
 
-                        // 1. Frame exato já pré-decodificado na GPU
                         if (isFrameReady(FRAMES[clamped])) {
                             return { item: FRAMES[clamped], index: clamped };
                         }
-                        // 2. Busca o frame pronto mais próximo por distância mínima (evita congelamento em scrub rápido)
                         for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
                             const prev = clamped - offset;
                             if (prev >= 0 && isFrameReady(FRAMES[prev])) {
@@ -100,10 +106,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         return null;
                     }
 
-                    function drawFrame(img, sourceIdx) {
-                        if (!canvas || !ctx || !img) return;
+                    function drawFrame(item, sourceIdx) {
+                        if (!canvas || !ctx || !item) return;
                         ctx.clearRect(0, 0, cachedW, cachedH);
-                        ctx.drawImage(img, cachedOffsetX, cachedOffsetY, cachedDrawW, cachedDrawH);
+                        if (item.sheet) {
+                            ctx.drawImage(
+                                item.sheet,
+                                item.sx, item.sy, item.sw, item.sh,
+                                cachedOffsetX, cachedOffsetY, cachedDrawW, cachedDrawH
+                            );
+                        } else {
+                            ctx.drawImage(item, cachedOffsetX, cachedOffsetY, cachedDrawW, cachedDrawH);
+                        }
                         if (typeof sourceIdx === 'number') {
                             displayedSourceIndex = sourceIdx;
                         }
@@ -113,8 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const diff = targetFrame - smoothFrame;
 
                         if (Math.abs(diff) > 0.04) {
-                            // Interpolação ágil sem double-lag com Lenis: preenche frames saltados no scroll
-                            const speed = Math.abs(diff) > 10 ? 0.34 : 0.26;
+                            const speed = Math.abs(diff) > 6 ? 0.34 : 0.24;
                             smoothFrame += diff * speed;
                             const nextIdx = Math.round(smoothFrame);
 
@@ -157,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const isMobile = window.innerWidth < 768;
                         const targetHeightRatio = isMobile ? 0.84 : 0.90;
                         cachedDrawH = cachedH * targetHeightRatio;
-                        // Proporção exata 16:9 dos frames (1600x900)
+                        // Proporção exata 16:9 dos frames
                         cachedDrawW = (1600 / 900) * cachedDrawH;
                         cachedOffsetX = (cachedW - cachedDrawW) / 2;
                         cachedOffsetY = cachedH - cachedDrawH;
@@ -167,139 +180,114 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     // ==========================================================
-                    // PRÉ-DECODIFICAÇÃO GPU (ImageBitmap) + FILA PRIORITÁRIA MULTI-PASS
-                    // Carrega primeiro os keyframes principais com no máximo 6 requisições simultâneas,
-                    // eliminando travamentos de decodificação WebP na CPU durante o scroll.
+                    // CARREGAMENTO VIA SPRITE SHEET ATLAS + RECORTE GPU (4 REQUESTS TOTAIS)
+                    // Reduz 94 requisições para 4 arquivos pré-escalados (desktop 1280x720 / mobile 768x432)
+                    // e libera o atlas da VRAM logo após fatiar os ImageBitmaps.
                     // ==========================================================
                     const deviceMemory = navigator.deviceMemory || 8;
-                    const isLowMem = isMobileScroll || deviceMemory <= 2;
-                    const bitmapW = isLowMem ? 768 : (deviceMemory <= 4 ? 960 : 1280);
-                    const bitmapH = isLowMem ? 432 : (deviceMemory <= 4 ? 540 : 720);
+                    const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+                    const useMobileTier = isMobileScroll || deviceMemory <= 2 || saveData;
+                    const sheetTier = useMobileTier ? 'mobile' : 'desktop';
+                    const cellW = useMobileTier ? 768 : 1280;
+                    const cellH = useMobileTier ? 432 : 720;
 
-                    async function toBitmap(source) {
-                        if (typeof createImageBitmap !== 'function') return source;
-                        try {
-                            return await createImageBitmap(source, {
-                                resizeWidth: bitmapW,
-                                resizeHeight: bitmapH,
-                                resizeQuality: 'high'
-                            });
-                        } catch (_) {
-                            return await createImageBitmap(source);
-                        }
-                    }
-
-                    function loadViaImage(url) {
+                    function loadSheetViaImage(url) {
                         return new Promise((resolve, reject) => {
                             const img = new Image();
                             img.decoding = 'async';
                             img.onload = async () => {
-                                try {
-                                    if (typeof img.decode === 'function') await img.decode().catch(() => {});
-                                    const bmp = await toBitmap(img).catch(() => img);
-                                    resolve(bmp);
-                                } catch (_) {
-                                    resolve(img);
-                                }
+                                if (typeof img.decode === 'function') await img.decode().catch(() => {});
+                                resolve(img);
                             };
                             img.onerror = reject;
                             img.src = url;
                         });
                     }
 
-                    async function fetchAndDecodeBitmap(url) {
-                        const res = await fetch(url);
-                        if (!res.ok) throw new Error('HTTP ' + res.status);
-                        const blob = await res.blob();
-                        return await toBitmap(blob);
+                    async function sliceSheetIntoFrames(source, sheetIndex) {
+                        const slots = SHEET_SLOTS[sheetIndex];
+                        if (typeof createImageBitmap === 'function') {
+                            try {
+                                const bitmaps = await Promise.all(
+                                    slots.map((_, pos) => {
+                                        const sx = (pos % 3) * cellW;
+                                        const sy = Math.floor(pos / 3) * cellH;
+                                        return createImageBitmap(source, sx, sy, cellW, cellH);
+                                    })
+                                );
+                                if (typeof source.close === 'function') source.close();
+                                slots.forEach((frameIdx, pos) => {
+                                    FRAMES[frameIdx] = bitmaps[pos];
+                                });
+                                return;
+                            } catch (_) {
+                                // Fallback abaixo para recorte direto no drawImage
+                            }
+                        }
+
+                        slots.forEach((frameIdx, pos) => {
+                            FRAMES[frameIdx] = {
+                                sheet: source,
+                                sx: (pos % 3) * cellW,
+                                sy: Math.floor(pos / 3) * cellH,
+                                sw: cellW,
+                                sh: cellH
+                            };
+                        });
                     }
 
-                    async function loadSingleFrame(idx) {
-                        const pad = String(idx + 1).padStart(3, '0');
-                        const primaryUrl = `${PATHS[currentGender]}${pad}.webp`;
-                        const fallbackUrl = `assets/transformation/${currentGender}/frame_${pad}.webp`;
+                    function refreshCanvasAfterSheetLoad() {
+                        if (isLoopRunning) return;
+                        const currentTargetIdx = Math.round(smoothFrame);
+                        const best = getReadyFrameEntry(currentTargetIdx);
+                        if (!best) return;
+
+                        if (displayedIndex === -1 || best.index !== displayedSourceIndex) {
+                            const prevDist = displayedSourceIndex === -1
+                                ? Infinity
+                                : Math.abs(currentTargetIdx - displayedSourceIndex);
+                            const newDist = Math.abs(currentTargetIdx - best.index);
+                            if (displayedIndex === -1 || newDist < prevDist) {
+                                displayedIndex = currentTargetIdx;
+                                drawFrame(best.item, best.index);
+                            }
+                        }
+                    }
+
+                    async function loadSheet(sheetIndex) {
+                        const url = `assets/transformation/sheets/${currentGender}/${sheetTier}_${sheetIndex}.webp`;
+                        let source = null;
 
                         if (typeof createImageBitmap === 'function') {
                             try {
-                                return await fetchAndDecodeBitmap(primaryUrl);
+                                const res = await fetch(url, sheetIndex === 0 ? { priority: 'high' } : undefined);
+                                if (!res.ok) throw new Error('HTTP ' + res.status);
+                                const blob = await res.blob();
+                                source = await createImageBitmap(blob);
                             } catch (_) {
-                                try {
-                                    return await fetchAndDecodeBitmap(fallbackUrl);
-                                } catch (__) {
-                                    // Fallback para protocolo file:// ou navegadores sem fetch local
-                                }
+                                source = await loadSheetViaImage(url);
                             }
+                        } else {
+                            source = await loadSheetViaImage(url);
                         }
-                        try {
-                            return await loadViaImage(primaryUrl);
-                        } catch (_) {
-                            return await loadViaImage(fallbackUrl);
-                        }
-                    }
 
-                    function buildPriorityQueue() {
-                        const queue = [];
-                        const seen = new Set();
-                        const enqueue = (i) => {
-                            if (i >= 0 && i < TOTAL_FRAMES && !seen.has(i)) {
-                                seen.add(i);
-                                queue.push(i);
-                            }
-                        };
-
-                        // Pass 1: Keyframes (0, 93 e passos de 8) para scrubbing imediato
-                        enqueue(0);
-                        enqueue(TOTAL_FRAMES - 1);
-                        for (let i = 8; i < TOTAL_FRAMES; i += 8) enqueue(i);
-                        // Pass 2: Meio-termo (passos de 4)
-                        for (let i = 4; i < TOTAL_FRAMES; i += 8) enqueue(i);
-                        // Pass 3: Frames pares (passos de 2 — mobile/low-RAM encerra aqui com 48 keyframes)
-                        for (let i = 2; i < TOTAL_FRAMES; i += 4) enqueue(i);
-                        // Pass 4: Frames ímpares completos apenas em desktop com memória suficiente
-                        if (!isLowMem) {
-                            for (let i = 1; i < TOTAL_FRAMES; i += 2) enqueue(i);
-                        }
-                        return queue;
-                    }
-
-                    const priorityQueue = buildPriorityQueue();
-                    let queueCursor = 0;
-                    const MAX_CONCURRENT = 6;
-
-                    async function runFrameWorker() {
-                        while (queueCursor < priorityQueue.length) {
-                            const idx = priorityQueue[queueCursor++];
-                            try {
-                                const readyItem = await loadSingleFrame(idx);
-                                FRAMES[idx] = readyItem;
-
-                                const currentTargetIdx = Math.round(smoothFrame);
-                                const prevDist = displayedSourceIndex === -1
-                                    ? Infinity
-                                    : Math.abs(currentTargetIdx - displayedSourceIndex);
-                                const newDist = Math.abs(currentTargetIdx - idx);
-
-                                if (currentTargetIdx === 0) {
-                                    if (idx === 0 && !isLoopRunning) {
-                                        displayedIndex = 0;
-                                        drawFrame(readyItem, 0);
-                                    }
-                                } else if (!isLoopRunning && newDist < prevDist) {
-                                    displayedIndex = currentTargetIdx;
-                                    drawFrame(readyItem, idx);
-                                }
-                            } catch (_) {
-                                // Silencioso: motor busca frame vizinho pronto se algum asset falhar
-                            }
-                        }
+                        await sliceSheetIntoFrames(source, sheetIndex);
+                        refreshCanvasAfterSheetLoad();
                     }
 
                     window.addEventListener('resize', resizeDoctorCanvas, { passive: true });
                     resizeDoctorCanvas();
 
-                    for (let w = 0; w < MAX_CONCURRENT; w++) {
-                        runFrameWorker();
-                    }
+                    // Sheet 0 exclusivo primeiro (0% -> 100% em 1 request), depois 1, depois 2 e 3 em paralelo
+                    (async () => {
+                        try {
+                            await loadSheet(0);
+                            await loadSheet(1);
+                            await Promise.all([loadSheet(2), loadSheet(3)]);
+                        } catch (_) {
+                            // Silencioso caso algum request seja interrompido em navegação
+                        }
+                    })();
 
                     const frameProxy = { frame: 0 };
 
