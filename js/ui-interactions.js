@@ -51,20 +51,21 @@ document.addEventListener("DOMContentLoaded", () => {
         updateCountdown();
 
         // -------------------------------------------------------------
-        // 6. SMOOTH ANCHOR NAVIGATION (ZERO SLINGSHOT / NATIVE FLUID SCROLL)
+        // 6. SMOOTH ANCHOR NAVIGATION (INTEGRADA AO LENIS)
         // -------------------------------------------------------------
-        document.addEventListener("DOMContentLoaded", () => {
-            // Suaviza rolagem ao clicar em links internos (#faq, #cronograma, etc.) sem sequestrar o scroll do mouse
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    const targetEl = document.querySelector(targetId);
-                    if (targetEl) {
-                        e.preventDefault();
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetEl = document.querySelector(targetId);
+                if (targetEl) {
+                    e.preventDefault();
+                    if (window.__lenis) {
+                        window.__lenis.scrollTo(targetEl, { duration: 1.1 });
+                    } else {
                         targetEl.scrollIntoView({ behavior: 'smooth' });
                     }
-                });
+                }
             });
         });
 

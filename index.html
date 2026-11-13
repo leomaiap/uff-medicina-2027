@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -54,9 +54,11 @@
         }
     </script>
 
-    <!-- GSAP 3 + ScrollTrigger -->
+    <!-- GSAP 3 + ScrollTrigger + Lenis Smooth Scroll -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.20/dist/lenis.css">
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
 
     <!-- Modular CSS Architecture -->
     <link rel="stylesheet" href="css/main.css">
@@ -659,7 +661,7 @@
 
     <!-- Modal de Detalhes da Especialidade -->
     <div id="specialty-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="glass-card relative w-full max-w-2xl rounded-3xl p-6 sm:p-8 shadow-2xl overflow-y-auto max-h-[90vh]">
+        <div data-lenis-prevent class="glass-card relative w-full max-w-2xl rounded-3xl p-6 sm:p-8 shadow-2xl overflow-y-auto max-h-[90vh]">
             <button id="modal-close" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2 text-2xl font-bold leading-none">&times;</button>
             <div id="modal-content"></div>
         </div>
@@ -668,6 +670,7 @@
     <!-- ============================================================== -->
     <!-- MODULAR JAVASCRIPT ARCHITECTURE                                -->
     <!-- ============================================================== -->
+    <script src="js/smooth-scroll.js"></script>
     <script src="js/specialties-data.js"></script>
     <script src="js/specialties-carousel.js"></script>
     <script src="js/ui-interactions.js"></script>

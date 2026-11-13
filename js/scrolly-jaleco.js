@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (pinnedStage && hero && stageBehind) {
                     const TOTAL_FRAMES = 94;
-                    const CACHE = { female: [], male: [] };
+                    const FRAMES = new Array(TOTAL_FRAMES).fill(null);
                     const PATHS = {
                         female: 'assets/transformation/female_transparent/frame_',
                         male: 'assets/transformation/male_transparent/frame_'
@@ -52,7 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         scrollyScrollCue.addEventListener('click', (e) => {
                             e.preventDefault();
                             const vagas = document.getElementById('vagas');
-                            if (vagas) {
+                            if (!vagas) return;
+                            if (window.__lenis) {
+                                window.__lenis.scrollTo(vagas, { duration: 1.1 });
+                            } else {
                                 vagas.scrollIntoView({ behavior: 'smooth' });
                             }
                         });
@@ -60,55 +63,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // ==========================================================
                     // MOTOR DE INTERPOLAÇÃO SUAVE DESACOPLADA (LERP ASSISTIDO EM rAF)
-                    // Permite controle 100% manual pelo scroll, enquanto o código
-                    // suaviza a transição entre todos os 94 frames a 60/120 FPS.
+                    // Sincronizado ao Lenis Smooth Scroll para resposta imediata e 60/120 FPS.
                     // ==========================================================
                     let targetFrame = 0;
                     let smoothFrame = 0;
                     let displayedIndex = -1;
+                    let displayedSourceIndex = -1;
                     let isLoopRunning = false;
 
-                    function getReadyImage(index) {
-                        const list = CACHE[currentGender];
-                        if (!list || list.length === 0) return null;
+                    function isFrameReady(item) {
+                        if (!item) return false;
+                        if (typeof ImageBitmap !== 'undefined' && item instanceof ImageBitmap) {
+                            return item.width > 0;
+                        }
+                        return Boolean(item.complete && item.naturalWidth > 0);
+                    }
+
+                    function getReadyFrameEntry(index) {
                         const clamped = Math.max(0, Math.min(TOTAL_FRAMES - 1, index));
 
-                        // 1. Se o frame exato já estiver baixado e decodificado, usa ele
-                        if (list[clamped] && list[clamped].complete && list[clamped].naturalWidth > 0) {
-                            return list[clamped];
+                        // 1. Frame exato já pré-decodificado na GPU
+                        if (isFrameReady(FRAMES[clamped])) {
+                            return { item: FRAMES[clamped], index: clamped };
                         }
-                        // 2. Busca o frame pronto mais próximo para trás (evita congelamento em scroll rápido)
-                        for (let i = clamped - 1; i >= 0; i--) {
-                            if (list[i] && list[i].complete && list[i].naturalWidth > 0) return list[i];
-                        }
-                        // 3. Se não houver anterior, busca para frente
-                        for (let i = clamped + 1; i < list.length; i++) {
-                            if (list[i] && list[i].complete && list[i].naturalWidth > 0) return list[i];
+                        // 2. Busca o frame pronto mais próximo por distância mínima (evita congelamento em scrub rápido)
+                        for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
+                            const prev = clamped - offset;
+                            if (prev >= 0 && isFrameReady(FRAMES[prev])) {
+                                return { item: FRAMES[prev], index: prev };
+                            }
+                            const next = clamped + offset;
+                            if (next < TOTAL_FRAMES && isFrameReady(FRAMES[next])) {
+                                return { item: FRAMES[next], index: next };
+                            }
                         }
                         return null;
                     }
 
-                    function drawFrame(img) {
+                    function drawFrame(img, sourceIdx) {
                         if (!canvas || !ctx || !img) return;
                         ctx.clearRect(0, 0, cachedW, cachedH);
                         ctx.drawImage(img, cachedOffsetX, cachedOffsetY, cachedDrawW, cachedDrawH);
+                        if (typeof sourceIdx === 'number') {
+                            displayedSourceIndex = sourceIdx;
+                        }
                     }
 
                     function tickSmoothFrames() {
                         const diff = targetFrame - smoothFrame;
 
                         if (Math.abs(diff) > 0.04) {
-                            // Interpolação adaptativa:
-                            // Se a diferença for grande (giro brusco do mouse), acelera suavemente (0.22)
-                            // Se for um ajuste fino, desacelera suavemente (0.16)
-                            const speed = Math.abs(diff) > 15 ? 0.22 : 0.16;
+                            // Interpolação ágil sem double-lag com Lenis: preenche frames saltados no scroll
+                            const speed = Math.abs(diff) > 10 ? 0.34 : 0.26;
                             smoothFrame += diff * speed;
                             const nextIdx = Math.round(smoothFrame);
 
                             if (nextIdx !== displayedIndex) {
                                 displayedIndex = nextIdx;
-                                const img = getReadyImage(nextIdx);
-                                if (img) drawFrame(img);
+                                const entry = getReadyFrameEntry(nextIdx);
+                                if (entry) drawFrame(entry.item, entry.index);
                             }
                             requestAnimationFrame(tickSmoothFrames);
                         } else {
@@ -116,8 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             const finalIdx = Math.round(smoothFrame);
                             if (finalIdx !== displayedIndex) {
                                 displayedIndex = finalIdx;
-                                const img = getReadyImage(finalIdx);
-                                if (img) drawFrame(img);
+                                const entry = getReadyFrameEntry(finalIdx);
+                                if (entry) drawFrame(entry.item, entry.index);
                             }
                             isLoopRunning = false;
                         }
@@ -149,32 +162,144 @@ document.addEventListener('DOMContentLoaded', () => {
                         cachedOffsetX = (cachedW - cachedDrawW) / 2;
                         cachedOffsetY = cachedH - cachedDrawH;
 
-                        const currentImg = getReadyImage(Math.round(smoothFrame));
-                        if (currentImg) drawFrame(currentImg);
+                        const entry = getReadyFrameEntry(Math.round(smoothFrame));
+                        if (entry) drawFrame(entry.item, entry.index);
                     }
 
-                    // Preload dos 94 frames com decodificação assíncrona (evita travadas no main thread)
-                    for (let i = 1; i <= TOTAL_FRAMES; i++) {
-                        const img = new Image();
-                        img.decoding = 'async';
-                        const pad = String(i).padStart(3, '0');
-                        img.src = `${PATHS[currentGender]}${pad}.webp`;
-                        if (i === 1) {
-                            img.onload = () => resizeDoctorCanvas();
-                        } else {
-                            img.onload = () => {
-                                if (!isLoopRunning && Math.round(smoothFrame) === i - 1) {
-                                    drawFrame(img);
+                    // ==========================================================
+                    // PRÉ-DECODIFICAÇÃO GPU (ImageBitmap) + FILA PRIORITÁRIA MULTI-PASS
+                    // Carrega primeiro os keyframes principais com no máximo 6 requisições simultâneas,
+                    // eliminando travamentos de decodificação WebP na CPU durante o scroll.
+                    // ==========================================================
+                    const deviceMemory = navigator.deviceMemory || 8;
+                    const isLowMem = isMobileScroll || deviceMemory <= 2;
+                    const bitmapW = isLowMem ? 768 : (deviceMemory <= 4 ? 960 : 1280);
+                    const bitmapH = isLowMem ? 432 : (deviceMemory <= 4 ? 540 : 720);
+
+                    async function toBitmap(source) {
+                        if (typeof createImageBitmap !== 'function') return source;
+                        try {
+                            return await createImageBitmap(source, {
+                                resizeWidth: bitmapW,
+                                resizeHeight: bitmapH,
+                                resizeQuality: 'high'
+                            });
+                        } catch (_) {
+                            return await createImageBitmap(source);
+                        }
+                    }
+
+                    function loadViaImage(url) {
+                        return new Promise((resolve, reject) => {
+                            const img = new Image();
+                            img.decoding = 'async';
+                            img.onload = async () => {
+                                try {
+                                    if (typeof img.decode === 'function') await img.decode().catch(() => {});
+                                    const bmp = await toBitmap(img).catch(() => img);
+                                    resolve(bmp);
+                                } catch (_) {
+                                    resolve(img);
                                 }
                             };
-                        }
-                        img.onerror = () => {
-                            img.src = `assets/transformation/${currentGender}/frame_${pad}.webp`;
-                        };
-                        CACHE[currentGender].push(img);
+                            img.onerror = reject;
+                            img.src = url;
+                        });
                     }
+
+                    async function fetchAndDecodeBitmap(url) {
+                        const res = await fetch(url);
+                        if (!res.ok) throw new Error('HTTP ' + res.status);
+                        const blob = await res.blob();
+                        return await toBitmap(blob);
+                    }
+
+                    async function loadSingleFrame(idx) {
+                        const pad = String(idx + 1).padStart(3, '0');
+                        const primaryUrl = `${PATHS[currentGender]}${pad}.webp`;
+                        const fallbackUrl = `assets/transformation/${currentGender}/frame_${pad}.webp`;
+
+                        if (typeof createImageBitmap === 'function') {
+                            try {
+                                return await fetchAndDecodeBitmap(primaryUrl);
+                            } catch (_) {
+                                try {
+                                    return await fetchAndDecodeBitmap(fallbackUrl);
+                                } catch (__) {
+                                    // Fallback para protocolo file:// ou navegadores sem fetch local
+                                }
+                            }
+                        }
+                        try {
+                            return await loadViaImage(primaryUrl);
+                        } catch (_) {
+                            return await loadViaImage(fallbackUrl);
+                        }
+                    }
+
+                    function buildPriorityQueue() {
+                        const queue = [];
+                        const seen = new Set();
+                        const enqueue = (i) => {
+                            if (i >= 0 && i < TOTAL_FRAMES && !seen.has(i)) {
+                                seen.add(i);
+                                queue.push(i);
+                            }
+                        };
+
+                        // Pass 1: Keyframes (0, 93 e passos de 8) para scrubbing imediato
+                        enqueue(0);
+                        enqueue(TOTAL_FRAMES - 1);
+                        for (let i = 8; i < TOTAL_FRAMES; i += 8) enqueue(i);
+                        // Pass 2: Meio-termo (passos de 4)
+                        for (let i = 4; i < TOTAL_FRAMES; i += 8) enqueue(i);
+                        // Pass 3: Frames pares (passos de 2 — mobile/low-RAM encerra aqui com 48 keyframes)
+                        for (let i = 2; i < TOTAL_FRAMES; i += 4) enqueue(i);
+                        // Pass 4: Frames ímpares completos apenas em desktop com memória suficiente
+                        if (!isLowMem) {
+                            for (let i = 1; i < TOTAL_FRAMES; i += 2) enqueue(i);
+                        }
+                        return queue;
+                    }
+
+                    const priorityQueue = buildPriorityQueue();
+                    let queueCursor = 0;
+                    const MAX_CONCURRENT = 6;
+
+                    async function runFrameWorker() {
+                        while (queueCursor < priorityQueue.length) {
+                            const idx = priorityQueue[queueCursor++];
+                            try {
+                                const readyItem = await loadSingleFrame(idx);
+                                FRAMES[idx] = readyItem;
+
+                                const currentTargetIdx = Math.round(smoothFrame);
+                                const prevDist = displayedSourceIndex === -1
+                                    ? Infinity
+                                    : Math.abs(currentTargetIdx - displayedSourceIndex);
+                                const newDist = Math.abs(currentTargetIdx - idx);
+
+                                if (currentTargetIdx === 0) {
+                                    if (idx === 0 && !isLoopRunning) {
+                                        displayedIndex = 0;
+                                        drawFrame(readyItem, 0);
+                                    }
+                                } else if (!isLoopRunning && newDist < prevDist) {
+                                    displayedIndex = currentTargetIdx;
+                                    drawFrame(readyItem, idx);
+                                }
+                            } catch (_) {
+                                // Silencioso: motor busca frame vizinho pronto se algum asset falhar
+                            }
+                        }
+                    }
+
                     window.addEventListener('resize', resizeDoctorCanvas, { passive: true });
                     resizeDoctorCanvas();
+
+                    for (let w = 0; w < MAX_CONCURRENT; w++) {
+                        runFrameWorker();
+                    }
 
                     const frameProxy = { frame: 0 };
 
@@ -186,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             pin: true,
                             pinSpacing: true,
                             anticipatePin: 1,
-                            scrub: 0.25, // ScrollTrigger ágil; o LERP em rAF interpola frame a frame
+                            scrub: window.__lenis ? true : 0.25,
                             invalidateOnRefresh: true,
                             onUpdate: (self) => {
                                 if (scrollyProgressBar) {
