@@ -1,23 +1,22 @@
 /**
- * UFF Medicina 2027 - Scrollytelling do Jaleco & Iris Radial Mask
- * Transição de abertura circular + 94 frames WebP transparentes do médico se vestindo
+ * UFF Medicina 2027 - Hero Parallax Exit & Scrollytelling do Jaleco
+ * Saída natural do Hero com paralaxe multi-plano + pinagem dedicada aos 48 keyframes do médico
  * Sorteio aleatório feminino/masculino + 4 pilares informativos
  */
 document.addEventListener('DOMContentLoaded', () => {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     
     const hero = document.getElementById('hero');
+    const bgLayer = document.getElementById('hero-bg-layer');
     const textLayer = document.getElementById('hero-text-layer');
     const doctorsLayer = document.getElementById('hero-doctors-layer');
 
                 ScrollTrigger.config({ ignoreMobileResize: true });
 
-                const pinnedStage = document.getElementById('hero-pinned-stage');
-                const stageBehind = document.getElementById('stage-behind');
+                const scrollyStage = document.getElementById('scrolly-stage');
                 const isMobileScroll = window.innerWidth < 768;
-                const D = isMobileScroll ? 320 : 520; // Pacing equilibrado: 520px desktop e 320px mobile
 
-                if (pinnedStage && hero && stageBehind) {
+                if (scrollyStage) {
                     const TOTAL_FRAMES = 48;
                     const FRAMES = new Array(TOTAL_FRAMES).fill(null);
 
@@ -291,22 +290,133 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const frameProxy = { frame: 0 };
 
-                    const heroTl = gsap.timeline({
+                    // ==========================================================
+                    // 1. SAÍDA NATURAL DO HERO COM PARALAXE MULTI-PLANO AO ROLAR
+                    // Usa yPercent/scale/opacity (não colide com x/y do mousemove em hero-parallax.js)
+                    // ==========================================================
+                    if (hero) {
+                        const heroExitTl = gsap.timeline({
+                            scrollTrigger: {
+                                trigger: hero,
+                                start: 'top top',
+                                end: 'bottom top',
+                                scrub: true,
+                                invalidateOnRefresh: true
+                            }
+                        });
+
+                        if (bgLayer) {
+                            heroExitTl.to(bgLayer, {
+                                yPercent: 22,
+                                scale: 1.07,
+                                opacity: 0.35,
+                                ease: 'none',
+                                duration: 1
+                            }, 0);
+                        }
+                        if (textLayer) {
+                            heroExitTl.to(textLayer, {
+                                yPercent: 34,
+                                scale: 0.92,
+                                opacity: 0,
+                                ease: 'power1.in',
+                                duration: 0.85
+                            }, 0);
+                        }
+                        if (doctorsLayer) {
+                            heroExitTl.to(doctorsLayer, {
+                                yPercent: 10,
+                                scale: 1.04,
+                                opacity: 0.15,
+                                ease: 'none',
+                                duration: 1
+                            }, 0);
+                        }
+                        const bottomUI = hero.querySelector('.hero-bottom-ui');
+                        if (bottomUI) {
+                            heroExitTl.to(bottomUI, {
+                                y: -44,
+                                opacity: 0,
+                                ease: 'power1.out',
+                                duration: 0.55
+                            }, 0);
+                        }
+                    }
+
+                    // ==========================================================
+                    // 2. ENTRADA PREPARATÓRIA DO PALCO ANTES DE TRAVAR A PINAGEM
+                    // Enquanto #scrolly-stage sobe até o topo, título e texto monumental
+                    // já se alinham perfeitamente no centro antes do pin começar.
+                    // ==========================================================
+                    const sobreHeading = document.getElementById('sobre-heading');
+                    if (sobreHeading && !sobreHeading.dataset.splitDone) {
+                        sobreHeading.dataset.splitDone = 'true';
+                        const rawWords = sobreHeading.innerText.trim().split(/\s+/);
+                        sobreHeading.innerHTML = rawWords.map(w => `<span class="word-mask"><span class="word-inner">${w}</span></span>`).join(' ');
+                    }
+                    const sobreWordInners = sobreHeading ? sobreHeading.querySelectorAll('.word-inner') : [];
+                    const line1 = document.getElementById('scrolly-text-line-1');
+                    const line2 = document.getElementById('scrolly-text-line-2');
+
+                    const entranceTl = gsap.timeline({
                         scrollTrigger: {
-                            trigger: pinnedStage,
+                            trigger: scrollyStage,
+                            start: 'top 85%',
+                            end: 'top top',
+                            scrub: true,
+                            invalidateOnRefresh: true
+                        }
+                    });
+
+                    if (sobreWordInners.length) {
+                        entranceTl.fromTo(sobreWordInners,
+                            { yPercent: 105, rotateZ: 3, opacity: 0 },
+                            { yPercent: 0, rotateZ: 0, opacity: 1, stagger: 0.03, ease: 'power3.out', duration: 0.9 },
+                            0
+                        );
+                    }
+                    if (bgOutline) {
+                        entranceTl.fromTo(bgOutline,
+                            { scale: 0.94, opacity: 0.2 },
+                            { scale: 1, opacity: 1, ease: 'power2.out', duration: 0.9 },
+                            0
+                        );
+                    }
+                    if (line1) {
+                        entranceTl.fromTo(line1,
+                            { xPercent: -26 },
+                            { xPercent: 0, ease: 'power2.out', duration: 1 },
+                            0
+                        );
+                    }
+                    if (line2) {
+                        entranceTl.fromTo(line2,
+                            { xPercent: 26 },
+                            { xPercent: 0, ease: 'power2.out', duration: 1 },
+                            0
+                        );
+                    }
+
+                    // ==========================================================
+                    // 3. PINAGEM DEDICADA EXCLUSIVAMENTE À ANIMAÇÃO DO MÉDICO + 4 PILARES
+                    // 100% da distância pinada veste o jaleco e revela os 4 cards com precisão.
+                    // ==========================================================
+                    const coatTl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: scrollyStage,
                             start: 'top top',
-                            end: () => '+=' + (window.innerWidth < 768 ? 320 : 520),
+                            end: () => '+=' + (window.innerWidth < 768 ? 360 : 560),
                             pin: true,
                             pinSpacing: true,
                             anticipatePin: 1,
-                            scrub: window.__lenis ? true : 0.25,
+                            scrub: window.__lenis ? true : 0.2,
                             invalidateOnRefresh: true,
                             onUpdate: (self) => {
                                 if (scrollyProgressBar) {
                                     scrollyProgressBar.style.transform = `scaleX(${self.progress})`;
                                 }
                                 if (scrollyHud) {
-                                    if (self.progress <= 0.02) {
+                                    if (self.progress <= 0.01) {
                                         scrollyHud.style.opacity = '0';
                                         scrollyHud.style.pointerEvents = 'none';
                                     } else if (self.progress > 0.88) {
@@ -320,14 +430,18 @@ document.addEventListener('DOMContentLoaded', () => {
                                 }
                             },
                             onLeave: () => {
-                                hero.style.display = 'none';
+                                if (scrollyHud) {
+                                    scrollyHud.style.opacity = '0';
+                                    scrollyHud.style.pointerEvents = 'none';
+                                }
+                            },
+                            onLeaveBack: () => {
                                 if (scrollyHud) {
                                     scrollyHud.style.opacity = '0';
                                     scrollyHud.style.pointerEvents = 'none';
                                 }
                             },
                             onEnterBack: () => {
-                                hero.style.display = 'flex';
                                 if (scrollyHud) {
                                     scrollyHud.style.opacity = '1';
                                     scrollyHud.style.pointerEvents = 'auto';
@@ -336,107 +450,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     });
 
-                    // FASE 1 (0.0 -> 0.32): Abertura da íris circular via clip-path 100% acelerado pela GPU (zero blur / zero re-rasterização)
-                    heroTl.fromTo(stageBehind,
-                        { clipPath: 'circle(0% at 50% 50%)' },
-                        { 
-                            clipPath: 'circle(140% at 50% 50%)', 
-                            ease: 'power1.inOut', 
-                            duration: 0.32,
-                            onStart: () => { stageBehind.style.pointerEvents = 'auto'; },
-                            onReverseComplete: () => { stageBehind.style.pointerEvents = 'none'; }
-                        },
-                        0
-                    );
-
-                    // Fade out suave e escala sutil do Hero frontal
-                    heroTl.to(hero, {
-                        opacity: 0,
-                        scale: 0.95,
-                        ease: 'power1.inOut',
-                        duration: 0.28
-                    }, 0.02);
-
-                    // 3. Efeito de profundidade sutil nos elementos do Hero frontal durante a abertura
-                    if (textLayer) {
-                        heroTl.to(textLayer, {
-                            scale: 0.94,
-                            opacity: 0,
-                            ease: 'power1.inOut',
-                            duration: 0.22
-                        }, 0);
-                    }
-                    if (doctorsLayer) {
-                        heroTl.to(doctorsLayer, {
-                            scale: 0.95,
-                            opacity: 0,
-                            ease: 'power1.inOut',
-                            duration: 0.24
-                        }, 0);
-                    }
-                    const bottomUI = hero.querySelector('.hero-bottom-ui');
-                    if (bottomUI) {
-                        heroTl.to(bottomUI, {
-                            y: 30,
-                            opacity: 0,
-                            ease: 'power1.inOut',
-                            duration: 0.20
-                        }, 0);
-                    }
-
-                    // 4. Entrada do Título "Tradição Centenária, Ciência de Vanguarda." e do Texto Monumental
-                    const sobreHeading = document.getElementById('sobre-heading');
-                    if (sobreHeading && !sobreHeading.dataset.splitDone) {
-                        sobreHeading.dataset.splitDone = 'true';
-                        const rawWords = sobreHeading.innerText.trim().split(/\s+/);
-                        sobreHeading.innerHTML = rawWords.map(w => `<span class="word-mask"><span class="word-inner">${w}</span></span>`).join(' ');
-                    }
-                    const sobreWordInners = sobreHeading ? sobreHeading.querySelectorAll('.word-inner') : [];
-                    if (sobreWordInners.length) {
-                        heroTl.fromTo(sobreWordInners,
-                            { yPercent: 115, rotateZ: 4, opacity: 0 },
-                            { yPercent: 0, rotateZ: 0, opacity: 1, stagger: 0.015, ease: 'power3.out', duration: 0.22 },
-                            0.04
-                        );
-                    }
-
-                    const line1 = document.getElementById('scrolly-text-line-1');
-                    const line2 = document.getElementById('scrolly-text-line-2');
-
-                    if (bgOutline) {
-                        heroTl.fromTo(bgOutline,
-                            { scale: 0.95, opacity: 0 },
-                            { scale: 1, opacity: 1, ease: 'power2.out', duration: 0.25 },
-                            0.04
-                        );
-                    }
-
-                    // Linha 1 ("CONCURSO") desliza da esquerda até o centro exato da página (xPercent: 0) e PARA de se mover
-                    // Linha 2 ("UNIFICADO 27") desliza da direita até o centro exato da página (xPercent: 0) e PARA de se mover
-                    if (line1) {
-                        heroTl.fromTo(line1,
-                            { xPercent: -36 },
-                            { xPercent: 0, ease: 'power2.out', duration: 0.44 },
-                            0
-                        );
-                    }
-                    if (line2) {
-                        heroTl.fromTo(line2,
-                            { xPercent: 36 },
-                            { xPercent: 0, ease: 'power2.out', duration: 0.44 },
-                            0
-                        );
-                    }
-
-                    // FASE 2 (0.08 -> 0.92): Veste o jaleco com motor de interpolação assistida por código
-                    heroTl.to(frameProxy, {
+                    // Veste o jaleco ao longo de praticamente toda a pinagem (0.00 -> 0.92)
+                    coatTl.to(frameProxy, {
                         frame: TOTAL_FRAMES - 1,
                         ease: 'none',
-                        duration: 0.84,
+                        duration: 0.92,
                         onUpdate: () => {
                             updateTargetFrame(frameProxy.frame);
                         }
-                    }, 0.08);
+                    }, 0);
 
                     // Os 4 cards informativos surgem em sequência fluida durante a vestimenta do jaleco
                     const card1 = document.getElementById('scrolly-card-1');
@@ -445,36 +467,40 @@ document.addEventListener('DOMContentLoaded', () => {
                     const card4 = document.getElementById('scrolly-card-4');
 
                     if (card1) {
-                        heroTl.fromTo(card1,
+                        coatTl.fromTo(card1,
                             { y: 24, scale: 0.94, opacity: 0 },
-                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.2)', duration: 0.20, onStart: () => card1.classList.add('scrolly-pillar-active'), onReverseComplete: () => card1.classList.remove('scrolly-pillar-active') },
-                            0.18
+                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.2)', duration: 0.18, onStart: () => card1.classList.add('scrolly-pillar-active'), onReverseComplete: () => card1.classList.remove('scrolly-pillar-active') },
+                            0.08
                         );
                     }
                     if (card2) {
-                        heroTl.fromTo(card2,
+                        coatTl.fromTo(card2,
                             { y: 24, scale: 0.94, opacity: 0 },
-                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.2)', duration: 0.20, onStart: () => card2.classList.add('scrolly-pillar-active'), onReverseComplete: () => card2.classList.remove('scrolly-pillar-active') },
-                            0.38
+                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.2)', duration: 0.18, onStart: () => card2.classList.add('scrolly-pillar-active'), onReverseComplete: () => card2.classList.remove('scrolly-pillar-active') },
+                            0.28
                         );
                     }
                     if (card3) {
-                        heroTl.fromTo(card3,
+                        coatTl.fromTo(card3,
                             { y: 24, scale: 0.94, opacity: 0 },
-                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.2)', duration: 0.20, onStart: () => card3.classList.add('scrolly-pillar-active'), onReverseComplete: () => card3.classList.remove('scrolly-pillar-active') },
-                            0.58
+                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.2)', duration: 0.18, onStart: () => card3.classList.add('scrolly-pillar-active'), onReverseComplete: () => card3.classList.remove('scrolly-pillar-active') },
+                            0.48
                         );
                     }
                     if (card4) {
-                        heroTl.fromTo(card4,
+                        coatTl.fromTo(card4,
                             { y: 24, scale: 0.94, opacity: 0 },
-                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.2)', duration: 0.20, onStart: () => card4.classList.add('scrolly-pillar-active'), onReverseComplete: () => card4.classList.remove('scrolly-pillar-active') },
-                            0.76
+                            { y: 0, scale: 1, opacity: 1, ease: 'back.out(1.2)', duration: 0.18, onStart: () => card4.classList.add('scrolly-pillar-active'), onReverseComplete: () => card4.classList.remove('scrolly-pillar-active') },
+                            0.68
                         );
                     }
 
-                    // Respiro final enxuto (0.04) para transição imediata para #vagas
-                    heroTl.to({}, { duration: 0.04 }, 0.96);
+                    // Respiro final (0.92 -> 1.00) exibindo o médico completo antes de despinar para #vagas
+                    coatTl.to({}, { duration: 0.08 }, 0.92);
+
+                    window.addEventListener('load', () => {
+                        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+                    }, { once: true });
                 }
 
 });

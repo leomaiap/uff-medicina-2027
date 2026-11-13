@@ -73,109 +73,9 @@
     <div id="arch-beams-wrapper" aria-hidden="true"><div id="arch-beams-track"></div></div>
 
     <!-- ============================================================== -->
-    <!-- 1. HERO PINNED STAGE (TRANSIÇÃO RADIAL NATIVA COM ZERO JITTER) -->
+    <!-- 1. HERO PRINCIPAL (SAÍDA COM PARALAXE AO ROLAR)               -->
     <!-- ============================================================== -->
-    <div id="hero-pinned-stage" class="relative z-10 w-full h-[100svh] overflow-hidden bg-brand-base">
-
-        <!-- CAMADA DA SEÇÃO SOBRE (REVELADA POR ÍRIS CLIP-PATH 100% GPU) -->
-        <div id="stage-behind" class="absolute inset-0 w-full h-full z-20 overflow-hidden flex flex-col justify-between bg-brand-base" style="clip-path: circle(0% at 50% 50%); will-change: clip-path; pointer-events: none;">
-            
-            <!-- 2. INFINITE MARQUEE TICKER -->
-            <section class="py-3 md:py-4 border-y border-white/10 bg-brand-surface/40 backdrop-blur-md overflow-hidden select-none shrink-0">
-                <div class="animate-marquee whitespace-nowrap flex items-center gap-12 text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-slate-300">
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> FACULDADE DE MEDICINA DA UFF</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CONCURSO UNIFICADO 2027</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg font-bold">✦</span> <span class="text-white font-bold">107 VAGAS OFERECIDAS</span></span>
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> PÓS-GRADUAÇÃO LATO SENSU</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> 100% GRATUITO (ZERO MENSALIDADE)</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> 13 ESPECIALIDADES MÉDICAS</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CAMPUS UNIVERSITÁRIO NITERÓI</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> CORPO DOCENTE TITULADO</span>
-                    
-                    <!-- Duplicate for seamless infinite loop -->
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> FACULDADE DE MEDICINA DA UFF</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CONCURSO UNIFICADO 2027</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg font-bold">✦</span> <span class="text-white font-bold">107 VAGAS OFERECIDAS</span></span>
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> PÓS-GRADUAÇÃO LATO SENSU</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> 100% GRATUITO (ZERO MENSALIDADE)</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> 13 ESPECIALIDADES MÉDICAS</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CAMPUS UNIVERSITÁRIO NITERÓI</span>
-                    <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> CORPO DOCENTE TITULADO</span>
-                </div>
-            </section>
-
-            <!-- 3. A FACULDADE DE MEDICINA DA UFF (SOBRE - PINADO COM JALECO ANIMADO) -->
-            <section id="sobre" class="relative w-full flex-1 flex flex-col justify-between overflow-hidden border-t border-white/10">
-                <!-- Fundo Fotográfico Arquitetônico FacMed UFF (Idêntico ao Hero Principal: Mesma foto, escala, posição e transparência) -->
-                <div class="sobre-layer-bg"></div>
-                <div class="hero-color-glow opacity-20 pointer-events-none"></div>
-
-                <!-- CAMADA 1 (FUNDO ATRÁS DO MÉDICO): Tipografia Monumental "CONCURSO UNIFICADO 27" Preenchida com Animação Parallax Oposta -->
-                <div id="scrolly-bg-outline" class="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none select-none overflow-hidden">
-                    <span id="scrolly-text-line-1" class="scrolly-filled-text text-[12vw] sm:text-[11vw] font-black uppercase tracking-tight leading-[0.88] whitespace-nowrap">CONCURSO</span>
-                    <span id="scrolly-text-line-2" class="scrolly-filled-text text-[11.5vw] sm:text-[10.5vw] font-black uppercase tracking-tight leading-[0.88] -mt-[0.5vw] whitespace-nowrap">UNIFICADO 27</span>
-                </div>
-
-                <!-- CAMADA 2 (TOPO): Título Principal Centralizado idêntico ao modelo-secao-2.jpg -->
-                <div class="relative z-30 w-full max-w-7xl mx-auto px-4 sm:px-8 pt-4 sm:pt-6 md:pt-8 text-center">
-                    <h2 id="sobre-heading" class="font-sans font-black text-2xl sm:text-3xl md:text-4xl lg:text-[2.85rem] text-white tracking-tight leading-tight drop-shadow-lg">
-                        Tradição Centenária, Ciência de Vanguarda.
-                    </h2>
-                </div>
-
-                <!-- CAMADA 3 (CENTRO/BASE): Canvas da Médica / Médico Vestindo o Jaleco (Ancorado na base) -->
-                <div class="absolute inset-0 z-20 flex items-end justify-center pointer-events-none">
-                    <canvas id="scrolly-canvas" class="w-full h-full object-contain pointer-events-none"></canvas>
-                </div>
-
-                <!-- CAMADA 4 (FRENTE): Os 4 Cards Informativos Flutuantes (Disposição Diagonal Exata da Referência) -->
-                <div class="absolute inset-0 z-30 pointer-events-none max-w-7xl mx-auto w-full h-full">
-                    
-                    <!-- Card 01 (Esquerda Superior) -->
-                    <div id="scrolly-card-1" class="scrolly-pillar-card glass-card absolute p-3.5 sm:p-4 md:p-5 rounded-2xl max-w-[260px] sm:max-w-[290px] lg:max-w-[310px]">
-                        <div class="pillar-num text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono leading-none">01</div>
-                        <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1.5">Zero Mensalidades</h3>
-                        <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
-                            Ensino superior federal 100% público. Você foca integralmente no seu aprendizado sem custos mensais.
-                        </p>
-                    </div>
-
-                    <!-- Card 02 (Esquerda Inferior) -->
-                    <div id="scrolly-card-2" class="scrolly-pillar-card glass-card absolute p-3.5 sm:p-4 md:p-5 rounded-2xl max-w-[260px] sm:max-w-[290px] lg:max-w-[310px]">
-                        <div class="pillar-num text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono leading-none">02</div>
-                        <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1.5">Corpo Docente Titulado</h3>
-                        <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
-                            Professores titulares, mestres e doutores com sólida produção científica e inserção acadêmica.
-                        </p>
-                    </div>
-
-                    <!-- Card 03 (Direita Superior) -->
-                    <div id="scrolly-card-3" class="scrolly-pillar-card glass-card absolute p-3.5 sm:p-4 md:p-5 rounded-2xl max-w-[260px] sm:max-w-[290px] lg:max-w-[310px]">
-                        <div class="pillar-num text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono leading-none">03</div>
-                        <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1.5">Prática Ambulatorial</h3>
-                        <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
-                            Treinamento prático nos ambulatórios de especialidades e centros diagnósticos da Faculdade de Medicina.
-                        </p>
-                    </div>
-
-                    <!-- Card 04 (Direita Inferior) -->
-                    <div id="scrolly-card-4" class="scrolly-pillar-card glass-card absolute p-3.5 sm:p-4 md:p-5 rounded-2xl max-w-[260px] sm:max-w-[290px] lg:max-w-[310px]">
-                        <div class="pillar-num text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono leading-none">04</div>
-                        <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1.5">Preparação para Título</h3>
-                        <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
-                            Carga horária e conteúdo programático alinhados aos requisitos das sociedades de especialidade da AMB.
-                        </p>
-                    </div>
-
-                </div>
-
-            </section>
-
-        </div>
-        <!-- FIM DO #stage-behind -->
-
-        <!-- CAMADA DO PRIMEIRO HERO (TRANSIÇÃO SUAVE DE OPACIDADE E PROFUNDIDADE) -->
-        <div id="hero" class="home-hero-area flex flex-col justify-between absolute inset-0 w-full h-full z-10 overflow-hidden" style="will-change: opacity, transform;">
+    <section id="hero" class="home-hero-area flex flex-col justify-between">
         
         <!-- CAMADA 1 (Fundo): Imagem do Átrio da Faculdade sem médicos + Luz Esmeralda -->
         <div id="hero-bg-layer" class="hero-layer-bg"></div>
@@ -252,8 +152,104 @@
             </div>
         </div>
 
+    </section>
+    <!-- FIM DO #hero -->
+
+    <!-- ============================================================== -->
+    <!-- 2. PALCO PINADO DO MÉDICO (MARQUEE + JALECO + 4 PILARES)       -->
+    <!-- ============================================================== -->
+    <section id="scrolly-stage" class="relative z-20 w-full h-[100svh] overflow-hidden flex flex-col justify-between bg-brand-base">
+
+        <!-- INFINITE MARQUEE TICKER -->
+        <div class="py-3 md:py-4 border-y border-white/10 bg-brand-surface/40 backdrop-blur-md overflow-hidden select-none shrink-0">
+            <div class="animate-marquee whitespace-nowrap flex items-center gap-12 text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-slate-300">
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> FACULDADE DE MEDICINA DA UFF</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CONCURSO UNIFICADO 2027</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg font-bold">✦</span> <span class="text-white font-bold">107 VAGAS OFERECIDAS</span></span>
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> PÓS-GRADUAÇÃO LATO SENSU</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> 100% GRATUITO (ZERO MENSALIDADE)</span>
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> 13 ESPECIALIDADES MÉDICAS</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CAMPUS UNIVERSITÁRIO NITERÓI</span>
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> CORPO DOCENTE TITULADO</span>
+                
+                <!-- Duplicate for seamless infinite loop -->
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> FACULDADE DE MEDICINA DA UFF</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CONCURSO UNIFICADO 2027</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg font-bold">✦</span> <span class="text-white font-bold">107 VAGAS OFERECIDAS</span></span>
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> PÓS-GRADUAÇÃO LATO SENSU</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> 100% GRATUITO (ZERO MENSALIDADE)</span>
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> 13 ESPECIALIDADES MÉDICAS</span>
+                <span class="flex items-center gap-3"><span class="text-brand-gold text-lg">✦</span> CAMPUS UNIVERSITÁRIO NITERÓI</span>
+                <span class="flex items-center gap-3"><span class="text-brand-accent text-lg">✦</span> CORPO DOCENTE TITULADO</span>
+            </div>
         </div>
-        <!-- FIM DO #hero (PRIMEIRO HERO) -->
+
+        <!-- 3. A FACULDADE DE MEDICINA DA UFF (SOBRE - PINADO COM JALECO ANIMADO) -->
+        <div id="sobre" class="relative w-full flex-1 flex flex-col justify-between overflow-hidden border-t border-white/10">
+            <!-- Fundo Fotográfico Arquitetônico FacMed UFF -->
+            <div class="sobre-layer-bg"></div>
+            <div class="hero-color-glow opacity-20 pointer-events-none"></div>
+
+            <!-- CAMADA 1 (FUNDO ATRÁS DO MÉDICO): Tipografia Monumental "CONCURSO UNIFICADO 27" -->
+            <div id="scrolly-bg-outline" class="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none select-none overflow-hidden">
+                <span id="scrolly-text-line-1" class="scrolly-filled-text text-[12vw] sm:text-[11vw] font-black uppercase tracking-tight leading-[0.88] whitespace-nowrap">CONCURSO</span>
+                <span id="scrolly-text-line-2" class="scrolly-filled-text text-[11.5vw] sm:text-[10.5vw] font-black uppercase tracking-tight leading-[0.88] -mt-[0.5vw] whitespace-nowrap">UNIFICADO 27</span>
+            </div>
+
+            <!-- CAMADA 2 (TOPO): Título Principal Centralizado -->
+            <div class="relative z-30 w-full max-w-7xl mx-auto px-4 sm:px-8 pt-4 sm:pt-6 md:pt-8 text-center">
+                <h2 id="sobre-heading" class="font-sans font-black text-2xl sm:text-3xl md:text-4xl lg:text-[2.85rem] text-white tracking-tight leading-tight drop-shadow-lg">
+                    Tradição Centenária, Ciência de Vanguarda.
+                </h2>
+            </div>
+
+            <!-- CAMADA 3 (CENTRO/BASE): Canvas da Médica / Médico Vestindo o Jaleco (Ancorado na base) -->
+            <div class="absolute inset-0 z-20 flex items-end justify-center pointer-events-none">
+                <canvas id="scrolly-canvas" class="w-full h-full object-contain pointer-events-none"></canvas>
+            </div>
+
+            <!-- CAMADA 4 (FRENTE): Os 4 Cards Informativos Flutuantes -->
+            <div class="absolute inset-0 z-30 pointer-events-none max-w-7xl mx-auto w-full h-full">
+                
+                <!-- Card 01 (Esquerda Superior) -->
+                <div id="scrolly-card-1" class="scrolly-pillar-card glass-card absolute p-3.5 sm:p-4 md:p-5 rounded-2xl max-w-[260px] sm:max-w-[290px] lg:max-w-[310px]">
+                    <div class="pillar-num text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono leading-none">01</div>
+                    <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1.5">Zero Mensalidades</h3>
+                    <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                        Ensino superior federal 100% público. Você foca integralmente no seu aprendizado sem custos mensais.
+                    </p>
+                </div>
+
+                <!-- Card 02 (Esquerda Inferior) -->
+                <div id="scrolly-card-2" class="scrolly-pillar-card glass-card absolute p-3.5 sm:p-4 md:p-5 rounded-2xl max-w-[260px] sm:max-w-[290px] lg:max-w-[310px]">
+                    <div class="pillar-num text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono leading-none">02</div>
+                    <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1.5">Corpo Docente Titulado</h3>
+                    <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                        Professores titulares, mestres e doutores com sólida produção científica e inserção acadêmica.
+                    </p>
+                </div>
+
+                <!-- Card 03 (Direita Superior) -->
+                <div id="scrolly-card-3" class="scrolly-pillar-card glass-card absolute p-3.5 sm:p-4 md:p-5 rounded-2xl max-w-[260px] sm:max-w-[290px] lg:max-w-[310px]">
+                    <div class="pillar-num text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono leading-none">03</div>
+                    <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1.5">Prática Ambulatorial</h3>
+                    <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                        Treinamento prático nos ambulatórios de especialidades e centros diagnósticos da Faculdade de Medicina.
+                    </p>
+                </div>
+
+                <!-- Card 04 (Direita Inferior) -->
+                <div id="scrolly-card-4" class="scrolly-pillar-card glass-card absolute p-3.5 sm:p-4 md:p-5 rounded-2xl max-w-[260px] sm:max-w-[290px] lg:max-w-[310px]">
+                    <div class="pillar-num text-brand-gold text-lg sm:text-xl md:text-2xl font-black font-mono leading-none">04</div>
+                    <h3 class="font-bold text-sm sm:text-base md:text-lg text-white mt-1.5">Preparação para Título</h3>
+                    <p class="text-[11px] sm:text-xs text-slate-300 mt-1 leading-relaxed">
+                        Carga horária e conteúdo programático alinhados aos requisitos das sociedades de especialidade da AMB.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
 
         <!-- CAMADA 3 (OVERLAY DO PALCO PINADO - z-40): HUD DISCRETO DE PROGRESSO DO SCROLL & CUE DE CONTINUAÇÃO -->
         <div id="scrolly-hud" class="absolute inset-x-0 bottom-2.5 sm:bottom-4 z-40 flex flex-col items-center justify-center pointer-events-none select-none px-4 transition-opacity duration-200" style="opacity: 0;">
@@ -267,8 +263,8 @@
             </div>
         </div>
 
-    </div>
-    <!-- FIM DO #hero-pinned-stage -->
+    </section>
+    <!-- FIM DO #scrolly-stage -->
 
     <!-- RESTANTE DA PÁGINA (SCROLL NORMAL CONTÍNUO A PARTIR DE #vagas) -->
     <main id="main-content" class="relative z-10">
