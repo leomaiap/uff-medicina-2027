@@ -355,11 +355,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         sobreHeading.innerHTML = rawWords.map(w => `<span class="word-mask"><span class="word-inner">${w}</span></span>`).join(' ');
                     }
                     const sobreWordInners = sobreHeading ? sobreHeading.querySelectorAll('.word-inner') : [];
-                    const fgOutline = document.getElementById('scrolly-fg-outline');
                     const line1 = document.getElementById('scrolly-text-line-1');
                     const line2 = document.getElementById('scrolly-text-line-2');
-                    const fgLine1 = document.getElementById('scrolly-fg-line-1');
-                    const fgLine2 = document.getElementById('scrolly-fg-line-2');
 
                     const entranceTl = gsap.timeline({
                         scrollTrigger: {
@@ -378,25 +375,22 @@ document.addEventListener('DOMContentLoaded', () => {
                             0
                         );
                     }
-                    const outlineContainers = [bgOutline, fgOutline].filter(Boolean);
-                    if (outlineContainers.length) {
-                        entranceTl.fromTo(outlineContainers,
+                    if (bgOutline) {
+                        entranceTl.fromTo(bgOutline,
                             { scale: 0.94, opacity: 0.2 },
                             { scale: 1, opacity: 1, ease: 'power2.out', duration: 0.9 },
                             0
                         );
                     }
-                    const topLines = [line1, fgLine1].filter(Boolean);
-                    if (topLines.length) {
-                        entranceTl.fromTo(topLines,
+                    if (line1) {
+                        entranceTl.fromTo(line1,
                             { xPercent: -26 },
                             { xPercent: 0, ease: 'power2.out', duration: 1 },
                             0
                         );
                     }
-                    const bottomLines = [line2, fgLine2].filter(Boolean);
-                    if (bottomLines.length) {
-                        entranceTl.fromTo(bottomLines,
+                    if (line2) {
+                        entranceTl.fromTo(line2,
                             { xPercent: 26 },
                             { xPercent: 0, ease: 'power2.out', duration: 1 },
                             0

@@ -19,25 +19,6 @@
     filter: drop-shadow(0 4px 30px rgba(0, 0, 0, 0.35));
 }
 
-/* Camada frontal (z-25, acima do médico z-20): apenas contorno vazado sobre o que o médico cobrir */
-#scrolly-fg-outline {
-    z-index: 25;
-}
-
-.scrolly-fg-outline-text {
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-    font-weight: 900;
-    will-change: transform;
-    user-select: none;
-    pointer-events: none;
-    display: inline-block;
-    letter-spacing: -0.04em;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.48);
-    filter: drop-shadow(0 1px 6px rgba(4, 30, 22, 0.42));
-}
-
 .scrolly-pillar-card {
     transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
