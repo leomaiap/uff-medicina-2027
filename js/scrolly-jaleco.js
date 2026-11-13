@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         cachedH = canvas.height;
 
                         const isMobile = window.innerWidth < 768;
-                        const targetHeightRatio = isMobile ? 0.84 : 0.90;
+                        const targetHeightRatio = isMobile ? 0.80 : 0.86;
                         cachedDrawH = cachedH * targetHeightRatio;
                         // Proporção exata 16:9 dos frames
                         cachedDrawW = (1600 / 900) * cachedDrawH;
@@ -291,20 +291,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // ==========================================================
                     // FITA TIPOGRÁFICA ANIMADA EM CONTORNO ("SLIDING TEXT")
-                    // Texto corre suavemente ao longo da silhueta do médico em rAF
-                    // com aceleração responsiva atrelada à velocidade do scroll.
+                    // Path dedicado extraído do último frame do médico masculino e feminino
+                    // com padding euclidiano e suavização de quinas no pescoço/ombros.
                     // ==========================================================
+                    const SILHOUETTE_PATHS = {
+                        female: 'M 560.2 927.4 C 563.7 909.9, 582.7 852.2, 580.9 822.3 C 579.1 792.4, 565.4 770.1, 549.5 748.1 C 533.6 726.1, 496.5 713.7, 485.3 690.4 C 474.2 667.0, 479.5 634.0, 482.6 608.1 C 485.6 582.2, 495.2 560.4, 503.5 534.8 C 511.9 509.2, 521.4 480.7, 532.5 454.6 C 543.6 428.4, 552.9 399.8, 570.0 377.9 C 587.2 356.0, 620.2 343.9, 635.4 323.1 C 650.5 302.3, 654.2 279.0, 661.0 253.0 C 667.7 227.0, 669.1 194.9, 676.0 167.0 C 682.9 139.2, 690.1 111.1, 702.6 85.8 C 715.1 60.6, 732.7 28.5, 751.1 15.5 C 769.5 2.4, 793.7 -1.8, 813.1 7.5 C 832.5 16.8, 852.3 47.9, 867.4 71.4 C 882.6 94.9, 895.2 121.3, 904.2 148.4 C 913.2 175.4, 914.7 207.3, 921.3 233.5 C 927.9 259.7, 928.8 284.7, 943.6 305.6 C 958.4 326.5, 992.5 337.5, 1010.2 358.9 C 1027.9 380.2, 1038.7 407.8, 1050.0 433.8 C 1061.3 459.7, 1070.3 488.5, 1077.9 514.4 C 1085.5 540.3, 1091.4 562.8, 1095.5 589.1 C 1099.7 615.4, 1110.3 647.0, 1102.8 672.5 C 1095.3 697.9, 1067.2 718.6, 1050.3 741.7 C 1033.5 764.8, 1007.6 780.1, 1001.8 811.1 C 996.0 842.2, 1013.2 908.4, 1015.5 927.8',
+                        male: 'M 563.3 923.8 C 553.9 907.9, 526.8 856.1, 506.6 828.3 C 486.5 800.6, 457.7 783.4, 442.4 757.3 C 427.2 731.1, 415.3 700.3, 414.9 671.5 C 414.5 642.7, 431.8 611.8, 440.3 584.6 C 448.9 557.5, 455.7 534.9, 466.1 508.5 C 476.5 482.1, 487.0 451.1, 502.9 426.1 C 518.8 401.1, 537.9 375.7, 561.5 358.6 C 585.1 341.4, 624.5 339.7, 644.4 323.2 C 664.2 306.8, 676.8 285.1, 680.7 259.8 C 684.7 234.4, 667.1 200.8, 668.2 171.1 C 669.2 141.4, 675.2 108.2, 686.9 81.3 C 698.6 54.5, 718.1 22.4, 738.5 10.2 C 758.9 -2.0, 788.4 -3.2, 809.2 8.2 C 830.0 19.6, 851.0 51.9, 863.4 78.5 C 875.9 105.0, 881.9 137.8, 883.9 167.6 C 885.8 197.4, 869.6 232.4, 875.1 257.3 C 880.5 282.3, 895.9 301.7, 916.8 317.4 C 937.7 333.1, 976.3 334.6, 1000.2 351.5 C 1024.1 368.5, 1043.9 394.0, 1060.2 419.0 C 1076.4 443.9, 1087.4 474.6, 1097.8 501.0 C 1108.2 527.5, 1113.9 550.5, 1122.5 577.6 C 1131.1 604.7, 1147.9 635.1, 1149.4 663.9 C 1150.8 692.7, 1144.1 723.8, 1131.0 750.3 C 1118.0 776.9, 1093.1 794.5, 1071.0 823.1 C 1048.9 851.8, 1010.4 905.7, 998.2 922.2'
+                    };
+
+                    const silhouettePath = document.getElementById('doc-silhouette-path');
+                    if (silhouettePath && SILHOUETTE_PATHS[currentGender]) {
+                        silhouettePath.setAttribute('d', SILHOUETTE_PATHS[currentGender]);
+                    }
+
                     const contourTp = document.getElementById('scrolly-contour-tp');
                     const contourTextElem = document.getElementById('scrolly-contour-text');
-                    const contourUnit = '✦ TORNE-SE ESPECIALISTA ✦ UFF MEDICINA ';
+                    const contourUnit = '✦\u00A0TORNE-SE\u00A0ESPECIALISTA\u00A0✦\u00A0UFF\u00A0MEDICINA\u00A0';
                     const CONTOUR_REPEATS = 10;
-                    let contourUnitLength = 540;
+                    let contourUnitLength = 671.8;
 
                     if (contourTp) {
                         contourTp.textContent = contourUnit.repeat(CONTOUR_REPEATS);
 
                         const measureContourUnit = () => {
                             try {
+                                if (typeof contourTp.getSubStringLength === 'function') {
+                                    const subLen = contourTp.getSubStringLength(0, contourUnit.length);
+                                    if (subLen > 0) {
+                                        contourUnitLength = subLen;
+                                        return;
+                                    }
+                                }
                                 if (contourTp.getComputedTextLength) {
                                     const total = contourTp.getComputedTextLength();
                                     if (total > 0) contourUnitLength = total / CONTOUR_REPEATS;
@@ -348,9 +365,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             contourOffset -= step;
 
                             if (contourUnitLength > 0) {
-                                if (contourOffset <= -contourUnitLength) {
+                                while (contourOffset <= -contourUnitLength) {
                                     contourOffset += contourUnitLength;
-                                } else if (contourOffset > 0) {
+                                }
+                                while (contourOffset > 0) {
                                     contourOffset -= contourUnitLength;
                                 }
                             }
