@@ -1,22 +1,25 @@
 /* ==============================================================
    SCROLLYTELLING JALECO UFF (DENTRO DO #stage-behind PINADO)
-   Tipografia Monumental "CONCURSO UNIFICADO 27" 100% Preenchida
+   Fita Tipográfica Animada Contornando a Silhueta do Médico
    ============================================================== */
-.scrolly-filled-text,
-.scrolly-outline-text {
+#scrolly-contour-wrap {
+    position: absolute;
+    z-index: 15;
+    pointer-events: none;
+    overflow: visible;
+    will-change: transform, opacity;
+}
+
+.scrolly-contour-text {
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-    font-weight: 900;
-    will-change: transform;
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    fill: #FACC15;
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.75));
     user-select: none;
     pointer-events: none;
-    display: inline-block;
-    letter-spacing: -0.04em;
-    color: #FFFFFF;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.30) 0%, rgba(52, 211, 153, 0.16) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 0 !important;
-    filter: drop-shadow(0 4px 30px rgba(0, 0, 0, 0.35));
 }
 
 .scrolly-pillar-card {

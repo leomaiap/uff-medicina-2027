@@ -190,10 +190,17 @@
             <div class="sobre-layer-bg"></div>
             <div class="hero-color-glow opacity-20 pointer-events-none"></div>
 
-            <!-- CAMADA 1 (FUNDO ATRÁS DO MÉDICO): Tipografia Monumental Preenchida "TORNE-SE ESPECIALISTA" -->
-            <div id="scrolly-bg-outline" class="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none select-none overflow-hidden">
-                <span id="scrolly-text-line-1" class="scrolly-filled-text text-[12.5vw] sm:text-[11.5vw] font-black uppercase tracking-tight leading-[0.88] whitespace-nowrap">TORNE-SE</span>
-                <span id="scrolly-text-line-2" class="scrolly-filled-text text-[11vw] sm:text-[10vw] font-black uppercase tracking-tight leading-[0.88] -mt-[0.5vw] whitespace-nowrap">ESPECIALISTA</span>
+            <!-- CAMADA 1 (SILHUETA DO MÉDICO): Fita Tipográfica Animada Contornando o Médico ("Sliding Text") -->
+            <div id="scrolly-contour-wrap" class="absolute pointer-events-none z-15 overflow-visible">
+                <svg viewBox="0 0 1600 900" class="w-full h-full overflow-visible">
+                    <defs>
+                        <path id="doc-silhouette-path" fill="none"
+                            d="M 280 920 C 330 640, 420 440, 520 360 C 590 300, 640 250, 660 170 C 680 70, 720 15, 800 15 C 880 15, 920 70, 940 170 C 960 250, 1010 300, 1080 360 C 1180 440, 1270 640, 1320 920" />
+                    </defs>
+                    <text id="scrolly-contour-text" class="scrolly-contour-text">
+                        <textPath id="scrolly-contour-tp" href="#doc-silhouette-path" startOffset="0px"></textPath>
+                    </text>
+                </svg>
             </div>
 
             <!-- CAMADA 2 (TOPO): Título Principal Centralizado -->
