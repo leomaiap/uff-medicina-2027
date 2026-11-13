@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
 
-                    const contourUnit = '✦\u00A0TORNE-SE\u00A0ESPECIALISTA\u00A0✦\u00A0UFF\u00A0MEDICINA\u00A0';
+                    const contourUnit = '✦\u00A0TORNE-SE\u00A0ESPECIALISTA\u00A0✦\u00A0PÓS-GRADUAÇÃO\u00A0UFF\u00A0';
                     const ATLAS_SUPERSAMPLE = 2;
                     const ATLAS_FONT_SIZE = 21;
                     const ATLAS_LETTER_SPACING = ATLAS_FONT_SIZE * 0.18;
@@ -447,7 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         aCtx.font = ATLAS_FONT;
                         aCtx.textBaseline = 'alphabetic';
                         aCtx.textAlign = 'left';
-                        aCtx.fillStyle = '#FACC15';
+                        aCtx.fillStyle = '#FFFFFF';
                         aCtx.shadowColor = 'rgba(0, 0, 0, 0.72)';
                         aCtx.shadowBlur = 7;
                         aCtx.shadowOffsetX = 0;
