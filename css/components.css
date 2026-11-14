@@ -413,3 +413,103 @@
         ::-webkit-scrollbar-track { background: #08382b; }
         ::-webkit-scrollbar-thumb { background: #006843; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #10B981; }
+
+        /* Institutional Footer (SGPG / FacMed UFF) */
+        .site-footer {
+            position: relative;
+            z-index: 10;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .site-footer-inner {
+            max-width: 72rem;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            text-align: center;
+        }
+        .site-footer-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .site-footer-logo {
+            height: 3.5rem;
+            width: auto;
+            opacity: 0.95;
+            flex-shrink: 0;
+        }
+        .site-footer-divider {
+            display: none;
+            height: 2.5rem;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.15);
+            flex-shrink: 0;
+        }
+        .site-footer-title {
+            margin: 0;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            font-weight: 600;
+            color: #FFFFFF;
+        }
+        .site-footer-subtitle {
+            margin: 0.25rem 0 0;
+            font-size: 0.75rem;
+            line-height: 1rem;
+            color: #94A3B8;
+        }
+        .site-footer-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            line-height: 1rem;
+            color: #94A3B8;
+        }
+        .site-footer-link {
+            color: #CBD5E1;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .site-footer-link:hover {
+            color: #FFFFFF;
+        }
+        @media (min-width: 640px) {
+            .site-footer-inner {
+                padding: 3rem 1.5rem;
+                flex-direction: row;
+                text-align: left;
+            }
+            .site-footer-brand {
+                flex-direction: row;
+                gap: 1.5rem;
+            }
+            .site-footer-logo {
+                height: 4rem;
+            }
+            .site-footer-divider {
+                display: block;
+            }
+            .site-footer-meta {
+                align-items: flex-end;
+            }
+        }
+        @media (min-width: 768px) {
+            .site-footer-inner {
+                padding-left: 3rem;
+                padding-right: 3rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .site-footer-inner {
+                padding-left: 5rem;
+                padding-right: 5rem;
+            }
+        }
