@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
         function openSpecialtyModal(spec) {
             isUserInteracting = true;
             modalContent.innerHTML = `
-                <div class="flex items-center justify-between text-xs font-mono pb-3 mb-3 border-b border-white/10">
+                <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono pb-2 mb-2 pr-8">
                     <span class="text-brand-gold font-bold uppercase tracking-wider text-[11px]">
                         Edital Unificado CMM • Faculdade de Medicina UFF
                     </span>
@@ -316,7 +316,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <p class="text-sm text-slate-200 leading-relaxed mb-6 font-light">${spec.desc}</p>
 
-                <div class="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-white/10">
+                <div class="flex flex-col sm:flex-row items-center gap-3 pt-2">
                     <a href="mailto:${spec.email}" class="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs font-bold text-white bg-brand-emerald hover:bg-emerald-500 text-center transition-all shadow-glow-emerald">
                         Coordenação: ${spec.email}
                     </a>

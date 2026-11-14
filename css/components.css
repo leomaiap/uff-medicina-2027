@@ -414,16 +414,60 @@
         ::-webkit-scrollbar-thumb { background: #006843; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #10B981; }
 
-        /* Institutional Footer (SGPG / FacMed UFF) */
+        /* Institutional Footer (FacMed UFF • SGPG • UFF + Comunicado) */
         .site-footer {
             position: relative;
             z-index: 10;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: none;
         }
         .site-footer-inner {
             max-width: 72rem;
             margin: 0 auto;
-            padding: 2.5rem 1.5rem;
+            padding: 2rem 1.5rem 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .site-footer-notice {
+            padding: 1.25rem;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            text-align: left;
+        }
+        .site-footer-notice-icon {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 9999px;
+            background: rgba(250, 204, 21, 0.15);
+            color: #FACC15;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+        .site-footer-edital-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 0.625rem 1.25rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            background-color: #009E5E;
+            text-align: center;
+            text-decoration: none;
+            flex-shrink: 0;
+            transition: background-color 0.2s ease;
+        }
+        .site-footer-edital-btn:hover {
+            background-color: #10B981;
+        }
+        .site-footer-bottom {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -431,23 +475,36 @@
             gap: 1.5rem;
             text-align: center;
         }
-        .site-footer-brand {
+        .site-footer-logos {
             display: flex;
-            flex-direction: column;
+            flex-wrap: nowrap;
             align-items: center;
-            gap: 1rem;
+            justify-content: center;
+            gap: 0.75rem;
+            max-width: 100%;
         }
-        .site-footer-logo {
-            height: 3.5rem;
+        .site-footer-logo-facmed {
+            height: 1.75rem;
+            width: auto;
+            opacity: 0.95;
+            flex-shrink: 0;
+        }
+        .site-footer-logo-sgpg {
+            height: 2.15rem;
+            width: auto;
+            opacity: 0.95;
+            flex-shrink: 0;
+        }
+        .site-footer-logo-uff {
+            height: 1.35rem;
             width: auto;
             opacity: 0.95;
             flex-shrink: 0;
         }
         .site-footer-divider {
-            display: none;
-            height: 2.5rem;
+            height: 1.4rem;
             width: 1px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.18);
             flex-shrink: 0;
         }
         .site-footer-title {
@@ -457,12 +514,6 @@
             font-weight: 600;
             color: #FFFFFF;
         }
-        .site-footer-subtitle {
-            margin: 0.25rem 0 0;
-            font-size: 0.75rem;
-            line-height: 1rem;
-            color: #94A3B8;
-        }
         .site-footer-meta {
             display: flex;
             flex-direction: column;
@@ -470,7 +521,7 @@
             gap: 0.25rem;
             font-size: 0.75rem;
             line-height: 1rem;
-            color: #94A3B8;
+            color: #CBD5E1;
         }
         .site-footer-link {
             color: #CBD5E1;
@@ -483,22 +534,30 @@
         }
         @media (min-width: 640px) {
             .site-footer-inner {
-                padding: 3rem 1.5rem;
-                flex-direction: row;
-                text-align: left;
+                padding: 3.5rem 1.5rem;
             }
-            .site-footer-brand {
+            .site-footer-notice {
+                padding: 1.5rem;
                 flex-direction: row;
-                gap: 1.5rem;
+                align-items: center;
             }
-            .site-footer-logo {
-                height: 4rem;
+            .site-footer-edital-btn {
+                width: auto;
+            }
+            .site-footer-logos {
+                gap: 1.75rem;
+            }
+            .site-footer-logo-facmed {
+                height: 2.75rem;
+            }
+            .site-footer-logo-sgpg {
+                height: 3.25rem;
+            }
+            .site-footer-logo-uff {
+                height: 2.25rem;
             }
             .site-footer-divider {
-                display: block;
-            }
-            .site-footer-meta {
-                align-items: flex-end;
+                height: 1.85rem;
             }
         }
         @media (min-width: 768px) {
@@ -511,5 +570,15 @@
             .site-footer-inner {
                 padding-left: 5rem;
                 padding-right: 5rem;
+            }
+            .site-footer-bottom {
+                flex-direction: row;
+                text-align: left;
+            }
+            .site-footer-logos {
+                justify-content: flex-start;
+            }
+            .site-footer-meta {
+                align-items: flex-end;
             }
         }
