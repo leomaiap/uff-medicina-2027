@@ -5,8 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
         let autoCycleTimer = null;
         let isAutoLooping = true;
         let isUserInteracting = false;
+        let isTouchActive = false;
+        let isCircularReady = false;
+        let activeTargetLeft = null;
+        let targetResetTimer = null;
         let resumeTimeout = null;
         let wrapTimer = null;
+
+        const BUFFER_LEFT = 4;
 
         function getCardStep() {
             const firstCard = specTrack ? specTrack.querySelector('.spec-card') : null;
@@ -18,26 +24,85 @@ document.addEventListener("DOMContentLoaded", () => {
             return firstCard.offsetWidth + 24;
         }
 
-        function checkSeamlessWrap() {
-            if (!specTrack) return;
-            const step = getCardStep();
-            const oneSetWidth = specialties.length * step;
-            if (oneSetWidth <= 0) return;
+        function getTrackPaddingLeft() {
+            if (!specTrack) return 0;
+            return parseFloat(getComputedStyle(specTrack).paddingLeft) || 0;
+        }
 
-            // Se avançou além do segundo conjunto, ajusta 1 conjunto para trás (imperceptível)
-            if (specTrack.scrollLeft >= oneSetWidth * 2) {
-                specTrack.scrollLeft -= oneSetWidth;
+        // Lista circular real com apenas os 13 cards no DOM (sem clonar 3x)
+        function rebalanceCircularTrack() {
+            if (!isCircularReady || !specTrack || specTrack.children.length < 2) return;
+            if (isTouchActive || specTrack.classList.contains('is-dragging')) return;
+
+            const step = getCardStep();
+            if (step <= 0) return;
+
+            const padLeft = getTrackPaddingLeft();
+            const minScroll = padLeft + (BUFFER_LEFT - 1) * step;
+            const maxScroll = padLeft + (BUFFER_LEFT + 1) * step;
+
+            if (specTrack.scrollLeft >= minScroll && specTrack.scrollLeft <= maxScroll) {
+                return;
             }
-            // Se recuou antes do segundo conjunto, ajusta 1 conjunto para frente (imperceptível)
-            else if (specTrack.scrollLeft <= oneSetWidth * 0.3) {
-                specTrack.scrollLeft += oneSetWidth;
+
+            const prevSnap = specTrack.style.scrollSnapType;
+            const prevBehavior = specTrack.style.scrollBehavior;
+            specTrack.style.scrollSnapType = 'none';
+            specTrack.style.scrollBehavior = 'auto';
+
+            let guard = 0;
+            while (specTrack.scrollLeft > maxScroll && guard < specialties.length) {
+                const first = specTrack.firstElementChild;
+                specTrack.appendChild(first);
+                specTrack.scrollLeft -= step;
+                if (activeTargetLeft !== null) activeTargetLeft -= step;
+                guard++;
             }
+
+            guard = 0;
+            while (specTrack.scrollLeft < minScroll && guard < specialties.length) {
+                const last = specTrack.lastElementChild;
+                specTrack.insertBefore(last, specTrack.firstElementChild);
+                specTrack.scrollLeft += step;
+                if (activeTargetLeft !== null) activeTargetLeft += step;
+                guard++;
+            }
+
+            // Garante commit de layout e scrollLeft antes de reativar scroll-snap
+            void specTrack.offsetLeft;
+            specTrack.style.scrollSnapType = prevSnap;
+            specTrack.style.scrollBehavior = prevBehavior;
+        }
+
+        function stepCarousel(direction) {
+            if (!specTrack || !isCircularReady) return;
+            const step = getCardStep();
+            const padLeft = getTrackPaddingLeft();
+
+            if (activeTargetLeft === null) {
+                rebalanceCircularTrack();
+                const slot = Math.round((specTrack.scrollLeft - padLeft) / step);
+                activeTargetLeft = padLeft + slot * step;
+            }
+
+            let nextLeft = activeTargetLeft + direction * step;
+            const maxSafeLeft = specTrack.scrollWidth - specTrack.clientWidth - step * 0.5;
+            if (nextLeft < padLeft + step || nextLeft > maxSafeLeft) {
+                rebalanceCircularTrack();
+                nextLeft = activeTargetLeft + direction * step;
+            }
+
+            activeTargetLeft = nextLeft;
+            specTrack.scrollTo({ left: activeTargetLeft, behavior: 'smooth' });
+            clearTimeout(targetResetTimer);
+            targetResetTimer = setTimeout(() => {
+                activeTargetLeft = null;
+                rebalanceCircularTrack();
+            }, 600);
         }
 
         function advanceCard() {
-            if (!specTrack) return;
-            const step = getCardStep();
-            specTrack.scrollBy({ left: step, behavior: 'smooth' });
+            stepCarousel(1);
         }
 
         function startAutoCycle() {
@@ -140,12 +205,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function buildSpecialtyCards() {
             if (!specTrack) return;
-            
-            // Buffer triplo (39 cards) para circulação infinita sem fim e sem sobressaltos
-            const loopItems = [...specialties, ...specialties, ...specialties];
 
-            specTrack.innerHTML = loopItems.map((spec, index) => {
-                const realIndex = index % specialties.length;
+            // Apenas os 13 cards reais rotacionados em anel circular:
+            // os últimos 4 ficam à esquerda do scroll inicial para permitir recuo imediato
+            const total = specialties.length;
+            const ringOrder = [];
+            for (let offset = 0; offset < total; offset++) {
+                ringOrder.push((total - BUFFER_LEFT + offset) % total);
+            }
+
+            specTrack.innerHTML = ringOrder.map((realIndex) => {
+                const spec = specialties[realIndex];
                 return `
                     <article class="spec-card"
                              data-index="${realIndex}"
@@ -180,10 +250,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
             scheduleSpecialtyPreload();
 
-            // Inicia no conjunto do meio para permitir rolagem bidirecional circular infinita
-            requestAnimationFrame(() => {
+            // Posiciona no Card #1 (logo após o buffer esquerdo circular) antes de liberar o rebalanceamento
+            const alignInitialTrack = () => {
                 const step = getCardStep();
-                specTrack.scrollLeft = specialties.length * step;
+                const padLeft = getTrackPaddingLeft();
+                const prevSnap = specTrack.style.scrollSnapType;
+                const prevBehavior = specTrack.style.scrollBehavior;
+                specTrack.style.scrollSnapType = 'none';
+                specTrack.style.scrollBehavior = 'auto';
+                specTrack.scrollLeft = padLeft + BUFFER_LEFT * step;
+                void specTrack.offsetLeft;
+                specTrack.style.scrollSnapType = prevSnap;
+                specTrack.style.scrollBehavior = prevBehavior;
+            };
+            alignInitialTrack();
+            requestAnimationFrame(() => {
+                alignInitialTrack();
+                requestAnimationFrame(() => {
+                    clearTimeout(wrapTimer);
+                    isCircularReady = true;
+                });
             });
 
             // Click & keyboard handler to open specialty modal
@@ -209,8 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (prevBtn) {
                 prevBtn.addEventListener('click', () => {
                     isUserInteracting = true;
-                    const step = getCardStep();
-                    specTrack.scrollBy({ left: -step, behavior: 'smooth' });
+                    stepCarousel(-1);
                     clearTimeout(resumeTimeout);
                     resumeTimeout = setTimeout(() => { isUserInteracting = false; }, 3500);
                 });
@@ -218,7 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (nextBtn) {
                 nextBtn.addEventListener('click', () => {
                     isUserInteracting = true;
-                    advanceCard();
+                    stepCarousel(1);
                     clearTimeout(resumeTimeout);
                     resumeTimeout = setTimeout(() => { isUserInteracting = false; }, 3500);
                 });
@@ -245,19 +330,63 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             }
 
+            function scheduleRebalance(delay = 140) {
+                clearTimeout(wrapTimer);
+                wrapTimer = setTimeout(() => {
+                    if (!isTouchActive && !specTrack.classList.contains('is-dragging') && activeTargetLeft === null) {
+                        rebalanceCircularTrack();
+                    }
+                }, delay);
+            }
+
             // Mouse hover / touch pause
             specTrack.addEventListener('mouseenter', () => { isUserInteracting = true; });
             specTrack.addEventListener('mouseleave', () => { isUserInteracting = false; });
-            specTrack.addEventListener('touchstart', () => { isUserInteracting = true; }, { passive: true });
-            specTrack.addEventListener('touchend', () => {
+            specTrack.addEventListener('wheel', () => {
+                activeTargetLeft = null;
+                clearTimeout(targetResetTimer);
+            }, { passive: true });
+            specTrack.addEventListener('touchstart', () => {
+                isTouchActive = true;
+                isUserInteracting = true;
+                activeTargetLeft = null;
+                clearTimeout(targetResetTimer);
+                clearTimeout(wrapTimer);
+            }, { passive: true });
+            const handleTouchRelease = () => {
+                isTouchActive = false;
+                scheduleRebalance(140);
                 clearTimeout(resumeTimeout);
                 resumeTimeout = setTimeout(() => { isUserInteracting = false; }, 2800);
-            }, { passive: true });
+            };
+            specTrack.addEventListener('touchend', handleTouchRelease, { passive: true });
+            specTrack.addEventListener('touchcancel', handleTouchRelease, { passive: true });
 
-            // Wrap transparente quando o scroll termina de assentar
+            // Reequilibra o anel circular quando o scroll assenta
             specTrack.addEventListener('scroll', () => {
-                clearTimeout(wrapTimer);
-                wrapTimer = setTimeout(checkSeamlessWrap, 120);
+                if (!isCircularReady) return;
+                if (!isTouchActive && !specTrack.classList.contains('is-dragging')) {
+                    scheduleRebalance(140);
+                }
+            }, { passive: true });
+            if ('onscrollend' in window) {
+                specTrack.addEventListener('scrollend', () => {
+                    if (!isCircularReady) return;
+                    if (!isTouchActive && !specTrack.classList.contains('is-dragging')) {
+                        activeTargetLeft = null;
+                        clearTimeout(targetResetTimer);
+                        rebalanceCircularTrack();
+                    }
+                }, { passive: true });
+            }
+
+            let resizeTimer = null;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    activeTargetLeft = null;
+                    rebalanceCircularTrack();
+                }, 150);
             }, { passive: true });
 
             // Mouse drag-to-scroll for desktop
@@ -268,6 +397,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 isDown = true;
                 dragMoved = false;
                 isUserInteracting = true;
+                activeTargetLeft = null;
+                clearTimeout(targetResetTimer);
+                clearTimeout(wrapTimer);
                 specTrack.classList.add('is-dragging');
                 startX = e.pageX - specTrack.offsetLeft;
                 scrollLeft = specTrack.scrollLeft;
@@ -276,6 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!isDown) return;
                 isDown = false;
                 specTrack.classList.remove('is-dragging');
+                scheduleRebalance(80);
                 clearTimeout(resumeTimeout);
                 resumeTimeout = setTimeout(() => { isUserInteracting = false; }, 2500);
                 setTimeout(() => { dragMoved = false; }, 50);
