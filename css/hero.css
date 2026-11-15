@@ -24,7 +24,7 @@
     height: 100svh;
     z-index: 20;
     overflow: hidden;
-    background-color: #08382b;
+    background-color: transparent;
     touch-action: pan-y;
 }
 
