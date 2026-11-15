@@ -333,18 +333,16 @@
                 <!-- Palco Full-Bleed: Selo Redondo Marca d'Água à Esquerda + OptionWheel Curvando Ao Redor -->
                 <div id="credits-viewport" class="credits-viewport relative w-full h-[360px] sm:h-[500px] lg:h-[580px] overflow-hidden select-none">
 
-                    <!-- Marca d'Água Esculpida (Metade Visível do Selo Redondo FacMed UFF) -->
+                    <!-- Selo Redondo FacMed UFF Branco (80% opacidade) à Esquerda -->
                     <div id="wheel-emblem-wrap" class="wheel-emblem-wrap pointer-events-none" aria-hidden="true">
-                        <div class="wheel-emblem-halo"></div>
                         <img src="assets/img/facmed-redondo.svg"
                              alt=""
                              class="wheel-emblem-img"
                              loading="eager"
                              decoding="async">
-                        <div id="wheel-orbit-ring" class="wheel-orbit-ring"></div>
                     </div>
 
-                    <!-- Roda Interativa de Opções Orbitais (Efeito OptionWheel) -->
+                    <!-- Roda Interativa de Opções Orbitais (Draggable OptionWheel) -->
                     <div id="disciplines-wheel"
                          class="option-wheel"
                          role="listbox"
@@ -353,32 +351,6 @@
                         <!-- Itens injetados dinamicamente via JS -->
                     </div>
 
-                </div>
-
-                <!-- Barra Discreta de Navegação e Ação da Disciplina em Foco -->
-                <div class="max-w-7xl mx-auto px-4 md:px-12 lg:px-16 relative z-20 pt-2 sm:pt-3 flex flex-wrap items-center justify-center gap-3">
-                    <div class="flex items-center gap-1.5">
-                        <button type="button" id="wheel-prev-btn" class="wheel-step-btn" aria-label="Disciplina anterior">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M5 15l7-7 7 7"></path>
-                            </svg>
-                        </button>
-                        <button type="button" id="wheel-next-btn" class="wheel-step-btn" aria-label="Próxima disciplina">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <button type="button" id="wheel-open-active" class="wheel-active-cta">
-                        <span class="wheel-active-dot" aria-hidden="true"></span>
-                        <span id="wheel-active-label">Análises Clínicas</span>
-                        <span class="wheel-active-sep" aria-hidden="true">•</span>
-                        <span id="wheel-active-meta" class="wheel-active-meta">25 vagas</span>
-                        <svg class="w-3.5 h-3.5 shrink-0 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
                 </div>
 
                 <!-- Lista Semântica Invisível para Leitores de Tela (TalkBack, VoiceOver, NVDA) -->

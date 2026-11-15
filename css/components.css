@@ -151,17 +151,18 @@
 
         .spec-card-number {
             position: absolute;
-            top: 0.85rem;
+            top: 0.9rem;
             left: 1.15rem;
             z-index: 4;
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 800;
-            font-size: 4.5rem;
-            line-height: 0.82;
+            font-size: 3.6rem;
+            line-height: 0.84;
             letter-spacing: -0.05em;
-            color: #ffffff;
+            color: var(--card-num-color, rgb(var(--card-rgb)));
+            -webkit-text-stroke: 1px rgba(var(--card-rgb-dark), 0.35);
             text-shadow:
-                0 3px 16px rgba(0, 0, 0, 0.55),
+                0 4px 18px rgba(0, 0, 0, 0.58),
                 0 1px 4px rgba(0, 0, 0, 0.45);
             pointer-events: none;
             user-select: none;
@@ -170,9 +171,9 @@
 
         @media (min-width: 640px) {
             .spec-card-number {
-                top: 1rem;
+                top: 1.05rem;
                 left: 1.25rem;
-                font-size: 5.2rem;
+                font-size: 4.15rem;
             }
         }
 
@@ -335,13 +336,10 @@
             --ow-inset: 338px;
             --ow-cx: -26px;
             --ow-emblem-size: 530px;
-            --ow-orbit-size: 616px;
             position: relative;
             width: 100%;
             height: 360px;
             overflow: hidden;
-            mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.35) 11%, #000 24%, #000 76%, rgba(0, 0, 0, 0.35) 89%, transparent 100%);
-            -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.35) 11%, #000 24%, #000 76%, rgba(0, 0, 0, 0.35) 89%, transparent 100%);
         }
 
         @media (min-width: 640px) {
@@ -368,45 +366,12 @@
             user-select: none;
         }
 
-        .wheel-emblem-halo {
-            position: absolute;
-            inset: -12%;
-            border-radius: 9999px;
-            background: radial-gradient(
-                circle at 60% 50%,
-                rgba(16, 185, 129, 0.16) 0%,
-                rgba(0, 158, 94, 0.08) 42%,
-                rgba(8, 56, 43, 0) 72%
-            );
-            filter: blur(18px);
-            pointer-events: none;
-        }
-
         .wheel-emblem-img {
             position: relative;
             width: 100%;
             height: 100%;
             object-fit: contain;
-            opacity: 0.38;
-            filter: drop-shadow(0 0 32px rgba(52, 211, 153, 0.16));
-            mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.14) 44%, rgba(0, 0, 0, 0.92) 72%, #000 88%, rgba(0, 0, 0, 0.35) 97%, transparent 100%);
-            -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.14) 44%, rgba(0, 0, 0, 0.92) 72%, #000 88%, rgba(0, 0, 0, 0.35) 97%, transparent 100%);
-            will-change: opacity, transform;
-        }
-
-        .wheel-orbit-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: var(--ow-orbit-size);
-            height: var(--ow-orbit-size);
-            transform: translate(-50%, -50%) rotate(0deg);
-            border-radius: 9999px;
-            border: 1px dashed rgba(255, 255, 255, 0.11);
-            mask-image: linear-gradient(90deg, transparent 35%, rgba(0, 0, 0, 0.5) 55%, rgba(0, 0, 0, 0.9) 85%, rgba(0, 0, 0, 0.9) 100%);
-            -webkit-mask-image: linear-gradient(90deg, transparent 35%, rgba(0, 0, 0, 0.5) 55%, rgba(0, 0, 0, 0.9) 85%, rgba(0, 0, 0, 0.9) 100%);
-            pointer-events: none;
-            will-change: transform;
+            opacity: 0.8;
         }
 
         .option-wheel {
@@ -417,8 +382,10 @@
             overflow: hidden;
             cursor: grab;
             user-select: none;
-            touch-action: pan-y;
+            touch-action: none;
             outline: none;
+            mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.35) 11%, #000 24%, #000 76%, rgba(0, 0, 0, 0.35) 89%, transparent 100%);
+            -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.35) 11%, #000 24%, #000 76%, rgba(0, 0, 0, 0.35) 89%, transparent 100%);
         }
 
         .option-wheel--dragging {
@@ -463,90 +430,8 @@
             border-radius: 16px;
         }
 
-        .wheel-step-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 9999px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            background: rgba(13, 72, 56, 0.55);
-            color: rgba(255, 255, 255, 0.85);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-        }
-
-        .wheel-step-btn:hover {
-            background: #10B981;
-            border-color: #10B981;
-            color: #08382b;
-            transform: scale(1.06);
-        }
-
-        .wheel-active-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            max-width: calc(100vw - 8.5rem);
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            background: rgba(13, 72, 56, 0.65);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: #ffffff;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.8125rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
-        }
-
-        .wheel-active-cta:hover {
-            background: rgba(16, 185, 129, 0.22);
-            border-color: rgba(52, 211, 153, 0.55);
-            transform: translateY(-1px);
-        }
-
-        .wheel-active-dot {
-            width: 0.45rem;
-            height: 0.45rem;
-            border-radius: 9999px;
-            background: #34D399;
-            flex-shrink: 0;
-        }
-
-        #wheel-active-label {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .wheel-active-sep {
-            color: rgba(255, 255, 255, 0.38);
-            flex-shrink: 0;
-            display: none;
-        }
-
-        .wheel-active-meta {
-            color: rgba(255, 255, 255, 0.72);
-            font-weight: 500;
-            white-space: nowrap;
-            display: none;
-        }
-
-        @media (min-width: 640px) {
-            .wheel-active-sep {
-                display: inline;
-            }
-            .wheel-active-meta {
-                display: inline;
-            }
-        }
-
         @media (prefers-reduced-motion: reduce) {
-            .credits-viewport {
+            .option-wheel {
                 mask-image: none;
                 -webkit-mask-image: none;
             }
