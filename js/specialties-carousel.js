@@ -705,8 +705,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 goToShortestIndex(idx, true);
             });
 
-            // Arraste vertical direto em qualquer dispositivo (mouse, caneta ou toque)
+            // Arraste vertical direto com mouse/caneta (mantém scroll vertical nativo da página no toque mobile)
             wheelEl.addEventListener('pointerdown', (e) => {
+                if (e.pointerType === 'touch') return;
                 if (e.button && e.button !== 0) return;
                 isDragging = true;
                 dragMoved = false;
@@ -764,6 +765,48 @@ document.addEventListener("DOMContentLoaded", () => {
                 sectionEl.addEventListener('mouseleave', () => { isHovering = false; });
             }
 
+            // Giro orbital cinematográfico ao chegar na seção e resposta suave ao scroll da página
+            let hasPlayedEntrance = false;
+            let lastScrollY = window.scrollY;
+            let scrollSnapTimer = null;
+
+            const triggerEntranceSpin = () => {
+                if (hasPlayedEntrance || prefersReducedMotion) return;
+                hasPlayedEntrance = true;
+                pos = target - 3.2;
+                paint(pos);
+                pauseAutoUntil = Date.now() + 2600;
+                ensureLoop();
+            };
+
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                const deltaY = currentScrollY - lastScrollY;
+                lastScrollY = currentScrollY;
+
+                if (!isInView || prefersReducedMotion || isDragging || isModalOpen()) return;
+                if (!hasPlayedEntrance) {
+                    const rect = (sectionEl || viewportEl).getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+                        triggerEntranceSpin();
+                        return;
+                    }
+                }
+                if (Math.abs(deltaY) < 1) return;
+
+                target += deltaY * 0.0042;
+                pauseAutoUntil = Date.now() + 2600;
+                ensureLoop();
+
+                clearTimeout(scrollSnapTimer);
+                scrollSnapTimer = setTimeout(() => {
+                    if (!isDragging) {
+                        target = Math.round(target);
+                        ensureLoop();
+                    }
+                }, 150);
+            }, { passive: true });
+
             // Auto-rotação orbital suave para cima quando visível
             let autoTimer = null;
             if (!prefersReducedMotion) {
@@ -775,18 +818,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 }, AUTO_STEP_MS);
             }
 
-            // Pausar rAF quando a seção estiver fora da tela
+            // Pausar rAF quando a seção estiver fora da tela e disparar giro na chegada
             if ('IntersectionObserver' in window) {
                 const viewObserver = new IntersectionObserver((entries) => {
                     isInView = entries.some((entry) => entry.isIntersecting);
                     if (isInView) {
-                        paint(pos);
-                        if (Math.abs(target - pos) > 0.001) ensureLoop();
+                        const rect = (sectionEl || viewportEl).getBoundingClientRect();
+                        if (!hasPlayedEntrance && rect.top < window.innerHeight * 0.95 && rect.bottom > 0) {
+                            triggerEntranceSpin();
+                        } else {
+                            paint(pos);
+                            if (Math.abs(target - pos) > 0.001) ensureLoop();
+                        }
                     } else if (rafId) {
                         cancelAnimationFrame(rafId);
                         rafId = null;
                     }
-                }, { rootMargin: '250px 0px' });
+                }, { rootMargin: '120px 0px' });
                 viewObserver.observe(sectionEl || viewportEl);
             }
 

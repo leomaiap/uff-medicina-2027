@@ -161,20 +161,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const creditsViewport = document.getElementById('credits-viewport');
                 if (creditsViewport) {
-                    gsap.fromTo(creditsViewport,
-                        { y: 32, opacity: 0 },
-                        {
-                            y: 0,
-                            opacity: 1,
-                            duration: 0.85,
-                            ease: 'power3.out',
-                            scrollTrigger: {
-                                trigger: creditsViewport,
-                                start: 'top 92%',
-                                once: true
-                            }
+                    const wheelEmblemImg = creditsViewport.querySelector('.wheel-emblem-img');
+                    const wheelEl = document.getElementById('disciplines-wheel');
+
+                    const wheelTl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: '#disciplinas-section',
+                            start: 'top 86%',
+                            once: true
                         }
-                    );
+                    });
+
+                    if (wheelEmblemImg) {
+                        wheelTl.fromTo(wheelEmblemImg,
+                            { x: -64, scale: 0.9, opacity: 0 },
+                            {
+                                x: 0,
+                                scale: 1,
+                                opacity: 0.8,
+                                duration: 0.95,
+                                ease: 'power3.out',
+                                clearProps: 'transform'
+                            },
+                            0
+                        );
+                    }
+
+                    if (wheelEl) {
+                        wheelTl.fromTo(wheelEl,
+                            { y: 36, opacity: 0 },
+                            {
+                                y: 0,
+                                opacity: 1,
+                                duration: 0.9,
+                                ease: 'power3.out',
+                                clearProps: 'transform'
+                            },
+                            0.08
+                        );
+                    }
                 }
 
                 // 10.5. Seção Cronograma: Painel HUD de Contagem Regressiva + Linha do Tempo desenhada pelo Scroll
