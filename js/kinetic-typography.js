@@ -144,17 +144,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const specTrackWrap = document.getElementById('spec-cards-track');
                 if (specTrackWrap) {
                     gsap.fromTo(specTrackWrap,
-                        { y: 60, opacity: 0, scale: 0.97 },
+                        { y: 24, opacity: 1 },
                         {
                             y: 0,
                             opacity: 1,
-                            scale: 1,
-                            duration: 1,
-                            ease: 'power3.out',
+                            duration: 0.65,
+                            ease: 'power2.out',
                             scrollTrigger: {
                                 trigger: specTrackWrap,
-                                start: 'top 88%',
-                                toggleActions: 'play none none reverse'
+                                start: 'top 92%',
+                                once: true
                             }
                         }
                     );

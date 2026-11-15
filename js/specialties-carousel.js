@@ -54,6 +54,90 @@ document.addEventListener("DOMContentLoaded", () => {
             autoCycleTimer = null;
         }
 
+        let specImagesHydrated = false;
+
+        function hydrateSpecCardImages() {
+            if (!specTrack || specImagesHydrated) return;
+            specImagesHydrated = true;
+
+            specTrack.querySelectorAll('img.spec-card-img').forEach((img) => {
+                const targetSrc = img.getAttribute('data-src');
+                if (targetSrc && !img.getAttribute('src')) {
+                    img.setAttribute('src', targetSrc);
+                }
+                const markLoaded = () => img.classList.add('is-loaded');
+                if (img.complete && img.naturalWidth > 0) {
+                    markLoaded();
+                } else {
+                    img.addEventListener('load', markLoaded, { once: true });
+                    img.addEventListener('error', markLoaded, { once: true });
+                }
+            });
+        }
+
+        function preloadSpecialtyImagesInBackground() {
+            if (!window.__specPreloadStarted) {
+                window.__specPreloadStarted = true;
+                window.__preloadedSpecImages = window.__preloadedSpecImages || [];
+
+                const uniqueUrls = [...new Set(specialties.map((s) => s.image))];
+                uniqueUrls.forEach((url) => {
+                    const preImg = new Image();
+                    preImg.decoding = 'async';
+                    if ('fetchPriority' in preImg) {
+                        preImg.fetchPriority = 'low';
+                    }
+                    const markDomCards = () => {
+                        if (!specTrack) return;
+                        specTrack.querySelectorAll(`img.spec-card-img[data-src="${url}"]`).forEach((domImg) => {
+                            if (!domImg.getAttribute('src')) {
+                                domImg.setAttribute('src', url);
+                            }
+                            domImg.classList.add('is-loaded');
+                        });
+                    };
+                    preImg.onload = () => {
+                        if (typeof preImg.decode === 'function') {
+                            preImg.decode().then(markDomCards).catch(markDomCards);
+                        } else {
+                            markDomCards();
+                        }
+                    };
+                    preImg.onerror = markDomCards;
+                    preImg.src = url;
+                    window.__preloadedSpecImages.push(preImg);
+                });
+            }
+            hydrateSpecCardImages();
+        }
+
+        function scheduleSpecialtyPreload() {
+            const kick = () => {
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(preloadSpecialtyImagesInBackground, { timeout: 350 });
+                } else {
+                    setTimeout(preloadSpecialtyImagesInBackground, 100);
+                }
+            };
+
+            if (document.readyState === 'complete') {
+                kick();
+            } else {
+                window.addEventListener('load', kick, { once: true });
+            }
+
+            // Garantia caso o usuário role rapidamente antes de window.load finalizar
+            if ('IntersectionObserver' in window && specTrack) {
+                const earlyObserver = new IntersectionObserver((entries) => {
+                    if (entries.some((e) => e.isIntersecting)) {
+                        earlyObserver.disconnect();
+                        preloadSpecialtyImagesInBackground();
+                    }
+                }, { rootMargin: '1200px 0px' });
+                earlyObserver.observe(specTrack);
+            }
+        }
+
         function buildSpecialtyCards() {
             if (!specTrack) return;
             
@@ -71,11 +155,13 @@ document.addEventListener("DOMContentLoaded", () => {
                              aria-label="Ver detalhes de ${spec.title}">
                         <span class="spec-card-number">${realIndex + 1}</span>
                         <div class="spec-card-img-wrap">
-                            <img src="${spec.image}"
+                            <img data-src="${spec.image}"
+                                 width="440"
+                                 height="587"
                                  alt="${spec.title} - Faculdade de Medicina da UFF"
                                  class="spec-card-img"
-                                 loading="lazy"
-                                 decoding="async">
+                                 loading="eager"
+                                 decoding="sync">
                         </div>
                         <div class="spec-card-gradient"></div>
                         <div class="spec-card-body">
@@ -91,6 +177,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     </article>
                 `;
             }).join('');
+
+            scheduleSpecialtyPreload();
 
             // Inicia no conjunto do meio para permitir rolagem bidirecional circular infinita
             requestAnimationFrame(() => {

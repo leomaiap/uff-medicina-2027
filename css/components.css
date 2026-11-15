@@ -193,12 +193,19 @@
             height: 100%;
             object-fit: cover;
             object-position: center 20%;
-            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            transition: opacity 0.26s ease-out, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
         }
 
-        .spec-card:hover .spec-card-img {
-            transform: scale(1.06);
+        .spec-card-img.is-loaded {
+            opacity: 1;
+        }
+
+        .spec-card:hover .spec-card-img.is-loaded {
+            transform: scale(1.06) translateZ(0);
         }
 
         /* Seamless predominant-color gradient fade over the image into the solid card base */
@@ -261,9 +268,7 @@
             justify-content: space-between;
             padding: 0.78rem 1.05rem;
             border-radius: 14px;
-            background: rgba(0, 0, 0, 0.28);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.30);
             border: none;
             color: #FFFFFF;
             font-size: 0.82rem;
@@ -273,7 +278,7 @@
         }
 
         .spec-card:hover .spec-card-btn {
-            background: rgba(0, 0, 0, 0.40);
+            background: rgba(0, 0, 0, 0.42);
             border: none;
         }
 
