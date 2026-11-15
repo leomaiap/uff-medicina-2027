@@ -254,9 +254,9 @@ void main() {
             blend: 0.36,
             height: 0.65,
             speed: 1.1,
-            glow: 0.75,
+            glow: 0.68,
             scale: 0.65,
-            brightness: 1.0,
+            brightness: 0.82,
             layers: 1,
             flip: 0,
             opacity: 0.55,
@@ -290,7 +290,7 @@ void main() {
 
         let raf = 0;
         let last = 0;
-        let isBelowHero = window.scrollY > window.innerHeight * 0.55;
+        let isBelowHero = window.scrollY > window.innerHeight * 0.15;
 
         const render = () => {
             gl.viewport(0, 0, canvas.width, canvas.height);
@@ -375,7 +375,7 @@ void main() {
         }
 
         window.addEventListener('scroll', () => {
-            const next = window.scrollY > window.innerHeight * 0.55;
+            const next = window.scrollY > window.innerHeight * 0.15;
             if (next !== isBelowHero) {
                 isBelowHero = next;
                 if (isBelowHero) wake();
