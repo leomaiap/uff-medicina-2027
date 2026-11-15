@@ -780,7 +780,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const triggerEntranceSpin = () => {
                 if (hasPlayedEntrance || prefersReducedMotion) return;
                 hasPlayedEntrance = true;
-                pos = target - 3.2;
+                pos = target - 3.6;
                 paint(pos);
                 pauseAutoUntil = Date.now() + 2600;
                 ensureLoop();
@@ -794,14 +794,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!isInView || prefersReducedMotion || isDragging || isModalOpen()) return;
                 if (!hasPlayedEntrance) {
                     const rect = (sectionEl || viewportEl).getBoundingClientRect();
-                    if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+                    if (rect.top < window.innerHeight * 0.88 && rect.bottom > 0) {
                         triggerEntranceSpin();
                         return;
                     }
                 }
                 if (Math.abs(deltaY) < 1) return;
 
-                target += deltaY * 0.0042;
+                target += deltaY * 0.0055;
                 pauseAutoUntil = Date.now() + 2600;
                 ensureLoop();
 
@@ -831,17 +831,20 @@ document.addEventListener("DOMContentLoaded", () => {
                     isInView = entries.some((entry) => entry.isIntersecting);
                     if (isInView) {
                         const rect = (sectionEl || viewportEl).getBoundingClientRect();
-                        if (!hasPlayedEntrance && rect.top < window.innerHeight * 0.95 && rect.bottom > 0) {
+                        if (!hasPlayedEntrance && rect.top < window.innerHeight * 0.9 && rect.bottom > 0) {
                             triggerEntranceSpin();
                         } else {
                             paint(pos);
                             if (Math.abs(target - pos) > 0.001) ensureLoop();
                         }
-                    } else if (rafId) {
-                        cancelAnimationFrame(rafId);
-                        rafId = null;
+                    } else {
+                        hasPlayedEntrance = false;
+                        if (rafId) {
+                            cancelAnimationFrame(rafId);
+                            rafId = null;
+                        }
                     }
-                }, { rootMargin: '120px 0px' });
+                }, { rootMargin: '0px' });
                 viewObserver.observe(sectionEl || viewportEl);
             }
 

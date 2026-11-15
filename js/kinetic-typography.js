@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
 
                 // 10.1. Títulos de todas as seções no <main>: Subida cinética das palavras + reação elástica ao scroll
-                const sectionHeadings = document.querySelectorAll('#main-content h2, #especialidades h3');
+                const sectionHeadings = document.querySelectorAll('#main-content h2, #disciplinas-section h3');
                 sectionHeadings.forEach((heading) => {
                     const wordInners = splitHeadingWords(heading);
                     if (!wordInners.length) return;
@@ -168,34 +168,49 @@ document.addEventListener('DOMContentLoaded', () => {
                         scrollTrigger: {
                             trigger: '#disciplinas-section',
                             start: 'top 86%',
-                            once: true
+                            end: 'top 52%',
+                            toggleActions: 'play none none reverse'
                         }
                     });
 
                     if (wheelEmblemImg) {
                         wheelTl.fromTo(wheelEmblemImg,
-                            { x: -64, scale: 0.9, opacity: 0 },
+                            { x: -72, scale: 0.86, opacity: 0 },
                             {
                                 x: 0,
                                 scale: 1,
                                 opacity: 0.8,
-                                duration: 0.95,
-                                ease: 'power3.out',
-                                clearProps: 'transform'
+                                duration: 0.9,
+                                ease: 'power3.out'
                             },
                             0
+                        );
+
+                        gsap.fromTo(wheelEmblemImg,
+                            { rotation: -8 },
+                            {
+                                rotation: 8,
+                                ease: 'none',
+                                scrollTrigger: {
+                                    trigger: '#disciplinas-section',
+                                    start: 'top bottom',
+                                    end: 'bottom top',
+                                    scrub: 0.5
+                                }
+                            }
                         );
                     }
 
                     if (wheelEl) {
                         wheelTl.fromTo(wheelEl,
-                            { y: 36, opacity: 0 },
+                            { x: 42, y: 36, scale: 0.95, opacity: 0 },
                             {
+                                x: 0,
                                 y: 0,
+                                scale: 1,
                                 opacity: 1,
-                                duration: 0.9,
-                                ease: 'power3.out',
-                                clearProps: 'transform'
+                                duration: 0.85,
+                                ease: 'power3.out'
                             },
                             0.08
                         );
