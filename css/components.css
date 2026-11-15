@@ -161,7 +161,6 @@
             letter-spacing: -0.05em;
             color: rgb(var(--card-rgb));
             mix-blend-mode: multiply;
-            opacity: 0.8;
             pointer-events: none;
             user-select: none;
             transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
