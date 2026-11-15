@@ -423,56 +423,17 @@
         .site-footer-inner {
             max-width: 72rem;
             margin: 0 auto;
-            padding: 2rem 1.5rem 3rem;
+            padding: 1.5rem 1.5rem 2.75rem;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
-        }
-        .site-footer-notice {
-            padding: 1.25rem;
-            border-radius: 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 1rem;
-            text-align: left;
-        }
-        .site-footer-notice-icon {
-            width: 2.25rem;
-            height: 2.25rem;
-            border-radius: 9999px;
-            background: rgba(250, 204, 21, 0.15);
-            color: #FACC15;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            margin-top: 0.125rem;
-        }
-        .site-footer-edital-btn {
-            display: inline-block;
-            width: 100%;
-            padding: 0.625rem 1.25rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #FFFFFF;
-            background-color: #009E5E;
-            text-align: center;
-            text-decoration: none;
-            flex-shrink: 0;
-            transition: background-color 0.2s ease;
-        }
-        .site-footer-edital-btn:hover {
-            background-color: #10B981;
+            gap: 1.25rem;
         }
         .site-footer-bottom {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            gap: 1.5rem;
+            gap: 1.25rem;
             text-align: center;
         }
         .site-footer-logos {
@@ -504,15 +465,15 @@
         .site-footer-divider {
             height: 1.4rem;
             width: 1px;
-            background: rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.16);
             flex-shrink: 0;
         }
         .site-footer-title {
             margin: 0;
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             line-height: 1.25rem;
-            font-weight: 600;
-            color: #FFFFFF;
+            font-weight: 500;
+            color: rgba(248, 250, 252, 0.92);
         }
         .site-footer-meta {
             display: flex;
@@ -521,43 +482,61 @@
             gap: 0.25rem;
             font-size: 0.75rem;
             line-height: 1rem;
-            color: #CBD5E1;
+            color: rgba(203, 213, 225, 0.75);
         }
         .site-footer-link {
-            color: #CBD5E1;
-            font-weight: 500;
+            color: rgba(203, 213, 225, 0.75);
+            font-weight: 400;
             text-decoration: none;
-            transition: color 0.2s ease;
+            transition: color 0.15s ease;
         }
         .site-footer-link:hover {
             color: #FFFFFF;
         }
+        .site-footer-disclaimer {
+            margin: 0 auto;
+            max-width: 46rem;
+            font-size: 0.6875rem;
+            line-height: 1.55;
+            color: rgba(203, 213, 225, 0.56);
+            text-align: center;
+            font-weight: 400;
+        }
+        .site-footer-disclaimer-link {
+            color: rgba(248, 250, 252, 0.78);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            text-decoration-color: rgba(255, 255, 255, 0.25);
+            margin-left: 0.25rem;
+            white-space: nowrap;
+            transition: color 0.15s ease, text-decoration-color 0.15s ease;
+        }
+        .site-footer-disclaimer-link:hover {
+            color: #FFFFFF;
+            text-decoration-color: rgba(255, 255, 255, 0.7);
+        }
         @media (min-width: 640px) {
             .site-footer-inner {
-                padding: 3.5rem 1.5rem;
-            }
-            .site-footer-notice {
-                padding: 1.5rem;
-                flex-direction: row;
-                align-items: center;
-            }
-            .site-footer-edital-btn {
-                width: auto;
+                padding: 2.25rem 1.5rem 3.25rem;
+                gap: 1.5rem;
             }
             .site-footer-logos {
-                gap: 1.75rem;
+                gap: 1.5rem;
             }
             .site-footer-logo-facmed {
-                height: 2.75rem;
+                height: 2.5rem;
             }
             .site-footer-logo-sgpg {
-                height: 3.25rem;
+                height: 3rem;
             }
             .site-footer-logo-uff {
-                height: 2.25rem;
+                height: 2rem;
             }
             .site-footer-divider {
-                height: 1.85rem;
+                height: 1.75rem;
+            }
+            .site-footer-disclaimer {
+                font-size: 0.75rem;
             }
         }
         @media (min-width: 768px) {
@@ -580,5 +559,10 @@
             }
             .site-footer-meta {
                 align-items: flex-end;
+            }
+            .site-footer-disclaimer {
+                margin: 0;
+                max-width: 48rem;
+                text-align: left;
             }
         }
