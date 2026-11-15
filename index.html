@@ -320,34 +320,65 @@
             </div>
 
             <!-- ============================================================== -->
-            <!-- CRÉDITOS DE ESPECIALIDADES EM LOOP (FIM DE FILME COM FADES)    -->
+            <!-- DISCIPLINAS EM RODA ORBITAL (OPTION WHEEL + SELO FACMED UFF)   -->
             <!-- ============================================================== -->
-            <div class="max-w-4xl mx-auto px-4 md:px-12 mt-12 md:mt-16 pt-6">
-                
-                <div class="text-center mb-6">
+            <div id="disciplinas-section" class="disciplines-wheel-section relative w-full mt-12 md:mt-16 pt-6 overflow-hidden">
+
+                <div class="max-w-7xl mx-auto px-4 md:px-12 lg:px-16 relative z-20 mb-2 sm:mb-4 text-center">
                     <h3 class="font-sans font-black text-2xl sm:text-4xl text-white tracking-tight">
                         Disciplinas Ofertadas no Concurso
                     </h3>
                 </div>
 
-                <!-- Rolagem Cinematográfica Livre de Disciplinas (Letras com alta visibilidade flutuando com fade superior e inferior) -->
-                <div class="relative max-w-2xl mx-auto overflow-hidden">
-                    
-                    <!-- Viewport de Rolagem (Exibe pelo menos 5 disciplinas simultaneamente com 68px cada: 340px / 68px = 5 visíveis com fade natural) -->
-                    <div id="credits-viewport" class="credits-viewport relative h-[340px] overflow-hidden select-none focus:outline-none" tabindex="0" role="region" aria-label="Créditos em rolagem contínua das especialidades médicas">
-                        <div id="credits-roll" class="credits-roll">
-                            <!-- Injetado dinamicamente via JS em loop infinito -->
-                        </div>
+                <!-- Palco Full-Bleed: Selo Redondo Marca d'Água à Esquerda + OptionWheel Curvando Ao Redor -->
+                <div id="credits-viewport" class="credits-viewport relative w-full h-[360px] sm:h-[500px] lg:h-[580px] overflow-hidden select-none">
+
+                    <!-- Marca d'Água Esculpida (Metade Visível do Selo Redondo FacMed UFF) -->
+                    <div id="wheel-emblem-wrap" class="wheel-emblem-wrap pointer-events-none" aria-hidden="true">
+                        <div class="wheel-emblem-halo"></div>
+                        <img src="assets/img/facmed-redondo.svg"
+                             alt=""
+                             class="wheel-emblem-img"
+                             loading="eager"
+                             decoding="async">
+                        <div id="wheel-orbit-ring" class="wheel-orbit-ring"></div>
                     </div>
 
-                    <!-- Controle sutil de reprodução -->
-                    <div class="flex items-center justify-center pt-4">
-                        <!-- <button id="credits-toggle-btn" class="hover:text-brand-gold text-slate-400 hover:text-white transition-colors flex items-center gap-1.5 py-1 px-3 rounded-full bg-white/5 hover:bg-white/10 text-xs font-mono" aria-label="Pausar ou reproduzir rolagem dos créditos">
-                            <span id="credits-toggle-icon">⏸</span>
-                            <span id="credits-toggle-label">Pausar</span>
-                        </button> -->
+                    <!-- Roda Interativa de Opções Orbitais (Efeito OptionWheel) -->
+                    <div id="disciplines-wheel"
+                         class="option-wheel"
+                         role="listbox"
+                         tabindex="0"
+                         aria-label="Disciplinas ofertadas no concurso em seletor orbital">
+                        <!-- Itens injetados dinamicamente via JS -->
                     </div>
 
+                </div>
+
+                <!-- Barra Discreta de Navegação e Ação da Disciplina em Foco -->
+                <div class="max-w-7xl mx-auto px-4 md:px-12 lg:px-16 relative z-20 pt-2 sm:pt-3 flex flex-wrap items-center justify-center gap-3">
+                    <div class="flex items-center gap-1.5">
+                        <button type="button" id="wheel-prev-btn" class="wheel-step-btn" aria-label="Disciplina anterior">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M5 15l7-7 7 7"></path>
+                            </svg>
+                        </button>
+                        <button type="button" id="wheel-next-btn" class="wheel-step-btn" aria-label="Próxima disciplina">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <button type="button" id="wheel-open-active" class="wheel-active-cta">
+                        <span class="wheel-active-dot" aria-hidden="true"></span>
+                        <span id="wheel-active-label">Análises Clínicas</span>
+                        <span class="wheel-active-sep" aria-hidden="true">•</span>
+                        <span id="wheel-active-meta" class="wheel-active-meta">25 vagas</span>
+                        <svg class="w-3.5 h-3.5 shrink-0 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
                 </div>
 
                 <!-- Lista Semântica Invisível para Leitores de Tela (TalkBack, VoiceOver, NVDA) -->

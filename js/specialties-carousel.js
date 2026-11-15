@@ -428,60 +428,49 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // -------------------------------------------------------------
-        // 2.1 RENDERIZAR CRÉDITOS DE ESPECIALIDADES EM LOOP INFINITO (CINEMATOGRÁFICO)
+        // 2.1 RODA ORBITAL DE DISCIPLINAS (OPTION WHEEL + SELO FACMED UFF)
         // -------------------------------------------------------------
-        function buildCreditsRoll() {
-            const rollEl = document.getElementById('credits-roll');
+        function initDisciplinesOptionWheel() {
+            const sectionEl = document.getElementById('disciplinas-section');
+            const viewportEl = document.getElementById('credits-viewport');
+            const wheelEl = document.getElementById('disciplines-wheel');
+            const orbitRingEl = document.getElementById('wheel-orbit-ring');
+            const prevStepBtn = document.getElementById('wheel-prev-btn');
+            const nextStepBtn = document.getElementById('wheel-next-btn');
+            const openActiveBtn = document.getElementById('wheel-open-active');
+            const activeLabelEl = document.getElementById('wheel-active-label');
+            const activeMetaEl = document.getElementById('wheel-active-meta');
             const srListEl = document.getElementById('spec-accessible-list');
-            const toggleBtn = document.getElementById('credits-toggle-btn');
-            const toggleIcon = document.getElementById('credits-toggle-icon');
-            const toggleLabel = document.getElementById('credits-toggle-label');
 
-            if (!rollEl) return;
+            if (!wheelEl || !viewportEl || !specialties.length) return;
 
-            // Duplicamos as 13 especialidades para loop sem fim contínuo
-            const loopItems = [...specialties, ...specialties];
+            const n = specialties.length;
+            const SMOOTHING_MS = 410;
+            const CURVE = 1;
+            const BLUR_STEP = 2;
+            const FADE_STEP = 0.25;
+            const MIN_OPACITY = 0.05;
+            const AUTO_STEP_MS = 2300;
 
-            rollEl.innerHTML = loopItems.map((spec, index) => {
-                const realIndex = index % specialties.length;
-                return `
-                    <div class="credits-item"
-                         data-index="${realIndex}"
-                         role="button"
-                         tabindex="0"
-                         aria-label="${spec.title} - Ver detalhes do programa">
-                        <span class="credits-item-text">${spec.title}</span>
-                    </div>
-                `;
-            }).join('');
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const modIdx = (idx) => ((idx % n) + n) % n;
+            const lerp = (a, b, t) => a + (b - a) * t;
 
-            // Clique ou teclado para abrir detalhes da especialidade
-            rollEl.querySelectorAll('.credits-item').forEach((item) => {
-                item.addEventListener('click', () => {
-                    const idx = Number(item.getAttribute('data-index'));
-                    openSpecialtyModal(specialties[idx]);
-                });
-                item.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        const idx = Number(item.getAttribute('data-index'));
-                        openSpecialtyModal(specialties[idx]);
-                    }
-                });
-            });
+            // Popula itens da roda orbital
+            wheelEl.innerHTML = specialties.map((spec, idx) => `
+                <div id="wheel-opt-${idx}"
+                     class="option-wheel__item${idx === 0 ? ' option-wheel__item--selected' : ''}"
+                     role="option"
+                     data-index="${idx}"
+                     aria-selected="${idx === 0 ? 'true' : 'false'}">
+                    ${spec.title}
+                </div>
+            `).join('');
 
-            // Botão de pausa/reprodução manual
-            let isCreditsPaused = false;
-            if (toggleBtn) {
-                toggleBtn.addEventListener('click', () => {
-                    isCreditsPaused = !isCreditsPaused;
-                    rollEl.classList.toggle('is-paused', isCreditsPaused);
-                    if (toggleIcon) toggleIcon.textContent = isCreditsPaused ? '▶' : '⏸';
-                    if (toggleLabel) toggleLabel.textContent = isCreditsPaused ? 'Continuar' : 'Pausar';
-                });
-            }
+            const itemEls = Array.from(wheelEl.querySelectorAll('.option-wheel__item'));
+            wheelEl.setAttribute('aria-activedescendant', 'wheel-opt-0');
 
-            // Lista semântica acessível para leitores de tela (TalkBack, VoiceOver, NVDA)
+            // Lista semântica acessível para leitores de tela
             if (srListEl) {
                 srListEl.innerHTML = specialties.map((spec, index) => `
                     <li>
@@ -489,10 +478,365 @@ document.addEventListener("DOMContentLoaded", () => {
                     </li>
                 `).join('');
             }
+
+            let cfg = {
+                fontSize: 2.8,
+                spacing: 1.05,
+                tilt: 7.6,
+                cx: -54,
+                inset: 301,
+                rowH: 47.04,
+                tiltRad: (7.6 * Math.PI) / 180,
+                R: 354.6,
+                emblemSize: 540,
+                orbitSize: 620
+            };
+
+            function updateGeometry() {
+                const remPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+                const width = viewportEl.clientWidth || window.innerWidth;
+
+                let fontSize;
+                let spacing;
+                let tilt;
+                let cx;
+                let emblemSize;
+                let orbitSize;
+
+                if (width >= 1360) {
+                    fontSize = 2.8;
+                    spacing = 1.05;
+                    tilt = 7.4;
+                    cx = -26;
+                } else if (width >= 1024) {
+                    const t = (width - 1024) / (1360 - 1024);
+                    fontSize = lerp(1.9, 2.55, t);
+                    spacing = lerp(1.08, 1.05, t);
+                    tilt = lerp(8.0, 7.4, t);
+                    cx = lerp(-24, -26, t);
+                } else if (width >= 640) {
+                    const t = (width - 640) / (1024 - 640);
+                    fontSize = lerp(1.5, 1.85, t);
+                    spacing = lerp(1.22, 1.12, t);
+                    tilt = lerp(8.8, 8.2, t);
+                    cx = lerp(-22, -24, t);
+                } else {
+                    fontSize = width < 380 ? 1.1 : 1.18;
+                    spacing = 1.44;
+                    tilt = 9.6;
+                    cx = -22;
+                }
+
+                const rowH = fontSize * remPx * spacing;
+                const tiltRad = (tilt * Math.PI) / 180;
+                const R = rowH / tiltRad;
+                const inset = Math.round(cx + R);
+
+                if (width >= 1360) {
+                    emblemSize = 530;
+                    orbitSize = 616;
+                } else if (width >= 1024) {
+                    emblemSize = Math.round(Math.min(510, Math.max(340, R * 1.44)));
+                    orbitSize = Math.round(emblemSize + 60);
+                } else if (width >= 640) {
+                    emblemSize = Math.round(Math.min(410, Math.max(270, R * 1.4)));
+                    orbitSize = Math.round(emblemSize + 44);
+                } else {
+                    emblemSize = Math.round(Math.min(228, Math.max(185, R * 1.36)));
+                    orbitSize = Math.round(emblemSize + 32);
+                }
+
+                cfg = { fontSize, spacing, tilt, cx, inset, rowH, tiltRad, R, emblemSize, orbitSize };
+
+                viewportEl.style.setProperty('--ow-font-size', `${fontSize.toFixed(3)}rem`);
+                viewportEl.style.setProperty('--ow-inset', `${inset}px`);
+                viewportEl.style.setProperty('--ow-cx', `${cx.toFixed(1)}px`);
+                viewportEl.style.setProperty('--ow-emblem-size', `${emblemSize}px`);
+                viewportEl.style.setProperty('--ow-orbit-size', `${orbitSize}px`);
+            }
+
+            let pos = 0;
+            let target = 0;
+            let selectedIdx = 0;
+            let rafId = null;
+            let lastTime = 0;
+            let isInView = true;
+            let isHovering = false;
+            let isDragging = false;
+            let dragStartY = 0;
+            let dragStartTarget = 0;
+            let dragMoved = false;
+            let pauseAutoUntil = 0;
+
+            const isModalOpen = () => modal && !modal.classList.contains('pointer-events-none');
+
+            function syncSelection(nextIdx) {
+                if (nextIdx === selectedIdx) return;
+                const prevEl = itemEls[selectedIdx];
+                const nextEl = itemEls[nextIdx];
+                if (prevEl) {
+                    prevEl.classList.remove('option-wheel__item--selected');
+                    prevEl.setAttribute('aria-selected', 'false');
+                }
+                if (nextEl) {
+                    nextEl.classList.add('option-wheel__item--selected');
+                    nextEl.setAttribute('aria-selected', 'true');
+                    wheelEl.setAttribute('aria-activedescendant', nextEl.id);
+                }
+                selectedIdx = nextIdx;
+                const activeSpec = specialties[selectedIdx];
+                if (activeLabelEl) activeLabelEl.textContent = activeSpec.title;
+                if (activeMetaEl) activeMetaEl.textContent = activeSpec.vagasShort;
+            }
+
+            function paint(value) {
+                const { tilt, tiltRad, R } = cfg;
+                const wrapped = ((value % n) + n) % n;
+
+                for (let i = 0; i < n; i++) {
+                    const el = itemEls[i];
+                    if (!el) continue;
+
+                    let d = i - wrapped;
+                    if (d > n / 2) d -= n;
+                    else if (d < -n / 2) d += n;
+
+                    const absD = Math.abs(d);
+                    const steps = absD;
+                    let opacity = Math.max(MIN_OPACITY, 1 - steps * FADE_STEP);
+                    if (absD > 5.4) {
+                        opacity *= Math.max(0, 1 - (absD - 5.4) / 0.9);
+                    }
+
+                    if (opacity <= 0.004 || absD > 6.35) {
+                        el.style.visibility = 'hidden';
+                        el.style.opacity = '0';
+                        continue;
+                    }
+
+                    const ang = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, d * tiltRad));
+                    const y = R * Math.sin(ang);
+                    const x = -R * (1 - Math.cos(ang)) * CURVE;
+                    const rot = (ang * 180) / Math.PI;
+                    const p = Math.max(0, Math.min(1, 1 - steps));
+                    const blurPx = prefersReducedMotion ? 0 : (steps < 0.02 ? 0 : steps * BLUR_STEP);
+
+                    el.style.visibility = 'visible';
+                    el.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) translateY(-50%) rotate(${rot.toFixed(2)}deg)`;
+                    el.style.opacity = opacity.toFixed(3);
+                    el.style.filter = blurPx > 0.05 ? `blur(${blurPx.toFixed(2)}px)` : 'none';
+                    el.style.setProperty('--ow-p', p.toFixed(3));
+                    el.style.zIndex = String(Math.round(50 - steps * 4));
+                }
+
+                if (orbitRingEl) {
+                    const ringDeg = (value * tilt * 0.65).toFixed(2);
+                    orbitRingEl.style.transform = `translate(-50%, -50%) rotate(${ringDeg}deg)`;
+                }
+
+                syncSelection(modIdx(Math.round(value)));
+            }
+
+            function stepFrame(now) {
+                if (!lastTime) lastTime = now;
+                const dt = Math.min(0.05, Math.max(0.001, (now - lastTime) / 1000));
+                lastTime = now;
+
+                const diff = target - pos;
+                if (prefersReducedMotion || Math.abs(diff) < 0.0008) {
+                    pos = target;
+                    paint(pos);
+                    rafId = null;
+                    lastTime = 0;
+                    return;
+                }
+
+                const tau = SMOOTHING_MS / 1000;
+                const k = isDragging ? Math.min(1, dt * 18) : (1 - Math.exp(-dt / tau));
+                pos += diff * k;
+                paint(pos);
+
+                if (isInView && !document.hidden) {
+                    rafId = requestAnimationFrame(stepFrame);
+                } else {
+                    rafId = null;
+                    lastTime = 0;
+                }
+            }
+
+            function ensureLoop() {
+                if (prefersReducedMotion) {
+                    pos = target;
+                    paint(pos);
+                    return;
+                }
+                if (!rafId && isInView && !document.hidden) {
+                    lastTime = 0;
+                    rafId = requestAnimationFrame(stepFrame);
+                }
+            }
+
+            function goToShortestIndex(itemIdx, openIfCentered) {
+                const curIdx = modIdx(Math.round(target));
+                let diff = itemIdx - curIdx;
+                if (diff > n / 2) diff -= n;
+                else if (diff < -n / 2) diff += n;
+
+                if (diff === 0 && openIfCentered) {
+                    pauseAutoUntil = Date.now() + 4500;
+                    openSpecialtyModal(specialties[itemIdx]);
+                    return;
+                }
+
+                target = Math.round(target) + diff;
+                pauseAutoUntil = Date.now() + 4500;
+                ensureLoop();
+            }
+
+            // Cliques diretos nas opções da roda
+            wheelEl.addEventListener('click', (e) => {
+                if (dragMoved) {
+                    dragMoved = false;
+                    return;
+                }
+                const item = e.target.closest('.option-wheel__item');
+                if (!item) return;
+                const idx = Number(item.getAttribute('data-index'));
+                if (Number.isNaN(idx)) return;
+                goToShortestIndex(idx, true);
+            });
+
+            // Arraste vertical com mouse/caneta (mantém scroll vertical touch nativo no mobile)
+            wheelEl.addEventListener('pointerdown', (e) => {
+                if (e.pointerType === 'touch') return;
+                isDragging = true;
+                dragMoved = false;
+                dragStartY = e.clientY;
+                dragStartTarget = target;
+                pauseAutoUntil = Date.now() + 5000;
+                wheelEl.classList.add('option-wheel--dragging');
+                try { wheelEl.setPointerCapture(e.pointerId); } catch (_) {}
+                ensureLoop();
+            });
+
+            wheelEl.addEventListener('pointermove', (e) => {
+                if (!isDragging) return;
+                const dy = e.clientY - dragStartY;
+                if (Math.abs(dy) > 5) dragMoved = true;
+                target = dragStartTarget - dy / Math.max(20, cfg.rowH);
+                pauseAutoUntil = Date.now() + 5000;
+                ensureLoop();
+            });
+
+            const finishDrag = (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                wheelEl.classList.remove('option-wheel--dragging');
+                try { wheelEl.releasePointerCapture(e.pointerId); } catch (_) {}
+                target = Math.round(target);
+                pauseAutoUntil = Date.now() + 3800;
+                ensureLoop();
+                setTimeout(() => { dragMoved = false; }, 40);
+            };
+            wheelEl.addEventListener('pointerup', finishDrag);
+            wheelEl.addEventListener('pointercancel', finishDrag);
+
+            // Teclado acessível (Setas / Enter)
+            wheelEl.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    target = Math.round(target) + 1;
+                    pauseAutoUntil = Date.now() + 4500;
+                    ensureLoop();
+                } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    target = Math.round(target) - 1;
+                    pauseAutoUntil = Date.now() + 4500;
+                    ensureLoop();
+                } else if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openSpecialtyModal(specialties[selectedIdx]);
+                }
+            });
+
+            // Controles inferiores discretos
+            if (prevStepBtn) {
+                prevStepBtn.addEventListener('click', () => {
+                    target = Math.round(target) - 1;
+                    pauseAutoUntil = Date.now() + 4500;
+                    ensureLoop();
+                });
+            }
+            if (nextStepBtn) {
+                nextStepBtn.addEventListener('click', () => {
+                    target = Math.round(target) + 1;
+                    pauseAutoUntil = Date.now() + 4500;
+                    ensureLoop();
+                });
+            }
+            if (openActiveBtn) {
+                openActiveBtn.addEventListener('click', () => {
+                    pauseAutoUntil = Date.now() + 4500;
+                    openSpecialtyModal(specialties[selectedIdx]);
+                });
+            }
+
+            // Pausa elegante durante hover na área de interação
+            if (sectionEl) {
+                sectionEl.addEventListener('mouseenter', () => { isHovering = true; });
+                sectionEl.addEventListener('mouseleave', () => { isHovering = false; });
+            }
+
+            // Auto-rotação orbital suave para cima quando visível
+            let autoTimer = null;
+            if (!prefersReducedMotion) {
+                autoTimer = setInterval(() => {
+                    if (!isInView || document.hidden || isHovering || isDragging || isModalOpen()) return;
+                    if (Date.now() < pauseAutoUntil) return;
+                    target = Math.round(target) + 1;
+                    ensureLoop();
+                }, AUTO_STEP_MS);
+            }
+
+            // Pausar rAF quando a seção estiver fora da tela
+            if ('IntersectionObserver' in window) {
+                const viewObserver = new IntersectionObserver((entries) => {
+                    isInView = entries.some((entry) => entry.isIntersecting);
+                    if (isInView) {
+                        paint(pos);
+                        if (Math.abs(target - pos) > 0.001) ensureLoop();
+                    } else if (rafId) {
+                        cancelAnimationFrame(rafId);
+                        rafId = null;
+                    }
+                }, { rootMargin: '250px 0px' });
+                viewObserver.observe(sectionEl || viewportEl);
+            }
+
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && isInView && Math.abs(target - pos) > 0.001) {
+                    ensureLoop();
+                }
+            });
+
+            // Recalculo geométrico responsivo (ResizeObserver + window resize)
+            const handleResize = () => {
+                updateGeometry();
+                paint(pos);
+            };
+            if ('ResizeObserver' in window) {
+                const ro = new ResizeObserver(handleResize);
+                ro.observe(viewportEl);
+            } else {
+                window.addEventListener('resize', handleResize, { passive: true });
+            }
+
+            updateGeometry();
+            paint(pos);
         }
 
         buildSpecialtyCards();
-        buildCreditsRoll();
+        initDisciplinesOptionWheel();
 
         // -------------------------------------------------------------
         // 3. MODAL DE DETALHES DA ESPECIALIDADE (COM DADOS DO EDITAL)

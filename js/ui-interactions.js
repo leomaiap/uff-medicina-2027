@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-                if (prefersReducedMotion) {
+                if (prefersReducedMotion || typeof gsap === 'undefined') {
                     counters.forEach(c => {
                         const el = document.getElementById(c.id);
                         if (el) el.textContent = c.target;

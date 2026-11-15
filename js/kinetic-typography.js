@@ -162,16 +162,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const creditsViewport = document.getElementById('credits-viewport');
                 if (creditsViewport) {
                     gsap.fromTo(creditsViewport,
-                        { y: 45, opacity: 0 },
+                        { y: 32, opacity: 0 },
                         {
                             y: 0,
                             opacity: 1,
-                            duration: 0.9,
-                            ease: 'power2.out',
+                            duration: 0.85,
+                            ease: 'power3.out',
                             scrollTrigger: {
                                 trigger: creditsViewport,
-                                start: 'top 88%',
-                                toggleActions: 'play none none reverse'
+                                start: 'top 92%',
+                                once: true
                             }
                         }
                     );

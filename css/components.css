@@ -311,88 +311,247 @@
             transform: scale(1.06);
         }
 
-        /* Movie Credits Specialty Scroll (Disciplinas em Loop Infinito com Fade) */
-        .credits-viewport {
+        /* ==============================================================
+           DISCIPLINES OPTION WHEEL & FACMED WATERMARK EMBLEM
+           ============================================================== */
+        .disciplines-wheel-section {
             position: relative;
-            height: 340px;
+            width: 100%;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
             overflow: hidden;
-            mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.3) 10%, #000 24%, #000 76%, rgba(0, 0, 0, 0.3) 90%, transparent 100%);
-            -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.3) 10%, #000 24%, #000 76%, rgba(0, 0, 0, 0.3) 90%, transparent 100%);
         }
 
-        @keyframes rollCreditsUp {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(-50%);
+        @media (min-width: 768px) {
+            .disciplines-wheel-section {
+                margin-top: 4rem;
             }
         }
 
-        .credits-roll {
-            display: flex;
-            flex-direction: column;
-            animation: rollCreditsUp 28s linear infinite;
-            will-change: transform;
-        }
-
-        .credits-roll.is-paused,
-        .credits-viewport:hover .credits-roll,
-        .credits-viewport:focus-within .credits-roll {
-            animation-play-state: paused;
-        }
-
-        .credits-item {
-            min-height: 64px;
-            height: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0.35rem 1rem;
-            cursor: pointer;
-            user-select: none;
-            transition: transform 0.25s ease;
-        }
-
-        .credits-item-text {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800;
-            font-size: clamp(1.15rem, 4.6vw, 1.6rem);
-            letter-spacing: -0.025em;
-            line-height: 1.2;
-            color: rgba(255, 255, 255, 0.92);
-            transition: color 0.25s ease, transform 0.25s ease, text-shadow 0.25s ease;
-            text-wrap: balance;
-            text-align: center;
-            max-width: 100%;
-            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+        .credits-viewport {
+            --ow-text-color: #8eb3a4;
+            --ow-active-color: #ffffff;
+            --ow-font-size: 2.8rem;
+            --ow-inset: 338px;
+            --ow-cx: -26px;
+            --ow-emblem-size: 530px;
+            --ow-orbit-size: 616px;
+            position: relative;
+            width: 100%;
+            height: 360px;
+            overflow: hidden;
+            mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.35) 11%, #000 24%, #000 76%, rgba(0, 0, 0, 0.35) 89%, transparent 100%);
+            -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.35) 11%, #000 24%, #000 76%, rgba(0, 0, 0, 0.35) 89%, transparent 100%);
         }
 
         @media (min-width: 640px) {
-            .credits-item-text {
-                font-size: 2.15rem;
+            .credits-viewport {
+                height: 500px;
             }
         }
 
-        .credits-item:hover,
-        .credits-item:focus {
-            transform: none;
+        @media (min-width: 1024px) {
+            .credits-viewport {
+                height: 580px;
+            }
         }
 
-        .credits-item:hover .credits-item-text,
-        .credits-item:focus .credits-item-text {
-            color: #10B981;
-            transform: none;
-            text-shadow: none;
+        .wheel-emblem-wrap {
+            position: absolute;
+            top: 50%;
+            left: var(--ow-cx);
+            width: var(--ow-emblem-size);
+            height: var(--ow-emblem-size);
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .wheel-emblem-halo {
+            position: absolute;
+            inset: -12%;
+            border-radius: 9999px;
+            background: radial-gradient(
+                circle at 60% 50%,
+                rgba(16, 185, 129, 0.16) 0%,
+                rgba(0, 158, 94, 0.08) 42%,
+                rgba(8, 56, 43, 0) 72%
+            );
+            filter: blur(18px);
+            pointer-events: none;
+        }
+
+        .wheel-emblem-img {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0.38;
+            filter: drop-shadow(0 0 32px rgba(52, 211, 153, 0.16));
+            mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.14) 44%, rgba(0, 0, 0, 0.92) 72%, #000 88%, rgba(0, 0, 0, 0.35) 97%, transparent 100%);
+            -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.14) 44%, rgba(0, 0, 0, 0.92) 72%, #000 88%, rgba(0, 0, 0, 0.35) 97%, transparent 100%);
+            will-change: opacity, transform;
+        }
+
+        .wheel-orbit-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: var(--ow-orbit-size);
+            height: var(--ow-orbit-size);
+            transform: translate(-50%, -50%) rotate(0deg);
+            border-radius: 9999px;
+            border: 1px dashed rgba(255, 255, 255, 0.11);
+            mask-image: linear-gradient(90deg, transparent 35%, rgba(0, 0, 0, 0.5) 55%, rgba(0, 0, 0, 0.9) 85%, rgba(0, 0, 0, 0.9) 100%);
+            -webkit-mask-image: linear-gradient(90deg, transparent 35%, rgba(0, 0, 0, 0.5) 55%, rgba(0, 0, 0, 0.9) 85%, rgba(0, 0, 0, 0.9) 100%);
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        .option-wheel {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            cursor: grab;
+            user-select: none;
+            touch-action: pan-y;
+            outline: none;
+        }
+
+        .option-wheel--dragging {
+            cursor: grabbing;
+        }
+
+        .option-wheel__item {
+            position: absolute;
+            top: 50%;
+            left: var(--ow-inset);
+            max-width: calc(100% - var(--ow-inset) - 1rem);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: var(--ow-font-size);
+            line-height: 1.08;
+            font-weight: 300;
+            letter-spacing: -0.028em;
+            white-space: normal;
+            transform-origin: left center;
+            cursor: pointer;
+            will-change: transform, opacity, filter;
+            color: var(--ow-text-color);
+            color: color-mix(in srgb, var(--ow-active-color) calc(var(--ow-p, 0) * 100%), var(--ow-text-color));
+            text-shadow: 0 4px 20px rgba(4, 24, 18, calc(0.18 + var(--ow-p, 0) * 0.36));
+            transition: font-weight 0.2s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .option-wheel__item {
+                white-space: nowrap;
+                line-height: 1;
+                max-width: calc(100% - var(--ow-inset) - 1.5rem);
+            }
+        }
+
+        .option-wheel__item--selected {
+            font-weight: 700;
+        }
+
+        .option-wheel:focus-visible {
+            outline: 1px solid rgba(52, 211, 153, 0.45);
+            outline-offset: -4px;
+            border-radius: 16px;
+        }
+
+        .wheel-step-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(13, 72, 56, 0.55);
+            color: rgba(255, 255, 255, 0.85);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+
+        .wheel-step-btn:hover {
+            background: #10B981;
+            border-color: #10B981;
+            color: #08382b;
+            transform: scale(1.06);
+        }
+
+        .wheel-active-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            max-width: calc(100vw - 8.5rem);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(13, 72, 56, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .wheel-active-cta:hover {
+            background: rgba(16, 185, 129, 0.22);
+            border-color: rgba(52, 211, 153, 0.55);
+            transform: translateY(-1px);
+        }
+
+        .wheel-active-dot {
+            width: 0.45rem;
+            height: 0.45rem;
+            border-radius: 9999px;
+            background: #34D399;
+            flex-shrink: 0;
+        }
+
+        #wheel-active-label {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .wheel-active-sep {
+            color: rgba(255, 255, 255, 0.38);
+            flex-shrink: 0;
+            display: none;
+        }
+
+        .wheel-active-meta {
+            color: rgba(255, 255, 255, 0.72);
+            font-weight: 500;
+            white-space: nowrap;
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .wheel-active-sep {
+                display: inline;
+            }
+            .wheel-active-meta {
+                display: inline;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .credits-roll {
-                animation: none;
-            }
             .credits-viewport {
-                overflow-y: auto;
+                mask-image: none;
+                -webkit-mask-image: none;
+            }
+            .option-wheel__item {
+                filter: none !important;
             }
         }
 
