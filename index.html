@@ -225,15 +225,72 @@
 
         </div>
 
-        <!-- CAMADA 3 (OVERLAY DO PALCO PINADO - z-40): HUD DISCRETO DE PROGRESSO DO SCROLL & CUE DE CONTINUAÇÃO -->
-        <div id="scrolly-hud" class="absolute inset-x-0 bottom-2.5 sm:bottom-4 z-40 flex flex-col items-center justify-center pointer-events-none select-none px-4 transition-opacity duration-200" style="opacity: 0;">
-            <button type="button" id="scrolly-scroll-cue" class="pointer-events-auto cursor-pointer group flex items-center gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-brand-surface/95 hover:bg-brand-surface border border-white/15 hover:border-brand-gold/50 shadow-lg text-[11px] sm:text-xs font-semibold text-slate-200 hover:text-white transition-all duration-200" title="Rolar para continuar">
-                <span>Role para ver mais</span>
-                <svg class="w-3.5 h-3.5 text-brand-gold group-hover:translate-y-0.5 transition-transform animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        <!-- CAMADA 3 (OVERLAY DO PALCO PINADO - z-40): HUD DISCRETO DE PROGRESSO & MÃO ANIMADA PARA ROLAR -->
+        <div id="scrolly-hud" class="scrolly-hud-wrap" style="opacity: 0;">
+            <button type="button" id="scrolly-scroll-cue" class="scroll-hand-cue" aria-label="Rolar para continuar" title="Rolar para continuar">
+                <span class="scroll-hand-stage" aria-hidden="true">
+                    <!-- Rastro e setas verdes de arraste para cima -->
+                    <span class="scroll-hand-trail"></span>
+                    <svg class="scroll-hand-chevrons" width="28" height="24" viewBox="0 0 28 24" fill="none">
+                        <path d="M5 18L14 9.5L23 18" stroke="#34D399" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.65"/>
+                        <path d="M7.5 11.5L14 5L20.5 11.5" stroke="#A7F3D0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <!-- Onda de toque verde na ponta do dedo -->
+                    <span class="scroll-hand-ripple"></span>
+                    <!-- Mão 3D estilizada com punho verde esmeralda -->
+                    <svg class="scroll-hand-svg" width="54" height="66" viewBox="0 0 96 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <radialGradient id="scrollyHandSkin" cx="40%" cy="30%" r="68%">
+                                <stop offset="0%" stop-color="#FFECE2"/>
+                                <stop offset="52%" stop-color="#F2BFA9"/>
+                                <stop offset="100%" stop-color="#CE846B"/>
+                            </radialGradient>
+                            <radialGradient id="scrollyFingerKnuckle" cx="45%" cy="30%" r="65%">
+                                <stop offset="0%" stop-color="#FAD3C2"/>
+                                <stop offset="70%" stop-color="#E7AC94"/>
+                                <stop offset="100%" stop-color="#C47960"/>
+                            </radialGradient>
+                            <linearGradient id="scrollyCuffWhite" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#CBD5E1"/>
+                                <stop offset="38%" stop-color="#FFFFFF"/>
+                                <stop offset="75%" stop-color="#F1F5F9"/>
+                                <stop offset="100%" stop-color="#94A3B8"/>
+                            </linearGradient>
+                            <linearGradient id="scrollyCuffGreen" x1="0%" y1="0%" x2="100%" y2="18%">
+                                <stop offset="0%" stop-color="#34D399"/>
+                                <stop offset="42%" stop-color="#009E5E"/>
+                                <stop offset="100%" stop-color="#005234"/>
+                            </linearGradient>
+                        </defs>
+                        <g transform="rotate(-5 48 64)">
+                            <!-- Polegar esquerdo -->
+                            <path d="M29 58C21.5 49.5 15.5 43.5 18.8 38.2C22 33 29.5 38.5 35.5 47Z" fill="url(#scrollyHandSkin)"/>
+                            <!-- Palma e dedo indicador estendido -->
+                            <path d="M35 50V17.5C35 12.2 39.2 8.5 44 8.5C48.8 8.5 52.6 12.2 52.6 17.5V41.5C52.6 39 55.6 37 59.1 37.6C62.5 38.2 64.6 40.8 64.6 43.8C65.7 41.5 68.7 40.5 71.7 41.6C74.4 42.6 75.8 45 75.8 48C77.1 46.6 79.7 46.4 81.7 47.9C83.8 49.5 84.3 52.6 83.6 56.6C82.1 65.6 78.5 75.6 71 80.5C65 84.5 45 85 38 78.5C31.5 72.5 29 63 35 50Z" fill="url(#scrollyHandSkin)"/>
+                            <!-- Volume 3D dos dedos dobrados -->
+                            <rect x="52.6" y="38.2" width="11.6" height="17" rx="5.8" fill="url(#scrollyFingerKnuckle)"/>
+                            <rect x="64.2" y="41.8" width="11.2" height="16" rx="5.6" fill="url(#scrollyFingerKnuckle)"/>
+                            <rect x="75" y="47.2" width="8.6" height="14" rx="4.3" fill="url(#scrollyFingerKnuckle)"/>
+                            <!-- Vincos suaves entre dedos -->
+                            <path d="M52.6 40V52M64.3 44V54M75.1 49V57" stroke="#A65E47" stroke-opacity="0.42" stroke-width="1.8" stroke-linecap="round"/>
+                            <!-- Brilho sutil na ponta do indicador -->
+                            <rect x="40" y="12" width="7.8" height="6.8" rx="3.5" fill="#FFF5EF" fill-opacity="0.72"/>
+                            <!-- Punho branco interno -->
+                            <rect x="37" y="79" width="32" height="9.8" rx="4.4" fill="url(#scrollyCuffWhite)"/>
+                            <!-- Manga verde esmeralda 3D -->
+                            <rect x="34.8" y="85.5" width="36.4" height="20" rx="7.2" fill="url(#scrollyCuffGreen)"/>
+                            <!-- Realce suave na borda superior da manga -->
+                            <path d="M39 87.6H66" stroke="#A7F3D0" stroke-opacity="0.35" stroke-width="1.4" stroke-linecap="round"/>
+                            <!-- Botões laterais do punho -->
+                            <circle cx="67.5" cy="92" r="2.1" fill="#ECFDF5" fill-opacity="0.92"/>
+                            <circle cx="67.5" cy="99" r="2.1" fill="#ECFDF5" fill-opacity="0.92"/>
+                        </g>
+                    </svg>
+                </span>
             </button>
-            <!-- Mini barra de progresso horizontal do estágio pinado -->
-            <div class="w-28 sm:w-36 h-1 sm:h-1.5 bg-black/40 border border-white/10 rounded-full mt-1.5 overflow-hidden shadow-inner" aria-hidden="true">
-                <div id="scrolly-progress-bar" class="h-full bg-gradient-to-r from-emerald-400 via-brand-accent to-brand-gold rounded-full w-full origin-left transform scale-x-0 will-change-transform"></div>
+            <!-- Mini barra de progresso horizontal verde do estágio pinado -->
+            <div class="scrolly-progress-track" aria-hidden="true">
+                <div id="scrolly-progress-bar" class="scrolly-progress-fill"></div>
             </div>
         </div>
 
