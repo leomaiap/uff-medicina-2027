@@ -100,13 +100,13 @@
 }
 
 /* ==============================================================
-   HUD & INDICADOR DE PROGRESSO DO ESTÁGIO PINADO
+   HUD & CHEVRON DISCRETO BRANCO DO ESTÁGIO PINADO
    ============================================================== */
 #scrolly-hud {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0.65rem;
+    bottom: 0.9rem;
     z-index: 40;
     display: flex;
     flex-direction: column;
@@ -121,244 +121,87 @@
 
 @media (min-width: 640px) {
     #scrolly-hud {
-        bottom: 1rem;
+        bottom: 1.35rem;
     }
 }
 
 #scrolly-scroll-cue {
     pointer-events: auto;
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.25rem;
+    width: 40px;
+    height: 40px;
+    padding: 0;
     background: transparent;
     border: none;
     box-shadow: none;
     outline: none;
-    transition: transform 0.2s ease;
+    transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-#scrolly-scroll-cue:hover .scroll-hand-stage {
-    transform: translateY(-2px) scale(1.05);
+#scrolly-scroll-cue:hover {
+    transform: translateY(-2px);
 }
 
 #scrolly-scroll-cue:active {
-    transform: scale(0.94);
+    transform: scale(0.92);
 }
 
-.scroll-hand-stage {
-    position: relative;
+.scroll-chevron-svg {
+    width: 26px;
+    height: 26px;
     display: block;
-    width: 48px;
-    height: 60px;
-    overflow: visible;
-    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.45));
+    will-change: transform;
+    animation: scrollChevronFloat 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-@media (min-width: 640px) {
-    .scroll-hand-stage {
-        width: 56px;
-        height: 70px;
-    }
+.scroll-chevron-line {
+    will-change: opacity;
 }
 
-.scroll-hand-svg {
-    position: relative;
-    z-index: 3;
-    width: 100%;
-    height: 100%;
-    display: block;
-    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 12px rgba(16, 185, 129, 0.35));
-    transform-origin: 50% 80%;
-    will-change: transform, opacity;
-    animation: scrollHandSwipe 2.1s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+.scroll-chevron-bottom {
+    animation: scrollChevronPulse 2s ease-in-out infinite;
 }
 
-.scroll-hand-trail {
-    position: absolute;
-    left: 41%;
-    top: 4px;
-    width: 4px;
-    height: 30px;
-    transform: translateX(-50%) scaleY(0.2);
-    transform-origin: bottom center;
-    border-radius: 9999px;
-    background: linear-gradient(180deg, rgba(167, 243, 208, 0.95) 0%, rgba(16, 185, 129, 0.65) 60%, rgba(0, 158, 94, 0) 100%);
-    filter: drop-shadow(0 0 8px rgba(52, 211, 153, 0.85));
-    opacity: 0;
-    z-index: 1;
-    pointer-events: none;
-    will-change: transform, opacity;
-    animation: scrollTrailSwipe 2.1s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+.scroll-chevron-top {
+    animation: scrollChevronPulse 2s ease-in-out 0.22s infinite;
 }
 
-.scroll-hand-chevrons {
-    position: absolute;
-    left: 41%;
-    top: -13px;
-    width: 24px;
-    height: 22px;
-    transform: translateX(-50%);
-    z-index: 2;
-    pointer-events: none;
-    filter: drop-shadow(0 0 7px rgba(52, 211, 153, 0.85));
-    opacity: 0;
-    will-change: transform, opacity;
-    animation: scrollChevronsUp 2.1s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-
-.scroll-hand-ripple {
-    position: absolute;
-    left: 41%;
-    top: 16px;
-    width: 18px;
-    height: 18px;
-    margin-left: -9px;
-    margin-top: -9px;
-    border-radius: 9999px;
-    border: 2px solid #34D399;
-    background: rgba(16, 185, 129, 0.28);
-    z-index: 2;
-    pointer-events: none;
-    opacity: 0;
-    will-change: transform, opacity;
-    animation: scrollTapRipple 2.1s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-
-@keyframes scrollHandSwipe {
-    0% {
-        opacity: 0.78;
-        transform: translateY(8px) scale(0.98) rotate(3deg);
+@keyframes scrollChevronFloat {
+    0%, 100% {
+        transform: translateY(3px);
     }
-    12% {
-        opacity: 1;
-        transform: translateY(7px) scale(1) rotate(2deg);
-    }
-    22% {
-        opacity: 1;
-        transform: translateY(7px) scale(0.92) rotate(1deg);
-    }
-    66% {
-        opacity: 1;
-        transform: translateY(-13px) scale(1) rotate(-3deg);
-    }
-    82% {
-        opacity: 0;
-        transform: translateY(-17px) scale(0.97) rotate(-4deg);
-    }
-    88% {
-        opacity: 0;
-        transform: translateY(9px) scale(0.97) rotate(3deg);
-    }
-    100% {
-        opacity: 0.78;
-        transform: translateY(8px) scale(0.98) rotate(3deg);
+    55% {
+        transform: translateY(-4px);
     }
 }
 
-@keyframes scrollTrailSwipe {
-    0%, 18% {
-        opacity: 0;
-        transform: translateX(-50%) translateY(14px) scaleY(0.15);
+@keyframes scrollChevronPulse {
+    0%, 100% {
+        opacity: 0.32;
     }
-    34% {
-        opacity: 0.95;
-        transform: translateX(-50%) translateY(4px) scaleY(0.95);
-    }
-    66% {
-        opacity: 0.8;
-        transform: translateX(-50%) translateY(-10px) scaleY(1.1);
-    }
-    82%, 100% {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-18px) scaleY(0.4);
-    }
-}
-
-@keyframes scrollChevronsUp {
-    0%, 16% {
-        opacity: 0.15;
-        transform: translateX(-50%) translateY(5px);
-    }
-    38% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(-2px);
-    }
-    68% {
-        opacity: 0.9;
-        transform: translateX(-50%) translateY(-11px);
-    }
-    84%, 100% {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-16px);
-    }
-}
-
-@keyframes scrollTapRipple {
-    0%, 14% {
-        opacity: 0;
-        transform: scale(0.35);
-    }
-    22% {
-        opacity: 0.95;
-        transform: scale(0.85);
-    }
-    46% {
-        opacity: 0;
-        transform: scale(1.9);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(1.9);
+    45% {
+        opacity: 0.92;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .scroll-hand-svg {
+    .scroll-chevron-svg {
         animation: none;
-        opacity: 1;
         transform: none;
     }
-    .scroll-hand-chevrons {
+    .scroll-chevron-bottom {
         animation: none;
-        opacity: 0.9;
-        transform: translateX(-50%) translateY(-2px);
+        opacity: 0.55;
     }
-    .scroll-hand-trail,
-    .scroll-hand-ripple {
+    .scroll-chevron-top {
         animation: none;
-        opacity: 0;
+        opacity: 0.85;
     }
 }
 
-.scrolly-progress-track {
-    width: 6rem;
-    height: 4px;
-    background: rgba(0, 0, 0, 0.42);
-    border: 1px solid rgba(52, 211, 153, 0.24);
-    border-radius: 9999px;
-    margin-top: 0.2rem;
-    overflow: hidden;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
-}
-
-@media (min-width: 640px) {
-    .scrolly-progress-track {
-        width: 8rem;
-    }
-}
-
-#scrolly-progress-bar,
-.scrolly-progress-fill {
-    width: 100%;
-    height: 100%;
-    border-radius: 9999px;
-    background: linear-gradient(90deg, #059669 0%, #34D399 55%, #A7F3D0 100%);
-    transform-origin: left center;
-    transform: scaleX(0);
-    will-change: transform;
-}
 
 
