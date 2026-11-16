@@ -258,7 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <h3 class="spec-card-title">${spec.title}</h3>
                             <p class="spec-card-meta">${spec.vagasShort} • ${spec.duration} • ${spec.hours}</p>
                             <div class="spec-card-btn">
-                                <span>Explorar Programa</span>
+                                <span>Ver Detalhes</span>
                                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"></path>
                                 </svg>
@@ -885,7 +885,7 @@ document.addEventListener("DOMContentLoaded", () => {
             modalContent.innerHTML = `
                 <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono pb-2 mb-2 pr-8">
                     <span class="text-brand-gold font-bold uppercase tracking-wider text-[11px]">
-                        Edital Unificado CMM • Faculdade de Medicina UFF
+                        Edital Unificado CMM Nº 1 / 2025 • UFF
                     </span>
                     <span class="text-brand-gold font-bold text-xs bg-brand-gold/15 px-3 py-1 rounded-full">
                         ${spec.vagas}
@@ -893,35 +893,41 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <h2 class="font-black text-2xl sm:text-3xl text-white mt-1">${spec.fullTitle || spec.title}</h2>
-                <div class="text-xs font-mono text-slate-400 mt-1 uppercase tracking-wider">${spec.category} • Início das Aulas: <strong class="text-white">${spec.inicio}</strong></div>
+                <div class="text-xs font-mono text-slate-300 mt-1 uppercase tracking-wider">Início das Aulas: <strong class="text-white">${spec.inicio}</strong> • Mínimo: <strong class="text-white">${spec.minAlunos}</strong></div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-5 text-xs sm:text-sm">
                     <div class="glass-card p-3.5 rounded-xl">
                         <span class="text-slate-400 block text-[11px] uppercase font-mono">Duração Oficial</span>
-                        <strong class="text-white text-base font-bold">${spec.duration}</strong>
+                        <strong class="text-white text-sm sm:text-base font-bold">${spec.duration}</strong>
                     </div>
                     <div class="glass-card p-3.5 rounded-xl">
                         <span class="text-slate-400 block text-[11px] uppercase font-mono">Carga Horária Total</span>
-                        <strong class="text-white text-base font-bold">${spec.hours}</strong>
+                        <strong class="text-white text-sm sm:text-base font-bold">${spec.hours}</strong>
+                    </div>
+                    <div class="glass-card p-3.5 rounded-xl">
+                        <span class="text-slate-400 block text-[11px] uppercase font-mono">1ª Etapa (Prova Escrita)</span>
+                        <strong class="text-slate-100 font-semibold text-xs sm:text-sm leading-relaxed block mt-1">${spec.stage1}</strong>
+                    </div>
+                    <div class="glass-card p-3.5 rounded-xl">
+                        <span class="text-slate-400 block text-[11px] uppercase font-mono">2ª Etapa (Classificatória)</span>
+                        <strong class="text-slate-100 font-semibold text-xs sm:text-sm leading-relaxed block mt-1">${spec.stage2}</strong>
                     </div>
                     <div class="glass-card p-3.5 rounded-xl sm:col-span-2">
-                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Pré-Requisito Regulamentar (Edital)</span>
+                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Pré-Requisito (Item 1.1 do Edital)</span>
                         <strong class="text-slate-200 font-medium text-xs sm:text-sm leading-relaxed block mt-1">${spec.prereq}</strong>
                     </div>
                     <div class="glass-card p-3.5 rounded-xl sm:col-span-2">
-                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Coordenação Acadêmica</span>
-                        <strong class="text-white text-sm font-bold">${spec.coordinator}</strong>
+                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Diploma Obtido no Exterior</span>
+                        <strong class="text-slate-200 font-medium text-xs sm:text-sm leading-relaxed block mt-1">${spec.revalidacao}</strong>
                     </div>
                 </div>
 
-                <p class="text-sm text-slate-200 leading-relaxed mb-6 font-light">${spec.desc}</p>
-
                 <div class="flex flex-col sm:flex-row items-center gap-3 pt-2">
-                    <a href="mailto:${spec.email}" class="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs font-bold text-white bg-brand-emerald hover:bg-emerald-500 text-center transition-all shadow-glow-emerald">
-                        Coordenação: ${spec.email}
+                    <a href="https://editais.uff.br/sites/default/files/arquivos/Edital%20Unificado.pdf" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs font-bold text-white bg-brand-emerald hover:bg-emerald-500 text-center transition-all shadow-glow-emerald">
+                        Consultar Edital Oficial (PDF)
                     </a>
                     <a href="mailto:concursos.cmm@id.uff.br" class="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white glass-pill text-center transition-all">
-                        Dúvidas Edital: concursos.cmm@id.uff.br
+                        Contato Edital: concursos.cmm@id.uff.br
                     </a>
                 </div>
             `;

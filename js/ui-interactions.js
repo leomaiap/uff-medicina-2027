@@ -19,39 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // -------------------------------------------------------------
-        // 5. COUNTDOWN TIMER EM TEMPO REAL (HUD & STICKY BAR)
-        // -------------------------------------------------------------
-        const targetDate = new Date();
-        targetDate.setDate(targetDate.getDate() + 18);
-        targetDate.setHours(targetDate.getHours() + 9);
-        targetDate.setMinutes(targetDate.getMinutes() + 42);
-
-        function updateCountdown() {
-            const now = new Date();
-            const diff = targetDate - now;
-            if (diff <= 0) return;
-
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const m = Math.floor((diff / (1000 * 60)) % 60);
-            const s = Math.floor((diff / 1000) % 60);
-
-            const dStr = d < 10 ? '0' + d : d;
-            const hStr = h < 10 ? '0' + h : h;
-            const mStr = m < 10 ? '0' + m : m;
-            const sStr = s < 10 ? '0' + s : s;
-
-            document.getElementById('hud-days').innerText = dStr;
-            document.getElementById('hud-hours').innerText = hStr;
-            document.getElementById('hud-minutes').innerText = mStr;
-            document.getElementById('hud-seconds').innerText = sStr;
-        }
-
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-
-        // -------------------------------------------------------------
-        // 6. SMOOTH ANCHOR NAVIGATION (INTEGRADA AO LENIS)
+        // 5. SMOOTH ANCHOR NAVIGATION (INTEGRADA AO LENIS)
         // -------------------------------------------------------------
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
