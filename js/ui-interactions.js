@@ -19,7 +19,36 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // -------------------------------------------------------------
-        // 5. SMOOTH ANCHOR NAVIGATION (INTEGRADA AO LENIS)
+        // 5. COUNTDOWN TIMER (PREVISÃO DE ABERTURA DAS INSCRIÇÕES 2027)
+        // -------------------------------------------------------------
+        const targetDate = new Date('2027-01-05T10:00:00-03:00');
+        const daysEl = document.getElementById('hud-days');
+        const hoursEl = document.getElementById('hud-hours');
+        const minutesEl = document.getElementById('hud-minutes');
+        const secondsEl = document.getElementById('hud-seconds');
+
+        function updateCountdown() {
+            if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+            const diff = Math.max(0, targetDate - new Date());
+
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const m = Math.floor((diff / (1000 * 60)) % 60);
+            const s = Math.floor((diff / 1000) % 60);
+
+            daysEl.textContent = d < 10 ? '0' + d : String(d);
+            hoursEl.textContent = h < 10 ? '0' + h : String(h);
+            minutesEl.textContent = m < 10 ? '0' + m : String(m);
+            secondsEl.textContent = s < 10 ? '0' + s : String(s);
+        }
+
+        if (daysEl) {
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+        }
+
+        // -------------------------------------------------------------
+        // 6. SMOOTH ANCHOR NAVIGATION (INTEGRADA AO LENIS)
         // -------------------------------------------------------------
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {

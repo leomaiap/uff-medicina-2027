@@ -885,7 +885,7 @@ document.addEventListener("DOMContentLoaded", () => {
             modalContent.innerHTML = `
                 <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono pb-2 mb-2 pr-8">
                     <span class="text-brand-gold font-bold uppercase tracking-wider text-[11px]">
-                        Edital Unificado CMM Nº 1 / 2025 • UFF
+                        Previsão 2027 • Base Edital CMM Nº 1 (UFF)
                     </span>
                     <span class="text-brand-gold font-bold text-xs bg-brand-gold/15 px-3 py-1 rounded-full">
                         ${spec.vagas}
@@ -893,7 +893,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <h2 class="font-black text-2xl sm:text-3xl text-white mt-1">${spec.fullTitle || spec.title}</h2>
-                <div class="text-xs font-mono text-slate-300 mt-1 uppercase tracking-wider">Início das Aulas: <strong class="text-white">${spec.inicio}</strong> • Mínimo: <strong class="text-white">${spec.minAlunos}</strong></div>
+                <div class="text-xs font-mono text-slate-300 mt-1 uppercase tracking-wider">Início Previsto: <strong class="text-white">${spec.inicio}</strong> • Mínimo: <strong class="text-white">${spec.minAlunos}</strong></div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-5 text-xs sm:text-sm">
                     <div class="glass-card p-3.5 rounded-xl">
