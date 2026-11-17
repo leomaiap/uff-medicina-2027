@@ -83,34 +83,27 @@
         <div id="hero-bg-layer" class="hero-layer-bg"></div>
         <div class="hero-color-glow"></div>
 
-        <!-- TOP NAVIGATION BAR (z-50: Logos + Dúvidas, Edital, Inscreva-se) -->
-        <header id="main-nav" class="relative z-50 w-full pt-[max(0.75rem,env(safe-area-inset-top))] sm:pt-[max(1rem,env(safe-area-inset-top))] md:pt-5 px-3 sm:px-4 md:px-12 lg:px-16">
-            <div class="max-w-7xl mx-auto flex items-center justify-between gap-1.5 sm:gap-3 py-1.5 sm:py-2 md:py-3 pl-2.5 pr-1.5 sm:pl-3.5 sm:pr-2.5 md:px-6 rounded-full bg-brand-base/50 backdrop-blur-md">
+        <!-- CABEÇALHO INSTITUCIONAL LIMPO (z-50: Logos + Links discretos, sem barra/pílula) -->
+        <header id="main-nav" class="hero-top-header relative z-50 w-full pt-[max(1rem,env(safe-area-inset-top))] sm:pt-[max(1.25rem,env(safe-area-inset-top))] md:pt-7 px-5 sm:px-8 md:px-12 lg:px-16">
+            <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
                 
                 <!-- Logos FacMed & UFF -->
-                <a href="#hero" class="flex items-center gap-1.5 sm:gap-3 md:gap-4 group shrink-0 min-w-0">
-                    <img src="assets/img/logo facmedwhite.svg" alt="Faculdade de Medicina da UFF" class="h-5 sm:h-7 md:h-10 w-auto transition-transform group-hover:scale-105 duration-300" decoding="async">
-                    <div class="h-3.5 sm:h-5 md:h-6 w-[1px] bg-white/25 shrink-0"></div>
-                    <img src="assets/img/logo-uff-white.png" alt="Universidade Federal Fluminense" class="h-3.5 sm:h-5 md:h-8 w-auto opacity-95" decoding="async">
+                <a href="#hero" class="hero-top-logos">
+                    <img src="assets/img/logo facmedwhite.svg" alt="Faculdade de Medicina da UFF" class="hero-top-logo-facmed" decoding="async">
+                    <span class="hero-top-divider" aria-hidden="true"></span>
+                    <img src="assets/img/logo-uff-white.png" alt="Universidade Federal Fluminense" class="hero-top-logo-uff" decoding="async">
                 </a>
 
-                <!-- Links: Apenas Inscreva-se no mobile; Dúvidas e Edital no desktop -->
-                <div class="flex items-center gap-2 sm:gap-6 md:gap-8 shrink-0">
-                    <a href="#faq" class="hidden lg:inline text-xs sm:text-sm font-semibold text-white/90 hover:text-white transition-colors">
+                <!-- Links discretos em texto (sem botão CTA concorrente) -->
+                <nav aria-label="Acesso rápido" class="hero-top-links">
+                    <a href="#faq" class="hero-top-link hero-top-link-faq">
                         Dúvidas
                     </a>
-                    <a href="https://editais.uff.br/10496" target="_blank" rel="noopener noreferrer" 
-                       class="hidden lg:flex text-xs sm:text-sm font-semibold text-white/90 hover:text-white transition-colors items-center gap-1">
+                    <a href="https://editais.uff.br/10496" target="_blank" rel="noopener noreferrer" class="hero-top-link">
                         <span>Edital</span>
-                        <svg class="w-3.5 h-3.5 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        <svg class="hero-top-link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </a>
-                    <a href="#cronograma" class="avenora-btn shrink-0 !py-1 sm:!py-1.5 !pl-2.5 sm:!pl-4.5 !pr-1 sm:!pr-1.5 !gap-1.5 sm:!gap-2.5 text-xs sm:text-sm whitespace-nowrap">
-                        <span><span class="sm:hidden">Inscrever</span><span class="hidden sm:inline">Inscreva-se 2027</span></span>
-                        <span class="avenora-btn-circle !w-6 !h-6 sm:!w-8 sm:!h-8">
-                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                        </span>
-                    </a>
-                </div>
+                </nav>
 
             </div>
         </header>

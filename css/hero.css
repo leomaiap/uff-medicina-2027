@@ -70,6 +70,78 @@
     opacity: 0.028;
 }
 
+/* Cabeçalho institucional transparente do Hero (Opção A: sem pílula/navbar) */
+.hero-top-logos {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-shrink: 0;
+    min-width: 0;
+    opacity: 0.95;
+    transition: opacity 0.2s ease;
+}
+.hero-top-logos:hover {
+    opacity: 1;
+}
+.hero-top-logo-facmed {
+    height: 1.35rem;
+    width: auto;
+}
+.hero-top-divider {
+    height: 0.95rem;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.25);
+    flex-shrink: 0;
+}
+.hero-top-logo-uff {
+    height: 0.95rem;
+    width: auto;
+    opacity: 0.95;
+}
+.hero-top-links {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-shrink: 0;
+}
+.hero-top-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.84);
+    white-space: nowrap;
+    transition: color 0.15s ease;
+}
+.hero-top-link:hover {
+    color: #FFFFFF;
+}
+.hero-top-link-faq {
+    display: none;
+}
+.hero-top-link-icon {
+    width: 0.85rem;
+    height: 0.85rem;
+    opacity: 0.78;
+    flex-shrink: 0;
+}
+@media (min-width: 640px) {
+    .hero-top-logos { gap: 0.85rem; }
+    .hero-top-logo-facmed { height: 1.75rem; }
+    .hero-top-divider { height: 1.25rem; }
+    .hero-top-logo-uff { height: 1.25rem; }
+    .hero-top-links { gap: 1.75rem; }
+    .hero-top-link { font-size: 0.875rem; }
+    .hero-top-link-faq { display: inline-flex; }
+}
+@media (min-width: 768px) {
+    .hero-top-logos { gap: 1rem; }
+    .hero-top-logo-facmed { height: 2.25rem; }
+    .hero-top-divider { height: 1.5rem; }
+    .hero-top-logo-uff { height: 1.75rem; }
+}
+
 /* Layer 2: Monumental Text Plane (Behind the doctors' heads/shoulders!) */
 .hero-layer-text {
     position: relative;
