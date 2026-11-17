@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Faculdade de Medicina UFF//Concurso Unificado 2027//PT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:uff-med-2027-fase2@facmed.uff.br
+DTSTAMP:20261117T170000Z
+DTSTART:20270309T120000Z
+DTEND:20270309T200000Z
+SUMMARY:UFF Medicina 2027 - Fase 2: Documentos\, Entrevista e/ou Curríc
+ ulo
+LOCATION:Faculdade de Medicina da UFF (SGPG - 6º andar)\, Niterói/RJ
+DESCRIPTION:Previsão: entrega presencial do Currículo Lattes e comprov
+ antes em 09/03/2027 e avaliações presenciais entre 11/03 e 13/03/2027
+ .
+STATUS:CONFIRMED
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Lembrete: UFF Medicina 2027 - Fase 2: Documentos\, Entrevist
+ a e/ou Currículo
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -652,3 +652,88 @@
                 text-align: left;
             }
         }
+
+        /* ==============================================================
+           ADICIONAR AO CALENDÁRIO (BOTÃO + POPOVER MULTI-PLATAFORMA)
+           ============================================================== */
+        .timeline-step-open,
+        .timeline-step-open .timeline-highlight-card {
+            position: relative;
+            z-index: 45 !important;
+        }
+        .cal-wrap {
+            position: relative;
+            display: inline-block;
+            margin-top: 0.65rem;
+            z-index: 50;
+        }
+        .cal-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.36rem 0.78rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: rgba(226, 232, 240, 0.9);
+            font-size: 0.72rem;
+            font-weight: 500;
+            line-height: 1.2;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+        .cal-btn:hover,
+        .cal-btn[aria-expanded="true"] {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.28);
+            color: #FFFFFF;
+        }
+        .cal-btn-chevron {
+            transition: transform 0.2s ease;
+            opacity: 0.75;
+        }
+        .cal-btn[aria-expanded="true"] .cal-btn-chevron {
+            transform: rotate(180deg);
+        }
+        .cal-menu {
+            position: absolute;
+            left: 0;
+            top: calc(100% + 0.4rem);
+            min-width: 262px;
+            padding: 0.35rem;
+            border-radius: 0.9rem;
+            background: #06281f;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            box-shadow: 0 20px 44px -8px rgba(0, 0, 0, 0.78);
+            display: none;
+            flex-direction: column;
+            gap: 0.15rem;
+            z-index: 60;
+        }
+        .cal-menu.is-open {
+            display: flex;
+        }
+        .cal-menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.85rem;
+            padding: 0.52rem 0.75rem;
+            border-radius: 0.6rem;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: #E2E8F0;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background-color 0.15s ease, color 0.15s ease;
+        }
+        .cal-menu-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+        }
+        .cal-menu-sub {
+            font-size: 0.66rem;
+            color: #94A3B8;
+            font-weight: 400;
+            white-space: nowrap;
+        }

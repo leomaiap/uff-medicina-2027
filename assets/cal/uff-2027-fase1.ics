@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Faculdade de Medicina UFF//Concurso Unificado 2027//PT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:uff-med-2027-fase1@facmed.uff.br
+DTSTAMP:20261117T170000Z
+DTSTART:20270224T130000Z
+DTEND:20270224T160000Z
+SUMMARY:UFF Medicina 2027 - Fase 1: Prova Escrita Presencial
+LOCATION:Faculdade de Medicina da UFF - Rua Ataíde Parreiras\, 100\, Ni
+ terói/RJ
+DESCRIPTION:Previsão: 1ª Fase nos dias 24/02 e 25/02/2027 (10h às 13h
+ )\, conforme especialidade. Resultado previsto em 03/03/2027 e convoca
+ ção em 06/03/2027.
+STATUS:CONFIRMED
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Lembrete: UFF Medicina 2027 - Fase 1: Prova Escrita Presenci
+ al
+END:VALARM
+END:VEVENT
+END:VCALENDAR

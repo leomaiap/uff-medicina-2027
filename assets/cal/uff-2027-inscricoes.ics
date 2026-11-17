@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Faculdade de Medicina UFF//Concurso Unificado 2027//PT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:uff-med-2027-inscricoes@facmed.uff.br
+DTSTAMP:20261117T170000Z
+DTSTART:20270105T130000Z
+DTEND:20270105T140000Z
+SUMMARY:UFF Medicina 2027 - Abertura das Inscrições
+LOCATION:PASSUFF (app.uff.br/pasuff) e SISPOS (app.uff.br/sispos/candida
+ tura)
+DESCRIPTION:Previsão: período de inscrições de 05/01 a 02/02/2027. T
+ axa de R$ 400\,00 no PASSUFF e envio dos documentos no SISPOS. Homologa
+ ção prevista em 06/02/2027.
+STATUS:CONFIRMED
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Lembrete: UFF Medicina 2027 - Abertura das Inscrições
+END:VALARM
+END:VEVENT
+END:VCALENDAR

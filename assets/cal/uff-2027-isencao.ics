@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Faculdade de Medicina UFF//Concurso Unificado 2027//PT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:uff-med-2027-isencao@facmed.uff.br
+DTSTAMP:20261117T170000Z
+DTSTART:20261209T190000Z
+DTEND:20261209T200000Z
+SUMMARY:UFF Medicina 2027 - Solicitação de Isenção da Taxa
+LOCATION:concursos.cmm@id.uff.br
+DESCRIPTION:Previsão: envio da solicitação de isenção da taxa em PD
+ F para concursos.cmm@id.uff.br (09/12 a 12/12/2026). Resultado previsto
+  em 18/12/2026.
+STATUS:CONFIRMED
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Lembrete: UFF Medicina 2027 - Solicitação de Isenção da 
+ Taxa
+END:VALARM
+END:VEVENT
+END:VCALENDAR
