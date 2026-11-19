@@ -5,20 +5,20 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 BEGIN:VEVENT
 UID:uff-med-2027-inscricoes@facmed.uff.br
-DTSTAMP:20261117T170000Z
-DTSTART:20270105T130000Z
-DTEND:20270105T140000Z
-SUMMARY:UFF Medicina 2027 - Abertura das Inscrições
-LOCATION:PASSUFF (app.uff.br/pasuff) e SISPOS (app.uff.br/sispos/candida
- tura)
-DESCRIPTION:Previsão: período de inscrições de 05/01 a 02/02/2027. T
- axa de R$ 400\,00 no PASSUFF e envio dos documentos no SISPOS. Homologa
- ção prevista em 06/02/2027.
+DTSTAMP:20261119T110000Z
+DTSTART:20270101T140000Z
+DTEND:20270101T150000Z
+SUMMARY:UFF Medicina 2027 - Abertura das Inscrições (PASSUFF)
+LOCATION:PASSUFF (https://app.uff.br/pasuff)
+DESCRIPTION:Minuta CMM 01/2026: inscrições de 01/01/2027 (11h) a 22/01/2
+ 027 (16h) exclusivamente no PASSUFF\, com taxa de R$ 400\,00 paga no CPF 
+ do candidato. Homologação e salas em 26/01/2027 (17h).
 STATUS:CONFIRMED
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:Lembrete: UFF Medicina 2027 - Abertura das Inscrições
+DESCRIPTION:Lembrete: UFF Medicina 2027 - Abertura das Inscrições (PASSU
+ FF)
 END:VALARM
 END:VEVENT
 END:VCALENDAR

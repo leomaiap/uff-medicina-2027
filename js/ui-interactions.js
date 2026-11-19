@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // -------------------------------------------------------------
-        // 5. COUNTDOWN TIMER (PREVISÃO DE ABERTURA DAS INSCRIÇÕES 2027)
+        // 5. COUNTDOWN TIMER (ABERTURA DAS INSCRIÇÕES - MINUTA CMM 01/2026)
         // -------------------------------------------------------------
-        const targetDate = new Date('2027-01-05T10:00:00-03:00');
+        const targetDate = new Date('2027-01-01T11:00:00-03:00');
         const daysEl = document.getElementById('hud-days');
         const hoursEl = document.getElementById('hud-hours');
         const minutesEl = document.getElementById('hud-minutes');
@@ -68,13 +68,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // -------------------------------------------------------------
 
-            // 9. ANIMATED STAT COUNTERS ON SCROLL (107 VAGAS & MÉTRICAS)
+            // 9. ANIMATED STAT COUNTERS ON SCROLL (104+ VAGAS & 14 CURSOS)
             // -------------------------------------------------------------
             const vagasSection = document.getElementById('vagas');
             if (vagasSection) {
                 const counters = [
-                    { id: 'counter-vagas', target: 107, duration: 2.2 },
-                    { id: 'counter-especialidades', target: 13, duration: 1.6 },
+                    { id: 'counter-vagas', target: 104, duration: 2.2 },
+                    { id: 'counter-especialidades', target: 14, duration: 1.6 },
                     { id: 'counter-gratuito', target: 100, duration: 2.0 }
                 ];
 
@@ -115,51 +115,51 @@ document.addEventListener("DOMContentLoaded", () => {
                 isencao: {
                     title: 'UFF Medicina 2027 — Solicitação de Isenção da Taxa',
                     location: 'concursos.cmm@id.uff.br',
-                    details: 'Previsão: envio da solicitação de isenção da taxa em PDF para concursos.cmm@id.uff.br (09/12 a 12/12/2026). Resultado previsto em 18/12/2026.',
-                    startUtc: '20261209T190000Z',
-                    endUtc: '20261209T200000Z',
-                    startIso: '2026-12-09T16:00:00-03:00',
-                    endIso: '2026-12-09T17:00:00-03:00',
+                    details: 'Minuta CMM 01/2026: envio do formulário assinado via GOV.BR e PDFs (até 5 MB cada) para concursos.cmm@id.uff.br entre 07/12 e 11/12/2026. Resultado em 16/12/2026 (17h).',
+                    startUtc: '20261207T120000Z',
+                    endUtc: '20261207T210000Z',
+                    startIso: '2026-12-07T09:00:00-03:00',
+                    endIso: '2026-12-07T18:00:00-03:00',
                     ics: 'assets/cal/uff-2027-isencao.ics'
                 },
                 inscricoes: {
-                    title: 'UFF Medicina 2027 — Abertura das Inscrições',
-                    location: 'PASSUFF (app.uff.br/pasuff) e SISPOS (app.uff.br/sispos/candidatura)',
-                    details: 'Previsão: período de inscrições de 05/01 a 02/02/2027. Taxa de R$ 400,00 no PASSUFF e envio dos documentos no SISPOS. Homologação prevista em 06/02/2027.',
-                    startUtc: '20270105T130000Z',
-                    endUtc: '20270105T140000Z',
-                    startIso: '2027-01-05T10:00:00-03:00',
-                    endIso: '2027-01-05T11:00:00-03:00',
+                    title: 'UFF Medicina 2027 — Abertura das Inscrições (PASSUFF)',
+                    location: 'PASSUFF (https://app.uff.br/pasuff)',
+                    details: 'Minuta CMM 01/2026: inscrições de 01/01/2027 (11h) a 22/01/2027 (16h) exclusivamente no PASSUFF, com taxa de R$ 400,00 paga no CPF do candidato. Homologação e salas em 26/01/2027 (17h).',
+                    startUtc: '20270101T140000Z',
+                    endUtc: '20270101T150000Z',
+                    startIso: '2027-01-01T11:00:00-03:00',
+                    endIso: '2027-01-01T12:00:00-03:00',
                     ics: 'assets/cal/uff-2027-inscricoes.ics'
                 },
                 fase1: {
-                    title: 'UFF Medicina 2027 — Fase 1: Prova Escrita Presencial',
+                    title: 'UFF Medicina 2027 — 1ª Etapa: Prova Escrita Presencial',
                     location: 'Faculdade de Medicina da UFF - Rua Ataíde Parreiras, 100, Niterói/RJ',
-                    details: 'Previsão: 1ª Fase nos dias 24/02 e 25/02/2027 (10h às 13h), conforme especialidade. Resultado previsto em 03/03/2027 e convocação em 06/03/2027.',
-                    startUtc: '20270224T130000Z',
-                    endUtc: '20270224T160000Z',
-                    startIso: '2027-02-24T10:00:00-03:00',
-                    endIso: '2027-02-24T13:00:00-03:00',
+                    details: 'Minuta CMM 01/2026: Prova escrita em 31/01/2027 (fechamento dos portões às 9h; prova das 10h às 13h, ou 10h às 11h para Radiologia/Tórax). Resultado em 04/02, recursos até 05/02 e convocação em 12/02/2027.',
+                    startUtc: '20270131T120000Z',
+                    endUtc: '20270131T160000Z',
+                    startIso: '2027-01-31T09:00:00-03:00',
+                    endIso: '2027-01-31T13:00:00-03:00',
                     ics: 'assets/cal/uff-2027-fase1.ics'
                 },
                 fase2: {
-                    title: 'UFF Medicina 2027 — Fase 2: Documentos, Entrevista e/ou Currículo',
-                    location: 'Faculdade de Medicina da UFF (SGPG - 6º andar), Niterói/RJ',
-                    details: 'Previsão: entrega presencial do Currículo Lattes e comprovantes em 09/03/2027 e avaliações presenciais entre 11/03 e 13/03/2027.',
-                    startUtc: '20270309T120000Z',
-                    endUtc: '20270309T200000Z',
-                    startIso: '2027-03-09T09:00:00-03:00',
-                    endIso: '2027-03-09T17:00:00-03:00',
+                    title: 'UFF Medicina 2027 — 2ª Etapa: Entrega de Currículo (SGPG)',
+                    location: 'Faculdade de Medicina da UFF (SGPG - 6º andar), Rua Ataíde Parreiras, 100, Niterói/RJ',
+                    details: 'Minuta CMM 01/2026: entrega presencial de Currículo Lattes e comprovantes em envelope pardo lacrado de 15/02 a 17/02/2027 (9h às 15h), exceto cursos em etapa única. Resultado em 25/02 e recursos até 26/02/2027.',
+                    startUtc: '20270215T120000Z',
+                    endUtc: '20270215T180000Z',
+                    startIso: '2027-02-15T09:00:00-03:00',
+                    endIso: '2027-02-15T15:00:00-03:00',
                     ics: 'assets/cal/uff-2027-fase2.ics'
                 },
                 integracao: {
                     title: 'UFF Medicina 2027 — Curso de Integração Obrigatório',
                     location: 'Faculdade de Medicina da UFF, Niterói/RJ',
-                    details: 'Previsão: resultado final em 18/03/2027, Curso de Integração Acadêmica obrigatório em 25/03/2027 e início das aulas previsto em 30/03/2027.',
-                    startUtc: '20270325T130000Z',
-                    endUtc: '20270325T160000Z',
-                    startIso: '2027-03-25T10:00:00-03:00',
-                    endIso: '2027-03-25T13:00:00-03:00',
+                    details: 'Minuta CMM 01/2026: Resultado final em 01/03 (13h), pré-matrícula no CANDIDATURAPOS de 01/03 a 04/03 (RG ou CIN; CNH não aceita), Curso de Integração obrigatório em 05/03/2027 e início das aulas a partir de 05/03/2027.',
+                    startUtc: '20270305T120000Z',
+                    endUtc: '20270305T150000Z',
+                    startIso: '2027-03-05T09:00:00-03:00',
+                    endIso: '2027-03-05T12:00:00-03:00',
                     ics: 'assets/cal/uff-2027-resultado-integracao.ics'
                 }
             };

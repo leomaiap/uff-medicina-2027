@@ -5,21 +5,22 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 BEGIN:VEVENT
 UID:uff-med-2027-fase1@facmed.uff.br
-DTSTAMP:20261117T170000Z
-DTSTART:20270224T130000Z
-DTEND:20270224T160000Z
-SUMMARY:UFF Medicina 2027 - Fase 1: Prova Escrita Presencial
-LOCATION:Faculdade de Medicina da UFF - Rua Ataíde Parreiras\, 100\, Ni
- terói/RJ
-DESCRIPTION:Previsão: 1ª Fase nos dias 24/02 e 25/02/2027 (10h às 13h
- )\, conforme especialidade. Resultado previsto em 03/03/2027 e convoca
- ção em 06/03/2027.
+DTSTAMP:20261119T110000Z
+DTSTART:20270131T120000Z
+DTEND:20270131T160000Z
+SUMMARY:UFF Medicina 2027 - 1ª Etapa: Prova Escrita Presencial
+LOCATION:Faculdade de Medicina da UFF - Rua Ataíde Parreiras\, 100\, Nite
+ rói/RJ
+DESCRIPTION:Minuta CMM 01/2026: Prova escrita em 31/01/2027 (fechamento do
+ s portões às 9h\; prova das 10h às 13h\, ou 10h às 11h para Radiologi
+ a/Tórax). Resultado em 04/02\, recursos até 05/02 e convocação em 12/
+ 02/2027.
 STATUS:CONFIRMED
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:Lembrete: UFF Medicina 2027 - Fase 1: Prova Escrita Presenci
- al
+DESCRIPTION:Lembrete: UFF Medicina 2027 - 1ª Etapa: Prova Escrita Presenc
+ ial
 END:VALARM
 END:VEVENT
 END:VCALENDAR

@@ -5,20 +5,21 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 BEGIN:VEVENT
 UID:uff-med-2027-integracao@facmed.uff.br
-DTSTAMP:20261117T170000Z
-DTSTART:20270325T130000Z
-DTEND:20270325T160000Z
+DTSTAMP:20261119T110000Z
+DTSTART:20270305T120000Z
+DTEND:20270305T150000Z
 SUMMARY:UFF Medicina 2027 - Curso de Integração Obrigatório
 LOCATION:Faculdade de Medicina da UFF\, Niterói/RJ
-DESCRIPTION:Previsão: resultado final em 18/03/2027\, Curso de Integra
- ção Acadêmica obrigatório em 25/03/2027 e início das aulas previst
- o em 30/03/2027.
+DESCRIPTION:Minuta CMM 01/2026: Resultado final em 01/03 (13h)\, pré-matr
+ ícula no CANDIDATURAPOS de 01/03 a 04/03 (RG ou CIN\; CNH não aceita)\,
+  Curso de Integração obrigatório em 05/03/2027 e início das aulas a p
+ artir de 05/03/2027.
 STATUS:CONFIRMED
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:Lembrete: UFF Medicina 2027 - Curso de Integração Obrigat
- ório
+DESCRIPTION:Lembrete: UFF Medicina 2027 - Curso de Integração Obrigatór
+ io
 END:VALARM
 END:VEVENT
 END:VCALENDAR
