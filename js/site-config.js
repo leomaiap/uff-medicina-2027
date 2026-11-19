@@ -17,7 +17,7 @@ window.UFF_SITE_CONFIG = {
     editalUrl: 'https://www.editais.uff.br',
 
     // Cole aqui o link do seu formulário Tally (ex.: 'https://tally.so/r/SEU_ID'):
-    tallyUrl: ''
+    tallyUrl: 'https://tally.so/r/8NL40Y'
 };
 
 // Aplica o modo antes da primeira pintura (sem flash visual entre modos)
