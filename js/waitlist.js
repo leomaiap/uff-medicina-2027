@@ -1,21 +1,31 @@
         // -------------------------------------------------------------
-        // 11. MODO AGUARDANDO EDITAL (GOOGLE FORMS EMBED) & INTERRUPTOR
+        // 11. MODO AGUARDANDO EDITAL (TALLY EMBED) & INTERRUPTOR
         // -------------------------------------------------------------
         /**
          * Lê window.UFF_SITE_CONFIG de js/site-config.js:
-         *  - editalPublicado: false -> exibe #lista-espera (Google Forms) e oculta #cronograma
+         *  - editalPublicado: false -> exibe #lista-espera (Tally transparente) e oculta #cronograma
          *  - editalPublicado: true  -> oculta #lista-espera e reativa #cronograma + Countdown
          */
         const SITE_CONFIG = window.UFF_SITE_CONFIG || {};
 
-        function toGoogleFormsEmbedUrl(rawUrl) {
+        function toTallyEmbedUrl(rawUrl, specialtyTitle) {
             if (!rawUrl || typeof rawUrl !== 'string') return '';
             const trimmed = rawUrl.trim();
             if (!trimmed) return '';
             try {
                 const parsed = new URL(trimmed);
-                if (!parsed.searchParams.has('embedded')) {
-                    parsed.searchParams.set('embedded', 'true');
+                // Aceita tanto link de compartilhamento (/r/ID) quanto link direto (/embed/ID)
+                if (parsed.hostname.includes('tally.so') && parsed.pathname.startsWith('/r/')) {
+                    parsed.pathname = parsed.pathname.replace(/^\/r\//, '/embed/');
+                }
+                if (parsed.hostname.includes('tally.so')) {
+                    if (!parsed.searchParams.has('alignLeft')) parsed.searchParams.set('alignLeft', '1');
+                    if (!parsed.searchParams.has('hideTitle')) parsed.searchParams.set('hideTitle', '1');
+                    if (!parsed.searchParams.has('transparentBackground')) parsed.searchParams.set('transparentBackground', '1');
+                    if (!parsed.searchParams.has('dynamicHeight')) parsed.searchParams.set('dynamicHeight', '1');
+                }
+                if (specialtyTitle) {
+                    parsed.searchParams.set('especialidade', specialtyTitle);
                 }
                 return parsed.toString();
             } catch (_) {
@@ -23,17 +33,40 @@
             }
         }
 
-        function toGoogleFormsDirectUrl(rawUrl) {
+        function toTallyDirectUrl(rawUrl) {
             if (!rawUrl || typeof rawUrl !== 'string') return '';
             const trimmed = rawUrl.trim();
             if (!trimmed) return '';
             try {
                 const parsed = new URL(trimmed);
-                parsed.searchParams.delete('embedded');
+                if (parsed.hostname.includes('tally.so') && parsed.pathname.startsWith('/embed/')) {
+                    parsed.pathname = parsed.pathname.replace(/^\/embed\//, '/r/');
+                }
+                ['alignLeft', 'hideTitle', 'transparentBackground', 'dynamicHeight'].forEach((p) => {
+                    parsed.searchParams.delete(p);
+                });
                 return parsed.toString();
             } catch (_) {
                 return trimmed;
             }
+        }
+
+        function loadTallyEmbedScript() {
+            if (window.Tally && typeof window.Tally.loadEmbeds === 'function') {
+                window.Tally.loadEmbeds();
+                return;
+            }
+            if (document.querySelector('script[data-tally-embed-js]')) return;
+            const s = document.createElement('script');
+            s.src = 'https://tally.so/widgets/embed.js';
+            s.async = true;
+            s.dataset.tallyEmbedJs = '1';
+            s.onload = () => {
+                if (window.Tally && typeof window.Tally.loadEmbeds === 'function') {
+                    window.Tally.loadEmbeds();
+                }
+            };
+            document.body.appendChild(s);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -47,8 +80,47 @@
                 });
             }
 
-            // Permite rolar direto para a Lista de Espera a partir do modal de qualquer curso
-            window.selectWaitlistSpecialty = () => {
+            const embedContainer = document.getElementById('waitlist-embed-container');
+            const placeholderEl = document.getElementById('waitlist-embed-placeholder');
+            const externalLinkEl = document.getElementById('waitlist-external-link');
+            const rawFormUrl = SITE_CONFIG.tallyUrl || SITE_CONFIG.googleFormsUrl || '';
+            let activeIframe = null;
+
+            function mountTallyIframe(specialtyTitle) {
+                const embedUrl = toTallyEmbedUrl(rawFormUrl, specialtyTitle);
+                if (!embedContainer || !embedUrl) return;
+
+                if (!activeIframe) {
+                    activeIframe = document.createElement('iframe');
+                    activeIframe.title = 'Formulário de Lista de Espera — Concurso Unificado FacMed UFF 2027';
+                    activeIframe.className = 'waitlist-iframe';
+                    activeIframe.loading = 'lazy';
+                    activeIframe.setAttribute('frameborder', '0');
+                    activeIframe.setAttribute('marginheight', '0');
+                    activeIframe.setAttribute('marginwidth', '0');
+                    activeIframe.setAttribute('allowtransparency', 'true');
+                    if (placeholderEl) placeholderEl.remove();
+                    embedContainer.appendChild(activeIframe);
+                    embedContainer.classList.add('has-iframe');
+                }
+
+                activeIframe.setAttribute('data-tally-src', embedUrl);
+                activeIframe.src = embedUrl;
+                loadTallyEmbedScript();
+
+                const directUrl = toTallyDirectUrl(rawFormUrl);
+                if (externalLinkEl && directUrl) {
+                    externalLinkEl.href = directUrl;
+                    externalLinkEl.hidden = false;
+                }
+            }
+
+            // Permite rolar até a Lista de Espera a partir do modal e repassar ?especialidade=... ao Tally
+            window.selectWaitlistSpecialty = (specialtyId) => {
+                if (activeIframe && specialtyId && Array.isArray(specialties)) {
+                    const spec = specialties.find((s) => s.id === specialtyId);
+                    if (spec) mountTallyIframe(spec.title);
+                }
                 const target = document.getElementById('lista-espera');
                 if (!target) return;
                 if (window.__lenis) {
@@ -58,31 +130,6 @@
                 }
             };
 
-            if (isPublished) return;
-
-            const embedContainer = document.getElementById('waitlist-embed-container');
-            const placeholderEl = document.getElementById('waitlist-embed-placeholder');
-            const externalLinkEl = document.getElementById('waitlist-external-link');
-            const embedUrl = toGoogleFormsEmbedUrl(SITE_CONFIG.googleFormsUrl);
-            const directUrl = toGoogleFormsDirectUrl(SITE_CONFIG.googleFormsUrl);
-
-            if (!embedContainer || !embedUrl) return;
-
-            const iframe = document.createElement('iframe');
-            iframe.src = embedUrl;
-            iframe.title = 'Formulário de Lista de Espera — Concurso Unificado FacMed UFF 2027';
-            iframe.className = 'waitlist-iframe';
-            iframe.loading = 'lazy';
-            iframe.setAttribute('frameborder', '0');
-            iframe.setAttribute('marginheight', '0');
-            iframe.setAttribute('marginwidth', '0');
-
-            if (placeholderEl) placeholderEl.remove();
-            embedContainer.appendChild(iframe);
-            embedContainer.classList.add('has-iframe');
-
-            if (externalLinkEl && directUrl) {
-                externalLinkEl.href = directUrl;
-                externalLinkEl.hidden = false;
-            }
+            if (isPublished || !rawFormUrl.trim()) return;
+            mountTallyIframe('');
         });

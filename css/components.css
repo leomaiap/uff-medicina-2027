@@ -916,20 +916,21 @@
             justify-content: center;
         }
         .waitlist-embed-container.has-iframe {
-            background: #FFFFFF;
-            min-height: 620px;
+            background: transparent;
+            min-height: 460px;
+            padding: 1rem 1.25rem 1.25rem;
             align-items: stretch;
         }
         .waitlist-iframe {
             width: 100%;
-            height: 640px;
+            min-height: 440px;
             border: 0;
             display: block;
-            background: #FFFFFF;
+            background: transparent;
         }
         @media (min-width: 640px) {
-            .waitlist-iframe {
-                height: 680px;
+            .waitlist-embed-container.has-iframe {
+                padding: 1.25rem 1.5rem 1.5rem;
             }
         }
         .waitlist-embed-placeholder {
