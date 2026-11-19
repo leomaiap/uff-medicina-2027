@@ -1029,3 +1029,11 @@
             color: #94A3B8;
             text-align: center;
         }
+
+        /* Alternância instantânea entre Modo Aguardando Edital e Modo Edital Publicado (js/site-config.js) */
+        html[data-site-mode="waiting"] [data-mode-only="published"] {
+            display: none !important;
+        }
+        html[data-site-mode="published"] [data-mode-only="waiting"] {
+            display: none !important;
+        }

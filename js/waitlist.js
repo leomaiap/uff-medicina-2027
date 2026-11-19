@@ -1,18 +1,33 @@
         // -------------------------------------------------------------
-        // 11. LISTA DE ESPERA (AGUARDANDO EDITAL) + TURNSTILE + HONEYPOT
+        // 11. LISTA DE ESPERA (AGUARDANDO EDITAL) + MODO DO SITE
         // -------------------------------------------------------------
         /**
-         * Configuração do endpoint Cloudflare Worker + Turnstile.
-         * Siga o passo a passo em waitlist-worker/README.md e preencha os valores abaixo
-         * antes de publicar em produção (depois reconstrua js/bundle.min.js).
+         * Lê as configurações de js/site-config.js (window.UFF_SITE_CONFIG),
+         * permitindo alternar `editalPublicado: false <-> true` e preencher
+         * `apiUrl` / `turnstileSiteKey` sem precisar reconstruir o bundle.
          */
-        const WAITLIST_CONFIG = window.UFF_WAITLIST_CONFIG || {
+        const SITE_CONFIG = window.UFF_SITE_CONFIG || {};
+        const WAITLIST_CONFIG = window.UFF_WAITLIST_CONFIG || SITE_CONFIG.waitlist || {
             apiUrl: '',
             turnstileSiteKey: '',
             lgpdVersion: 'v1-2026-11'
         };
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Sincroniza modo no DOM caso site-config.js tenha sido alterado dinamicamente
+            const isPublished = Boolean(SITE_CONFIG.editalPublicado);
+            document.documentElement.dataset.siteMode = isPublished ? 'published' : 'waiting';
+
+            // Atualiza todos os links marcados com data-edital-link para o editalUrl configurado
+            if (SITE_CONFIG.editalUrl) {
+                document.querySelectorAll('a[data-edital-link]').forEach((a) => {
+                    a.setAttribute('href', SITE_CONFIG.editalUrl);
+                });
+            }
+
+            // Se o edital já estiver publicado, não inicializa o formulário nem carrega Turnstile
+            if (isPublished) return;
+
             const form = document.getElementById('waitlist-form');
             if (!form) return;
 

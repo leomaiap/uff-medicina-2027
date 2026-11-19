@@ -59,16 +59,20 @@ Anote a URL publicada (ex.: `https://uff-medicina-2027-waitlist.<seu-subdominio>
 3. Crie uma política **Allow** com regra **Emails** ou **Emails ending in** `@id.uff.br` (ou os e-mails específicos da equipe da FacMed / SGPG).
 4. *(Recomendado para validação criptográfica extra)* Copie o **Application Audience (AUD) Tag** e o **Team Domain** (`<sua-equipe>.cloudflareaccess.com`) e adicione-os em `[vars]` no `wrangler.toml`, rodando `npm run deploy` novamente.
 
-### 7. Conectar o Front-end (GitHub Pages)
-Abra `js/waitlist.js` no repositório principal e preencha `WAITLIST_CONFIG`:
+### 7. Conectar o Front-end (GitHub Pages — sem precisar rodar build!)
+Abra **`js/site-config.js`** (pode editar até direto pelo navegador no GitHub) e preencha `waitlist`:
 ```js
-const WAITLIST_CONFIG = {
-    apiUrl: 'https://uff-medicina-2027-waitlist.<seu-subdominio>.workers.dev/api/waitlist',
-    turnstileSiteKey: '0x4AAAAAAA...',
-    lgpdVersion: 'v1-2026-11'
+window.UFF_SITE_CONFIG = {
+    editalPublicado: false,
+    editalUrl: 'https://www.editais.uff.br',
+    waitlist: {
+        apiUrl: 'https://uff-medicina-2027-waitlist.<seu-subdominio>.workers.dev/api/waitlist',
+        turnstileSiteKey: '0x4AAAAAAA...',
+        lgpdVersion: 'v1-2026-11'
+    }
 };
 ```
-Depois reconstrua `js/bundle.min.js` e faça push para a `main`.
+Salve/commite na `main` — o GitHub Pages publica em ~1 minuto.
 
 ---
 
@@ -81,8 +85,15 @@ Depois reconstrua `js/bundle.min.js` e faça push para a `main`.
 
 ---
 
-## Como Reverter para o Modo "Edital Publicado"
+## Como Voltar o Cronograma Quando o Edital Oficial Sair (1 linha!)
 
-Quando o Edital Oficial for publicado:
-1. Em `index.html`, restaure o CTA do Hero para `#especialidades` / `#cronograma`, remova ou recolha a seção `#lista-espera` e atualize os avisos de "Minuta / Aguardando publicação" para "Edital Publicado" com o link direto do PDF.
-2. O Worker e o banco D1 permanecem seguros para consulta ou exportação final até a exclusão programada dos leads após o encerramento do processo seletivo (boas práticas LGPD).
+Abra **`js/site-config.js`** e troque apenas uma palavra:
+```js
+editalPublicado: true,
+editalUrl: 'https://www.editais.uff.br/...', // opcional: link direto do PDF oficial
+```
+Ao commitar essa alteração:
+- A seção **Lista de Espera** (`#lista-espera`) é ocultada automaticamente;
+- A seção **Cronograma 2027** (`#cronograma`) + Countdown + botões de calendário `.ics` reaparecem automaticamente;
+- Hero, menu, modais das 14 especialidades, CTA final e rodapé passam automaticamente para o modo **Edital Publicado**.
+- O Worker e o banco D1 permanecem disponíveis em `/admin` para consulta/exportação final até a exclusão programada dos leads após o encerramento do processo seletivo (boas práticas LGPD).

@@ -66,6 +66,9 @@
 
     <!-- Bundle CSS Único (1 request para toda a arquitetura modular + Lenis CSS) -->
     <link rel="stylesheet" href="css/bundle.min.css">
+
+    <!-- Interruptor Único de Modo (editalPublicado: false <-> true) + Config Cloudflare -->
+    <script src="js/site-config.js"></script>
 </head>
 <body class="selection:bg-brand-emerald selection:text-white">
 
@@ -96,13 +99,16 @@
 
                 <!-- Links discretos em texto (sem botão CTA concorrente) -->
                 <nav aria-label="Acesso rápido" class="hero-top-links">
-                    <a href="#lista-espera" class="hero-top-link">
+                    <a href="#lista-espera" class="hero-top-link" data-mode-only="waiting">
                         Lista de Espera
+                    </a>
+                    <a href="#cronograma" class="hero-top-link" data-mode-only="published">
+                        Cronograma
                     </a>
                     <a href="#faq" class="hero-top-link hero-top-link-faq">
                         Dúvidas
                     </a>
-                    <a href="https://www.editais.uff.br" target="_blank" rel="noopener noreferrer" class="hero-top-link">
+                    <a href="https://www.editais.uff.br" data-edital-link target="_blank" rel="noopener noreferrer" class="hero-top-link">
                         <span>Editais</span>
                         <svg class="hero-top-link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </a>
@@ -134,7 +140,7 @@
         <div class="relative z-30 max-w-7xl w-full mx-auto px-6 md:px-12 lg:px-16 pb-[max(2.5rem,env(safe-area-inset-bottom))] md:pb-12 pt-24 md:pt-44 hero-bottom-ui flex flex-col items-center justify-end text-center">
             <div class="max-w-3xl lg:max-w-4xl mx-auto flex flex-col items-center text-center">
                 
-                <p class="hero-status-note">
+                <p class="hero-status-note" data-mode-only="waiting">
                     Aguardando publicação do Edital Oficial • Turmas 2027
                 </p>
 
@@ -142,7 +148,8 @@
                     Pós-graduação Lato Sensu gratuita na Faculdade de Medicina da UFF.
                 </h2>
                 
-                <div class="mt-6 md:mt-7 flex flex-col items-center justify-center">
+                <!-- CTA Modo Aguardando Edital (editalPublicado: false) -->
+                <div class="mt-6 md:mt-7 flex flex-col items-center justify-center" data-mode-only="waiting">
                     <a href="#lista-espera" class="avenora-btn text-sm sm:text-base">
                         <span>Entrar na Lista de Espera</span>
                         <span class="avenora-btn-circle">
@@ -152,6 +159,16 @@
                     <a href="#especialidades" class="hero-secondary-link">
                         <span>Explorar os 14 cursos previstos</span>
                         <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </a>
+                </div>
+
+                <!-- CTA Modo Edital Publicado (editalPublicado: true) -->
+                <div class="mt-6 md:mt-7 flex items-center justify-center" data-mode-only="published">
+                    <a href="#especialidades" class="avenora-btn text-sm sm:text-base">
+                        <span>Explorar 14 Cursos</span>
+                        <span class="avenora-btn-circle">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </span>
                     </a>
                 </div>
 
@@ -289,7 +306,7 @@
         <!-- ============================================================== -->
         <!-- 3.7. LISTA DE ESPERA — AGUARDANDO PUBLICAÇÃO DO EDITAL 2027    -->
         <!-- ============================================================== -->
-        <section id="lista-espera" class="waitlist-section" aria-labelledby="waitlist-heading">
+        <section id="lista-espera" class="waitlist-section" data-mode-only="waiting" aria-labelledby="waitlist-heading">
             <div class="glass-card waitlist-card">
                 <div class="waitlist-grid">
 
@@ -481,7 +498,7 @@
         <!-- ============================================================== -->
         <!-- 5. CRONOGRAMA 2027 (MINUTA EDITAL UNIFICADO CMM Nº 01/2026)    -->
         <!-- ============================================================== -->
-        <section id="cronograma" class="pt-2 md:pt-3 pb-8 md:pb-10 px-6 md:px-12 lg:px-20 max-w-6xl mx-auto">
+        <section id="cronograma" class="pt-2 md:pt-3 pb-8 md:pb-10 px-6 md:px-12 lg:px-20 max-w-6xl mx-auto" data-mode-only="published">
             
             <div class="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
                 <h2 class="font-sans font-black text-3xl sm:text-5xl text-white">
@@ -494,10 +511,10 @@
                 <div class="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8 relative z-10">
                     <div class="w-full lg:w-auto text-center lg:text-left">
                         <p class="text-xs font-mono font-semibold uppercase tracking-[0.18em] text-slate-400 mb-1.5">
-                            Minuta CMM Nº 01/2026 • Aguardando Publicação Oficial
+                            Edital Unificado CMM Nº 01/2026 • Turmas 2027
                         </p>
                         <h3 class="font-sans font-black text-2xl sm:text-3xl text-white">
-                            Previsão de Abertura das Inscrições
+                            Abertura das Inscrições
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-300 mt-2 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                             Exclusivamente via <strong class="text-white">PASSUFF</strong> (<span class="font-mono text-slate-200">app.uff.br/pasuff</span>), de <strong class="text-white">01/01/2027 (11h)</strong> a <strong class="text-white">22/01/2027 (16h)</strong>, com taxa de <strong class="text-white">R$ 400,00</strong> no CPF do candidato. Documentação vai só na pré-matrícula (<span class="font-mono text-slate-200">CANDIDATURAPOS</span>).
@@ -722,20 +739,36 @@
                     Especialize-se na Faculdade de Medicina da UFF.
                 </h2>
                 
-                <p class="mt-5 sm:mt-6 text-sm sm:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+                <p class="mt-5 sm:mt-6 text-sm sm:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed" data-mode-only="waiting">
                     Cadastre-se na lista de espera para ser avisado assim que o Edital Unificado CMM Nº 01/2026 for publicado oficialmente no Portal de Editais da UFF.
                 </p>
+                <p class="mt-5 sm:mt-6 text-sm sm:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed" data-mode-only="published">
+                    Consulte todas as regras, critérios de avaliação, horários (Anexo VI) e conteúdos programáticos no Edital Unificado CMM Nº 01/2026 e no Portal de Editais da UFF.
+                </p>
 
-                <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4" data-mode-only="waiting">
                     <a href="#lista-espera" class="avenora-btn text-xs sm:text-lg whitespace-nowrap">
                         <span>Entrar na Lista de Espera</span>
                         <span class="avenora-btn-circle">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </span>
                     </a>
-                    <a href="https://www.editais.uff.br" target="_blank" rel="noopener noreferrer" 
+                    <a href="https://www.editais.uff.br" data-edital-link target="_blank" rel="noopener noreferrer" 
                        class="w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-sm sm:text-base text-slate-200 hover:text-white glass-pill hover:bg-white/10 transition-all">
                         Consultar Portal de Editais (UFF)
+                    </a>
+                </div>
+
+                <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4" data-mode-only="published">
+                    <a href="#cronograma" class="avenora-btn text-xs sm:text-lg whitespace-nowrap">
+                        <span>Ver Cronograma 2027</span>
+                        <span class="avenora-btn-circle">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </span>
+                    </a>
+                    <a href="https://www.editais.uff.br" data-edital-link target="_blank" rel="noopener noreferrer" 
+                       class="w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-sm sm:text-base text-slate-200 hover:text-white glass-pill hover:bg-white/10 transition-all">
+                        Consultar Edital Oficial (UFF)
                     </a>
                 </div>
             </div>
@@ -766,9 +799,13 @@
             </div>
 
             <!-- Nota Institucional Sóbria sobre o Edital Oficial -->
-            <p class="site-footer-disclaimer">
-                As regras, vagas, datas e critérios desta página seguem a Minuta do Edital Unificado CMM Nº 01/2026 (Turmas 2027, datada de 03/11/2026), estando sujeitos à confirmação na publicação definitiva no Portal de Editais da UFF, e não substituem a leitura integral do documento oficial e de suas eventuais retificações.
-                <a href="https://www.editais.uff.br" target="_blank" rel="noopener noreferrer" class="site-footer-disclaimer-link">Consultar Portal de Editais (UFF)</a>
+            <p class="site-footer-disclaimer" data-mode-only="waiting">
+                As informações desta página seguem a Minuta do Edital Unificado CMM Nº 01/2026 (Turmas 2027), aguardando publicação definitiva no Portal de Editais da UFF, e não substituem a leitura integral do documento oficial e de suas eventuais retificações.
+                <a href="https://www.editais.uff.br" data-edital-link target="_blank" rel="noopener noreferrer" class="site-footer-disclaimer-link">Consultar Portal de Editais (UFF)</a>
+            </p>
+            <p class="site-footer-disclaimer" data-mode-only="published">
+                As regras, vagas, datas e critérios desta página resumem o Edital Unificado CMM Nº 01/2026 (Turmas 2027) e não substituem a leitura integral do documento oficial e de suas eventuais retificações.
+                <a href="https://www.editais.uff.br" data-edital-link target="_blank" rel="noopener noreferrer" class="site-footer-disclaimer-link">Consultar Edital Oficial (UFF)</a>
             </p>
 
         </div>
