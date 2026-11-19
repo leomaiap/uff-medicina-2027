@@ -820,9 +820,12 @@
             font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
             font-weight: 800;
             font-size: clamp(1.25rem, 2.1vw, 1.65rem);
-            line-height: 1.25;
+            line-height: 1.28;
             letter-spacing: -0.02em;
             color: #FFFFFF;
+            text-align: center;
+            margin-inline: auto;
+            max-width: 46rem;
         }
 
         .waitlist-embed-shell {

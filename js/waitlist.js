@@ -19,7 +19,6 @@
                     parsed.pathname = parsed.pathname.replace(/^\/r\//, '/embed/');
                 }
                 if (parsed.hostname.includes('tally.so')) {
-                    if (!parsed.searchParams.has('alignLeft')) parsed.searchParams.set('alignLeft', '1');
                     if (!parsed.searchParams.has('hideTitle')) parsed.searchParams.set('hideTitle', '1');
                     if (!parsed.searchParams.has('transparentBackground')) parsed.searchParams.set('transparentBackground', '1');
                     if (!parsed.searchParams.has('dynamicHeight')) parsed.searchParams.set('dynamicHeight', '1');
