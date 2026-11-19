@@ -87,8 +87,6 @@
 
             const embedContainer = document.getElementById('waitlist-embed-container');
             const placeholderEl = document.getElementById('waitlist-embed-placeholder');
-            const externalLinkEl = document.getElementById('waitlist-external-link');
-            const barTitleEl = document.getElementById('waitlist-embed-bar-title');
             const successBoxEl = document.getElementById('waitlist-success-box');
             const resetBtnEl = document.getElementById('waitlist-reset-btn');
             const rawFormUrl = SITE_CONFIG.tallyUrl || SITE_CONFIG.googleFormsUrl || '';
@@ -103,12 +101,6 @@
                     embedContainer.classList.remove('has-iframe');
                     embedContainer.classList.add('is-submitted');
                 }
-                if (externalLinkEl) {
-                    externalLinkEl.hidden = true;
-                }
-                if (barTitleEl) {
-                    barTitleEl.textContent = 'Cadastro Confirmado';
-                }
                 if (successBoxEl) {
                     successBoxEl.hidden = false;
                 }
@@ -120,9 +112,6 @@
                 }
                 if (embedContainer) {
                     embedContainer.classList.remove('is-submitted');
-                }
-                if (barTitleEl) {
-                    barTitleEl.textContent = 'Cadastro na Lista de Espera';
                 }
                 if (activeIframe) {
                     activeIframe.remove();
@@ -137,7 +126,6 @@
 
                 if (successBoxEl) successBoxEl.hidden = true;
                 embedContainer.classList.remove('is-submitted');
-                if (barTitleEl) barTitleEl.textContent = 'Cadastro na Lista de Espera';
 
                 if (!activeIframe) {
                     activeIframe = document.createElement('iframe');
@@ -174,12 +162,6 @@
                     loadTallyEmbedScript(applyFallbackSrc);
                     clearTimeout(fallbackTimer);
                     fallbackTimer = setTimeout(applyFallbackSrc, 1200);
-                }
-
-                const directUrl = toTallyDirectUrl(rawFormUrl);
-                if (externalLinkEl && directUrl) {
-                    externalLinkEl.href = directUrl;
-                    externalLinkEl.hidden = false;
                 }
             }
 
