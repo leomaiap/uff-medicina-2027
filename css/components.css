@@ -737,3 +737,295 @@
             font-weight: 400;
             white-space: nowrap;
         }
+
+        /* ==============================================================
+           MODO AGUARDANDO EDITAL & LISTA DE ESPERA (LGPD + ANTI-BOT)
+           ============================================================== */
+        .hero-status-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.85rem;
+            padding: 0.34rem 0.9rem;
+            border-radius: 9999px;
+            background: rgba(6, 36, 28, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: rgba(241, 245, 249, 0.92);
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            backdrop-filter: blur(8px);
+        }
+        .hero-secondary-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-top: 0.9rem;
+            font-size: 0.84rem;
+            font-weight: 500;
+            color: rgba(226, 232, 240, 0.86);
+            text-decoration: none;
+            transition: color 0.18s ease;
+        }
+        .hero-secondary-link:hover {
+            color: #FFFFFF;
+        }
+
+        .waitlist-section {
+            position: relative;
+            z-index: 20;
+            padding: 2.25rem 1.5rem 2.75rem;
+            max-width: 72rem;
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) {
+            .waitlist-section {
+                padding: 2.75rem 3rem 3.5rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .waitlist-section {
+                padding: 3rem 5rem 3.75rem;
+            }
+        }
+        .waitlist-card {
+            border-radius: 1.75rem;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        @media (min-width: 640px) {
+            .waitlist-card {
+                border-radius: 2rem;
+                padding: 2.25rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .waitlist-card {
+                padding: 2.75rem 3rem;
+            }
+        }
+        .waitlist-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+        @media (min-width: 960px) {
+            .waitlist-grid {
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+                gap: 3rem;
+                align-items: center;
+            }
+        }
+        .waitlist-eyebrow {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #94A3B8;
+            margin-bottom: 0.65rem;
+        }
+        .waitlist-title {
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            font-weight: 800;
+            font-size: clamp(1.65rem, 3.1vw, 2.35rem);
+            line-height: 1.15;
+            letter-spacing: -0.025em;
+            color: #FFFFFF;
+        }
+        .waitlist-lead {
+            margin-top: 0.9rem;
+            font-size: 0.92rem;
+            line-height: 1.65;
+            color: #CBD5E1;
+            max-width: 34rem;
+        }
+        .waitlist-points {
+            list-style: none;
+            padding: 0;
+            margin: 1.4rem 0 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+        .waitlist-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.65rem;
+            font-size: 0.83rem;
+            line-height: 1.45;
+            color: #CBD5E1;
+        }
+        .waitlist-point-icon {
+            width: 1rem;
+            height: 1rem;
+            margin-top: 0.15rem;
+            flex-shrink: 0;
+            color: #34D399;
+        }
+
+        .waitlist-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: rgba(5, 32, 24, 0.56);
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 1.35rem;
+            padding: 1.35rem;
+        }
+        @media (min-width: 640px) {
+            .waitlist-form {
+                padding: 1.75rem;
+            }
+        }
+        .waitlist-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .waitlist-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #E2E8F0;
+            letter-spacing: 0.01em;
+        }
+        .waitlist-input,
+        .waitlist-select {
+            width: 100%;
+            min-height: 2.9rem;
+            padding: 0.7rem 0.95rem;
+            border-radius: 0.8rem;
+            background: rgba(7, 42, 32, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: #FFFFFF;
+            font-family: inherit;
+            font-size: 0.92rem;
+            line-height: 1.4;
+            outline: none;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+        }
+        .waitlist-input::placeholder {
+            color: rgba(148, 163, 184, 0.72);
+        }
+        .waitlist-input:focus,
+        .waitlist-select:focus {
+            border-color: #34D399;
+            background: rgba(7, 48, 36, 0.96);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22);
+        }
+        .waitlist-select {
+            appearance: none;
+            -webkit-appearance: none;
+            padding-right: 2.5rem;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.85rem center;
+            cursor: pointer;
+        }
+        .waitlist-select option {
+            background-color: #072c22;
+            color: #F8FAFC;
+        }
+
+        /* Honeypot invisível para humanos e leitores de tela */
+        .waitlist-hp {
+            position: absolute !important;
+            left: -9999px !important;
+            top: auto !important;
+            width: 1px !important;
+            height: 1px !important;
+            overflow: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        .waitlist-consent {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.65rem;
+            font-size: 0.78rem;
+            line-height: 1.5;
+            color: #CBD5E1;
+            cursor: pointer;
+            margin-top: 0.15rem;
+        }
+        .waitlist-checkbox {
+            width: 1.05rem;
+            height: 1.05rem;
+            margin-top: 0.15rem;
+            flex-shrink: 0;
+            accent-color: #10B981;
+            cursor: pointer;
+        }
+
+        .waitlist-turnstile {
+            min-height: 65px;
+            display: flex;
+            align-items: center;
+        }
+        .waitlist-turnstile[hidden] {
+            display: none;
+        }
+
+        .waitlist-submit {
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.9rem 1.4rem;
+            border-radius: 9999px;
+            background: #FFFFFF;
+            color: #062c21;
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            font-weight: 800;
+            font-size: 0.94rem;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.18s ease, background-color 0.18s ease, opacity 0.18s ease;
+        }
+        .waitlist-submit:hover:not(:disabled) {
+            background: #F1F5F9;
+            transform: translateY(-1px);
+        }
+        .waitlist-submit:disabled {
+            opacity: 0.68;
+            cursor: not-allowed;
+        }
+
+        .waitlist-feedback {
+            border-radius: 0.85rem;
+            padding: 0.8rem 0.95rem;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        .waitlist-feedback[hidden] {
+            display: none;
+        }
+        .waitlist-feedback--success {
+            background: rgba(16, 185, 129, 0.16);
+            border: 1px solid rgba(52, 211, 153, 0.42);
+            color: #D1FAE5;
+        }
+        .waitlist-feedback--error {
+            background: rgba(239, 68, 68, 0.14);
+            border: 1px solid rgba(248, 113, 113, 0.4);
+            color: #FEE2E2;
+        }
+        .waitlist-feedback--info {
+            background: rgba(148, 163, 184, 0.14);
+            border: 1px solid rgba(203, 213, 225, 0.28);
+            color: #E2E8F0;
+        }
+
+        .waitlist-footnote {
+            font-size: 0.72rem;
+            line-height: 1.45;
+            color: #94A3B8;
+            text-align: center;
+        }

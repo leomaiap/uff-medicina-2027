@@ -1,0 +1,15 @@
+{
+  "name": "uff-medicina-2027-waitlist",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:init:local": "wrangler d1 execute uff-waitlist-2027 --local --file=./schema.sql",
+    "db:init:remote": "wrangler d1 execute uff-waitlist-2027 --remote --file=./schema.sql"
+  },
+  "devDependencies": {
+    "wrangler": "^3.100.0"
+  }
+}

@@ -928,14 +928,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <div class="flex flex-col sm:flex-row items-center gap-3 pt-2">
-                    <a href="https://www.editais.uff.br" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs font-bold text-white bg-brand-emerald hover:bg-emerald-500 text-center transition-all shadow-glow-emerald">
+                    <button type="button" id="modal-waitlist-btn" class="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs font-bold text-white bg-brand-emerald hover:bg-emerald-500 text-center transition-all shadow-glow-emerald cursor-pointer">
+                        Avise-me sobre este curso
+                    </button>
+                    <a href="https://www.editais.uff.br" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white glass-pill text-center transition-all">
                         Portal de Editais da UFF
-                    </a>
-                    <a href="mailto:concursos.cmm@id.uff.br" class="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white glass-pill text-center transition-all">
-                        Contato Edital: concursos.cmm@id.uff.br
                     </a>
                 </div>
             `;
+            const waitlistBtn = document.getElementById('modal-waitlist-btn');
+            if (waitlistBtn) {
+                waitlistBtn.onclick = () => {
+                    modal.classList.add('opacity-0', 'pointer-events-none');
+                    setTimeout(() => { isUserInteracting = false; }, 600);
+                    if (typeof window.selectWaitlistSpecialty === 'function') {
+                        window.selectWaitlistSpecialty(spec.id);
+                    }
+                };
+            }
             modal.classList.remove('opacity-0', 'pointer-events-none');
         }
 

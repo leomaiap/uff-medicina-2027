@@ -96,6 +96,9 @@
 
                 <!-- Links discretos em texto (sem botão CTA concorrente) -->
                 <nav aria-label="Acesso rápido" class="hero-top-links">
+                    <a href="#lista-espera" class="hero-top-link">
+                        Lista de Espera
+                    </a>
                     <a href="#faq" class="hero-top-link hero-top-link-faq">
                         Dúvidas
                     </a>
@@ -131,16 +134,24 @@
         <div class="relative z-30 max-w-7xl w-full mx-auto px-6 md:px-12 lg:px-16 pb-[max(2.5rem,env(safe-area-inset-bottom))] md:pb-12 pt-24 md:pt-44 hero-bottom-ui flex flex-col items-center justify-end text-center">
             <div class="max-w-3xl lg:max-w-4xl mx-auto flex flex-col items-center text-center">
                 
+                <p class="hero-status-note">
+                    Aguardando publicação do Edital Oficial • Turmas 2027
+                </p>
+
                 <h2 class="font-sans font-bold text-[1.85rem] sm:text-5xl md:text-[3.25rem] text-white tracking-tight leading-[1.1] drop-shadow-2xl text-center">
                     Pós-graduação Lato Sensu gratuita na Faculdade de Medicina da UFF.
                 </h2>
                 
-                <div class="mt-6 md:mt-7 flex items-center justify-center">
-                    <a href="#especialidades" class="avenora-btn text-sm sm:text-base">
-                        <span>Explorar 14 Cursos</span>
+                <div class="mt-6 md:mt-7 flex flex-col items-center justify-center">
+                    <a href="#lista-espera" class="avenora-btn text-sm sm:text-base">
+                        <span>Entrar na Lista de Espera</span>
                         <span class="avenora-btn-circle">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </span>
+                    </a>
+                    <a href="#especialidades" class="hero-secondary-link">
+                        <span>Explorar os 14 cursos previstos</span>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </a>
                 </div>
 
@@ -276,6 +287,115 @@
         </section>
 
         <!-- ============================================================== -->
+        <!-- 3.7. LISTA DE ESPERA — AGUARDANDO PUBLICAÇÃO DO EDITAL 2027    -->
+        <!-- ============================================================== -->
+        <section id="lista-espera" class="waitlist-section" aria-labelledby="waitlist-heading">
+            <div class="glass-card waitlist-card">
+                <div class="waitlist-grid">
+
+                    <!-- Coluna Informativa -->
+                    <div>
+                        <p class="waitlist-eyebrow">Aguardando Publicação Oficial • Turmas 2027</p>
+                        <h2 id="waitlist-heading" class="waitlist-title">
+                            Receba o aviso assim que o Edital Oficial sair.
+                        </h2>
+                        <p class="waitlist-lead">
+                            O Edital Unificado CMM nº 01/2026 encontra-se em etapa de minuta. Deixe seu nome, e-mail e a especialidade de interesse para receber um único alerta quando as inscrições oficiais forem publicadas no Portal de Editais da UFF.
+                        </p>
+
+                        <ul class="waitlist-points">
+                            <li class="waitlist-point">
+                                <svg class="waitlist-point-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M5 13l4 4L19 7"></path></svg>
+                                <span><strong class="text-white">Disparo objetivo:</strong> aviso enviado na publicação do edital oficial e na abertura do PASSUFF.</span>
+                            </li>
+                            <li class="waitlist-point">
+                                <svg class="waitlist-point-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M5 13l4 4L19 7"></path></svg>
+                                <span><strong class="text-white">Por especialidade:</strong> selecione o curso desejado (ou altere depois pelo mesmo e-mail).</span>
+                            </li>
+                            <li class="waitlist-point">
+                                <svg class="waitlist-point-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M5 13l4 4L19 7"></path></svg>
+                                <span><strong class="text-white">Proteção LGPD:</strong> dados restritos à equipe institucional, sem compartilhamento com terceiros.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Coluna Formulário -->
+                    <form id="waitlist-form" class="waitlist-form" novalidate>
+                        <div class="waitlist-field">
+                            <label for="waitlist-name" class="waitlist-label">Nome completo</label>
+                            <input
+                                id="waitlist-name"
+                                name="fullName"
+                                type="text"
+                                class="waitlist-input"
+                                placeholder="Ex.: Dra. Ana Beatriz Souza"
+                                autocomplete="name"
+                                required
+                                minlength="3"
+                                maxlength="120"
+                            >
+                        </div>
+
+                        <div class="waitlist-field">
+                            <label for="waitlist-email" class="waitlist-label">E-mail para aviso</label>
+                            <input
+                                id="waitlist-email"
+                                name="email"
+                                type="email"
+                                class="waitlist-input"
+                                placeholder="seu.email@exemplo.com"
+                                autocomplete="email"
+                                required
+                                maxlength="160"
+                            >
+                        </div>
+
+                        <div class="waitlist-field">
+                            <label for="waitlist-specialty" class="waitlist-label">Especialidade de interesse</label>
+                            <select id="waitlist-specialty" name="specialtyId" class="waitlist-select" required>
+                                <option value="" disabled selected>Selecione uma especialidade</option>
+                            </select>
+                        </div>
+
+                        <!-- Campo Honeypot anti-bot (invisível para usuários humanos e leitores de tela) -->
+                        <div class="waitlist-hp" aria-hidden="true">
+                            <label for="waitlist-website">Website</label>
+                            <input
+                                id="waitlist-website"
+                                name="website"
+                                type="text"
+                                tabindex="-1"
+                                autocomplete="off"
+                            >
+                        </div>
+
+                        <label for="waitlist-lgpd" class="waitlist-consent">
+                            <input id="waitlist-lgpd" name="lgpdConsent" type="checkbox" class="waitlist-checkbox" required>
+                            <span>
+                                Autorizo o uso do meu nome e e-mail exclusivamente para receber avisos sobre a publicação do Edital Unificado CMM 2027 (FacMed UFF), em conformidade com a LGPD.
+                            </span>
+                        </label>
+
+                        <!-- Cloudflare Turnstile (ativado automaticamente quando turnstileSiteKey estiver configurada) -->
+                        <div id="waitlist-turnstile" class="waitlist-turnstile" hidden></div>
+
+                        <div id="waitlist-feedback" class="waitlist-feedback" role="status" aria-live="polite" hidden></div>
+
+                        <button id="waitlist-submit" type="submit" class="waitlist-submit">
+                            <span class="waitlist-submit-label">Avise-me quando o Edital sair</span>
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+
+                        <p class="waitlist-footnote">
+                            Protegido contra cadastros automatizados (honeypot, verificação Turnstile e limite por rede).
+                        </p>
+                    </form>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
         <!-- 4. CURSOS DE ESPECIALIZAÇÃO (Cards com Cor Predominante)       -->
         <!-- ============================================================== -->
         <section id="especialidades" class="pt-6 md:pt-8 pb-0" aria-label="14 Cursos de Especialização Oficiais">
@@ -374,10 +494,10 @@
                 <div class="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8 relative z-10">
                     <div class="w-full lg:w-auto text-center lg:text-left">
                         <p class="text-xs font-mono font-semibold uppercase tracking-[0.18em] text-slate-400 mb-1.5">
-                            Minuta CMM Nº 01/2026 • Turmas 2027
+                            Minuta CMM Nº 01/2026 • Aguardando Publicação Oficial
                         </p>
                         <h3 class="font-sans font-black text-2xl sm:text-3xl text-white">
-                            Abertura das Inscrições
+                            Previsão de Abertura das Inscrições
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-300 mt-2 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                             Exclusivamente via <strong class="text-white">PASSUFF</strong> (<span class="font-mono text-slate-200">app.uff.br/pasuff</span>), de <strong class="text-white">01/01/2027 (11h)</strong> a <strong class="text-white">22/01/2027 (16h)</strong>, com taxa de <strong class="text-white">R$ 400,00</strong> no CPF do candidato. Documentação vai só na pré-matrícula (<span class="font-mono text-slate-200">CANDIDATURAPOS</span>).
@@ -603,12 +723,12 @@
                 </h2>
                 
                 <p class="mt-5 sm:mt-6 text-sm sm:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
-                    Consulte todas as regras, critérios de avaliação, horários (Anexo VI) e conteúdos programáticos previstos na Minuta do Edital Unificado CMM Nº 01/2026 e no Portal de Editais da UFF.
+                    Cadastre-se na lista de espera para ser avisado assim que o Edital Unificado CMM Nº 01/2026 for publicado oficialmente no Portal de Editais da UFF.
                 </p>
 
                 <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="#cronograma" class="avenora-btn text-xs sm:text-lg whitespace-nowrap">
-                        <span>Ver Cronograma 2027</span>
+                    <a href="#lista-espera" class="avenora-btn text-xs sm:text-lg whitespace-nowrap">
+                        <span>Entrar na Lista de Espera</span>
                         <span class="avenora-btn-circle">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </span>
