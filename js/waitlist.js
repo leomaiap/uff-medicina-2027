@@ -51,7 +51,7 @@
             }
         }
 
-        function loadTallyEmbedScript() {
+        function loadTallyEmbedScript(onFail) {
             if (window.Tally && typeof window.Tally.loadEmbeds === 'function') {
                 window.Tally.loadEmbeds();
                 return;
@@ -64,7 +64,12 @@
             s.onload = () => {
                 if (window.Tally && typeof window.Tally.loadEmbeds === 'function') {
                     window.Tally.loadEmbeds();
+                } else if (typeof onFail === 'function') {
+                    onFail();
                 }
+            };
+            s.onerror = () => {
+                if (typeof onFail === 'function') onFail();
             };
             document.body.appendChild(s);
         }
@@ -85,6 +90,7 @@
             const externalLinkEl = document.getElementById('waitlist-external-link');
             const rawFormUrl = SITE_CONFIG.tallyUrl || SITE_CONFIG.googleFormsUrl || '';
             let activeIframe = null;
+            let fallbackTimer = null;
 
             function mountTallyIframe(specialtyTitle) {
                 const embedUrl = toTallyEmbedUrl(rawFormUrl, specialtyTitle);
@@ -94,7 +100,9 @@
                     activeIframe = document.createElement('iframe');
                     activeIframe.title = 'Formulário de Lista de Espera — Concurso Unificado FacMed UFF 2027';
                     activeIframe.className = 'waitlist-iframe';
-                    activeIframe.loading = 'lazy';
+                    activeIframe.width = '100%';
+                    activeIframe.height = '260';
+                    activeIframe.loading = 'eager';
                     activeIframe.setAttribute('frameborder', '0');
                     activeIframe.setAttribute('marginheight', '0');
                     activeIframe.setAttribute('marginwidth', '0');
@@ -105,8 +113,22 @@
                 }
 
                 activeIframe.setAttribute('data-tally-src', embedUrl);
-                activeIframe.src = embedUrl;
-                loadTallyEmbedScript();
+
+                const applyFallbackSrc = () => {
+                    const targetSrc = activeIframe && activeIframe.getAttribute('data-tally-src');
+                    if (activeIframe && targetSrc && activeIframe.getAttribute('src') !== targetSrc) {
+                        activeIframe.src = targetSrc;
+                    }
+                };
+
+                if (window.Tally && typeof window.Tally.loadEmbeds === 'function') {
+                    activeIframe.removeAttribute('src');
+                    window.Tally.loadEmbeds();
+                } else {
+                    loadTallyEmbedScript(applyFallbackSrc);
+                    clearTimeout(fallbackTimer);
+                    fallbackTimer = setTimeout(applyFallbackSrc, 1200);
+                }
 
                 const directUrl = toTallyDirectUrl(rawFormUrl);
                 if (externalLinkEl && directUrl) {
