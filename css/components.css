@@ -928,10 +928,19 @@
             display: block;
             background: transparent;
         }
+        .waitlist-iframe[hidden] {
+            display: none;
+        }
         @media (min-width: 640px) {
             .waitlist-embed-container.has-iframe {
                 padding: 0.5rem 0.9rem 0.65rem;
             }
+        }
+        .waitlist-embed-container.is-submitted {
+            min-height: 210px;
+            padding: 1.5rem 1.25rem;
+            align-items: center;
+            justify-content: center;
         }
         .waitlist-embed-placeholder {
             padding: 2.25rem 1.5rem;
@@ -955,6 +964,58 @@
             font-size: 0.82rem;
             line-height: 1.55;
             color: #CBD5E1;
+        }
+        .waitlist-success-box {
+            padding: 0.5rem 0.75rem;
+            text-align: center;
+            max-width: 23rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .waitlist-success-box[hidden] {
+            display: none;
+        }
+        .waitlist-success-icon-wrap {
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 9999px;
+            background: rgba(16, 185, 129, 0.16);
+            border: 1px solid rgba(52, 211, 153, 0.45);
+            color: #34D399;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.15rem;
+        }
+        .waitlist-success-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: -0.01em;
+        }
+        .waitlist-success-desc {
+            font-size: 0.83rem;
+            line-height: 1.55;
+            color: #CBD5E1;
+        }
+        .waitlist-success-reset {
+            margin-top: 0.35rem;
+            padding: 0.42rem 0.9rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: #E2E8F0;
+            font-size: 0.74rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+        }
+        .waitlist-success-reset:hover {
+            background: rgba(255, 255, 255, 0.14);
+            border-color: rgba(52, 211, 153, 0.45);
+            color: #FFFFFF;
         }
 
         /* Alternância instantânea entre Modo Aguardando Edital e Modo Edital Publicado (js/site-config.js) */
