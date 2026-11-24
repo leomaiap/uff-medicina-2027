@@ -211,17 +211,11 @@
 
         .spec-card-seal {
             position: absolute;
-            top: 0.95rem;
-            right: 0.95rem;
+            top: 0.9rem;
+            right: 0.9rem;
             z-index: 4;
-            width: 56px;
-            height: 56px;
-            border-radius: 9999px;
-            padding: 2px;
-            background: rgba(255, 255, 255, 0.22);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.55);
+            width: 58px;
+            height: 58px;
             pointer-events: none;
             user-select: none;
             transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
@@ -229,10 +223,10 @@
 
         @media (min-width: 640px) {
             .spec-card-seal {
-                top: 1.05rem;
-                right: 1.05rem;
-                width: 62px;
-                height: 62px;
+                top: 1rem;
+                right: 1rem;
+                width: 64px;
+                height: 64px;
             }
         }
 
@@ -243,9 +237,9 @@
         .spec-card-seal-img {
             width: 100%;
             height: 100%;
-            border-radius: 9999px;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.7));
         }
 
         .spec-card-img-wrap {
@@ -563,11 +557,10 @@
         }
         .site-footer-logos {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
-            row-gap: 0.75rem;
             max-width: 100%;
         }
         .site-footer-logo-facmed {
@@ -588,11 +581,35 @@
             opacity: 0.95;
             flex-shrink: 0;
         }
+        .site-footer-subrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.25rem;
+            padding-top: 1.15rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .site-footer-recognition {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.45rem;
+            flex-shrink: 0;
+        }
+        .site-footer-recognition-label {
+            font-size: 0.6875rem;
+            line-height: 1.2;
+            color: rgba(203, 213, 225, 0.62);
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+        }
         .site-footer-logo-link {
             display: inline-flex;
             align-items: center;
             flex-shrink: 0;
-            opacity: 0.92;
+            padding: 0.25rem 0.4rem;
+            opacity: 0.85;
             transition: opacity 0.2s ease, transform 0.2s ease;
         }
         .site-footer-logo-link:hover {
@@ -600,7 +617,7 @@
             transform: translateY(-1px);
         }
         .site-footer-logo-sbc {
-            height: 1.5rem;
+            height: 1.25rem;
             width: auto;
             flex-shrink: 0;
         }
@@ -619,13 +636,10 @@
             background: rgba(255, 255, 255, 0.08) !important;
         }
         .modal-seal-img {
-            width: 3.25rem;
-            height: 3.25rem;
-            border-radius: 9999px;
-            object-fit: cover;
+            width: 3.35rem;
+            height: 3.35rem;
+            object-fit: contain;
             flex-shrink: 0;
-            box-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.25);
         }
         .modal-seal-text {
             display: flex;
@@ -656,9 +670,6 @@
             width: 1px;
             background: rgba(255, 255, 255, 0.16);
             flex-shrink: 0;
-        }
-        .site-footer-divider--sbc {
-            display: none;
         }
         .site-footer-title {
             margin: 0;
@@ -713,7 +724,6 @@
                 gap: 1.5rem;
             }
             .site-footer-logos {
-                flex-wrap: nowrap;
                 gap: 1.5rem;
             }
             .site-footer-logo-facmed {
@@ -726,13 +736,10 @@
                 height: 2rem;
             }
             .site-footer-logo-sbc {
-                height: 2.15rem;
+                height: 1.4rem;
             }
             .site-footer-divider {
                 height: 1.75rem;
-            }
-            .site-footer-divider--sbc {
-                display: block;
             }
             .site-footer-disclaimer {
                 font-size: 0.75rem;
@@ -759,9 +766,16 @@
             .site-footer-meta {
                 align-items: flex-end;
             }
+            .site-footer-subrow {
+                flex-direction: row;
+                align-items: flex-end;
+            }
+            .site-footer-recognition {
+                align-items: flex-end;
+            }
             .site-footer-disclaimer {
                 margin: 0;
-                max-width: 48rem;
+                max-width: 44rem;
                 text-align: left;
             }
         }
