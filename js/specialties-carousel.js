@@ -244,6 +244,10 @@ document.addEventListener("DOMContentLoaded", () => {
                              tabindex="0"
                              aria-label="Ver detalhes de ${spec.title}">
                         <span class="spec-card-number">${realIndex + 1}</span>
+                        ${spec.seal ? `
+                        <div class="spec-card-seal" title="${spec.seal.label}">
+                            <img src="${spec.seal.src}" alt="${spec.seal.alt}" class="spec-card-seal-img" loading="eager" decoding="async">
+                        </div>` : ''}
                         <div class="spec-card-img-wrap">
                             <img data-src="${spec.image}"
                                  width="440"
@@ -918,6 +922,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 <h2 class="font-black text-2xl sm:text-3xl text-white mt-1">${spec.fullTitle || spec.title}</h2>
                 <div class="text-xs font-mono text-slate-300 mt-1 uppercase tracking-wider">Início das Aulas: <strong class="text-white">${spec.inicio}</strong> • Mínimo: <strong class="text-white">${spec.minAlunos}</strong></div>
                 
+                ${spec.seal ? `
+                <a href="${spec.seal.url}" target="_blank" rel="noopener noreferrer" class="glass-card modal-seal-banner">
+                    <img src="${spec.seal.src}" alt="${spec.seal.alt}" class="modal-seal-img">
+                    <div class="modal-seal-text">
+                        <span class="modal-seal-eyebrow text-brand-gold">Credenciamento SBC</span>
+                        <strong class="modal-seal-title">Sociedade Brasileira de Cardiologia</strong>
+                        <span class="modal-seal-link">Ver credenciamento no portal SBC</span>
+                    </div>
+                </a>` : ''}
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-5 text-xs sm:text-sm">
                     <div class="glass-card p-3.5 rounded-xl">
                         <span class="text-slate-400 block text-[11px] uppercase font-mono">Duração Oficial</span>

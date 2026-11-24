@@ -52,6 +52,12 @@
                 revalidacao: 'Não listado entre os cursos com exigência de revalidação no Item 1.4 na matrícula.',
                 schedule: 'Teóricas presenciais seg e ter (08h às 13h) • Prática no HUAP no 2º ano',
                 image: 'assets/img/especialidades/cardiologia.webp',
+                seal: {
+                    src: 'assets/img/selo-sbc.png',
+                    alt: 'Selo SBC - Sociedade Brasileira de Cardiologia',
+                    label: 'Credenciamento SBC',
+                    url: 'https://www.portal.cardiol.br/credenciamento?tab=Credenciamento+Provis%C3%B3rio'
+                },
                 rgb: '112, 24, 42',
                 rgbDark: '68, 12, 24'
             },
