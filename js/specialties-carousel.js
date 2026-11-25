@@ -302,13 +302,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 card.addEventListener('click', () => {
                     if (dragMoved) return;
                     const idx = Number(card.getAttribute('data-index'));
-                    openSpecialtyModal(specialties[idx]);
+                    openSpecialtyModal(specialties[idx], card);
                 });
                 card.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
                         const idx = Number(card.getAttribute('data-index'));
-                        openSpecialtyModal(specialties[idx]);
+                        openSpecialtyModal(specialties[idx], card);
                     }
                 });
             });
@@ -878,119 +878,242 @@ document.addEventListener("DOMContentLoaded", () => {
         initDisciplinesOptionWheel();
 
         // -------------------------------------------------------------
-        // 3. MODAL DE DETALHES DA ESPECIALIDADE (COM DADOS DO EDITAL)
+        // 3. MODAL DE DETALHES DA ESPECIALIDADE (ESTILO CARD COLORIDO)
         // -------------------------------------------------------------
         const modal = document.getElementById('specialty-modal');
+        const modalPanel = document.getElementById('specialty-modal-panel');
         const modalContent = document.getElementById('modal-content');
         const modalClose = document.getElementById('modal-close');
+        let lastModalTrigger = null;
+        let modalCloseTimer = null;
+        let modalResumeTimer = null;
 
-        function openSpecialtyModal(spec) {
+        function setModalOriginFromElement(sourceEl) {
+            if (!modalPanel) return;
+            if (sourceEl && typeof sourceEl.getBoundingClientRect === 'function') {
+                const rect = sourceEl.getBoundingClientRect();
+                const vw = window.innerWidth || 1280;
+                const vh = window.innerHeight || 800;
+                const cardCx = rect.left + rect.width / 2;
+                const cardCy = rect.top + rect.height / 2;
+                const dx = Math.max(-110, Math.min(110, Math.round((cardCx - vw / 2) * 0.28)));
+                const dy = Math.max(-64, Math.min(64, Math.round((cardCy - vh / 2) * 0.24)));
+                modalPanel.style.setProperty('--modal-origin-x', `${dx}px`);
+                modalPanel.style.setProperty('--modal-origin-y', `${dy}px`);
+            } else {
+                modalPanel.style.setProperty('--modal-origin-x', '0px');
+                modalPanel.style.setProperty('--modal-origin-y', '28px');
+            }
+        }
+
+        function closeSpecialtyModal(options = {}) {
+            if (!modal || !modal.classList.contains('is-open')) return;
+            const { restoreFocus = true, resumeDelay = 1200 } = options;
+
+            clearTimeout(modalCloseTimer);
+            clearTimeout(modalResumeTimer);
+
+            modal.classList.remove('is-open');
+            modal.classList.add('pointer-events-none');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            if (window.__lenis && typeof window.__lenis.start === 'function') {
+                window.__lenis.start();
+            }
+
+            const triggerToFocus = lastModalTrigger;
+            lastModalTrigger = null;
+            if (restoreFocus && triggerToFocus && typeof triggerToFocus.focus === 'function') {
+                modalCloseTimer = setTimeout(() => {
+                    try { triggerToFocus.focus({ preventScroll: true }); } catch (_) {}
+                }, 260);
+            }
+
+            modalResumeTimer = setTimeout(() => {
+                isUserInteracting = false;
+            }, resumeDelay);
+        }
+
+        function openSpecialtyModal(spec, sourceEl = null) {
+            if (!modal || !modalPanel || !modalContent || !spec) return;
+
+            clearTimeout(modalCloseTimer);
+            clearTimeout(modalResumeTimer);
             isUserInteracting = true;
+            lastModalTrigger = sourceEl || document.activeElement;
+
+            const specIdx = specialties.indexOf(spec);
+            const specNum = specIdx >= 0 ? specIdx + 1 : '';
+            const accentColor = rgbToCardNumColor(spec.rgb);
+
+            modalPanel.style.setProperty('--modal-rgb', spec.rgb || '15, 54, 85');
+            modalPanel.style.setProperty('--modal-rgb-dark', spec.rgbDark || '9, 34, 56');
+            modalPanel.style.setProperty('--modal-accent', accentColor);
+            setModalOriginFromElement(sourceEl);
+
             const siteCfg = window.UFF_SITE_CONFIG || {};
             const isPublished = Boolean(siteCfg.editalPublicado);
             const editalUrl = siteCfg.editalUrl || 'https://www.editais.uff.br';
             const modalEyebrow = isPublished
-                ? 'Edital Unificado CMM Nº 01/2026 • Turmas 2027'
-                : 'Edital CMM Nº 01/2026 (Minuta) • Turmas 2027';
+                ? 'Edital Unificado CMM 01/2026 · Turmas 2027'
+                : 'Minuta CMM 01/2026 · Turmas 2027';
+
+            const showDetailedVagas = Boolean(spec.vagas && spec.vagas !== spec.vagasShort && spec.vagas.length > 34);
+            const primaryVagasLabel = showDetailedVagas ? spec.vagasShort : (spec.vagas || spec.vagasShort);
 
             const modalActionsHtml = isPublished
                 ? `
-                    <a href="${editalUrl}" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs font-bold text-white bg-brand-emerald hover:bg-emerald-500 text-center transition-all shadow-glow-emerald">
-                        Consultar Edital Oficial
+                    <a href="${editalUrl}" target="_blank" rel="noopener noreferrer" class="spec-modal-cta-primary">
+                        <span>Consultar Edital Oficial</span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M7 17L17 7M9 7h8v8"/>
+                        </svg>
                     </a>
-                    <a href="mailto:concursos.cmm@id.uff.br" class="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white glass-pill text-center transition-all">
-                        Contato Edital: concursos.cmm@id.uff.br
+                    <a href="mailto:concursos.cmm@id.uff.br" class="spec-modal-cta-secondary">
+                        concursos.cmm@id.uff.br
                     </a>`
                 : `
-                    <button type="button" id="modal-waitlist-btn" class="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs font-bold text-white bg-brand-emerald hover:bg-emerald-500 text-center transition-all shadow-glow-emerald cursor-pointer">
-                        Avise-me sobre este curso
+                    <button type="button" id="modal-waitlist-btn" class="spec-modal-cta-primary">
+                        <span>Avise-me sobre este curso</span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12h14M13 5l7 7-7 7"/>
+                        </svg>
                     </button>
-                    <a href="${editalUrl}" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white glass-pill text-center transition-all">
+                    <a href="${editalUrl}" target="_blank" rel="noopener noreferrer" class="spec-modal-cta-secondary">
                         Portal de Editais da UFF
                     </a>`;
 
             modalContent.innerHTML = `
-                <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono pb-2 mb-2 pr-8">
-                    <span class="text-brand-gold font-bold uppercase tracking-wider text-[11px]">
-                        ${modalEyebrow}
-                    </span>
-                    <span class="text-brand-gold font-bold text-xs bg-brand-gold/15 px-3 py-1 rounded-full">
-                        ${spec.vagas}
-                    </span>
-                </div>
-
-                <h2 class="font-black text-2xl sm:text-3xl text-white mt-1">${spec.fullTitle || spec.title}</h2>
-                <div class="text-xs font-mono text-slate-300 mt-1 uppercase tracking-wider">Início das Aulas: <strong class="text-white">${spec.inicio}</strong> • Mínimo: <strong class="text-white">${spec.minAlunos}</strong></div>
-                
-                ${spec.seal ? `
-                <a href="${spec.seal.url}" target="_blank" rel="noopener noreferrer" class="glass-card modal-seal-banner">
-                    <img src="${spec.seal.src}" alt="${spec.seal.alt}" class="modal-seal-img">
-                    <div class="modal-seal-text">
-                        <span class="modal-seal-eyebrow text-brand-gold">Credenciamento SBC</span>
-                        <strong class="modal-seal-title">Sociedade Brasileira de Cardiologia</strong>
-                        <span class="modal-seal-link">Ver credenciamento no portal SBC</span>
-                    </div>
-                </a>` : ''}
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-5 text-xs sm:text-sm">
-                    <div class="glass-card p-3.5 rounded-xl">
-                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Duração Oficial</span>
-                        <strong class="text-white text-sm sm:text-base font-bold">${spec.duration}</strong>
-                    </div>
-                    <div class="glass-card p-3.5 rounded-xl">
-                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Carga Horária Total</span>
-                        <strong class="text-white text-sm sm:text-base font-bold">${spec.hours}</strong>
-                    </div>
-                    <div class="glass-card p-3.5 rounded-xl">
-                        <span class="text-slate-400 block text-[11px] uppercase font-mono">1ª Etapa (Prova Escrita)</span>
-                        <strong class="text-slate-100 font-semibold text-xs sm:text-sm leading-relaxed block mt-1">${spec.stage1}</strong>
-                    </div>
-                    <div class="glass-card p-3.5 rounded-xl">
-                        <span class="text-slate-400 block text-[11px] uppercase font-mono">2ª Etapa</span>
-                        <strong class="text-slate-100 font-semibold text-xs sm:text-sm leading-relaxed block mt-1">${spec.stage2}</strong>
-                    </div>
-                    ${spec.schedule ? `
-                    <div class="glass-card p-3.5 rounded-xl sm:col-span-2">
-                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Horário e Modalidade (Anexo VI)</span>
-                        <strong class="text-slate-200 font-medium text-xs sm:text-sm leading-relaxed block mt-1">${spec.schedule}</strong>
-                    </div>` : ''}
-                    <div class="glass-card p-3.5 rounded-xl sm:col-span-2">
-                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Pré-Requisito (Item 1.1 do Edital)</span>
-                        <strong class="text-slate-200 font-medium text-xs sm:text-sm leading-relaxed block mt-1">${spec.prereq}</strong>
-                    </div>
-                    <div class="glass-card p-3.5 rounded-xl sm:col-span-2">
-                        <span class="text-slate-400 block text-[11px] uppercase font-mono">Diploma Obtido no Exterior</span>
-                        <strong class="text-slate-200 font-medium text-xs sm:text-sm leading-relaxed block mt-1">${spec.revalidacao}</strong>
+                <div class="spec-modal-hero">
+                    ${specNum ? `<span class="spec-modal-number" aria-hidden="true">${specNum}</span>` : ''}
+                    <img src="${spec.image}" alt="${spec.title} - Faculdade de Medicina da UFF" class="spec-modal-hero-img">
+                    <div class="spec-modal-hero-gradient" aria-hidden="true"></div>
+                    <div class="spec-modal-hero-content">
+                        <p class="spec-modal-eyebrow">${modalEyebrow}</p>
+                        <h2 id="spec-modal-title" class="spec-modal-title">${spec.fullTitle || spec.title}</h2>
                     </div>
                 </div>
 
-                <div class="flex flex-col sm:flex-row items-center gap-3 pt-2">
-                    ${modalActionsHtml}
+                <div class="spec-modal-body">
+                    <div class="spec-modal-stats">
+                        <div class="spec-modal-stat">
+                            <span class="spec-modal-stat-label">Vagas</span>
+                            <span class="spec-modal-stat-value">${primaryVagasLabel}</span>
+                        </div>
+                        <div class="spec-modal-stat">
+                            <span class="spec-modal-stat-label">Duração</span>
+                            <span class="spec-modal-stat-value">${spec.duration}</span>
+                        </div>
+                        <div class="spec-modal-stat">
+                            <span class="spec-modal-stat-label">Carga horária</span>
+                            <span class="spec-modal-stat-value">${spec.hours}</span>
+                        </div>
+                        <div class="spec-modal-stat">
+                            <span class="spec-modal-stat-label">Início</span>
+                            <span class="spec-modal-stat-value">${spec.inicio}</span>
+                        </div>
+                    </div>
+
+                    ${spec.seal ? `
+                    <a href="${spec.seal.url}" target="_blank" rel="noopener noreferrer" class="modal-seal-banner">
+                        <img src="${spec.seal.src}" alt="${spec.seal.alt}" class="modal-seal-img">
+                        <div class="modal-seal-text">
+                            <span class="modal-seal-eyebrow">Reconhecimento oficial</span>
+                            <strong class="modal-seal-title">Sociedade Brasileira de Cardiologia</strong>
+                            <span class="modal-seal-link">Consultar credenciamento no portal SBC</span>
+                        </div>
+                    </a>` : ''}
+
+                    <div class="spec-modal-stages">
+                        <div class="spec-modal-stage">
+                            <span class="spec-modal-label">1ª Etapa · Prova escrita</span>
+                            <span class="spec-modal-value">${spec.stage1}</span>
+                        </div>
+                        <div class="spec-modal-stage">
+                            <span class="spec-modal-label">2ª Etapa</span>
+                            <span class="spec-modal-value">${spec.stage2}</span>
+                        </div>
+                    </div>
+
+                    <div class="spec-modal-list">
+                        ${showDetailedVagas ? `
+                        <div class="spec-modal-row">
+                            <span class="spec-modal-label">Distribuição de vagas</span>
+                            <span class="spec-modal-value">${spec.vagas}</span>
+                        </div>` : ''}
+                        ${spec.schedule ? `
+                        <div class="spec-modal-row">
+                            <span class="spec-modal-label">Horário e modalidade</span>
+                            <span class="spec-modal-value">${spec.schedule}</span>
+                        </div>` : ''}
+                        <div class="spec-modal-row">
+                            <span class="spec-modal-label">Pré-requisito</span>
+                            <span class="spec-modal-value">${spec.prereq}</span>
+                        </div>
+                        <div class="spec-modal-row">
+                            <span class="spec-modal-label">Turma mínima</span>
+                            <span class="spec-modal-value">${spec.minAlunos}</span>
+                        </div>
+                        <div class="spec-modal-row">
+                            <span class="spec-modal-label">Diploma obtido no exterior</span>
+                            <span class="spec-modal-value">${spec.revalidacao}</span>
+                        </div>
+                    </div>
+
+                    <div class="spec-modal-footer">
+                        ${modalActionsHtml}
+                    </div>
                 </div>
             `;
+
+            modalContent.scrollTop = 0;
+
             const waitlistBtn = document.getElementById('modal-waitlist-btn');
             if (waitlistBtn) {
                 waitlistBtn.onclick = () => {
-                    modal.classList.add('opacity-0', 'pointer-events-none');
-                    setTimeout(() => { isUserInteracting = false; }, 600);
+                    closeSpecialtyModal({ restoreFocus: false, resumeDelay: 600 });
                     if (typeof window.selectWaitlistSpecialty === 'function') {
-                        window.selectWaitlistSpecialty(spec.id);
+                        setTimeout(() => window.selectWaitlistSpecialty(spec.id), 220);
                     }
                 };
             }
-            modal.classList.remove('opacity-0', 'pointer-events-none');
+
+            modal.classList.remove('pointer-events-none');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            if (window.__lenis && typeof window.__lenis.stop === 'function') {
+                window.__lenis.stop();
+            }
+
+            // Force reflow so open transition always plays smoothly from origin
+            void modalPanel.offsetWidth;
+            requestAnimationFrame(() => {
+                modal.classList.add('is-open');
+            });
+
+            if (modalPanel && typeof modalPanel.focus === 'function') {
+                modalPanel.setAttribute('tabindex', '-1');
+                setTimeout(() => {
+                    try { modalPanel.focus({ preventScroll: true }); } catch (_) {}
+                }, 120);
+            }
         }
 
-        modalClose.onclick = () => {
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            setTimeout(() => { isUserInteracting = false; }, 1500);
-        };
-        modal.onclick = (e) => {
-            if (e.target === modal) {
-                modal.classList.add('opacity-0', 'pointer-events-none');
-                setTimeout(() => { isUserInteracting = false; }, 1500);
+        if (modalClose) {
+            modalClose.onclick = () => closeSpecialtyModal();
+        }
+        if (modal) {
+            modal.onclick = (e) => {
+                if (e.target === modal) {
+                    closeSpecialtyModal();
+                }
+            };
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal && modal.classList.contains('is-open')) {
+                closeSpecialtyModal();
             }
-        };
+        });
 
         // -------------------------------------------------------------
 });
