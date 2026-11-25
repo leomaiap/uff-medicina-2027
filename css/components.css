@@ -800,19 +800,18 @@
             gap: 0.45rem;
             padding: 0.36rem 0.78rem;
             border-radius: 9999px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.07);
+            border: none;
             color: rgba(226, 232, 240, 0.9);
             font-size: 0.72rem;
             font-weight: 500;
             line-height: 1.2;
             cursor: pointer;
-            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+            transition: background-color 0.2s ease, color 0.2s ease;
         }
         .cal-btn:hover,
         .cal-btn[aria-expanded="true"] {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.14);
             color: #FFFFFF;
         }
         .cal-btn-chevron {
@@ -830,7 +829,7 @@
             padding: 0.35rem;
             border-radius: 0.9rem;
             background: #06281f;
-            border: 1px solid rgba(255, 255, 255, 0.16);
+            border: none;
             box-shadow: 0 20px 44px -8px rgba(0, 0, 0, 0.78);
             display: none;
             flex-direction: column;
