@@ -243,7 +243,7 @@
             },
             {
                 id: 'radiologia-toracica',
-                title: 'Radiologia Torácica',
+                title: 'Radiologia e Diagnóstico por Imagem do Tórax',
                 fullTitle: 'Radiologia e Diagnóstico por Imagem do Tórax',
                 duration: '1 Ano e 6 Meses',
                 hours: '1.864 horas',
