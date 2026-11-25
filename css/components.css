@@ -244,10 +244,8 @@
 
         .spec-card-img-wrap {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 76%;
+            inset: 0;
+            height: 100%;
             overflow: hidden;
             z-index: 1;
         }
@@ -256,7 +254,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 20%;
+            object-position: center 22%;
             opacity: 0;
             transform: translateZ(0);
             backface-visibility: hidden;
@@ -272,26 +270,64 @@
             transform: scale(1.06) translateZ(0);
         }
 
-        /* Seamless predominant-color gradient fade over the image into the solid card base */
+        /* Progressive frosted colored glass overlay over the full-bleed photo */
         .spec-card-gradient {
             position: absolute;
             inset: 0;
             z-index: 2;
+            pointer-events: none;
+        }
+
+        .spec-card-gradient::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            backdrop-filter: blur(18px) saturate(145%);
+            -webkit-backdrop-filter: blur(18px) saturate(145%);
+            -webkit-mask-image: linear-gradient(
+                180deg,
+                transparent 0%,
+                transparent 44%,
+                rgba(0, 0, 0, 0.45) 58%,
+                rgba(0, 0, 0, 0.92) 72%,
+                #000000 100%
+            );
+            mask-image: linear-gradient(
+                180deg,
+                transparent 0%,
+                transparent 44%,
+                rgba(0, 0, 0, 0.45) 58%,
+                rgba(0, 0, 0, 0.92) 72%,
+                #000000 100%
+            );
+            pointer-events: none;
+        }
+
+        .spec-card-gradient::after {
+            content: '';
+            position: absolute;
+            inset: 0;
             background:
                 radial-gradient(
                     circle at 14% 10%,
                     rgba(var(--card-rgb-dark), 0.68) 0%,
-                    rgba(var(--card-rgb-dark), 0.28) 22%,
+                    rgba(var(--card-rgb-dark), 0.26) 22%,
                     rgba(var(--card-rgb-dark), 0.00) 46%
                 ),
                 linear-gradient(
                     180deg,
+                    rgba(255, 255, 255, 0.00) 0%,
+                    rgba(255, 255, 255, 0.00) 50%,
+                    rgba(255, 255, 255, 0.06) 66%,
+                    rgba(255, 255, 255, 0.02) 100%
+                ),
+                linear-gradient(
+                    180deg,
                     rgba(var(--card-rgb), 0.00) 0%,
-                    rgba(var(--card-rgb), 0.00) 34%,
-                    rgba(var(--card-rgb), 0.48) 50%,
-                    rgba(var(--card-rgb), 0.88) 62%,
-                    rgb(var(--card-rgb)) 71%,
-                    rgb(var(--card-rgb-dark)) 100%
+                    rgba(var(--card-rgb), 0.00) 42%,
+                    rgba(var(--card-rgb), 0.34) 56%,
+                    rgba(var(--card-rgb), 0.56) 72%,
+                    rgba(var(--card-rgb-dark), 0.74) 100%
                 );
             pointer-events: none;
         }
@@ -312,7 +348,7 @@
             line-height: 1.2;
             letter-spacing: -0.02em;
             color: #FFFFFF;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.32);
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
@@ -324,7 +360,8 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 0.8rem;
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.82);
+            color: rgba(255, 255, 255, 0.86);
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.28);
             letter-spacing: 0.01em;
             white-space: nowrap;
             overflow: hidden;
@@ -339,7 +376,9 @@
             justify-content: space-between;
             padding: 0.78rem 1.05rem;
             border-radius: 14px;
-            background: rgba(0, 0, 0, 0.30);
+            background: rgba(0, 0, 0, 0.28);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: none;
             color: #FFFFFF;
             font-size: 0.82rem;
