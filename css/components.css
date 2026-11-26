@@ -1629,3 +1629,32 @@
         html[data-site-mode="published"] [data-mode-only="waiting"] {
             display: none !important;
         }
+
+        /* Sub-datas oficiais do Cronograma (Item 13) */
+        .timeline-subdates {
+            margin: 0.55rem 0 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            max-width: 42rem;
+        }
+        .timeline-subdates li {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.35rem 0.65rem;
+            font-size: 0.78rem;
+            line-height: 1.45;
+            color: rgba(203, 213, 225, 0.88);
+        }
+        .timeline-subdate {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            font-variant-numeric: tabular-nums;
+            min-width: 7.5rem;
+            flex-shrink: 0;
+        }
