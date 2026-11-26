@@ -1785,3 +1785,90 @@
         .timeline-step.is-past {
             opacity: 0.58;
         }
+
+        /* Botão de Notificações Push no Cronograma (Chrome + Safari) */
+        .push-notify-wrap {
+            margin-top: 1.05rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem 0.9rem;
+        }
+        @media (min-width: 1024px) {
+            .push-notify-wrap {
+                justify-content: flex-start;
+            }
+        }
+        .push-notify-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.62rem 1.15rem;
+            border-radius: 9999px;
+            border: none;
+            background: #009E5E;
+            color: #FFFFFF;
+            font-size: 0.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            cursor: pointer;
+            box-shadow: 0 10px 26px -10px rgba(16, 185, 129, 0.55);
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+        .push-notify-btn:hover {
+            background: #10B981;
+            transform: translateY(-1px);
+            box-shadow: 0 14px 30px -10px rgba(16, 185, 129, 0.68);
+        }
+        .push-notify-btn:hover .push-notify-bell {
+            transform: rotate(-10deg);
+        }
+        .push-notify-btn:disabled {
+            opacity: 0.68;
+            cursor: wait;
+            transform: none;
+        }
+        .push-notify-btn:focus-visible {
+            outline: 2px solid #FFFFFF;
+            outline-offset: 2px;
+        }
+        .push-notify-btn.is-subscribed {
+            background: rgba(16, 185, 129, 0.16);
+            color: #6EE7B7;
+            box-shadow: none;
+        }
+        .push-notify-btn.is-subscribed:hover {
+            background: rgba(16, 185, 129, 0.24);
+            color: #A7F3D0;
+            box-shadow: none;
+        }
+        .push-notify-bell {
+            flex-shrink: 0;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .push-notify-hint {
+            font-size: 0.74rem;
+            font-weight: 500;
+            color: rgba(203, 213, 225, 0.72);
+        }
+        .push-notify-status {
+            margin: 0.7rem auto 0;
+            padding: 0.65rem 0.9rem;
+            max-width: 34rem;
+            border-radius: 0.85rem;
+            background: rgba(255, 255, 255, 0.06);
+            font-size: 0.76rem;
+            line-height: 1.5;
+            color: rgba(226, 232, 240, 0.92);
+        }
+        @media (min-width: 1024px) {
+            .push-notify-status {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+        .push-notify-status[hidden] {
+            display: none;
+        }

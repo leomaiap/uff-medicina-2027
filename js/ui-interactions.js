@@ -402,4 +402,182 @@ document.addEventListener("DOMContentLoaded", () => {
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') closeAllCalMenus();
             });
+
+            // -------------------------------------------------------------
+            // 11. NOTIFICAÇÕES PUSH DO CRONOGRAMA (ONESIGNAL v16 — CHROME E SAFARI)
+            // -------------------------------------------------------------
+            const pushBtn = document.getElementById('push-notify-btn');
+            const pushLabel = document.getElementById('push-notify-label');
+            const pushStatus = document.getElementById('push-notify-status');
+
+            if (pushBtn && pushLabel) {
+                const siteCfg = window.UFF_SITE_CONFIG || {};
+                const appId = (siteCfg.oneSignalAppId || '').trim();
+                const safariWebId = (siteCfg.oneSignalSafariWebId || '').trim();
+                const isStandalonePWA = Boolean(
+                    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+                    window.navigator.standalone === true
+                );
+
+                let oneSignalInstance = null;
+                let oneSignalInitPromise = null;
+
+                function showPushStatus(html) {
+                    if (!pushStatus) return;
+                    if (!html) {
+                        pushStatus.hidden = true;
+                        pushStatus.innerHTML = '';
+                    } else {
+                        pushStatus.innerHTML = html;
+                        pushStatus.hidden = false;
+                    }
+                }
+
+                function setPushButtonState(subscribed, loading = false) {
+                    pushBtn.disabled = loading;
+                    pushBtn.classList.toggle('is-subscribed', Boolean(subscribed));
+                    pushBtn.setAttribute('aria-pressed', subscribed ? 'true' : 'false');
+                    if (loading) {
+                        pushLabel.textContent = 'Ativando notificações...';
+                    } else if (subscribed) {
+                        pushLabel.textContent = 'Notificações ativadas';
+                    } else {
+                        pushLabel.textContent = 'Receber notificações';
+                    }
+                }
+
+                function getBasePath() {
+                    const p = window.location.pathname || '/';
+                    const dir = p.endsWith('/') ? p : p.slice(0, p.lastIndexOf('/') + 1);
+                    return dir.startsWith('/') ? dir : '/' + dir;
+                }
+
+                function ensureOneSignalReady() {
+                    if (!appId) return Promise.resolve(null);
+                    if (oneSignalInitPromise) return oneSignalInitPromise;
+
+                    oneSignalInitPromise = new Promise((resolve, reject) => {
+                        window.OneSignalDeferred = window.OneSignalDeferred || [];
+
+                        if (!document.querySelector('script[data-onesignal-sdk]')) {
+                            const s = document.createElement('script');
+                            s.src = 'https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';
+                            s.defer = true;
+                            s.setAttribute('data-onesignal-sdk', 'true');
+                            s.onerror = () => reject(new Error('Falha ao carregar SDK OneSignal'));
+                            document.head.appendChild(s);
+                        }
+
+                        window.OneSignalDeferred.push(async function(OneSignal) {
+                            try {
+                                const basePath = getBasePath();
+                                const initOptions = {
+                                    appId,
+                                    allowLocalhostAsSecureOrigin: true,
+                                    autoResubscribe: true,
+                                    notifyButton: { enable: false },
+                                    welcomeNotification: {
+                                        title: 'Concurso Unificado Medicina UFF 2027',
+                                        message: 'Notificações ativadas! Você receberá avisos das etapas do cronograma.'
+                                    }
+                                };
+                                if (safariWebId) {
+                                    initOptions.safari_web_id = safariWebId;
+                                }
+                                if (basePath !== '/') {
+                                    initOptions.serviceWorkerParam = { scope: basePath };
+                                    initOptions.serviceWorkerPath = basePath.replace(/^\//, '') + 'OneSignalSDKWorker.js';
+                                }
+
+                                await OneSignal.init(initOptions);
+                                oneSignalInstance = OneSignal;
+
+                                const syncState = () => {
+                                    const optedIn = Boolean(OneSignal.User && OneSignal.User.PushSubscription && OneSignal.User.PushSubscription.optedIn);
+                                    setPushButtonState(optedIn, false);
+                                };
+                                syncState();
+
+                                if (OneSignal.User && OneSignal.User.PushSubscription && OneSignal.User.PushSubscription.addEventListener) {
+                                    OneSignal.User.PushSubscription.addEventListener('change', syncState);
+                                }
+
+                                resolve(OneSignal);
+                            } catch (err) {
+                                reject(err);
+                            }
+                        });
+                    });
+
+                    return oneSignalInitPromise;
+                }
+
+                // Inicializa silenciosamente se o App ID já estiver configurado (para refletir estado já inscrito)
+                if (appId && (!isIOSDevice || isStandalonePWA)) {
+                    ensureOneSignalReady().catch(() => {});
+                }
+
+                pushBtn.addEventListener('click', async () => {
+                    showPushStatus('');
+
+                    // No iPhone/iPad, o Safari exige adicionar o site à Tela de Início para liberar Web Push (iOS 16.4+)
+                    if (isIOSDevice && !isStandalonePWA) {
+                        showPushStatus('No Safari do iPhone/iPad, toque em <strong class="text-white">Compartilhar</strong> (ícone ↑) → <strong class="text-white">Adicionar à Tela de Início</strong>, abra o atalho criado e toque novamente neste botão para ativar os alertas.');
+                        return;
+                    }
+
+                    if (!('Notification' in window) || !('serviceWorker' in navigator)) {
+                        showPushStatus('Seu navegador atual não suporta notificações push. Use o <strong class="text-white">Chrome</strong> ou <strong class="text-white">Safari</strong> atualizado, ou adicione as datas ao calendário abaixo.');
+                        return;
+                    }
+
+                    if (Notification.permission === 'denied') {
+                        showPushStatus('As notificações estão bloqueadas para este site. Clique no ícone de <strong class="text-white">cadeado / ajustes</strong> na barra de endereço do navegador e permita notificações.');
+                        return;
+                    }
+
+                    if (!appId) {
+                        showPushStatus('As notificações push estão sendo finalizadas. Enquanto isso, clique em <strong class="text-white">Adicionar ao calendário</strong> nas etapas abaixo para receber lembretes automáticos.');
+                        return;
+                    }
+
+                    setPushButtonState(pushBtn.classList.contains('is-subscribed'), true);
+
+                    try {
+                        const OneSignal = oneSignalInstance || await ensureOneSignalReady();
+                        if (!OneSignal) {
+                            setPushButtonState(false, false);
+                            return;
+                        }
+
+                        const currentlyOptedIn = Boolean(OneSignal.User && OneSignal.User.PushSubscription && OneSignal.User.PushSubscription.optedIn);
+
+                        if (currentlyOptedIn) {
+                            await OneSignal.User.PushSubscription.optOut();
+                            setPushButtonState(false, false);
+                            showPushStatus('Notificações desativadas neste navegador. Você pode reativar quando quiser.');
+                            return;
+                        }
+
+                        await OneSignal.Notifications.requestPermission();
+                        if (OneSignal.Notifications.permission) {
+                            await OneSignal.User.PushSubscription.optIn();
+                            if (OneSignal.User && typeof OneSignal.User.addTag === 'function') {
+                                OneSignal.User.addTag('cronograma_2027', 'true');
+                            }
+                            setPushButtonState(true, false);
+                            showPushStatus('Pronto! Você receberá alertas neste navegador antes de cada etapa do cronograma.');
+                            if (typeof window.clarity === 'function') {
+                                window.clarity('event', 'ativar_notificacoes_push');
+                            }
+                        } else {
+                            setPushButtonState(false, false);
+                            showPushStatus('Permissão não concedida. Para receber alertas, clique novamente e escolha <strong class="text-white">Permitir</strong>.');
+                        }
+                    } catch (err) {
+                        setPushButtonState(false, false);
+                        showPushStatus('Não foi possível ativar as notificações agora. Tente novamente ou use o botão <strong class="text-white">Adicionar ao calendário</strong> abaixo.');
+                    }
+                });
+            }
 });

@@ -1,0 +1,25 @@
+{
+  "name": "Concurso Unificado Medicina UFF 2027",
+  "short_name": "Medicina UFF",
+  "description": "Concurso Unificado de Pós-Graduação Lato Sensu 2027 da Faculdade de Medicina da UFF.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#08382b",
+  "theme_color": "#006843",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "assets/img/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/img/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

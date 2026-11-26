@@ -17,7 +17,14 @@ window.UFF_SITE_CONFIG = {
     editalUrl: 'https://www.editais.uff.br',
 
     // Cole aqui o link do seu formulário Tally (ex.: 'https://tally.so/r/SEU_ID'):
-    tallyUrl: 'https://tally.so/r/8NL40Y'
+    tallyUrl: 'https://tally.so/r/8NL40Y',
+
+    // Cole aqui o App ID do OneSignal (Web Push gratuito para Chrome, Safari e iOS PWA):
+    // Painel OneSignal -> Settings -> Keys & IDs -> OneSignal App ID
+    oneSignalAppId: '',
+
+    // Opcional (apenas Safari legado macOS <= 12; Safari 16+ usa VAPID automaticamente):
+    oneSignalSafariWebId: ''
 };
 
 // Aplica o modo antes da primeira pintura (sem flash visual entre modos)
