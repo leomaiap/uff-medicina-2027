@@ -1022,6 +1022,143 @@
             color: rgba(255, 255, 255, 0.94);
             line-height: 1.46;
         }
+        .spec-modal-syllabus {
+            margin-bottom: 1rem;
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.24);
+            overflow: hidden;
+        }
+        .spec-modal-syllabus-trigger {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.85rem 1.1rem;
+            border: none;
+            background: transparent;
+            color: #FFFFFF;
+            text-align: left;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .spec-modal-syllabus-trigger:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .spec-modal-syllabus-trigger:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.75);
+            outline-offset: -2px;
+            border-radius: 16px;
+        }
+        .spec-modal-syllabus-heading {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+            min-width: 0;
+        }
+        .spec-modal-syllabus-title {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            line-height: 1.25;
+        }
+        .spec-modal-syllabus-sub {
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.62);
+            line-height: 1.25;
+        }
+        .spec-modal-syllabus-chevron {
+            flex-shrink: 0;
+            color: rgba(255, 255, 255, 0.72);
+            transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .spec-modal-syllabus.is-expanded .spec-modal-syllabus-chevron {
+            transform: rotate(180deg);
+        }
+        .spec-modal-syllabus-collapse {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .spec-modal-syllabus.is-expanded .spec-modal-syllabus-collapse {
+            grid-template-rows: 1fr;
+        }
+        .spec-modal-syllabus-inner {
+            overflow: hidden;
+        }
+        .spec-modal-syllabus-content {
+            padding: 0 1.1rem 1.05rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .spec-modal-syllabus-section-title {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0.85rem 0 0.45rem;
+        }
+        .spec-modal-syllabus-group {
+            margin-top: 0.7rem;
+        }
+        .spec-modal-syllabus-group:first-of-type {
+            margin-top: 0.35rem;
+        }
+        .spec-modal-syllabus-group-title {
+            font-size: 0.79rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.94);
+            margin: 0 0 0.3rem;
+        }
+        .spec-modal-syllabus-topics {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.32rem;
+        }
+        .spec-modal-syllabus-topics li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            line-height: 1.44;
+            color: rgba(255, 255, 255, 0.88);
+        }
+        .spec-modal-syllabus-idx {
+            flex-shrink: 0;
+            min-width: 1.35rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.48);
+            font-variant-numeric: tabular-nums;
+            padding-top: 0.1rem;
+        }
+        .spec-modal-syllabus-refs {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.42rem;
+        }
+        .spec-modal-syllabus-refs li {
+            font-size: 0.75rem;
+            line-height: 1.45;
+            color: rgba(255, 255, 255, 0.72);
+            padding-left: 0.75rem;
+            position: relative;
+        }
+        .spec-modal-syllabus-refs li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.52em;
+            width: 4px;
+            height: 4px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.36);
+        }
         .spec-modal-footer {
             display: flex;
             flex-direction: column;

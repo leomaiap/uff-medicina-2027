@@ -1065,6 +1065,58 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
 
+                    ${spec.syllabus ? (() => {
+                        const topics = Array.isArray(spec.syllabus.topics) ? spec.syllabus.topics : [];
+                        const refs = Array.isArray(spec.syllabus.references) ? spec.syllabus.references : [];
+                        const isGrouped = topics.length > 0 && typeof topics[0] === 'object' && topics[0] !== null;
+                        const totalTopics = isGrouped
+                            ? topics.reduce((sum, g) => sum + (Array.isArray(g.items) ? g.items.length : 0), 0)
+                            : topics.length;
+                        const topicsHtml = isGrouped
+                            ? topics.map((g) => `
+                                <div class="spec-modal-syllabus-group">
+                                    <p class="spec-modal-syllabus-group-title">${g.group}</p>
+                                    <ul class="spec-modal-syllabus-topics">
+                                        ${(g.items || []).map((item, idx) => `<li><span class="spec-modal-syllabus-idx">${idx + 1}.</span><span>${item}</span></li>`).join('')}
+                                    </ul>
+                                </div>
+                            `).join('')
+                            : `
+                                <ul class="spec-modal-syllabus-topics">
+                                    ${topics.map((item, idx) => `<li><span class="spec-modal-syllabus-idx">${idx + 1}.</span><span>${item}</span></li>`).join('')}
+                                </ul>
+                            `;
+                        const refsHtml = refs.length
+                            ? `
+                                <p class="spec-modal-syllabus-section-title">Referências bibliográficas</p>
+                                <ul class="spec-modal-syllabus-refs">
+                                    ${refs.map((ref) => `<li>${ref}</li>`).join('')}
+                                </ul>
+                            `
+                            : '';
+                        return `
+                        <div class="spec-modal-syllabus" id="modal-syllabus-box">
+                            <button type="button" class="spec-modal-syllabus-trigger" id="modal-syllabus-trigger" aria-expanded="false" aria-controls="modal-syllabus-panel">
+                                <span class="spec-modal-syllabus-heading">
+                                    <span class="spec-modal-syllabus-title">Conteúdo programático e referências</span>
+                                    <span class="spec-modal-syllabus-sub">Anexo IV da Minuta · ${totalTopics} ${totalTopics === 1 ? 'tema' : 'temas'}</span>
+                                </span>
+                                <svg class="spec-modal-syllabus-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </button>
+                            <div class="spec-modal-syllabus-collapse" id="modal-syllabus-panel">
+                                <div class="spec-modal-syllabus-inner">
+                                    <div class="spec-modal-syllabus-content">
+                                        <p class="spec-modal-syllabus-section-title">Temas da prova escrita</p>
+                                        ${topicsHtml}
+                                        ${refsHtml}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    })() : ''}
+
                     <div class="spec-modal-footer">
                         ${modalActionsHtml}
                     </div>
@@ -1072,6 +1124,23 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
 
             modalContent.scrollTop = 0;
+
+            const syllabusBox = document.getElementById('modal-syllabus-box');
+            const syllabusTrigger = document.getElementById('modal-syllabus-trigger');
+            if (syllabusBox && syllabusTrigger) {
+                syllabusTrigger.onclick = () => {
+                    const expanded = syllabusBox.classList.toggle('is-expanded');
+                    syllabusTrigger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+                    if (expanded) {
+                        if (typeof window.clarity === 'function') {
+                            window.clarity('event', 'ver_conteudo_programatico');
+                        }
+                        setTimeout(() => {
+                            try { syllabusBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (_) {}
+                        }, 180);
+                    }
+                };
+            }
 
             const waitlistBtn = document.getElementById('modal-waitlist-btn');
             if (waitlistBtn) {
