@@ -11,7 +11,7 @@
  */
 window.UFF_SITE_CONFIG = {
     // Mude de `false` para `true` assim que o Edital Oficial for publicado:
-    editalPublicado: false,
+    editalPublicado: true,
 
     // Link oficial do Edital (ou PDF publicado) usado nos botões do modo publicado:
     editalUrl: 'https://www.editais.uff.br',
