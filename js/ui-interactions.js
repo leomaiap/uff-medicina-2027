@@ -47,6 +47,21 @@ document.addEventListener("DOMContentLoaded", () => {
             updateCountdown();
         }
 
+        // Destaque dinâmico da etapa do cronograma conforme a data real atual
+        function syncTimelineStepStates() {
+            const now = Date.now();
+            document.querySelectorAll('.timeline-step[data-step-start][data-step-end]').forEach((step) => {
+                const startMs = Date.parse(step.getAttribute('data-step-start'));
+                const endMs = Date.parse(step.getAttribute('data-step-end'));
+                if (Number.isNaN(startMs) || Number.isNaN(endMs)) return;
+                const isCurrent = now >= startMs && now <= endMs;
+                const isPast = now > endMs;
+                step.classList.toggle('is-current', isCurrent);
+                step.classList.toggle('is-past', isPast);
+            });
+        }
+        syncTimelineStepStates();
+
         // -------------------------------------------------------------
         // 6. SMOOTH ANCHOR NAVIGATION (INTEGRADA AO LENIS)
         // -------------------------------------------------------------

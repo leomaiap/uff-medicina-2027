@@ -1771,3 +1771,17 @@
             min-width: 7.5rem;
             flex-shrink: 0;
         }
+        .timeline-step.is-current .timeline-step-card {
+            background: rgba(4, 38, 29, 0.78);
+            border-radius: 1rem;
+            padding: 1.25rem 1.4rem;
+            box-shadow: 0 22px 48px -18px rgba(0, 0, 0, 0.65);
+        }
+        .timeline-step.is-current .timeline-dot {
+            background-color: #009E5E;
+            border-color: #08382b;
+            top: 1.5rem;
+        }
+        .timeline-step.is-past {
+            opacity: 0.58;
+        }
